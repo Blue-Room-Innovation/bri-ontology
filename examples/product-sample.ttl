@@ -25,7 +25,7 @@ ex:fac1 a dpp:Facility ;
 ex:prod1 a dpp:Product ;
   schema:name "Lavadora Serie X" ;
   dpp:serialNumber "SN-ABC-2024-00042" ;
-  adms:identifier [ dct:identifier "GTIN-12345678901231" ] ;
+  adms:identifier [ a dpp:Identifier ; dct:identifier "GTIN-12345678901231" ] ;
   dpp:manufacturer ex:org1 ;
   dpp:producedByParty ex:org1 ;
   dpp:producedAtFacility ex:fac1 ;

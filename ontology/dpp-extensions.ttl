@@ -98,7 +98,7 @@ dpp:productionDate a owl:DatatypeProperty ;
 dpp:countryOfProduction a owl:ObjectProperty ;
   rdfs:label "país de producción"@es ;
   rdfs:domain dpp:Product ;
-  rdfs:range  rdfs Resource ;
+  rdfs:range  rdfs:Resource ;
   owl:equivalentProperty untpcore:countryOfProduction .
 
 dpp:productCategory a owl:ObjectProperty ;

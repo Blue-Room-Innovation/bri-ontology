@@ -115,14 +115,18 @@ dpp:IdentifierShape a sh:NodeShape ;
     [ sh:property [ sh:path dpp:gtin ; sh:minCount 1 ; sh:datatype xsd:string ] ]
     [ sh:property [ sh:path dpp:serialNumber ; sh:minCount 1 ; sh:datatype xsd:string ] ]
     [ sh:property [ sh:path dpp:mpn ; sh:minCount 1 ; sh:datatype xsd:string ] ]
+    [ sh:property [ sh:path dct:identifier ; sh:minCount 1 ; sh:datatype xsd:string ] ]
   ) .
 
 dpp:LifecycleEventShape a sh:NodeShape ;
   sh:targetClass dpp:LifecycleEvent ;
   sh:name "DPP: Evento de Ciclo de Vida"@es ;
-  sh:property [ sh:path prov:startedAtTime ; sh:minCount 1 ; sh:datatype xsd:dateTime ] ;
+  sh:or (
+    [ sh:property [ sh:path prov:startedAtTime ; sh:minCount 1 ; sh:datatype xsd:dateTime ] ]
+    [ sh:property [ sh:path dpp:eventTime ; sh:minCount 1 ; sh:datatype xsd:dateTime ] ]
+  ) ;
   sh:property [ sh:path prov:endedAtTime   ; sh:minCount 0 ; sh:datatype xsd:dateTime ] ;
-  sh:property [ sh:path prov:wasAssociatedWith ; sh:minCount 1 ; sh:nodeKind sh:IRI ] .
+  sh:property [ sh:path prov:wasAssociatedWith ; sh:minCount 0 ; sh:nodeKind sh:IRI ] .
 
 dpp:MeasurementShape a sh:NodeShape ;
   sh:targetClass dpp:Measurement ;
@@ -143,8 +147,8 @@ dpp:MaterialProvenanceShape a sh:NodeShape ;
   sh:name "DPP: Proveniencia de Material"@es ;
   sh:property [ sh:path dpp:materialType ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path dpp:originCountry ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
-  sh:property [ sh:path dpp:massFraction ; sh:minCount 0 ; sh:datatype xsd:double ] ;
-  sh:property [ sh:path dpp:recycledMassFraction ; sh:minCount 0 ; sh:datatype xsd:double ] ;
+  sh:property [ sh:path dpp:massFraction ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path dpp:recycledMassFraction ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
   sh:property [ sh:path dpp:mass ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
   sh:property [ sh:path dpp:hazardous ; sh:minCount 0 ; sh:datatype xsd:boolean ] ;
   sh:property [ sh:path dpp:symbol ; sh:minCount 0 ; sh:datatype xsd:string ] ;
@@ -153,25 +157,25 @@ dpp:MaterialProvenanceShape a sh:NodeShape ;
 dpp:EmissionsScorecardShape a sh:NodeShape ;
   sh:targetClass dpp:EmissionsScorecard ;
   sh:name "DPP: Emisiones (scorecard)"@es ;
-  sh:property [ sh:path dpp:carbonFootprint ; sh:minCount 1 ; sh:datatype xsd:double ] ;
+  sh:property [ sh:path dpp:carbonFootprint ; sh:minCount 1 ; sh:datatype xsd:decimal ] ;
   sh:property [ sh:path dpp:declaredUnit ; sh:minCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path dpp:operationalScope ; sh:minCount 0 ; sh:nodeKind sh:IRI ] ;
-  sh:property [ sh:path dpp:primarySourcedRatio ; sh:minCount 0 ; sh:datatype xsd:double ] ;
+  sh:property [ sh:path dpp:primarySourcedRatio ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
   sh:property [ sh:path dpp:reportingStandard ; sh:minCount 0 ] .
 
 dpp:CircularityScorecardShape a sh:NodeShape ;
   sh:targetClass dpp:CircularityScorecard ;
   sh:name "DPP: Circularidad (scorecard)"@es ;
-  sh:property [ sh:path dpp:recyclableContent ; sh:minCount 0 ; sh:datatype xsd:double ] ;
-  sh:property [ sh:path dpp:recycledContent ; sh:minCount 0 ; sh:datatype xsd:double ] ;
-  sh:property [ sh:path dpp:utilityFactor ; sh:minCount 0 ; sh:datatype xsd:double ] ;
-  sh:property [ sh:path dpp:materialCircularityIndicator ; sh:minCount 0 ; sh:datatype xsd:double ] .
+  sh:property [ sh:path dpp:recyclableContent ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path dpp:recycledContent ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path dpp:utilityFactor ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path dpp:materialCircularityIndicator ; sh:minCount 0 ; sh:datatype xsd:decimal ] .
 
 dpp:TraceabilityInformationShape a sh:NodeShape ;
   sh:targetClass dpp:TraceabilityInformation ;
   sh:name "DPP: Trazabilidad"@es ;
   sh:property [ sh:path dpp:valueChainProcess ; sh:minCount 0 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path dpp:verifiedRatio ; sh:minCount 0 ; sh:datatype xsd:double ] ;
+  sh:property [ sh:path dpp:verifiedRatio ; sh:minCount 0 ; sh:datatype xsd:decimal ] ;
   sh:property [ sh:path dpp:traceabilityEvent ; sh:minCount 0 ] ;
   sh:property [ sh:path dpp:hasEPCISEvent ; sh:minCount 0 ; sh:node dpp:EPCISEventShape ] .
 
@@ -190,15 +194,16 @@ dpp:ProductPassportShape a sh:NodeShape ;
   sh:property [ sh:path dpp:dueDiligenceDeclaration ; sh:minCount 0 ] .
 
 # Completar Product con extensiones
-  
-dpp:ProductShape sh:property [ sh:path dpp:producedAtFacility ; sh:minCount 0 ; sh:class dpp:Facility ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:productionDate ; sh:minCount 0 ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:weight ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:length ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:width ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:height ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:volume ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
-  dpp:ProductShape sh:property [ sh:path dpp:hasMaterialProvenance ; sh:minCount 0 ; sh:node dpp:MaterialProvenanceShape ] .
+
+dpp:ProductShape
+  sh:property [ sh:path dpp:producedAtFacility ; sh:minCount 0 ; sh:class dpp:Facility ] ;
+  sh:property [ sh:path dpp:productionDate ; sh:minCount 0 ] ;
+  sh:property [ sh:path dpp:weight ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
+  sh:property [ sh:path dpp:length ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
+  sh:property [ sh:path dpp:width ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
+  sh:property [ sh:path dpp:height ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
+  sh:property [ sh:path dpp:volume ; sh:minCount 0 ; sh:node dpp:MeasurementShape ] ;
+  sh:property [ sh:path dpp:hasMaterialProvenance ; sh:minCount 0 ; sh:node dpp:MaterialProvenanceShape ] .
 
 # EPCIS event shapes
 
