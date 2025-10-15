@@ -1,0 +1,340 @@
+@prefix dpp:     <https://example.org/dpp#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix schema:  <http://schema.org/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix untpdpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+@prefix untpcore:<https://test.uncefact.org/vocabulary/untp/core/0/> .
+
+# Extensiones DPP alineadas con UNTP (UN/CEFACT)
+
+########################
+# Clases adicionales   #
+########################
+
+dpp:ProductPassport a owl:Class ;
+  rdfs:label "Pasaporte de Producto"@es ;
+  rdfs:comment "Instancia concreta del pasaporte de un producto."@es ;
+  rdfs:subClassOf dpp:DigitalProductPassport ;
+  owl:equivalentClass untpdpp:ProductPassport .
+
+dpp:Party a owl:Class ;
+  rdfs:label "Parte"@es ;
+  rdfs:comment "Entidad participante (persona u organización)."@es ;
+  owl:equivalentClass untpcore:Party .
+
+# Asegurar que Organización y Persona se consideran dpp:Party
+dpp:Organization rdfs:subClassOf dpp:Party .
+dpp:Person rdfs:subClassOf dpp:Party .
+
+dpp:Facility a owl:Class ;
+  rdfs:label "Instalación"@es ;
+  rdfs:comment "Instalación o planta donde se realizan procesos."@es ;
+  rdfs:subClassOf dpp:Location ;
+  owl:equivalentClass untpcore:Facility .
+
+dpp:MaterialProvenance a owl:Class ;
+  rdfs:label "Proveniencia de Material"@es ;
+  rdfs:comment "Información de origen y fracciones de materiales."@es .
+
+dpp:CircularityScorecard a owl:Class ;
+  rdfs:label "Cuadro de mando de circularidad"@es ;
+  rdfs:comment "Indicadores de circularidad del producto."@es ;
+  rdfs:seeAlso untpcore:circularityScorecard .
+
+dpp:EmissionsScorecard a owl:Class ;
+  rdfs:label "Cuadro de mando de emisiones"@es ;
+  rdfs:comment "Indicadores de huella de carbono y alcances operativos."@es ;
+  rdfs:seeAlso untpcore:emissionsScorecard .
+
+dpp:Standard a owl:Class ;
+  rdfs:label "Norma"@es ;
+  owl:equivalentClass untpcore:Standard .
+
+dpp:Regulation a owl:Class ;
+  rdfs:label "Regulación"@es ;
+  owl:equivalentClass untpcore:Regulation .
+
+dpp:Criterion a owl:Class ;
+  rdfs:label "Criterio"@es ;
+  owl:equivalentClass untpcore:Criterion .
+
+dpp:Claim a owl:Class ;
+  rdfs:label "Declaración de conformidad (claim)"@es ;
+  owl:equivalentClass untpcore:Claim .
+
+dpp:Declaration a owl:Class ;
+  rdfs:label "Declaración"@es ;
+  owl:equivalentClass untpcore:Declaration .
+
+########################
+# Propiedades UNTP core #
+########################
+
+dpp:producedByParty a owl:ObjectProperty ;
+  rdfs:label "producido por parte"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Party ;
+  owl:equivalentProperty untpcore:producedByParty .
+
+dpp:producedAtFacility a owl:ObjectProperty ;
+  rdfs:label "producido en instalación"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Facility ;
+  owl:equivalentProperty untpcore:producedAtFacility .
+
+dpp:productionDate a owl:DatatypeProperty ;
+  rdfs:label "fecha de producción"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  xsd:string ;
+  owl:equivalentProperty untpcore:productionDate .
+
+dpp:countryOfProduction a owl:ObjectProperty ;
+  rdfs:label "país de producción"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  rdfs Resource ;
+  owl:equivalentProperty untpcore:countryOfProduction .
+
+dpp:productCategory a owl:ObjectProperty ;
+  rdfs:label "categoría de producto"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpcore:productCategory .
+
+dpp:granularityLevel a owl:ObjectProperty ;
+  rdfs:label "nivel de granularidad"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpdpp:granularityLevel .
+
+# Dimensiones y masa (mapeadas a QUDT)
+dpp:weight a owl:ObjectProperty ;
+  rdfs:label "peso"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Measurement ;
+  rdfs:seeAlso untpcore:weight .
+
+dpp:length a owl:ObjectProperty ;
+  rdfs:label "longitud"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Measurement ;
+  rdfs:seeAlso untpcore:length .
+
+dpp:width a owl:ObjectProperty ;
+  rdfs:label "ancho"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Measurement ;
+  rdfs:seeAlso untpcore:width .
+
+dpp:height a owl:ObjectProperty ;
+  rdfs:label "alto"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Measurement ;
+  rdfs:seeAlso untpcore:height .
+
+dpp:volume a owl:ObjectProperty ;
+  rdfs:label "volumen"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Measurement ;
+  rdfs:seeAlso untpcore:volume .
+
+###############################
+# Proveniencia de materiales  #
+###############################
+
+dpp:hasMaterialProvenance a owl:ObjectProperty ;
+  rdfs:label "tiene proveniencia de material"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:MaterialProvenance ;
+  owl:equivalentProperty untpcore:materialsProvenance .
+
+dpp:materialType a owl:ObjectProperty ;
+  rdfs:label "tipo de material"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpcore:materialType .
+
+dpp:originCountry a owl:ObjectProperty ;
+  rdfs:label "país de origen"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpcore:originCountry .
+
+dpp:massFraction a owl:DatatypeProperty ;
+  rdfs:label "fracción másica"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:massFraction .
+
+dpp:recycledMassFraction a owl:DatatypeProperty ;
+  rdfs:label "fracción másica reciclada"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:recycledMassFraction .
+
+dpp:mass a owl:ObjectProperty ;
+  rdfs:label "masa"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  dpp:Measurement ;
+  owl:equivalentProperty untpcore:mass .
+
+dpp:hazardous a owl:DatatypeProperty ;
+  rdfs:label "peligroso"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  xsd:boolean ;
+  owl:equivalentProperty untpcore:hazardous .
+
+dpp:symbol a owl:DatatypeProperty ;
+  rdfs:label "símbolo"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  xsd:string ;
+  owl:equivalentProperty untpcore:symbol .
+
+dpp:materialSafetyInformation a owl:ObjectProperty ;
+  rdfs:label "información de seguridad del material"@es ;
+  rdfs:domain dpp:MaterialProvenance ;
+  rdfs:range  dpp:Document ;
+  owl:equivalentProperty untpcore:materialSafetyInformation .
+
+################################
+# Cuadros de mando (scorecards) #
+################################
+
+dpp:emissionsScorecard a owl:ObjectProperty ;
+  rdfs:label "cuadro de mando de emisiones"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:EmissionsScorecard ;
+  owl:equivalentProperty untpcore:emissionsScorecard .
+
+dpp:carbonFootprint a owl:DatatypeProperty ;
+  rdfs:label "huella de carbono"@es ;
+  rdfs:domain dpp:EmissionsScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:carbonFootprint .
+
+dpp:declaredUnit a owl:ObjectProperty ;
+  rdfs:label "unidad declarada"@es ;
+  rdfs:domain dpp:EmissionsScorecard ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpcore:declaredUnit .
+
+dpp:operationalScope a owl:ObjectProperty ;
+  rdfs:label "alcance operativo"@es ;
+  rdfs:domain dpp:EmissionsScorecard ;
+  rdfs:range  rdfs:Resource ;
+  owl:equivalentProperty untpcore:operationalScope .
+
+dpp:primarySourcedRatio a owl:DatatypeProperty ;
+  rdfs:label "ratio de origen primario"@es ;
+  rdfs:domain dpp:EmissionsScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:primarySourcedRatio .
+
+dpp:reportingStandard a owl:ObjectProperty ;
+  rdfs:label "estándar de reporte"@es ;
+  rdfs:domain dpp:EmissionsScorecard ;
+  rdfs:range  dpp:Standard ;
+  owl:equivalentProperty untpcore:reportingStandard .
+
+dpp:circularityScorecard a owl:ObjectProperty ;
+  rdfs:label "cuadro de mando de circularidad"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:CircularityScorecard ;
+  owl:equivalentProperty untpcore:circularityScorecard .
+
+dpp:recyclableContent a owl:DatatypeProperty ;
+  rdfs:label "contenido reciclable"@es ;
+  rdfs:domain dpp:CircularityScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:recyclableContent .
+
+dpp:recycledContent a owl:DatatypeProperty ;
+  rdfs:label "contenido reciclado"@es ;
+  rdfs:domain dpp:CircularityScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:recycledContent .
+
+dpp:utilityFactor a owl:DatatypeProperty ;
+  rdfs:label "factor de utilidad"@es ;
+  rdfs:domain dpp:CircularityScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:utilityFactor .
+
+dpp:materialCircularityIndicator a owl:DatatypeProperty ;
+  rdfs:label "indicador de circularidad de material"@es ;
+  rdfs:domain dpp:CircularityScorecard ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpcore:materialCircularityIndicator .
+
+#####################
+# Conformidad/claims #
+#####################
+
+dpp:conformityClaim a owl:ObjectProperty ;
+  rdfs:label "declaración de conformidad (claim)"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:Claim ;
+  owl:equivalentProperty untpcore:conformityClaim .
+
+dpp:conformityEvidence a owl:ObjectProperty ;
+  rdfs:label "evidencia de conformidad"@es ;
+  rdfs:domain dpp:Claim ;
+  rdfs:range  dpp:Document ;
+  owl:equivalentProperty untpcore:conformityEvidence .
+
+dpp:referenceStandard a owl:ObjectProperty ;
+  rdfs:label "estándar de referencia"@es ;
+  rdfs:domain dpp:Claim ;
+  rdfs:range  dpp:Standard ;
+  owl:equivalentProperty untpcore:referenceStandard .
+
+dpp:referenceRegulation a owl:ObjectProperty ;
+  rdfs:label "regulación de referencia"@es ;
+  rdfs:domain dpp:Claim ;
+  rdfs:range  dpp:Regulation ;
+  owl:equivalentProperty untpcore:referenceRegulation .
+
+dpp:dueDiligenceDeclaration a owl:ObjectProperty ;
+  rdfs:label "declaración de debida diligencia"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:Document ;
+  owl:equivalentProperty untpcore:dueDiligenceDeclaration .
+
+############################
+# Trazabilidad (DPP module) #
+############################
+
+dpp:TraceabilityInformation a owl:Class ;
+  rdfs:label "Información de trazabilidad"@es ;
+  rdfs:comment "Estado de procesos en la cadena de valor y eventos asociados."@es .
+
+dpp:traceabilityInformation a owl:ObjectProperty ;
+  rdfs:label "trazabilidad"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:TraceabilityInformation ;
+  owl:equivalentProperty untpdpp:traceabilityInformation .
+
+dpp:valueChainProcess a owl:DatatypeProperty ;
+  rdfs:label "proceso de cadena de valor"@es ;
+  rdfs:domain dpp:TraceabilityInformation ;
+  rdfs:range  xsd:string ;
+  owl:equivalentProperty untpdpp:valueChainProcess .
+
+dpp:verifiedRatio a owl:DatatypeProperty ;
+  rdfs:label "ratio verificado"@es ;
+  rdfs:domain dpp:TraceabilityInformation ;
+  rdfs:range  xsd:double ;
+  owl:equivalentProperty untpdpp:verifiedRatio .
+
+dpp:traceabilityEvent a owl:ObjectProperty ;
+  rdfs:label "evento de trazabilidad"@es ;
+  rdfs:domain dpp:TraceabilityInformation ;
+  rdfs:range  dpp:Document ;
+  owl:equivalentProperty untpcore:traceabilityEvent .
+

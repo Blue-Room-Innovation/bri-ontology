@@ -1,0 +1,212 @@
+@prefix dpp:    <https://example.org/dpp#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix schema: <http://schema.org/> .
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix qudt:   <http://qudt.org/schema/qudt/> .
+@prefix unit:   <http://qudt.org/vocab/unit/> .
+@prefix vann:   <http://purl.org/vocab/vann/> .
+
+dpp: a owl:Ontology ;
+  dct:title "Ontología DPP (Digital Product Passport)"@es ;
+  dct:description "Ontología para modelar Pasaportes Digitales de Producto (DPP), reusando vocabularios consolidados (schema.org, PROV, DCTERMS, ADMS, QUDT)."@es ;
+  dct:issued "2025-10-15"^^xsd:date ;
+  vann:preferredNamespacePrefix "dpp" ;
+  vann:preferredNamespaceUri "https://example.org/dpp#" ;
+  owl:versionInfo "0.1.0" .
+
+# Clases principales
+
+dpp:DigitalProductPassport a owl:Class ;
+  rdfs:label "Pasaporte Digital de Producto"@es ;
+  rdfs:comment "Registro digital que describe un producto y su ciclo de vida."@es ;
+  rdfs:subClassOf schema:DigitalDocument .
+
+dpp:Product a owl:Class ;
+  rdfs:label "Producto"@es ;
+  rdfs:comment "Producto que es descrito por un DPP."@es ;
+  owl:equivalentClass schema:Product .
+
+dpp:Component a owl:Class ;
+  rdfs:label "Componente"@es ;
+  rdfs:comment "Componente que forma parte de un producto."@es ;
+  rdfs:subClassOf dpp:Product .
+
+dpp:Material a owl:Class ;
+  rdfs:label "Material"@es ;
+  rdfs:comment "Material o sustancia empleada en un producto o componente."@es ;
+  rdfs:seeAlso schema:material .
+
+dpp:Batch a owl:Class ;
+  rdfs:label "Lote"@es ;
+  rdfs:comment "Conjunto de productos producidos bajo condiciones similares."@es ;
+  rdfs:subClassOf prov:Entity .
+
+dpp:Identifier a owl:Class ;
+  rdfs:label "Identificador"@es ;
+  rdfs:comment "Identificador gestionado para un recurso (GTIN, MPN, serie, etc.)."@es ;
+  owl:equivalentClass adms:Identifier .
+
+dpp:Organization a owl:Class ;
+  rdfs:label "Organización"@es ;
+  owl:equivalentClass schema:Organization .
+
+dpp:Person a owl:Class ;
+  rdfs:label "Persona"@es ;
+  owl:equivalentClass schema:Person .
+
+dpp:Location a owl:Class ;
+  rdfs:label "Ubicación"@es ;
+  owl:equivalentClass schema:Place .
+
+dpp:Certificate a owl:Class ;
+  rdfs:label "Certificado de Conformidad"@es ;
+  rdfs:comment "Certificado, declaración o evidencia de conformidad."@es ;
+  rdfs:subClassOf schema:CreativeWork .
+
+dpp:Document a owl:Class ;
+  rdfs:label "Documento Digital"@es ;
+  owl:equivalentClass schema:DigitalDocument .
+
+dpp:LifecycleEvent a owl:Class ;
+  rdfs:label "Evento de Ciclo de Vida"@es ;
+  rdfs:comment "Actividad relevante del ciclo de vida (fabricación, reparación, reciclaje, etc.)."@es ;
+  rdfs:subClassOf prov:Activity .
+
+dpp:Measurement a owl:Class ;
+  rdfs:label "Medición"@es ;
+  rdfs:comment "Valor cuantitativo con unidad."@es ;
+  rdfs:subClassOf qudt:QuantityValue .
+
+dpp:DataCarrier a owl:Class ;
+  rdfs:label "Portador de Datos"@es ;
+  rdfs:comment "Soporte físico o digital (QR, NFC, URI) que enlaza al DPP."@es .
+
+# Propiedades objeto
+
+dpp:describesProduct a owl:ObjectProperty ;
+  rdfs:label "describe producto"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:Product ;
+  rdfs:subPropertyOf schema:about ;
+  owl:inverseOf dpp:hasPassport .
+
+dpp:hasPassport a owl:ObjectProperty ;
+  rdfs:label "tiene DPP"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:DigitalProductPassport .
+
+dpp:hasComponent a owl:ObjectProperty ;
+  rdfs:label "tiene componente"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Component ;
+  owl:equivalentProperty schema:hasPart .
+
+dpp:isComponentOf a owl:ObjectProperty ;
+  rdfs:label "es componente de"@es ;
+  rdfs:domain dpp:Component ;
+  rdfs:range  dpp:Product ;
+  owl:equivalentProperty schema:isPartOf ;
+  owl:inverseOf dpp:hasComponent .
+
+dpp:hasMaterial a owl:ObjectProperty ;
+  rdfs:label "tiene material"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Material ;
+  rdfs:subPropertyOf schema:material .
+
+dpp:manufacturer a owl:ObjectProperty ;
+  rdfs:label "fabricante"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Organization ;
+  owl:equivalentProperty schema:manufacturer .
+
+dpp:brand a owl:ObjectProperty ;
+  rdfs:label "marca"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  schema:Brand ;
+  rdfs:seeAlso schema:brand .
+
+dpp:hasIdentifier a owl:ObjectProperty ;
+  rdfs:label "tiene identificador"@es ;
+  rdfs:domain rdfs:Resource ;
+  rdfs:range  dpp:Identifier ;
+  owl:equivalentProperty adms:identifier .
+
+dpp:hasLifecycleEvent a owl:ObjectProperty ;
+  rdfs:label "tiene evento de ciclo de vida"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:LifecycleEvent ;
+  rdfs:subPropertyOf prov:wasInfluencedBy .
+
+dpp:hasCertificate a owl:ObjectProperty ;
+  rdfs:label "tiene certificado"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Certificate ;
+  rdfs:subPropertyOf dct:relation .
+
+dpp:hasDataCarrier a owl:ObjectProperty ;
+  rdfs:label "tiene portador de datos"@es ;
+  rdfs:domain dpp:DigitalProductPassport ;
+  rdfs:range  dpp:DataCarrier .
+
+dpp:documentedBy a owl:ObjectProperty ;
+  rdfs:label "documentado por"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  dpp:Document ;
+  rdfs:subPropertyOf dct:documentation .
+
+dpp:rightsHolder a owl:ObjectProperty ;
+  rdfs:label "titular de derechos"@es ;
+  rdfs:domain rdfs:Resource ;
+  rdfs:range  dpp:Organization ;
+  rdfs:subPropertyOf dct:rightsHolder .
+
+# Propiedades de datos
+
+dpp:serialNumber a owl:DatatypeProperty ;
+  rdfs:label "número de serie"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  xsd:string ;
+  owl:equivalentProperty schema:serialNumber .
+
+dpp:mpn a owl:DatatypeProperty ;
+  rdfs:label "MPN"@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  xsd:string ;
+  owl:equivalentProperty schema:mpn .
+
+dpp:gtin a owl:DatatypeProperty ;
+  rdfs:label "GTIN"@es ;
+  rdfs:comment "Identificador GTIN (use gtin14/gtin13 de schema.org cuando aplique)."@es ;
+  rdfs:domain dpp:Product ;
+  rdfs:range  xsd:string ;
+  rdfs:seeAlso schema:gtin14 , schema:gtin13 , schema:gtin12 , schema:gtin8 .
+
+dpp:lotNumber a owl:DatatypeProperty ;
+  rdfs:label "número de lote"@es ;
+  rdfs:domain dpp:Batch ;
+  rdfs:range  xsd:string .
+
+# Esquema de conceptos: etapas del ciclo de vida
+
+dpp:LifecycleStageScheme a skos:ConceptScheme ;
+  skos:prefLabel "Etapas del Ciclo de Vida"@es .
+
+dpp:Manufacturing a skos:Concept ; skos:prefLabel "Fabricación"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Distribution a skos:Concept ; skos:prefLabel "Distribución"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Use         a skos:Concept ; skos:prefLabel "Uso"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Repair      a skos:Concept ; skos:prefLabel "Reparación"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Refurbish   a skos:Concept ; skos:prefLabel "Reacondicionamiento"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Recycle     a skos:Concept ; skos:prefLabel "Reciclaje"@es ; skos:inScheme dpp:LifecycleStageScheme .
+dpp:Disposal    a skos:Concept ; skos:prefLabel "Eliminación"@es ; skos:inScheme dpp:LifecycleStageScheme .
+
+# Notas
+# - Puede mapearse a ontologías UN/CEFACT/UNTP cuando se disponga de IRIs estables.
+# - Se han alineado propiedades y clases a schema.org, DCTERMS, PROV y ADMS.
+

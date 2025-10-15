@@ -1,0 +1,132 @@
+@prefix dpp:     <https://example.org/dpp#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix epcis:   <https://ref.gs1.org/epcis/> .
+@prefix cbv:     <https://ref.gs1.org/cbv/> .
+@prefix gs1:     <https://gs1.org/voc/> .
+
+# Alineación DPP con GS1 EPCIS/CBV
+
+dpp:EPCISEvent a owl:Class ;
+  rdfs:label "EPCIS Event"@en , "Evento EPCIS"@es ;
+  rdfs:comment "Evento de EPCIS 2.0 de GS1"@es ;
+  rdfs:subClassOf dpp:LifecycleEvent ;
+  owl:equivalentClass epcis:Event .
+
+dpp:ObjectEvent a owl:Class ;
+  rdfs:label "Object Event"@en , "Evento de Objeto"@es ;
+  rdfs:subClassOf dpp:EPCISEvent ;
+  owl:equivalentClass epcis:ObjectEvent .
+
+dpp:AggregationEvent a owl:Class ;
+  rdfs:label "Aggregation Event"@en , "Evento de Agregación"@es ;
+  rdfs:subClassOf dpp:EPCISEvent ;
+  owl:equivalentClass epcis:AggregationEvent .
+
+dpp:TransformationEvent a owl:Class ;
+  rdfs:label "Transformation Event"@en , "Evento de Transformación"@es ;
+  rdfs:subClassOf dpp:EPCISEvent ;
+  owl:equivalentClass epcis:TransformationEvent .
+
+dpp:TransactionEvent a owl:Class ;
+  rdfs:label "Transaction Event"@en , "Evento de Transacción"@es ;
+  rdfs:subClassOf dpp:EPCISEvent ;
+  owl:equivalentClass epcis:TransactionEvent .
+
+# Propiedades básicas EPCIS
+
+dpp:eventID a owl:DatatypeProperty ;
+  rdfs:label "event ID"@en , "ID de evento"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso epcis:eventID .
+
+dpp:eventTime a owl:DatatypeProperty ;
+  rdfs:label "event time"@en , "hora del evento"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range xsd:dateTime ;
+  owl:equivalentProperty epcis:eventTime .
+
+dpp:recordTime a owl:DatatypeProperty ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range xsd:dateTime ;
+  owl:equivalentProperty epcis:recordTime .
+
+dpp:eventTimeZoneOffset a owl:DatatypeProperty ;
+  rdfs:label "event time zone offset"@en , "zona horaria (offset)"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range xsd:string ;
+  rdfs:seeAlso epcis:eventTimeZoneOffset .
+
+dpp:bizStep a owl:ObjectProperty ;
+  rdfs:label "business step"@en , "paso de negocio"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range rdfs:Resource ;
+  owl:equivalentProperty epcis:bizStep ;
+  rdfs:seeAlso cbv:BizStep- .
+
+dpp:disposition a owl:ObjectProperty ;
+  rdfs:label "disposition"@en , "disposición"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range rdfs:Resource ;
+  owl:equivalentProperty epcis:disposition ;
+  rdfs:seeAlso cbv:Disp- .
+
+dpp:readPoint a owl:ObjectProperty ;
+  rdfs:label "read point"@en , "punto de lectura"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range rdfs:Resource ;
+  owl:equivalentProperty epcis:readPoint .
+
+dpp:bizLocation a owl:ObjectProperty ;
+  rdfs:label "business location"@en , "ubicación de negocio"@es ;
+  rdfs:domain dpp:EPCISEvent ;
+  rdfs:range rdfs:Resource ;
+  owl:equivalentProperty epcis:bizLocation .
+
+dpp:epc a owl:ObjectProperty ;
+  rdfs:label "EPC"@en , "EPC"@es ;
+  rdfs:comment "Elemento EPC involucrado en el evento (ej. SGTIN)."@es ;
+  rdfs:domain dpp:ObjectEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:epcList .
+
+dpp:parentEpc a owl:ObjectProperty ;
+  rdfs:label "parent EPC"@en , "EPC padre"@es ;
+  rdfs:domain dpp:AggregationEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:parentID .
+
+dpp:childEpc a owl:ObjectProperty ;
+  rdfs:label "child EPC"@en , "EPC hijo"@es ;
+  rdfs:domain dpp:AggregationEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:childEPCs .
+
+dpp:inputEpc a owl:ObjectProperty ;
+  rdfs:label "input EPC"@en , "EPC de entrada"@es ;
+  rdfs:domain dpp:TransformationEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:inputEPCList .
+
+dpp:outputEpc a owl:ObjectProperty ;
+  rdfs:label "output EPC"@en , "EPC de salida"@es ;
+  rdfs:domain dpp:TransformationEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:outputEPCList .
+
+dpp:bizTransaction a owl:ObjectProperty ;
+  rdfs:label "business transaction"@en , "transacción de negocio"@es ;
+  rdfs:domain dpp:TransactionEvent ;
+  rdfs:range rdfs:Resource ;
+  rdfs:seeAlso epcis:bizTransactionList , cbv:BizTransaction- .
+
+# Enlace desde DPP
+
+dpp:hasEPCISEvent a owl:ObjectProperty ;
+  rdfs:label "tiene evento EPCIS"@es ;
+  rdfs:domain dpp:TraceabilityInformation ;
+  rdfs:range dpp:EPCISEvent ;
+  rdfs:seeAlso epcis:Event .

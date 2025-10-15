@@ -1,0 +1,104 @@
+@prefix ex:      <https://example.org/resource/> .
+@prefix dpp:     <https://example.org/dpp#> .
+@prefix schema:  <http://schema.org/> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix adms:    <http://www.w3.org/ns/adms#> .
+@prefix qudt:    <http://qudt.org/schema/qudt/> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix untpcore:<https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix untpdpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+@prefix epcis:   <https://ref.gs1.org/epcis/> .
+@prefix cbv:     <https://ref.gs1.org/cbv/> .
+
+# Organización (fabricante / producedByParty)
+ex:org1 a dpp:Organization ;
+  schema:name "Acme Manufacturing GmbH" ;
+  adms:identifier [ a dpp:Identifier ; dct:identifier "ORG-ACME-123" ] .
+
+# Instalación
+ex:fac1 a dpp:Facility ;
+  schema:name "Planta Wuppertal" ;
+  adms:identifier [ dct:identifier "FAC-001" ] .
+
+# Producto
+ex:prod1 a dpp:Product ;
+  schema:name "Lavadora Serie X" ;
+  dpp:serialNumber "SN-ABC-2024-00042" ;
+  adms:identifier [ dct:identifier "GTIN-12345678901231" ] ;
+  dpp:manufacturer ex:org1 ;
+  dpp:producedByParty ex:org1 ;
+  dpp:producedAtFacility ex:fac1 ;
+  dpp:productionDate "2024-09-30" ;
+  dpp:weight [ a dpp:Measurement ; qudt:numericValue 68.2 ; qudt:unit unit:KiloGM ] ;
+  dpp:length [ a dpp:Measurement ; qudt:numericValue 0.60 ; qudt:unit unit:M ] ;
+  dpp:width  [ a dpp:Measurement ; qudt:numericValue 0.60 ; qudt:unit unit:M ] ;
+  dpp:height [ a dpp:Measurement ; qudt:numericValue 0.85 ; qudt:unit unit:M ] ;
+  dpp:hasMaterialProvenance [ a dpp:MaterialProvenance ;
+      dpp:materialType <https://vocabulary.uncefact.org/MaterialType#Steel> ;
+      dpp:originCountry <https://vocabulary.uncefact.org/CountryId#DE> ;
+      dpp:massFraction 0.72 ;
+      dpp:recycledMassFraction 0.18 ;
+      dpp:mass [ a dpp:Measurement ; qudt:numericValue 49.1 ; qudt:unit unit:KiloGM ]
+  ] .
+
+# Pasaporte Digital
+ex:passport1 a dpp:ProductPassport ;
+  dpp:describesProduct ex:prod1 ;
+  dct:conformsTo ex:std1 ;
+  dct:issued "2024-10-01T00:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  dpp:circularityScorecard [ a dpp:CircularityScorecard ;
+      dpp:recyclableContent 0.85 ;
+      dpp:recycledContent 0.22 ;
+      dpp:utilityFactor 0.9 ;
+      dpp:materialCircularityIndicator 0.64
+  ] ;
+  dpp:emissionsScorecard [ a dpp:EmissionsScorecard ;
+      dpp:carbonFootprint 120.5 ;
+      dpp:declaredUnit <https://vocabulary.uncefact.org/UnitMeasureCode#KGM> ;
+      dpp:operationalScope <https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#S1> ;
+      dpp:primarySourcedRatio 0.6 ;
+      dpp:reportingStandard ex:std1
+  ] ;
+  dpp:traceabilityInformation [ a dpp:TraceabilityInformation ;
+      dpp:valueChainProcess "Final Assembly" ;
+      dpp:verifiedRatio 0.75 ;
+      dpp:traceabilityEvent ex:traceDoc1 ;
+      dpp:hasEPCISEvent ex:evt1 , ex:agg1 , ex:trans1 , ex:txn1
+  ] ;
+  dpp:dueDiligenceDeclaration ex:ddd1 .
+
+# Soportes documentales
+ex:std1 a dpp:Standard ; schema:name "ISO 14067:2018" .
+ex:traceDoc1 a dpp:Document ; dct:title "EPCIS Events (hash)" ; dct:identifier "hash:abcd..." .
+ex:ddd1 a dpp:Document ; dct:title "Debida diligencia – proveedor crítico" .
+
+# EPCIS ObjectEvent de ejemplo
+ex:evt1 a dpp:ObjectEvent ;
+  dpp:eventTime "2024-10-01T10:15:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  dpp:bizStep cbv:BizStep-shipping ;
+  dpp:disposition cbv:Disp-in_transit ;
+  dpp:epc <urn:epc:id:sgtin:4023333.012345.998877> ;
+  dpp:bizLocation <urn:epc:id:sgln:4023333.00002.0> ;
+  dpp:readPoint <urn:epc:id:sgln:4023333.00002.0> .
+
+# EPCIS AggregationEvent de ejemplo
+ex:agg1 a dpp:AggregationEvent ;
+  dpp:eventTime "2024-10-01T08:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  dpp:bizStep cbv:BizStep-packing ;
+  dpp:disposition cbv:Disp-active ;
+  dpp:parentEpc <urn:epc:id:sscc:4023333.0000000001> ;
+  dpp:childEpc <urn:epc:id:sgtin:4023333.012345.998877> , <urn:epc:id:sgtin:4023333.012345.998878> .
+
+# EPCIS TransformationEvent de ejemplo
+ex:trans1 a dpp:TransformationEvent ;
+  dpp:eventTime "2024-09-30T12:30:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  dpp:bizStep cbv:BizStep-transforming ;
+  dpp:inputEpc <urn:epc:id:sgtin:4023333.000111.0001> ;
+  dpp:outputEpc <urn:epc:id:sgtin:4023333.000111.0002> .
+
+# EPCIS TransactionEvent de ejemplo
+ex:txn1 a dpp:TransactionEvent ;
+  dpp:eventTime "2024-10-02T09:00:00Z"^^<http://www.w3.org/2001/XMLSchema#dateTime> ;
+  dpp:bizStep cbv:BizStep-receiving ;
+  dpp:bizTransaction <urn:epcglobal:cbv:bt:po:PO-12345> .
