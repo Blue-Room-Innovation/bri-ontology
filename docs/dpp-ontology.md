@@ -7,43 +7,39 @@ Este documento resume las principales clases y propiedades de la ontología DPP,
 ```mermaid
 classDiagram
   class DigitalProductPassport {
-    dpp:describesProduct -> Product
-    dpp:hasDataCarrier -> DataCarrier
+    +conformsTo
+    +issued: xsd:dateTime
   }
   class Product {
-    schema:name : xsd:string
-    dpp:serialNumber / schema:serialNumber
-    dpp:mpn / schema:mpn
-    dpp:gtin / schema:gtin14|13|12|8
+    +name: xsd:string
+    +serialNumber: xsd:string
+    +mpn: xsd:string
+    +gtin: xsd:string
   }
-  class Component {
-  }
-  class Material {
-  }
-  class Organization {
-  }
-  class Document {
-  }
-  class Certificate {
-  }
+  class Component
+  class Material
+  class Organization
+  class Document
+  class Certificate
   class LifecycleEvent {
-    prov:startedAtTime
-    prov:endedAtTime
+    +startedAtTime: xsd:dateTime
+    +endedAtTime: xsd:dateTime
   }
-  class DataCarrier {
-  }
+  class DataCarrier
 
-  DigitalProductPassport --> Product : dpp:describesProduct
-  Product --> DigitalProductPassport : dpp:hasPassport
-  Product --> Component : dpp:hasComponent
-  Component --> Product : dpp:isComponentOf
-  Product --> Material : dpp:hasMaterial
-  Product --> Organization : dpp:manufacturer
-  Product --> Certificate : dpp:hasCertificate
-  Product --> LifecycleEvent : dpp:hasLifecycleEvent
-  Product --> Document : dpp:documentedBy
-  DigitalProductPassport --> DataCarrier : dpp:hasDataCarrier
+  DigitalProductPassport --> Product : describesProduct
+  Product --> DigitalProductPassport : hasPassport
+  Product --> Component : hasComponent
+  Component --> Product : isComponentOf
+  Product --> Material : hasMaterial
+  Product --> Organization : manufacturer
+  Product --> Certificate : hasCertificate
+  Product --> LifecycleEvent : hasLifecycleEvent
+  Product --> Document : documentedBy
+  DigitalProductPassport --> DataCarrier : hasDataCarrier
 ```
+
+Nota: se han omitido los prefijos (`dpp:`/`schema:`) en las etiquetas del diagrama para asegurar la compatibilidad del render. Consulta los prefijos completos en los archivos `.ttl`.
 
 ### Alineaciones clave
 

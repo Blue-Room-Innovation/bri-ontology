@@ -1,40 +1,47 @@
-## Toolkit Ontología DPP
+## Toolkit OntologA-a DPP
 
 Repositorio para modelar, validar y documentar una ontología de Pasaporte Digital de Producto (DPP) con OWL/RDF y SHACL. Incluye alineaciones con UNTP (UN/CEFACT) y soporte para eventos GS1 EPCIS.
 
-### Estructura
+### Estructura (Mermaid)
 
+```mermaid
+flowchart TD
+  root(("Repo"))
+  root --> ontology["ontology/"]
+  ontology --> dpp["dpp.ttl"]
+  ontology --> align["alignments-untp.ttl"]
+  ontology --> ext["dpp-extensions.ttl"]
+  ontology --> epcis["gs1-epcis.ttl"]
+  ontology --> extdecl["external-declarations.ttl"]
+
+  root --> shapes["shapes/"]
+  shapes --> sh["dpp-shapes.ttl"]
+
+  root --> examples["examples/"]
+  examples --> ex_ttl["product-sample.ttl"]
+  examples --> ex_jsonld["product-sample.jsonld"]
+  examples --> ex_invalid["invalid-product-sample.ttl"]
+
+  root --> docs["docs/"]
+  docs --> dpp_ont["dpp-ontology.md"]
+  docs --> dpp_shapes["dpp-shapes.md"]
+  docs --> dpp_untp["dpp-untp-alignment.md"]
+  docs --> dpp_epcis["dpp-epcis.md"]
+  docs --> build["build.md"]
+  docs --> examples_md["examples.md"]
+  docs --> install_md["install.md"]
+  docs --> paso["paso-a-paso-ontologia.md"]
+  docs --> interpretar_md["interpretar-resultados.md"]
+
+  root --> scripts["scripts/"]
+  scripts --> val_owl["validate-owl.sh"]
+  scripts --> val_shacl["validate-shacl.sh"]
+
+  root --> docker["docker/"]
+  docker --> df["Dockerfile"]
 ```
-.
-├─ ontology/
-│  ├─ dpp.ttl                    # Núcleo OWL de la ontología DPP
-│  ├─ alignments-untp.ttl        # Alineaciones DPP ↔ UNTP (clases/propiedades)
-│  ├─ dpp-extensions.ttl         # Extensiones DPP (scorecards, provenance, etc.)
-│  ├─ gs1-epcis.ttl              # Módulo EPCIS (Object/Aggregation/Transformation/Transaction)
-│  └─ external-declarations.ttl  # Declaraciones mínimas de IRIs externos
-├─ shapes/
-│  └─ dpp-shapes.ttl             # SHACL Shapes para validar instancias DPP
-├─ examples/
-│  ├─ product-sample.ttl         # Ejemplo TTL de un DPP completo
-│  └─ product-sample.jsonld      # Ejemplo JSON-LD equivalente
-├─ docs/
-│  ├─ dpp-ontology.md            # Resumen de la ontología + diagrama
-│  ├─ dpp-shapes.md              # Resumen de Shapes + diagrama
-│  ├─ dpp-untp-alignment.md      # Alineación con UNTP + diagrama
-│  ├─ dpp-epcis.md               # Integración EPCIS + diagrama
-│  ├─ examples.md                # Cómo validar y ejemplos
-│  ├─ install.md                 # Instalación nativa y con Docker
-│  └─ paso-a-paso-ontologia.md   # Guía para modificar la ontología y testear
-├─ scripts/
-│  ├─ validate-owl.sh            # Valida OWL (usado dentro de Docker)
-│  └─ validate-shacl.sh          # Valida SHACL (usado dentro de Docker)
-└─ docker/
-   └─ Dockerfile                 # Imagen con Java 17 + ROBOT + pySHACL
-```
 
-Nota (docs): `docs/build.md` — Artefactos de build (merged & reasoned).
-
-### Documentación
+### DocumentaciA3n
 
 - Ontología: `docs/dpp-ontology.md`
 - Shapes: `docs/dpp-shapes.md`
@@ -53,3 +60,4 @@ Nota (docs): `docs/build.md` — Artefactos de build (merged & reasoned).
 ### Contribuir y Uso
 
 Sigue la guía paso a paso: `docs/paso-a-paso-ontologia.md`.
+
