@@ -4,8 +4,7 @@ Esta guía explica cómo añadir o modificar clases/propiedades en la ontología
 
 ### Requisitos
 
-- Opción rápida con Docker: `./scripts/build-docker.ps1` (Windows) o `bash scripts/build-docker.sh` (Unix)
-- Opción nativa: Java 17+, ROBOT, (opcional) Apache Jena; Python 3.8+ con `pyshACL`. Ver `docs/install.md`.
+- Docker instalado. Sigue `docs/install.md`.
 
 ### Flujo de trabajo
 
@@ -67,25 +66,14 @@ dpp:SustainabilityClaimShape a sh:NodeShape ;
 - Extiende `examples/product-sample.ttl` para cubrir la nueva clase/propiedad
 - Si mantienes JSON-LD, alinea contextos y comprueba que serializa correctamente
 
-6) Valida los cambios
-- Docker (recomendado)
-  - Construir imagen: `./scripts/build-docker.ps1` o `bash scripts/build-docker.sh`
-  - Validar todo: `./scripts/validate-all-docker.ps1` o `bash scripts/validate-all-docker.sh`
-
-- Instalación nativa
-  - OWL: `./scripts/validate-owl.ps1` o `bash scripts/validate-owl.sh`
-  - SHACL: `./scripts/validate-shacl.ps1 -DataFile examples/product-sample.ttl` o `bash scripts/validate-shacl.sh examples/product-sample.ttl`
-
-Criterios de aceptación
-- SHACL: `Conforms: True` con los ejemplos actualizados
-- OWL: el perfil DL valida y el razonador completa sin errores; `build/dpp-merged.ttl` y `build/dpp-reasoned.ttl` se generan
+6) Valida los cambios, tal como se explica en `docs/install.md`.
 
 7) Checklist antes de abrir PR
 - [ ] Prefijos y IRIs consistentes (`https://example.org/dpp#`)
 - [ ] `rdfs:label` y `rdfs:comment` claros (al menos @es)
 - [ ] Domain/Range/SubClass correctos; equivalencias justificadas
 - [ ] Shapes SHACL actualizadas y pasando
-- [ ] Ejemplos actualizados (TTL y, si aplica, JSON-LD)
+- [ ] Ejemplos actualizados (TTL y JSON-LD)
 - [ ] Validaciones OWL+SHACL verdes (o warnings conocidos documentados)
 
 ### Consejos y buenas prácticas
@@ -96,4 +84,3 @@ Criterios de aceptación
 - Etiquetas: añade `rdfs:label` en español y, opcionalmente, en inglés (@en)
 - Estilo TTL: agrupa secciones por temática; identación de 2 espacios; ordena propiedades de forma coherente
 - SHACL: replica el patrón de Shapes existente (uso de `sh:or` cuando aplica DPP/UNTP)
-

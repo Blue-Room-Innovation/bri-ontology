@@ -1,66 +1,43 @@
-## Instalación de dependencias
+## Instalación (solo Docker)
 
-Puedes usar instalación nativa (Java + ROBOT + Jena + pySHACL) o la opción con Docker.
+Requisitos
+- Docker Desktop (Windows/macOS) o Docker Engine (Linux)
 
-Requisitos comunes
-- Java 17+ (para ROBOT y Jena)
-- Python 3.8+ (para pySHACL)
+Construir imagen
+```bash
+# Construir imagen (una vez)
+docker build -t bri-ontology-tooling -f docker/Dockerfile .
+```
 
-Opción 1: Instalación nativa
-- Java
-  - Windows: instala OpenJDK (p. ej., Temurin) y añade `java` al PATH.
-  - macOS (Homebrew): `brew install --cask temurin`
-  - Linux (Debian/Ubuntu): `sudo apt-get install -y openjdk-17-jre-headless`
+Validar OWL
+```bash
+# Bash (macOS/Linux)
+docker run --rm -v "$PWD:/workspace" -w /workspace bri-ontology-tooling validate-owl
+# PowerShell (Windows)
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-owl
+# CMD (Windows)
+docker run --rm -v %cd%:/workspace -w /workspace bri-ontology-tooling validate-owl
+```
 
-- ROBOT (ontodev)
-  1) Descarga el JAR: https://github.com/ontodev/robot/releases/latest/download/robot.jar
-  2) Mueve a una ruta fija, por ejemplo:
-     - Windows: `C:\tools\robot\robot.jar`
-     - Unix: `~/bin/robot.jar`
-  3) Crea un wrapper para invocarlo como comando `robot`:
-     - Windows (PowerShell, guarda como `C:\tools\robot\robot.cmd`):
-       ```bat
-       @echo off
-       java -jar "C:\tools\robot\robot.jar" %*
-       ```
-       Añade `C:\tools\robot` al PATH.
-     - Unix:
-       ```bash
-       printf '#!/usr/bin/env bash
-       exec java -jar "$HOME/bin/robot.jar" "$@"
-       ' > ~/bin/robot
-       chmod +x ~/bin/robot
-       ```
+Validar SHACL
+```bash
+# Bash (macOS/Linux)
+docker run --rm -v "$PWD:/workspace" -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+# PowerShell (Windows)
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+# CMD (Windows)
+docker run --rm -v %cd%:/workspace -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+```
 
-- Apache Jena (opcional; fallback de validación RDF/SHACL)
-  1) Descarga desde: https://jena.apache.org/download/
-  2) Extrae y añade la carpeta `bin` al PATH (comandos `riot`, `shacl` o `jena shacl`).
 
-- pySHACL
-  - Con pip: `pip install pyshacl`
-  - Recomendado con pipx: `pipx install pyshacl`
+Archivos de ejemplo:
+- TTL: `examples/product-sample.ttl`
+- JSON-LD: `examples/product-sample.jsonld`
 
-Verificación rápida
-- `robot --version`
-- `riot --version` (si instalaste Jena)
-- `pyshacl --version`
+Resultados esperados
+- SHACL: con `examples/product-sample.ttl` debe verse `Conforms: True`.
+- OWL (ROBOT): puede mostrar mensajes de parseo por IRIs externos (schema.org/UNTP/EPCIS). Son esperables y no bloquean la validación de instancias.
 
-Opción 2: Usar Docker
-- Requisitos: Docker Desktop (Windows/macOS) o Docker Engine (Linux)
-- Construir imagen con dependencias (Java + ROBOT + pySHACL):
-  - Windows: `./scripts/build-docker.ps1`
-  - Unix: `bash scripts/build-docker.sh`
-- Ejecutar validación dentro del contenedor montando el repo:
-  - Windows: `./scripts/validate-all-docker.ps1`
-  - Unix: `bash scripts/validate-all-docker.sh`
-
-Comandos útiles con Docker directamente
-- Construir y validar en una sola línea (Unix):
-  ```bash
-  bash scripts/build-docker.sh && docker run --rm -v "$PWD":/workspace -w /workspace bri-ontology-tooling -lc "validate-all"
-  ```
-- Validar SHACL únicamente (Unix):
-  ```bash
-  docker run --rm -v "$PWD":/workspace -w /workspace bri-ontology-tooling -lc "validate-shacl examples/product-sample.ttl"
-  ```
-
+Notas:
+- Las unidades de `dpp:Measurement` usan QUDT (`qudt:unit`). Para `dpp:declaredUnit` en emisiones se admiten IRIs de `https://vocabulary.uncefact.org/UnitMeasureCode#...`.
+- Los códigos de país en los ejemplos hacen referencia a IRIs del vocabulario UN/CEFACT CountryId.

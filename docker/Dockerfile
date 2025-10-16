@@ -27,7 +27,7 @@ WORKDIR /workspace
 # Convenience: copy CLI scripts into PATH (they reference mounted repo paths)
 COPY scripts/validate-owl.sh /usr/local/bin/validate-owl
 COPY scripts/validate-shacl.sh /usr/local/bin/validate-shacl
-COPY scripts/validate-all.sh /usr/local/bin/validate-all
-RUN chmod +x /usr/local/bin/validate-owl /usr/local/bin/validate-shacl /usr/local/bin/validate-all
+RUN chmod +x /usr/local/bin/validate-owl /usr/local/bin/validate-shacl \
+  && sed -i 's/\r$//' /usr/local/bin/validate-owl /usr/local/bin/validate-shacl
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["bash","-lc"]
