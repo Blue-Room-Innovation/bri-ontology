@@ -32,12 +32,15 @@ Repositorio para modelar, validar y documentar una ontología de Pasaporte Digit
    └─ Dockerfile                 # Imagen con Java 17 + ROBOT + pySHACL
 ```
 
+Nota (docs): `docs/build.md` — Artefactos de build (merged & reasoned).
+
 ### Documentación
 
 - Ontología: `docs/dpp-ontology.md`
 - Shapes: `docs/dpp-shapes.md`
 - UNTP: `docs/dpp-untp-alignment.md`
 - EPCIS: `docs/dpp-epcis.md`
+- Artefactos build: `docs/build.md`
 - Instalación y ejemplos: `docs/install.md`, `docs/examples.md`
 - Guía para modificar y testear la ontología: `docs/paso-a-paso-ontologia.md`
 - Cómo interpretar los resultados: `docs/interpretar-resultados.md`
