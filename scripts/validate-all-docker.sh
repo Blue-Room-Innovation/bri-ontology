@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-IMAGE=${IMAGE:-dpp-tooling}
+IMAGE=${IMAGE:-bri-ontology-tooling}
 
 if ! docker image inspect "$IMAGE" >/dev/null 2>&1; then
   echo "Docker image '$IMAGE' not found. Building..."

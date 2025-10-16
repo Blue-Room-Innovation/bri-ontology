@@ -1,5 +1,5 @@
 Param(
-  [string]$ImageName = "dpp-tooling",
+  [string]$ImageName = "bri-ontology-tooling",
   [string]$DataFile = "examples/product-sample.ttl"
 )
 

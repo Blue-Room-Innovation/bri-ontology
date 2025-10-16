@@ -57,10 +57,10 @@ Opción 2: Usar Docker
 Comandos útiles con Docker directamente
 - Construir y validar en una sola línea (Unix):
   ```bash
-  bash scripts/build-docker.sh && docker run --rm -v "$PWD":/workspace -w /workspace dpp-tooling -lc "validate-all"
+  bash scripts/build-docker.sh && docker run --rm -v "$PWD":/workspace -w /workspace bri-ontology-tooling -lc "validate-all"
   ```
 - Validar SHACL únicamente (Unix):
   ```bash
-  docker run --rm -v "$PWD":/workspace -w /workspace dpp-tooling -lc "validate-shacl examples/product-sample.ttl"
+  docker run --rm -v "$PWD":/workspace -w /workspace bri-ontology-tooling -lc "validate-shacl examples/product-sample.ttl"
   ```
 
