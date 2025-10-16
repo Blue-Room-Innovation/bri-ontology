@@ -1,0 +1,28 @@
+@prefix dpp:    <https://example.org/dpp#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix adms:   <http://www.w3.org/ns/adms#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix ex:     <https://example.org/example#> .
+
+# Ejemplo unificado INTENCIONALMENTE inválido para
+# - SHACL: incumple reglas de DigitalProductPassport y Product
+# - OWL 2 DL: punning de propiedad (misma IRI como ObjectProperty y DatatypeProperty)
+
+# Instancia DPP con errores SHACL:
+ex:pp a dpp:DigitalProductPassport ;
+  dpp:describesProduct ex:prod ;
+  dct:conformsTo <http://example.org/standard/DPPv1> ;
+  # dct:issued requiere xsd:dateTime, aquí se pone string para forzar error
+  dct:issued "2024-01-01"^^xsd:string .
+
+# Producto sin nombre ni identificadores (viola ProductShape)
+ex:prod a dpp:Product .
+
+# Violación OWL 2 DL (punning): misma IRI como Objeto y Datatype Property
+dpp:badProperty a owl:ObjectProperty , owl:DatatypeProperty ;
+  dct:description "Propiedad inválida (punning) para forzar fallo de perfil DL"@es .
+
+# Nodo Identifier sin ningún valor requerido (viola IdentifierShape)
+ex:id a dpp:Identifier .
