@@ -3,7 +3,8 @@ Param(
     "ontology/dpp.ttl",
     "ontology/alignments-untp.ttl",
     "ontology/dpp-extensions.ttl",
-    "ontology/gs1-epcis.ttl"
+    "ontology/gs1-epcis.ttl",
+    "ontology/external-declarations.ttl"
   ),
   [string]$BuildDir = "build"
 )
@@ -42,4 +43,3 @@ if ($riot) {
 
 Write-Host "[OWL] No validator found. Please install 'robot' (recommended) or Apache Jena (riot)." -ForegroundColor Red
 exit 1
-
