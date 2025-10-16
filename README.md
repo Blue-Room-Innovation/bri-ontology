@@ -1,4 +1,4 @@
-## Toolkit OntologA-a DPP
+## Toolkit Ontología DPP
 
 Repositorio para modelar, validar y documentar una ontología de Pasaporte Digital de Producto (DPP) con OWL/RDF y SHACL. Incluye alineaciones con UNTP (UN/CEFACT) y soporte para eventos GS1 EPCIS.
 
@@ -35,7 +35,7 @@ Repositorio para modelar, validar y documentar una ontología de Pasaporte Digit
     `-- Dockerfile                 # Imagen con Java 17 + ROBOT + pySHACL
 ```
 
-### DocumentaciA3n
+### Documentación
 
 - Ontología: `docs/dpp-ontology.md`
 - Shapes: `docs/dpp-shapes.md`
