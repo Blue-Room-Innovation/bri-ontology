@@ -24,3 +24,17 @@ docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "valid
 ```
 
 Más información: consulta `docs/interpretar-resultados.md` para entender los informes y diagnosticar problemas.
+
+### Análisis rápido de resultados
+
+- SHACL (válido: `examples/product-sample.ttl`)
+  - Encabezado: `Validation Report` / `Conforms: True`.
+  - Sin resultados adicionales.
+
+- SHACL (inválido: `examples/invalid-product-sample.ttl`)
+  - Encabezado: `Validation Report` / `Conforms: False`.
+  - Violaciones típicas (resumen):
+    - `dct:issued`: tipo incorrecto (`xsd:string` en vez de `xsd:dateTime`).
+    - `dpp:Product` sin `schema:name` ni identificadores mínimos.
+    - `dpp:Identifier` vacío (falta `dpp:gtin`/`dpp:serialNumber`/`dpp:mpn`/`dct:identifier`).
+  - Ver campos “Focus node”, “Path”, “Constraint” para ubicar cada incumplimiento.
