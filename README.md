@@ -40,6 +40,7 @@ Repositorio para modelar, validar y documentar una ontología de Pasaporte Digit
 - EPCIS: `docs/dpp-epcis.md`
 - Instalación y ejemplos: `docs/install.md`, `docs/examples.md`
 - Guía para modificar y testear la ontología: `docs/paso-a-paso-ontologia.md`
+- Cómo interpretar los resultados: `docs/interpretar-resultados.md`
 
 ### Notas
 
