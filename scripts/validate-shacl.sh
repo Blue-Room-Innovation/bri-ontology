@@ -4,6 +4,16 @@ set -euo pipefail
 DATA_FILE=${1:-examples/product-sample.ttl}
 SHAPES_FILE=${2:-shapes/dpp-shapes.ttl}
 
+if [[ -z "${1:-}" ]]; then
+  echo "[SHACL] No se recibió argumento de datos; usando por defecto: ${DATA_FILE}"
+  echo "[SHACL] Consejo: con la imagen Docker (ENTRYPOINT 'bash -lc'), pasa el comando como una sola cadena:"
+  echo "        docker run --rm -v \"\${PWD}:/workspace\" -w /workspace bri-ontology-tooling \"validate-shacl examples/invalid-product-sample.ttl\""
+fi
+
+echo "[SHACL] Data   : ${DATA_FILE}"
+echo "[SHACL] Shapes : ${SHAPES_FILE}"
+echo "[SHACL] Extras : ontology/dpp.ttl, ontology/alignments-untp.ttl, ontology/dpp-extensions.ttl, ontology/gs1-epcis.ttl"
+
 for CMD in "pyshacl" "python3 -m pyshacl" "/opt/venv/bin/python -m pyshacl"; do
   if bash -lc "command -v ${CMD%% *}" >/dev/null 2>&1 || [[ "$CMD" == "/opt/venv/bin/python -m pyshacl" ]]; then
     echo "[SHACL] Trying ${CMD}"

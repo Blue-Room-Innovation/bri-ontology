@@ -22,11 +22,11 @@ docker run --rm -v %cd%:/workspace -w /workspace bri-ontology-tooling validate-o
 Validar SHACL
 ```bash
 # Bash (macOS/Linux)
-docker run --rm -v "$PWD:/workspace" -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+docker run --rm -v "$PWD:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/product-sample.ttl"
 # PowerShell (Windows)
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/product-sample.ttl"
 # CMD (Windows)
-docker run --rm -v %cd%:/workspace -w /workspace bri-ontology-tooling validate-shacl examples/product-sample.ttl
+docker run --rm -v %cd%:/workspace -w /workspace bri-ontology-tooling "validate-shacl examples/product-sample.ttl"
 ```
 
 
