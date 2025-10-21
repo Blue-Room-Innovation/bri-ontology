@@ -6,14 +6,12 @@ tags: [quickstart, validation]
 
 # Validación rápida (30s)
 
-Prerrequisitos: Docker instalado (alternativa nativa más abajo).
+Prerrequisitos: Docker instalado (alternativa nativa más abajo).Ejemplo de ejecución:
+- `docs/getting-started/installation.md`
 
 ## Docker
-```powershell
-docker build -t dpp-toolkit ./docker
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-owl.sh
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-shacl.sh examples/product-sample.ttl
-```
+Ejemplo de ejecución:
+- `docs/getting-started/installation.md`
 
 ## Nativo (Java 17 + Python)
 ```powershell

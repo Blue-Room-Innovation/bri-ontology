@@ -21,20 +21,21 @@ En pocas palabras:
 - Ejemplos y scripts te permiten validar rápido y extender el modelo.
     Ejemplo de ejecución rápida (Docker):
     ```powershell
-    docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-shacl.sh examples/product-sample.ttl
+    docker run --rm -v ${PWD}:/work bri-ontology-tooling bash docs/validation/scripts/validate-shacl.sh examples/product-sample.ttl
     ```
-        Herramientas:
-        - ROBOT (https://robot.obolibrary.org/): aunque nació en el ámbito de ontologías biomédicas, es una herramienta genérica para OWL. Aquí lo usamos para tareas repetibles del pipeline ontológico: merge de módulos (`merge`), comprobación básica de perfil OWL (`validate`), razonamiento para obtener axiomas implícitos (`reason`) y extracción/debug de términos (`extract`, `query`). Su ventaja es que encapsula buenas prácticas y permite scripts reproducibles sin escribir Java manualmente.
-            Ejemplo (merge + reason):
-            ```powershell
-            robot merge --input ontology/dpp.ttl --input ontology/dpp-extensions.ttl --output build/dpp-merged.ttl ; \
-            robot reason --input build/dpp-merged.ttl --output build/dpp-reasoned.ttl
-            ```
-        - pySHACL (https://github.com/RDFLib/pySHACL): librería Python para ejecutar validaciones SHACL sobre instancias RDF. La usamos para asegurar que los pasaportes (ejemplos y datos reales) cumplen las shapes (cardinalidades, tipos, formatos). Permite integrar en CI y obtener informes detallados (con severidades). 
-            Ejemplo (validación simple):
-            ```powershell
-            python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/product-sample.ttl
-            ```
+    Herramientas:
+    - ROBOT (https://robot.obolibrary.org/): aunque nació en el ámbito de ontologías biomédicas, es una herramienta genérica para OWL. Aquí lo usamos para tareas repetibles del pipeline ontológico: merge de módulos (`merge`), comprobación básica de perfil OWL (`validate`), razonamiento para obtener axiomas implícitos (`reason`) y extracción/debug de términos (`extract`, `query`). Su ventaja es que encapsula buenas prácticas y permite scripts reproducibles sin escribir Java manualmente.
+        Ejemplo (merge + reason):
+        ```powershell
+        robot merge --input ontology/dpp.ttl --input ontology/dpp-extensions.ttl --output build/dpp-merged.ttl ; \
+        robot reason --input build/dpp-merged.ttl --output build/dpp-reasoned.ttl
+        ```
+    - pySHACL (https://github.com/RDFLib/pySHACL): librería Python para ejecutar validaciones SHACL sobre instancias RDF. La usamos para asegurar que los pasaportes (ejemplos y datos reales) cumplen las shapes (cardinalidades, tipos, formatos). Permite integrar en CI y obtener informes detallados (con severidades). 
+
+        Ejemplo (validación simple):
+        ```powershell
+        python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/product-sample.ttl
+        ```
 
 Si solo quieres ver algo funcionando, ve directo a la sección "Quickstart" más abajo.
 
@@ -71,28 +72,6 @@ ex:Producto123 a dpp:Product ;
 }
 ```
 
-3. Validar vía Docker (sin instalar nada más):
-```powershell
-docker build -t dpp-toolkit ./docker
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-owl.sh
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-shacl.sh examples/product-sample.ttl
-```
-
-4. Validar nativo (si tienes Java 17 + Python): ver `docs/getting-started/installation.md`. Resumen:
-```powershell
-# OWL merge + reason (ROBOT) - ejemplo orientativo
-robot merge --input ontology/dpp.ttl --input ontology/dpp-extensions.ttl --output build/dpp-merged.ttl ; \
-robot reason --input build/dpp-merged.ttl --output build/dpp-reasoned.ttl
-
-# SHACL (pySHACL)
-python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/product-sample.ttl
-```
-
-5. Ver un informe de errores rápido (usa el ejemplo inválido):
-```powershell
-python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/invalid-product-sample.ttl
-```
-
 Más ejemplos y explicación detallada en `docs/validation/shacl-examples.md` y `docs/guides/validar-ontologia.md`.
 
 ---
@@ -110,15 +89,15 @@ build/           # Artefactos generados (merged, reasoned, etc.)
 
 ---
 
-### DocumentaciA3n detallada
+### Documentación detallada
 Puntos de entrada principales en docs/ (ver docs/index.md):
-- IntroducciA3n y primeros pasos: docs/getting-started/overview.md, docs/getting-started/installation.md, docs/getting-started/quick-validation.md
-- Conceptos del modelo: docs/concepts/data-model.md, docs/concepts/ontology-modules.md, docs/concepts/epcis-alignment.md, docs/concepts/untp-alignment.md
-- Referencia tAcnica: docs/reference/shapes.md, docs/reference/ontology.md, docs/reference/iri-warnings.md
-- GuA-as prA-cticas: docs/guides/validar-ontologia.md, docs/guides/build.md, docs/guides/interpretar-resultados.md, docs/guides/paso-a-paso-construccion.md
-- Ejemplos SHACL: docs/validation/shacl-examples.md
+- Introducción y primeros pasos: `docs/getting-started/overview.md`, `docs/getting-started/installation.md`, `docs/getting-started/quick-validation.md`
+- Conceptos del modelo: `docs/concepts/data-model.md`, `docs/concepts/ontology-modules.md`, `docs/concepts/epcis-alignment.md`, `docs/concepts/untp-alignment.md`
+- Referencia técnica: `docs/reference/shapes.md`, `docs/reference/ontology.md`, `docs/reference/iri-warnings.md`
+- Guías prácticas: `docs/guides/validar-ontologia.md`, `docs/guides/build.md`, `docs/guides/interpretar-resultados.md`, `docs/guides/paso-a-paso-construccion.md`
+- Ejemplos SHACL: `docs/validation/shacl-examples.md`
 
-Lee primero docs/concepts/data-model.md si buscas entender el modelo; o salta a docs/getting-started/quick-validation.md para ejecutar casos reales.
+Lee primero `docs/concepts/data-model.md` si buscas entender el modelo; o salta a `docs/getting-started/quick-validation.md` para ejecutar casos reales.
 
 ---
 

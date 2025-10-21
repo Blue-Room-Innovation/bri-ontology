@@ -13,11 +13,7 @@ Este documento reúne los puntos prácticos para validar el modelo OWL y las ins
 - SHACL: `docs/validation/scripts/validate-shacl.sh`
 
 Ejemplo de ejecución:
-```powershell
-docker build -t dpp-toolkit ./docker
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-owl.sh
-docker run --rm -v ${PWD}:/work dpp-toolkit bash docs/validation/scripts/validate-shacl.sh examples/product-sample.ttl
-```
+- `docs/getting-started/installation.md`
 
 ## Nativo
 - OWL (ROBOT): ver ejemplo en `../getting-started/quick-validation.md`
