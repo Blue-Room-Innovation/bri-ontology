@@ -113,6 +113,7 @@ build/           # Artefactos generados (merged, reasoned, etc.)
 ### Documentación detallada
 Cada tema tiene su propio archivo en `docs/`:
 - Ontología (conceptos, diagrama): `docs/dpp-ontology.md`
+- Módulos de la carpeta ontology (roles y buenas prácticas): `docs/ontology-modules.md`
 - Shapes (restricciones y diagrama): `docs/dpp-shapes.md`
 - Alineación con UNTP (mapa de clases/propiedades): `docs/dpp-untp-alignment.md`
 - Eventos EPCIS (modelo de eventos GS1): `docs/dpp-epcis.md`
