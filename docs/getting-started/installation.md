@@ -2,12 +2,7 @@
 
 Requisitos
 - Docker Desktop (Windows/macOS) o Docker Engine (Linux)
-
-Construir imagen
-```bash
-# Construir imagen (una vez)
-docker build -t bri-ontology-tooling -f docker/Dockerfile .
-```
+- Tener la imagen preparada `../guides/build.md`
 
 Validar OWL
 ```bash

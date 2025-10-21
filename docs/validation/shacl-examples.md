@@ -5,6 +5,9 @@ Archivos de ejemplo:
 - TTL inválido (SHACL): `examples/invalid-product-sample.ttl`
 - OWL inválido (perfil DL): `examples/invalid-owl.ttl`
 
+Requisitos:
+- `docs/getting-started/installation.md`
+
 Validación básica
 ```bash
 # Ejecutar OWL (repositorio) - PowerShell (Windows)
