@@ -56,8 +56,4 @@ Nota: se han omitido los prefijos (`dpp:`/`schema:`) en las etiquetas del diagra
 
 - Se incluyen alineaciones explícitas en `ontology/alignments-untp.ttl` y las extensiones en `ontology/dpp-extensions.ttl` utilizando prefijos `untpdpp:` y `untpcore:` (v. 0.x). Para futuras versiones, actualiza los prefijos a la versión estable adecuada.
 
-### Próximos pasos sugeridos
 
-- Añadir mapeos a esquemas UNTP concretos (si nos facilitas los IRIs).
-- Ampliar eventos con vocabularios EPCIS/GS1 si aplica al caso de uso.
-- Publicar el namespace bajo `w3id.org` o purl para IRIs estables.

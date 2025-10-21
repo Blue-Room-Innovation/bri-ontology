@@ -4,7 +4,7 @@ Esta guía explica cómo añadir o modificar clases/propiedades en la ontología
 
 ### Requisitos
 
-- Docker instalado. Sigue `docs/install.md`.
+- Docker instalado. Sigue `docs/getting-started/installation.md`.
 
 ### Flujo de trabajo
 
@@ -66,7 +66,7 @@ dpp:SustainabilityClaimShape a sh:NodeShape ;
 - Extiende `examples/product-sample.ttl` para cubrir la nueva clase/propiedad
 - Si mantienes JSON-LD, alinea contextos y comprueba que serializa correctamente
 
-6) Valida los cambios, tal como se explica en `docs/install.md`.
+6) Valida los cambios, tal como se explica en `docs/getting-started/installation.md`.
 
 7) Checklist antes de abrir PR
 - [ ] Prefijos y IRIs consistentes (`https://example.org/dpp#`)
@@ -84,3 +84,4 @@ dpp:SustainabilityClaimShape a sh:NodeShape ;
 - Etiquetas: añade `rdfs:label` en español y, opcionalmente, en inglés (@en)
 - Estilo TTL: agrupa secciones por temática; identación de 2 espacios; ordena propiedades de forma coherente
 - SHACL: replica el patrón de Shapes existente (uso de `sh:or` cuando aplica DPP/UNTP)
+
