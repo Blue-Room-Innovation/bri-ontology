@@ -1,285 +1,348 @@
-@prefix : <https://ontology.circularpass.io/digital-marpol-waste-passport/> .
+@prefix : <http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix untp-core: <https://ontology.untp.io/core/> .
-@base <https://ontology.circularpass.io/digital-marpol-waste-passport/> .
+@base <http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/> .
 
 <https://ontology.circularpass.io/digital-marpol-waste-passport/> rdf:type owl:Ontology ;
-    rdfs:label "Digital MARPOL Waste Passport Ontology" ;
-    owl:versionInfo "v1.0.0" ;
-    rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." .
+                                                                   owl:imports <https://ontology.circularpass.io/vocab/delivery-type-code/> ,
+                                                                               <https://ontology.circularpass.io/vocab/discharge-means-code/> ,
+                                                                               <https://ontology.circularpass.io/vocab/iso3166-iAlpha2/> ,
+                                                                               <https://ontology.circularpass.io/vocab/residue-subtype-code/> ,
+                                                                               <https://ontology.circularpass.io/vocab/residue-type-code/> ,
+                                                                               <https://ontology.circularpass.io/vocab/unlocode/> ;
+                                                                   rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
+                                                                   rdfs:label "Digital MARPOL Waste Passport Ontology" ;
+                                                                   owl:versionInfo "v1.0.0" .
 
 #################################################################
-#    Classes
+#    Annotation properties
 #################################################################
 
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/DigitalMarpolWastePassport
-:DigitalMarpolWastePassport rdf:type owl:Class ;
-                            rdfs:subClassOf :DigitalWastePassport ;
-                            rdfs:comment "A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/MarpolWastePassport
-:MarpolWastePassport rdf:type owl:Class ;
-                     rdfs:subClassOf :WastePassport ;
-                     rdfs:comment "Represents the waste passport data specific to MARPOL regulations." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/MarpolWaste
-:MarpolWaste rdf:type owl:Class ;
-             rdfs:subClassOf :Waste ;
-             rdfs:comment "Represents a specific waste entity within the MARPOL context, including regulatory attributes for ship-generated waste." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/Ship
-:Ship rdf:type owl:Class ;
-      rdfs:comment "Details about the ship generating the waste." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/AuthorizedParty
-:AuthorizedParty rdf:type owl:Class ;
-                 rdfs:comment "Represents an authorized entity responsible for handling the waste." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/InvolvedParty
-:InvolvedParty rdf:type owl:Class ;
-               rdfs:comment "A party involved in the waste management process, such as the ship operator." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/WasdisMetadata
-:WasdisMetadata rdf:type owl:Class ;
-                rdfs:comment "Metadata related to the WASDIS system for auditing purposes." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/ResidueInformation
-:ResidueInformation rdf:type owl:Class ;
-                    rdfs:comment "Details of a specific waste residue, including type, quantity, and handling." .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/DigitalWastePassport
-:DigitalWastePassport rdf:type owl:Class .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/Waste
-:Waste rdf:type owl:Class .
-
-
-###  https://ontology.circularpass.io/digital-marpol-waste-passport/WastePassport
-:WastePassport rdf:type owl:Class .
+###  http://www.w3.org/2004/02/skos/core#related
+<http://www.w3.org/2004/02/skos/core#related> rdf:type owl:AnnotationProperty .
 
 
 #################################################################
 #    Object Properties
 #################################################################
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/contactPoint
+:contactPoint rdf:type owl:ObjectProperty ;
+              rdfs:domain :AuthorizedParty ;
+              rdfs:range <https://ontology.untp.io/core/Link> ;
+              rdfs:comment "Contact information for the authorized party, represented as a link." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/credentialSubject
 :credentialSubject rdf:type owl:ObjectProperty ;
                    rdfs:domain :DigitalMarpolWastePassport ;
                    rdfs:range :MarpolWastePassport ;
                    rdfs:comment "References the MARPOL-specific waste passport subject (`MarpolWastePassport`)." .
 
 
-:waste rdf:type owl:ObjectProperty ;
-       rdfs:domain :MarpolWastePassport ;
-       rdfs:range :MarpolWaste ;
-       rdfs:comment "Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/estimatedGenerated
+:estimatedGenerated rdf:type owl:ObjectProperty ;
+                    rdfs:domain :ResidueInformation ;
+                    rdfs:range <https://ontology.untp.io/core/Measure> ;
+                    rdfs:comment "The estimated quantity of residue generated, represented as a measure." .
 
 
-:ship rdf:type owl:ObjectProperty ;
-      rdfs:domain :MarpolWaste ;
-      rdfs:range :Ship ;
-      rdfs:comment "Details about the ship responsible for the waste, including the IMO number, name, and flag." .
-
-
-:wasteAgent rdf:type owl:ObjectProperty ;
-            rdfs:domain :MarpolWaste ;
-            rdfs:range :AuthorizedParty ;
-            rdfs:comment "The authorized waste collection company handling the waste." .
-
-
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/involvedParty
 :involvedParty rdf:type owl:ObjectProperty ;
                rdfs:domain :MarpolWaste ;
                rdfs:range :InvolvedParty ;
                rdfs:comment "The party involved in the waste management process, such as the ship operator or company." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/maxCapacity
+:maxCapacity rdf:type owl:ObjectProperty ;
+             rdfs:domain :ResidueInformation ;
+             rdfs:range <https://ontology.untp.io/core/Measure> ;
+             rdfs:comment "The maximum capacity for residue storage, represented as a measure." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/message
 :message rdf:type owl:ObjectProperty ;
          rdfs:domain :MarpolWaste ;
          rdfs:range :WasdisMetadata ;
          rdfs:comment "Metadata related to the WASDIS system, including the sender, message ID, and submission details." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/quantityRemainingOnBoard
+:quantityRemainingOnBoard rdf:type owl:ObjectProperty ;
+                          rdfs:domain :ResidueInformation ;
+                          rdfs:range <https://ontology.untp.io/core/Measure> ;
+                          rdfs:comment "The quantity of residue still remaining onboard, represented as a measure." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/quantityToDeliver
+:quantityToDeliver rdf:type owl:ObjectProperty ;
+                   rdfs:domain :ResidueInformation ;
+                   rdfs:range <https://ontology.untp.io/core/Measure> ;
+                   rdfs:comment "The quantity of residue to be delivered, represented as a measure." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/residue
 :residue rdf:type owl:ObjectProperty ;
          rdfs:domain :MarpolWaste ;
          rdfs:range :ResidueInformation ;
          rdfs:comment "Detailed information about the waste residue, including type, quantity, and discharge method." .
 
 
-:contactPoint rdf:type owl:ObjectProperty ;
-              rdfs:domain :AuthorizedParty ;
-              rdfs:range untp-core:Link ;
-              rdfs:comment "Contact information for the authorized party, represented as a link." .
-
-
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/role
 :role rdf:type owl:ObjectProperty ;
       rdfs:domain :InvolvedParty ;
-      rdfs:range untp-core:Party ;
+      rdfs:range <https://ontology.untp.io/core/Party> ;
       rdfs:comment "The role of the involved party, as defined by the regulatory framework." .
 
 
-:quantityToDeliver rdf:type owl:ObjectProperty ;
-                   rdfs:domain :ResidueInformation ;
-                   rdfs:range untp-core:Measure ;
-                   rdfs:comment "The quantity of residue to be delivered, represented as a measure." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/ship
+:ship rdf:type owl:ObjectProperty ;
+      rdfs:domain :MarpolWaste ;
+      rdfs:range :Ship ;
+      rdfs:comment "Details about the ship responsible for the waste, including the IMO number, name, and flag." .
 
 
-:quantityRemainingOnBoard rdf:type owl:ObjectProperty ;
-                          rdfs:domain :ResidueInformation ;
-                          rdfs:range untp-core:Measure ;
-                          rdfs:comment "The quantity of residue still remaining onboard, represented as a measure." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/waste
+:waste rdf:type owl:ObjectProperty ;
+       rdfs:domain :MarpolWastePassport ;
+       rdfs:range :MarpolWaste ;
+       rdfs:comment "Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework." .
 
 
-:maxCapacity rdf:type owl:ObjectProperty ;
-             rdfs:domain :ResidueInformation ;
-             rdfs:range untp-core:Measure ;
-             rdfs:comment "The maximum capacity for residue storage, represented as a measure." .
-
-
-:estimatedGenerated rdf:type owl:ObjectProperty ;
-                    rdfs:domain :ResidueInformation ;
-                    rdfs:range untp-core:Measure ;
-                    rdfs:comment "The estimated quantity of residue generated, represented as a measure." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/wasteAgent
+:wasteAgent rdf:type owl:ObjectProperty ;
+            rdfs:domain :MarpolWaste ;
+            rdfs:range :AuthorizedParty ;
+            rdfs:comment "The authorized waste collection company handling the waste." .
 
 
 #################################################################
-#    Data Properties
+#    Data properties
 #################################################################
 
-:marpolEdition rdf:type owl:DatatypeProperty ;
-               rdfs:domain :MarpolWaste ;
-               rdfs:range xsd:string ;
-               rdfs:comment "The edition of MARPOL applicable to the waste being documented (if relevant)." .
-
-
-:deliveryType rdf:type owl:DatatypeProperty ;
-              rdfs:domain :MarpolWaste ;
-              rdfs:range xsd:string ;
-              rdfs:comment "Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`)." .
-
-
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/arrivalPort
 :arrivalPort rdf:type owl:DatatypeProperty ;
              rdfs:domain :MarpolWaste ;
              rdfs:range xsd:string ;
-             rdfs:comment "The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`)." .
+             rdfs:comment "The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`)." ;
+             <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/unlocode/UNLocodeScheme> .
 
 
-:lastWasteDeliveryPort rdf:type owl:DatatypeProperty ;
-                       rdfs:domain :MarpolWaste ;
-                       rdfs:range xsd:string ;
-                       rdfs:comment "The last port where waste was delivered, using UN/LOCODE format." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/deliveryType
+:deliveryType rdf:type owl:DatatypeProperty ;
+              rdfs:domain :MarpolWaste ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`)." ;
+              <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/delivery-type-code/DeliveryTypeCodeScheme> .
 
 
-:nextPlannedDeliveryPort rdf:type owl:DatatypeProperty ;
-                         rdfs:domain :MarpolWaste ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "The next planned port for waste delivery, identified with UN/LOCODE." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/dischargeMeans
+:dischargeMeans rdf:type owl:DatatypeProperty ;
+                rdfs:domain :ResidueInformation ;
+                rdfs:range xsd:string ;
+                rdfs:comment "The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`)." ;
+                <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/discharge-means-code/DischargeMeansCodeScheme> .
 
 
-:lastDeliveryDate rdf:type owl:DatatypeProperty ;
-                  rdfs:domain :MarpolWaste ;
-                  rdfs:range xsd:dateTime ;
-                  rdfs:comment "The date and time of the last waste delivery, in ISO-8601 format with timezone." .
-
-
-:shipScale rdf:type owl:DatatypeProperty ;
-           rdfs:domain :MarpolWaste ;
-           rdfs:range xsd:string ;
-           rdfs:comment "An identifier for the ship scale or port call, useful for traceability." .
-
-
-:imoNumber rdf:type owl:DatatypeProperty ;
-           rdfs:domain :Ship ;
-           rdfs:range xsd:string ;
-           rdfs:comment "The International Maritime Organization (IMO) number, a 7-digit identifier for ships." .
-
-
-:name rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Ship ;
-      rdfs:range xsd:string ;
-      rdfs:comment "The name of the ship." .
-
-
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/flag
 :flag rdf:type owl:DatatypeProperty ;
       rdfs:domain :Ship ;
       rdfs:range xsd:string ;
-      rdfs:comment "The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus)." .
+      rdfs:comment "The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus)." ;
+    <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/iso3166-iAlpha2/ISO3166Alpha2Scheme> .
 
 
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/identifier
 :identifier rdf:type owl:DatatypeProperty ;
             rdfs:domain :AuthorizedParty ;
             rdfs:range xsd:string ;
             rdfs:comment "A unique identifier for the authorized party." .
 
 
-:sender rdf:type owl:DatatypeProperty ;
-        rdfs:domain :WasdisMetadata ;
-        rdfs:range xsd:string ;
-        rdfs:comment "The entity that sent the waste notification." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/imoNumber
+:imoNumber rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Ship ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The International Maritime Organization (IMO) number, a 7-digit identifier for ships." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/lastDeliveryDate
+:lastDeliveryDate rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :MarpolWaste ;
+                  rdfs:range xsd:dateTime ;
+                  rdfs:comment "The date and time of the last waste delivery, in ISO-8601 format with timezone." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/lastWasteDeliveryPort
+:lastWasteDeliveryPort rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :MarpolWaste ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "The last port where waste was delivered, using UN/LOCODE format." ;
+                       <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/unlocode/UNLocodeScheme> .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/marpolEdition
+:marpolEdition rdf:type owl:DatatypeProperty ;
+               rdfs:domain :MarpolWaste ;
+               rdfs:range xsd:string ;
+               rdfs:comment "The edition of MARPOL applicable to the waste being documented (if relevant)." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/messageId
 :messageId rdf:type owl:DatatypeProperty ;
            rdfs:domain :WasdisMetadata ;
            rdfs:range xsd:string ;
            rdfs:comment "A unique identifier for the message." .
 
 
-:submissionDate rdf:type owl:DatatypeProperty ;
-                rdfs:domain :WasdisMetadata ;
-                rdfs:range xsd:dateTime ;
-                rdfs:comment "The date and time when the waste notification was submitted." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Ship ;
+      rdfs:range xsd:string ;
+      rdfs:comment "The name of the ship." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/nextCollectionPort
+:nextCollectionPort rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :ResidueInformation ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "The next port where the residue will be collected, identified by the UN/LOCODE" ;
+                         <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/unlocode/UNLocodeScheme> .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/nextPlannedDeliveryPort
+:nextPlannedDeliveryPort rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :MarpolWaste ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The next planned port for waste delivery, identified with UN/LOCODE." ;
+                         <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/unlocode/UNLocodeScheme> .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/remarks
 :remarks rdf:type owl:DatatypeProperty ;
          rdfs:domain :WasdisMetadata ;
          rdfs:range xsd:string ;
          rdfs:comment "Any additional remarks or notes regarding the waste delivery or process." .
 
 
-:typeCode rdf:type owl:DatatypeProperty ;
-          rdfs:domain :ResidueInformation ;
-          rdfs:range xsd:string ;
-          rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/sender
+:sender rdf:type owl:DatatypeProperty ;
+        rdfs:domain :WasdisMetadata ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The entity that sent the waste notification." .
 
 
-:subtypeCode rdf:type owl:DatatypeProperty ;
-             rdfs:domain :ResidueInformation ;
-             rdfs:range xsd:string ;
-             rdfs:comment "Code representing the subtype of residue, providing more detailed categorization." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/shipScale
+:shipScale rdf:type owl:DatatypeProperty ;
+           rdfs:domain :MarpolWaste ;
+           rdfs:range xsd:string ;
+           rdfs:comment "An identifier for the ship scale or port call, useful for traceability." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/submissionDate
+:submissionDate rdf:type owl:DatatypeProperty ;
+                rdfs:domain :WasdisMetadata ;
+                rdfs:range xsd:dateTime ;
+                rdfs:comment "The date and time when the waste notification was submitted." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/substance
 :substance rdf:type owl:DatatypeProperty ;
            rdfs:domain :ResidueInformation ;
            rdfs:range xsd:string ;
            rdfs:comment "The substance of the residue, e.g., oil, sewage, or waste sludge." .
 
 
-:dischargeMeans rdf:type owl:DatatypeProperty ;
-                rdfs:domain :ResidueInformation ;
-                rdfs:range xsd:string ;
-                rdfs:comment "The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`)." .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/subtypeCode
+:subtypeCode rdf:type owl:DatatypeProperty ;
+             rdfs:domain :ResidueInformation ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Code representing the subtype of residue, providing more detailed categorization." ;
+             <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/residue-subtype-code/ResidueSubtypeCodeScheme> .
 
 
-:nextCollectionPort rdf:type owl:DatatypeProperty ;
-                    rdfs:domain :ResidueInformation ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "The next port where the residue will be collected, identified by the UN/LOCODE" .
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/typeCode
+:typeCode rdf:type owl:DatatypeProperty ;
+          rdfs:domain :ResidueInformation ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
+          <http://www.w3.org/2004/02/skos/core#related> <https://ontology.circularpass.io/vocab/residue-type-code/ResidueTypeCodeScheme> .
 
 
-###  Generated by ChatGPT following OWL API formatting conventions
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/AuthorizedParty
+:AuthorizedParty rdf:type owl:Class ;
+                 rdfs:comment "Represents an authorized entity responsible for handling the waste." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/DigitalMarpolWastePassport
+:DigitalMarpolWastePassport rdf:type owl:Class ;
+                            rdfs:subClassOf :DigitalWastePassport ;
+                            rdfs:comment "A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`." .
 
 
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/DigitalWastePassport
+:DigitalWastePassport rdf:type owl:Class .
 
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/InvolvedParty
+:InvolvedParty rdf:type owl:Class ;
+               rdfs:comment "A party involved in the waste management process, such as the ship operator." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/MarpolWaste
+:MarpolWaste rdf:type owl:Class ;
+             rdfs:subClassOf :Waste ;
+             rdfs:comment "Represents a specific waste entity within the MARPOL context, including regulatory attributes for ship-generated waste." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/MarpolWastePassport
+:MarpolWastePassport rdf:type owl:Class ;
+                     rdfs:subClassOf :WastePassport ;
+                     rdfs:comment "Represents the waste passport data specific to MARPOL regulations." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/ResidueInformation
+:ResidueInformation rdf:type owl:Class ;
+                    rdfs:comment "Details of a specific waste residue, including type, quantity, and handling." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/Ship
+:Ship rdf:type owl:Class ;
+      rdfs:comment "Details about the ship generating the waste." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/WasdisMetadata
+:WasdisMetadata rdf:type owl:Class ;
+                rdfs:comment "Metadata related to the WASDIS system for auditing purposes." .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/Waste
+:Waste rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/aleixsolerribas/ontologies/2025/10/untitled-ontology-47/WastePassport
+:WastePassport rdf:type owl:Class .
+
+
+###  https://ontology.untp.io/core/Link
+<https://ontology.untp.io/core/Link> rdf:type owl:Class .
+
+
+###  https://ontology.untp.io/core/Measure
+<https://ontology.untp.io/core/Measure> rdf:type owl:Class .
+
+
+###  https://ontology.untp.io/core/Party
+<https://ontology.untp.io/core/Party> rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
