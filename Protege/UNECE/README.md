@@ -1,0 +1,1 @@
+Les ontologies a dins la carpeta UNECE són descarregades directament de la web oficial, la versio 0.6.x s'ha hagut de posar l'objecte dins un array perquè es pogues llegir.

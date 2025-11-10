@@ -1,0 +1,1656 @@
+@prefix : <https://test.uncefact.org/vocabulary/untp/core/0> .
+@prefix ns0: <https://schema.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://test.uncefact.org/vocabulary/untp/core/0> .
+
+<https://test.uncefact.org/vocabulary/untp/core/0> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/1999/02/22-rdf-syntax-ns#value
+rdf:value rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2000/01/rdf-schema#subClassOf
+rdfs:subClassOf rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/domainIncludes
+ns0:domainIncludes rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/rangeIncludes
+ns0:rangeIncludes rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/address
+<https://test.uncefact.org/vocabulary/untp/core/0/address> rdf:type owl:ObjectProperty ;
+                                                           rdfs:comment "The Postal address of the location." ;
+                                                           rdfs:label "address" ;
+                                                           ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                           ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/addressCountry
+<https://test.uncefact.org/vocabulary/untp/core/0/addressCountry> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:comment "The address country as an ISO-3166 two letter country code." ;
+                                                                  rdfs:label "addressCountry" ;
+                                                                  ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
+                                                                  ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/administeredBy
+<https://test.uncefact.org/vocabulary/untp/core/0/administeredBy> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:comment "the issuing body of the regulation. For example Australian Government Department of Climate Change, Energy, the Environment and Water" ;
+                                                                  rdfs:label "administeredBy" ;
+                                                                  ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ;
+                                                                  ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentCriteria
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentCriteria> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:comment "The specification against which the assessment is made." ;
+                                                                      rdfs:label "assessmentCriteria" ;
+                                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                      ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevel
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevel> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "Assurance pertaining to assessment (any authority or support for the assessment process)" ;
+                                                                   rdfs:label "assessmentLevel" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevel
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevel> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:comment "Assurance code pertaining to assessor (relation to the object under assessment)" ;
+                                                                 rdfs:label "assessorLevel" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                 ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationType
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationType> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "The type of criterion (optional or mandatory)." ;
+                                                                   rdfs:label "attestationType" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/auditableEvidence
+<https://test.uncefact.org/vocabulary/untp/core/0/auditableEvidence> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:comment "Auditable evidence supporting this assessment such as raw measurements, supporting documents. This is usually private data and would normally be encrypted." ;
+                                                                     rdfs:label "auditableEvidence" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                     ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/authorisation
+<https://test.uncefact.org/vocabulary/untp/core/0/authorisation> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:comment "The authority under which a conformity claim is issued.  For example a national accreditation authority may authorise a test lab to issue test certificates about a product against a standard.  " ;
+                                                                 rdfs:label "authorisation" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                 ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/characteristics
+<https://test.uncefact.org/vocabulary/untp/core/0/characteristics> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "A placeholder for indusutry / product category specific information. " ;
+                                                                   rdfs:label "characteristics" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Characteristics> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityCertificate
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityCertificate> rdf:type owl:ObjectProperty ;
+                                                                         rdfs:comment "A reference to the human / printable version of this conformity attestation - typically represented as a PDF document. The document may have more details than are represented in the digital attestation." ;
+                                                                         rdfs:label "conformityCertificate" ;
+                                                                         ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                         ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityEvidence
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityEvidence> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:comment "A URI pointing to the evidence supporting the claim. SHOULD be a URL to a UNTP Digital Conformity Credential (DCC)" ;
+                                                                      rdfs:label "conformityEvidence" ;
+                                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ;
+                                                                      ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopic
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopic> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "A gloabl UN/CEFACT standard sustainability toipic code. " ,
+                                                                                "The conformity topic category for this assessment (eg vocabulary.uncefact.org/sustainability/emissions)" ;
+                                                                   rdfs:label "conformityTopic" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ,
+                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/countryOfOperation
+<https://test.uncefact.org/vocabulary/untp/core/0/countryOfOperation> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:comment "The country in which this facility is operating." ;
+                                                                      rdfs:label "countryOfOperation" ;
+                                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                                      ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/countryOfProduction
+<https://test.uncefact.org/vocabulary/untp/core/0/countryOfProduction> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "The country in which this item was produced / manufactured." ;
+                                                                       rdfs:label "countryOfProduction" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/declaredUnit
+<https://test.uncefact.org/vocabulary/untp/core/0/declaredUnit> rdf:type owl:ObjectProperty ;
+                                                                rdfs:comment "The unit of product (EA, KGM, LTR, etc) that is the basis for carbon footprint." ;
+                                                                rdfs:label "declaredUnit" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
+                                                                ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/unitOfMeasure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/declaredValue
+<https://test.uncefact.org/vocabulary/untp/core/0/declaredValue> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:comment "The list of specific values measured as part of this assessment (eg tensile strength)" ;
+                                                                 rdfs:label "declaredValue" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                    <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                 ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/dimensions
+<https://test.uncefact.org/vocabulary/untp/core/0/dimensions> rdf:type owl:ObjectProperty ;
+                                                              rdfs:comment "The physical dimensions of the product. Not every dimension is relevant to every products.  For example bulk materials may have weight and volume but not length, with, or height.\"weight\":{\"value\":10, \"unit\":\"KGM\"}" ;
+                                                              rdfs:label "dimensions" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                              ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethod
+<https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethod> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:comment "The symmetric encryption algorithm used to encrypt the link target.  AES is the recommended standard. Decryption keys are expected to be passed out of bounds." ;
+                                                                    rdfs:label "encryptionMethod" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                                    ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/endorsementEvidence
+<https://test.uncefact.org/vocabulary/untp/core/0/endorsementEvidence> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "The evidence that supports the authority under which the attestation is issued - for an example an accreditation certificate." ;
+                                                                       rdfs:label "endorsementEvidence" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/facilityAlsoKnownAs
+<https://test.uncefact.org/vocabulary/untp/core/0/facilityAlsoKnownAs> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "An optional list of other registered identifiers for this facility - eg GLNs or other schemes." ;
+                                                                       rdfs:label "facilityAlsoKnownAs" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/fileType
+<https://test.uncefact.org/vocabulary/untp/core/0/fileType> rdf:type owl:ObjectProperty ;
+                                                            rdfs:comment "The type of file, represented as a MIME type." ;
+                                                            rdfs:label "fileType" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile> ;
+                                                            ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/mimeType> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/furtherInformation
+<https://test.uncefact.org/vocabulary/untp/core/0/furtherInformation> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:comment "A URL pointing to further human readable information about the product." ;
+                                                                      rdfs:label "furtherInformation" ;
+                                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                      ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/geoBoundary
+<https://test.uncefact.org/vocabulary/untp/core/0/geoBoundary> rdf:type owl:ObjectProperty ;
+                                                               rdfs:comment "The list of ordered coordinates that define a closed area polygon as a location boundary using GeoJSON polygon notation." ;
+                                                               rdfs:label "geoBoundary" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Location> ;
+                                                               ns0:rangeIncludes <https://purl.org/geojson/vocab#appendix-A.3> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/geoLocation
+<https://test.uncefact.org/vocabulary/untp/core/0/geoLocation> rdf:type owl:ObjectProperty ;
+                                                               rdfs:comment "The latitude and longitude coordinates that best represent the specified location. Using GeoJSON Point notation." ;
+                                                               rdfs:label "geoLocation" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Location> ;
+                                                               ns0:rangeIncludes <https://purl.org/geojson/vocab#appendix-A.1> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hashMethod
+<https://test.uncefact.org/vocabulary/untp/core/0/hashMethod> rdf:type owl:ObjectProperty ;
+                                                              rdfs:comment "The hashing algorithm used to create the target hash.  SHA-265 is the recommended standard" ;
+                                                              rdfs:label "hashMethod" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                              ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/height
+<https://test.uncefact.org/vocabulary/untp/core/0/height> rdf:type owl:ObjectProperty ;
+                                                          rdfs:comment "The height of the product or packaging. eg {\"value\":220, \"unit\":\"MMT\"}" ;
+                                                          rdfs:label "height" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
+                                                          ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/idScheme
+<https://test.uncefact.org/vocabulary/untp/core/0/idScheme> rdf:type owl:ObjectProperty ;
+                                                            rdfs:comment "The ID scheme of the facility. eg a GS1 GLN or a National land registry scheme. If self issued then use the party ID of the facility owner. " ,
+                                                                         "The identifier scheme for this product.  Eg a GS1 GTIN or an AU Livestock NLIS, or similar. If self issued then use the party ID of the issuer.  " ,
+                                                                         "The identifier scheme of the party.  Typically a national business register or a global scheme such as GLEIF. " ;
+                                                            rdfs:label "idScheme" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ,
+                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/Party> ,
+                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                            ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/industryCategory
+<https://test.uncefact.org/vocabulary/untp/core/0/industryCategory> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:comment "The industry categories for this organisations.  Recommend use of UNCPC as the category scheme. for example - unstats.un.org/isic/1030" ;
+                                                                    rdfs:label "industryCategory" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                    ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/issuedToParty
+<https://test.uncefact.org/vocabulary/untp/core/0/issuedToParty> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:comment "The party to whom the conformity attestation was issued." ;
+                                                                 rdfs:label "issuedToParty" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ;
+                                                                 ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/issuerAlsoKnownAs
+<https://test.uncefact.org/vocabulary/untp/core/0/issuerAlsoKnownAs> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:comment "An optional list of other registered identifiers for this credential issuer " ;
+                                                                     rdfs:label "issuerAlsoKnownAs" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> ;
+                                                                     ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/issuingAuthority
+<https://test.uncefact.org/vocabulary/untp/core/0/issuingAuthority> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:comment "The competent authority that issued the accreditation." ;
+                                                                    rdfs:label "issuingAuthority" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> ;
+                                                                    ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/issuingParty
+<https://test.uncefact.org/vocabulary/untp/core/0/issuingParty> rdf:type owl:ObjectProperty ;
+                                                                rdfs:comment "The party that issued the standard " ;
+                                                                rdfs:label "issuingParty" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ;
+                                                                ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/jurisdictionCountry
+<https://test.uncefact.org/vocabulary/untp/core/0/jurisdictionCountry> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "The legal jurisdiction (country) under which the regulation is issued." ;
+                                                                       rdfs:label "jurisdictionCountry" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/length
+<https://test.uncefact.org/vocabulary/untp/core/0/length> rdf:type owl:ObjectProperty ;
+                                                          rdfs:comment "The length of the product or packaging eg {\"value\":840, \"unit\":\"MMT\"}" ;
+                                                          rdfs:label "length" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
+                                                          ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/locationInformation
+<https://test.uncefact.org/vocabulary/untp/core/0/locationInformation> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "Geo-location information for this facility as a resolvable geographic area (a Plus Code), and/or a geo-located point (latitude / longitude), and/or a defined boundary (GeoJSON Polygon)." ;
+                                                                       rdfs:label "locationInformation" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Location> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/mass
+<https://test.uncefact.org/vocabulary/untp/core/0/mass> rdf:type owl:ObjectProperty ;
+                                                        rdfs:comment "The mass of the material component." ;
+                                                        rdfs:label "mass" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                        ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/materialSafetyInformation
+<https://test.uncefact.org/vocabulary/untp/core/0/materialSafetyInformation> rdf:type owl:ObjectProperty ;
+                                                                             rdfs:comment "Reference to further information about safe handling of this hazardous material (for example a link to a material safety data sheet)" ;
+                                                                             rdfs:label "materialSafetyInformation" ;
+                                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                                             ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/materialType
+<https://test.uncefact.org/vocabulary/untp/core/0/materialType> rdf:type owl:ObjectProperty ;
+                                                                rdfs:comment "The type of this material - as a value drawn from a controlled vocabulary eg from UN Framework Classification for Resources (UNFC)." ;
+                                                                rdfs:label "materialType" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                                ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/metricValue
+<https://test.uncefact.org/vocabulary/untp/core/0/metricValue> rdf:type owl:ObjectProperty ;
+                                                               rdfs:comment "A numeric value and unit of measure for this metric. Could be a measured value or a specified threshold. Eg {\"value\":400, \"unit\":\"MPA\"} as tensile strength of structural steel" ;
+                                                               rdfs:label "metricValue" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
+                                                               ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operatedByParty
+<https://test.uncefact.org/vocabulary/untp/core/0/operatedByParty> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "The Party entity responsible for operating the facility.An object structure that uniquely identifies the party within a known party identification scheme. " ;
+                                                                   rdfs:label "operatedByParty" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operationalScope
+<https://test.uncefact.org/vocabulary/untp/core/0/operationalScope> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:comment "The operational scope of the emissions performance. Only scope 1 & 2, or including upstream scope 3 (cradle to gate) or upstream and downstream scope 3 (cradle to grave)." ;
+                                                                    rdfs:label "operationalScope" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
+                                                                    ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/originCountry
+<https://test.uncefact.org/vocabulary/untp/core/0/originCountry> rdf:type owl:ObjectProperty ;
+                                                                 rdfs:comment "A ISO 3166-1 code representing the country of origin of the component or ingredient." ;
+                                                                 rdfs:label "originCountry" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                                 ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/owner
+<https://test.uncefact.org/vocabulary/untp/core/0/owner> rdf:type owl:ObjectProperty ;
+                                                         rdfs:comment "The party that is the owner / maintainer of this conformity scheme." ;
+                                                         rdfs:label "owner" ;
+                                                         ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ;
+                                                         ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/partyAlsoKnownAs
+<https://test.uncefact.org/vocabulary/untp/core/0/partyAlsoKnownAs> rdf:type owl:ObjectProperty ;
+                                                                    rdfs:comment "An optional list of other registered identifiers for this organisation. For example DUNS, GLN, LEI, etc" ;
+                                                                    rdfs:label "partyAlsoKnownAs" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                    ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/processCategory
+<https://test.uncefact.org/vocabulary/untp/core/0/processCategory> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "The industrial or production processes performed by this facility. Example unstats.un.org/isic/1030." ;
+                                                                   rdfs:label "processCategory" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/producedAtFacility
+<https://test.uncefact.org/vocabulary/untp/core/0/producedAtFacility> rdf:type owl:ObjectProperty ;
+                                                                      rdfs:comment "The Facility where the product batch was produced / manufactured." ;
+                                                                      rdfs:label "producedAtFacility" ;
+                                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                      ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/producedByParty
+<https://test.uncefact.org/vocabulary/untp/core/0/producedByParty> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "The Party entity that manufactured the product." ;
+                                                                   rdfs:label "producedByParty" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/productCategory
+<https://test.uncefact.org/vocabulary/untp/core/0/productCategory> rdf:type owl:ObjectProperty ;
+                                                                   rdfs:comment "A code representing the product's class, typically using the UN CPC (United Nations Central Product Classification) https://unstats.un.org/unsd/classifications/Econ/cpc" ;
+                                                                   rdfs:label "productCategory" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                   ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/productImage
+<https://test.uncefact.org/vocabulary/untp/core/0/productImage> rdf:type owl:ObjectProperty ;
+                                                                rdfs:comment "Reference information (location, type, name) of an image of the product." ;
+                                                                rdfs:label "productImage" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/recyclingInformation
+<https://test.uncefact.org/vocabulary/untp/core/0/recyclingInformation> rdf:type owl:ObjectProperty ;
+                                                                        rdfs:comment "A URI pointing to recycling information for the product." ;
+                                                                        rdfs:label "recyclingInformation" ;
+                                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                        ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/referenceRegulation
+<https://test.uncefact.org/vocabulary/untp/core/0/referenceRegulation> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "The reference to the regulation that defines the assessment criteria" ;
+                                                                       rdfs:label "referenceRegulation" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                          <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/referenceStandard
+<https://test.uncefact.org/vocabulary/untp/core/0/referenceStandard> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:comment "The reference to the standard that defines the specification / criteria" ;
+                                                                     rdfs:label "referenceStandard" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                        <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                     ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Standard> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/registrationCountry
+<https://test.uncefact.org/vocabulary/untp/core/0/registrationCountry> rdf:type owl:ObjectProperty ;
+                                                                       rdfs:comment "the country in which this organisation is registered" ;
+                                                                       rdfs:label "registrationCountry" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                       ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/countryCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/repairInformation
+<https://test.uncefact.org/vocabulary/untp/core/0/repairInformation> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:comment "A URI pointing to repair instructions for this product." ;
+                                                                     rdfs:label "repairInformation" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                     ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/reportingStandard
+<https://test.uncefact.org/vocabulary/untp/core/0/reportingStandard> rdf:type owl:ObjectProperty ;
+                                                                     rdfs:comment "The reporting standard (eg GHG Protocol, IFRS S2, ESRS, etc) against which this product emissions performance is assessed." ;
+                                                                     rdfs:label "reportingStandard" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
+                                                                     ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Standard> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/status
+<https://test.uncefact.org/vocabulary/untp/core/0/status> rdf:type owl:ObjectProperty ;
+                                                          rdfs:comment "The lifecycle status of this criterion. " ;
+                                                          rdfs:label "status" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
+                                                          ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/statusCode> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/subCriterion
+<https://test.uncefact.org/vocabulary/untp/core/0/subCriterion> rdf:type owl:ObjectProperty ;
+                                                                rdfs:comment "List of criterion that are subordinate to this criterion in the hierarchy." ;
+                                                                rdfs:label "subCriterion" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
+                                                                ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/thresholdValue
+<https://test.uncefact.org/vocabulary/untp/core/0/thresholdValue> rdf:type owl:ObjectProperty ;
+                                                                  rdfs:comment "A threshold value that defines the minimum compliance level. " ;
+                                                                  rdfs:label "thresholdValue" ;
+                                                                  ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
+                                                                  ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/trustmark
+<https://test.uncefact.org/vocabulary/untp/core/0/trustmark> rdf:type owl:ObjectProperty ;
+                                                             rdfs:comment "The trust mark image awarded by the AB to the CAB to indicate accreditation." ;
+                                                             rdfs:label "trustmark" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> ;
+                                                             ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/unit
+<https://test.uncefact.org/vocabulary/untp/core/0/unit> rdf:type owl:ObjectProperty ;
+                                                        rdfs:comment "Unit of measure drawn from the UNECE Rec20 measure code list." ;
+                                                        rdfs:label "unit" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> ;
+                                                        ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/unitOfMeasure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/volume
+<https://test.uncefact.org/vocabulary/untp/core/0/volume> rdf:type owl:ObjectProperty ;
+                                                          rdfs:comment "The displacement volume of the product. eg {\"value\":7.5, \"unit\":\"LTR\"}" ;
+                                                          rdfs:label "volume" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
+                                                          ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/weight
+<https://test.uncefact.org/vocabulary/untp/core/0/weight> rdf:type owl:ObjectProperty ;
+                                                          rdfs:comment "the weight of the product. EG {\"value\":10, \"unit\":\"KGM\"}" ;
+                                                          rdfs:label "weight" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
+                                                          ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/width
+<https://test.uncefact.org/vocabulary/untp/core/0/width> rdf:type owl:ObjectProperty ;
+                                                         rdfs:comment "The width of the product or packaging. eg {\"value\":150, \"unit\":\"MMT\"}" ;
+                                                         rdfs:label "width" ;
+                                                         ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
+                                                         ns0:rangeIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/accuracy
+<https://test.uncefact.org/vocabulary/untp/core/0/accuracy> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "A percentage represented as a numeric between 0 and 1 indicating the rage of accuracy of the claimed value (eg 0.05 means that the actual value is within 5% of the claimed value.)" ;
+                                                            rdfs:label "accuracy" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
+                                                            ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/addressLocality
+<https://test.uncefact.org/vocabulary/untp/core/0/addressLocality> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:comment "The city, suburb or township name." ;
+                                                                   rdfs:label "addressLocality" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
+                                                                   ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/addressRegion
+<https://test.uncefact.org/vocabulary/untp/core/0/addressRegion> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:comment "The state or territory or province" ;
+                                                                 rdfs:label "addressRegion" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
+                                                                 ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentDate
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentDate> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:comment "The date on which this assessment was made. " ;
+                                                                  rdfs:label "assessmentDate" ;
+                                                                  ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                     <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                                  ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/batchNumber
+<https://test.uncefact.org/vocabulary/untp/core/0/batchNumber> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:comment "Identifier of the specific production batch of the product.  Unique within the product class." ;
+                                                               rdfs:label "batchNumber" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                               ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/carbonFootprint
+<https://test.uncefact.org/vocabulary/untp/core/0/carbonFootprint> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:comment "The carbon footprint of the product in KgCO2e per declared unit." ;
+                                                                   rdfs:label "carbonFootprint" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
+                                                                   ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/code
+<https://test.uncefact.org/vocabulary/untp/core/0/code> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:comment "classification code within the scheme" ;
+                                                        rdfs:label "code" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ;
+                                                        ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformance
+<https://test.uncefact.org/vocabulary/untp/core/0/conformance> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:comment "An indicator of whether or not the claim or assesment conforms to the regulatory or standard criteria." ;
+                                                               rdfs:label "conformance" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ;
+                                                               ns0:rangeIncludes xsd:boolean .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/description
+<https://test.uncefact.org/vocabulary/untp/core/0/description> rdf:type owl:DatatypeProperty ;
+                                                               rdfs:comment "A full text description of the criterion that clearly specifies how compliance is achieved and measured. " ,
+                                                                            "A textual description of the declaration being made." ,
+                                                                            "A textual description of the scope or purpose of this conformity attestation" ,
+                                                                            "A textual description providing details about the product." ,
+                                                                            "An optional short description of the facility" ,
+                                                                            "An optional short description of the party." ,
+                                                                            "The description of this conformity scheme" ;
+                                                               rdfs:label "description" ;
+                                                               ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Party> ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                               ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/digestMultibase
+<https://test.uncefact.org/vocabulary/untp/core/0/digestMultibase> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:comment "Used for resource integrity and/or validation of the inline `template`" ;
+                                                                   rdfs:label "digestMultibase" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ;
+                                                                   ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/effectiveDate
+<https://test.uncefact.org/vocabulary/untp/core/0/effectiveDate> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:comment "the date at which the regulation came into effect." ;
+                                                                 rdfs:label "effectiveDate" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ;
+                                                                 ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/file
+<https://test.uncefact.org/vocabulary/untp/core/0/file> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:comment "The binary file data encoded as Base64 string." ;
+                                                        rdfs:label "file" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile> ;
+                                                        ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/fileName
+<https://test.uncefact.org/vocabulary/untp/core/0/fileName> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "A name for referenced binary file" ;
+                                                            rdfs:label "fileName" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hashDigest
+<https://test.uncefact.org/vocabulary/untp/core/0/hashDigest> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:comment "The hash of the file." ;
+                                                              rdfs:label "hashDigest" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                              ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hazardous
+<https://test.uncefact.org/vocabulary/untp/core/0/hazardous> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:comment "Indicates whether this material is hazardous. If true then the materialSafetyInformation property must be present" ;
+                                                             rdfs:label "hazardous" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                             ns0:rangeIncludes xsd:boolean .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/id
+<https://test.uncefact.org/vocabulary/untp/core/0/id> rdf:type owl:DatatypeProperty ;
+                                                      rdfs:comment "A unique identifier for the criterion within the scheme, standard  or regulation. For example CO2 emissions calculations for liquid fuel combustion." ,
+                                                                   "A unique identifier for the declaration. Often this will be an extension of the product.id or attestation.id. But could be a UUID." ,
+                                                                   "A unique identifier for the standard (eg https://www.iso.org/standard/60857.html)." ,
+                                                                   "Globally unique identifier of an accreditation or authority issued to a conformity assessment body by a regulator or national accreditation authority." ,
+                                                                   "The W3C DID of the issuer - should be a did:web or did:webvh" ,
+                                                                   "The globally unique ID of the facility as URI, ideally as a resolvable URL." ,
+                                                                   "The globally unique ID of the party as a URI, ideally as a resolvable ID. " ,
+                                                                   "The globally unique ID of the product as a URI. Ideally as a resolvable URL according to ISO 18975. " ,
+                                                                   "The globally unique ID of this conformity attestation." ,
+                                                                   "The globally unique URI representing the specific classifier value" ,
+                                                                   "The globally unique identifier of the registration scheme. The scheme should be registered and discoverable from vocabulary.uncefact.org/identifierSchemes" ,
+                                                                   "The globally unique identifier of this regulation. " ,
+                                                                   "The identifier of this scheme as a URI. Typically of the form ownerDomain.schemeName." ;
+                                                      rdfs:label "id" ;
+                                                      ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Declaration> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Party> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Product> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ,
+                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ;
+                                                      ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/issueDate
+<https://test.uncefact.org/vocabulary/untp/core/0/issueDate> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:comment "The date when the standard was issued." ;
+                                                             rdfs:label "issueDate" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ;
+                                                             ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/linkName
+<https://test.uncefact.org/vocabulary/untp/core/0/linkName> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "A display name for the target resource " ;
+                                                            rdfs:label "linkName" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> ,
+                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/linkType
+<https://test.uncefact.org/vocabulary/untp/core/0/linkType> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "The type of the target resource - drawn from a controlled vocabulary " ;
+                                                            rdfs:label "linkType" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> ,
+                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/linkURL
+<https://test.uncefact.org/vocabulary/untp/core/0/linkURL> rdf:type owl:DatatypeProperty ;
+                                                           rdfs:comment "The URL of the target resource. " ;
+                                                           rdfs:label "linkURL" ;
+                                                           ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Link> ,
+                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
+                                                           ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/massFraction
+<https://test.uncefact.org/vocabulary/untp/core/0/massFraction> rdf:type owl:DatatypeProperty ;
+                                                                rdfs:comment "The mass fraction of the product represented by this material. The sum of all mass fraction values for a given passport should be 1." ;
+                                                                rdfs:label "massFraction" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                                ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/materialCircularityIndicator
+<https://test.uncefact.org/vocabulary/untp/core/0/materialCircularityIndicator> rdf:type owl:DatatypeProperty ;
+                                                                                rdfs:comment "The overall circularity performance indicator for this product. Calculated as 1 - (V+W)/2D where - V = Virgin material proportion by mass (will be 1- recycled content) - W = Waste leakage proportion by mass (will be 1 - recyclableContent)  - D = Utility factor (set to 1 if unknown).  " ;
+                                                                                rdfs:label "materialCircularityIndicator" ;
+                                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                                ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/mediaQuery
+<https://test.uncefact.org/vocabulary/untp/core/0/mediaQuery> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:comment "Media query as defined in https://www.w3.org/TR/mediaqueries-4/" ;
+                                                              rdfs:label "mediaQuery" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ;
+                                                              ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/mediaType
+<https://test.uncefact.org/vocabulary/untp/core/0/mediaType> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:comment "content/media type for (possible) conneg on the above URL and certainly for display use" ;
+                                                             rdfs:label "mediaType" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ;
+                                                             ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/metricName
+<https://test.uncefact.org/vocabulary/untp/core/0/metricName> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:comment "A human readable name for this metric (for example \"Tensile strength\")" ;
+                                                              rdfs:label "metricName" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
+                                                              ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/name
+<https://test.uncefact.org/vocabulary/untp/core/0/name> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:comment "A human readable description of this conformity attestation" ,
+                                                                     "A name that describes this criteria." ,
+                                                                     "Human facing display name for selection" ,
+                                                                     "Human facing display name for template" ,
+                                                                     "Name of the classification represented by the code" ,
+                                                                     "Name of this material (eg \"Egyptian Cotton\")" ,
+                                                                     "The name of the accreditation." ,
+                                                                     "The name of the identifier scheme. " ,
+                                                                     "The name of the issuer person or organisation" ,
+                                                                     "The name of the regulation or act." ,
+                                                                     "The name of the standard" ,
+                                                                     "The name of this conformity scheme" ,
+                                                                     "The registered name of the facility within the identifier scheme.  " ,
+                                                                     "The registered name of the party within the identifier scheme." ,
+                                                                     "The registered name of the product within the identifier scheme. " ;
+                                                        rdfs:label "name" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Attestation> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Material> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Party> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Product> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ,
+                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/WebRenderingTemplate2022> ;
+                                                        ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/organisationWebsite
+<https://test.uncefact.org/vocabulary/untp/core/0/organisationWebsite> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:comment "Website for this organisation" ;
+                                                                       rdfs:label "organisationWebsite" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                       ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/performanceLevel
+<https://test.uncefact.org/vocabulary/untp/core/0/performanceLevel> rdf:type owl:DatatypeProperty ;
+                                                                    rdfs:comment "A performance category code to group criterion in a given hierarchyLevel according to pareformance" ;
+                                                                    rdfs:label "performanceLevel" ;
+                                                                    ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
+                                                                    ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/plusCode
+<https://test.uncefact.org/vocabulary/untp/core/0/plusCode> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "An open location code (https://maps.google.com/pluscodes/) representing this geographic location or region. Open location codes can represent any sized area from a point to a large region and are easily resolved to a visual map location. " ;
+                                                            rdfs:label "plusCode" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Location> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/postalCode
+<https://test.uncefact.org/vocabulary/untp/core/0/postalCode> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:comment "The postal code or zip code for this address." ;
+                                                              rdfs:label "postalCode" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
+                                                              ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/primarySourcedRatio
+<https://test.uncefact.org/vocabulary/untp/core/0/primarySourcedRatio> rdf:type owl:DatatypeProperty ;
+                                                                       rdfs:comment "The ratio of emissions data from primary sources (ie from supplier / product specific information rather than secondary / industry averages)." ;
+                                                                       rdfs:label "primarySourcedRatio" ;
+                                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
+                                                                       ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/productionDate
+<https://test.uncefact.org/vocabulary/untp/core/0/productionDate> rdf:type owl:DatatypeProperty ;
+                                                                  rdfs:comment "The ISO 8601 date on which the product batch or individual serialised item was manufactured." ;
+                                                                  rdfs:label "productionDate" ;
+                                                                  ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                  ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/recyclableContent
+<https://test.uncefact.org/vocabulary/untp/core/0/recyclableContent> rdf:type owl:DatatypeProperty ;
+                                                                     rdfs:comment "The fraction of the this product (my mass) that has been designed to be recyclable / re-usable. This will be be the total fraction that can avoid waste / landfill." ;
+                                                                     rdfs:label "recyclableContent" ;
+                                                                     ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                     ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/recycledContent
+<https://test.uncefact.org/vocabulary/untp/core/0/recycledContent> rdf:type owl:DatatypeProperty ;
+                                                                   rdfs:comment "The fraction (by mass) of recycled / repurposed, repaired content in this product.  This will be the total virgin content fraction." ;
+                                                                   rdfs:label "recycledContent" ;
+                                                                   ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                   ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/recycledMassFraction
+<https://test.uncefact.org/vocabulary/untp/core/0/recycledMassFraction> rdf:type owl:DatatypeProperty ;
+                                                                        rdfs:comment "Mass fraction of this material that is recycled (eg 50% recycled Lithium)" ;
+                                                                        rdfs:label "recycledMassFraction" ;
+                                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                                        ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/registeredId
+<https://test.uncefact.org/vocabulary/untp/core/0/registeredId> rdf:type owl:DatatypeProperty ;
+                                                                rdfs:comment "The registration number (alphanumeric) of the Party within the register. Unique within the register." ,
+                                                                             "The registration number (alphanumeric) of the entity within the register. Unique within the register." ,
+                                                                             "The registration number (alphanumeric) of the facility within the identifier scheme. Unique within the register." ;
+                                                                rdfs:label "registeredId" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ,
+                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/Party> ,
+                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/schemeID
+<https://test.uncefact.org/vocabulary/untp/core/0/schemeID> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "Classification scheme ID" ;
+                                                            rdfs:label "schemeID" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/schemeName
+<https://test.uncefact.org/vocabulary/untp/core/0/schemeName> rdf:type owl:DatatypeProperty ;
+                                                              rdfs:comment "The name of the classification scheme" ;
+                                                              rdfs:label "schemeName" ;
+                                                              ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ;
+                                                              ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/score
+<https://test.uncefact.org/vocabulary/untp/core/0/score> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:comment "A score or rank associated with this measured metric." ;
+                                                         rdfs:label "score" ;
+                                                         ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
+                                                         ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/serialNumber
+<https://test.uncefact.org/vocabulary/untp/core/0/serialNumber> rdf:type owl:DatatypeProperty ;
+                                                                rdfs:comment "A number or code representing a specific serialised item of the product. Unique within product class." ;
+                                                                rdfs:label "serialNumber" ;
+                                                                ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/streetAddress
+<https://test.uncefact.org/vocabulary/untp/core/0/streetAddress> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:comment "the street address as an unstructured string." ;
+                                                                 rdfs:label "streetAddress" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
+                                                                 ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/symbol
+<https://test.uncefact.org/vocabulary/untp/core/0/symbol> rdf:type owl:DatatypeProperty ;
+                                                          rdfs:comment "Based 64 encoded binary used to represent a visual symbol for a given material. " ;
+                                                          rdfs:label "symbol" ;
+                                                          ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
+                                                          ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/tags
+<https://test.uncefact.org/vocabulary/untp/core/0/tags> rdf:type owl:DatatypeProperty ;
+                                                        rdfs:comment "a category code to represent target stakeholder types or commodity types to which this criteron applies. " ;
+                                                        rdfs:label "tags" ;
+                                                        ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
+                                                        ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/template
+<https://test.uncefact.org/vocabulary/untp/core/0/template> rdf:type owl:DatatypeProperty ;
+                                                            rdfs:comment "An inline template field " ,
+                                                                         "An inline template field for use cases where remote retrieval of a render method is suboptimal" ;
+                                                            rdfs:label "template" ;
+                                                            ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ,
+                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/WebRenderingTemplate2022> ;
+                                                            ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/trustMark
+<https://test.uncefact.org/vocabulary/untp/core/0/trustMark> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:comment "The trust mark or seal used by this conformity scheme." ;
+                                                             rdfs:label "trustMark" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ;
+                                                             ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/url
+<https://test.uncefact.org/vocabulary/untp/core/0/url> rdf:type owl:DatatypeProperty ;
+                                                       rdfs:comment "URL for remotely hosted template" ;
+                                                       rdfs:label "url" ;
+                                                       ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> ;
+                                                       ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/utilityFactor
+<https://test.uncefact.org/vocabulary/untp/core/0/utilityFactor> rdf:type owl:DatatypeProperty ;
+                                                                 rdfs:comment "An indicator of durability defined as the lifetime (typically measures as usage cycles) for this product divided by the industry average. For example a battery with a 10,000 cycle lifetime where industry average is 5,000 cycles will have a durability factor of 2. If unknown set to 1 or omit.  " ;
+                                                                 rdfs:label "utilityFactor" ;
+                                                                 ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
+                                                                 ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/validFrom
+<https://test.uncefact.org/vocabulary/untp/core/0/validFrom> rdf:type owl:DatatypeProperty ;
+                                                             rdfs:comment "The data from which this scheme version is valid." ;
+                                                             rdfs:label "validFrom" ;
+                                                             ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ;
+                                                             ns0:rangeIncludes xsd:string .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/value
+<https://test.uncefact.org/vocabulary/untp/core/0/value> rdf:type owl:DatatypeProperty ;
+                                                         rdfs:comment "The numeric value of the measure" ;
+                                                         rdfs:label "value" ;
+                                                         ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/Measure> ;
+                                                         ns0:rangeIncludes xsd:decimal .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/version
+<https://test.uncefact.org/vocabulary/untp/core/0/version> rdf:type owl:DatatypeProperty ;
+                                                           rdfs:comment "Version of this scheme folling SemVer best practive (major.minor.patch). " ;
+                                                           rdfs:label "version" ;
+                                                           ns0:domainIncludes <https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> ;
+                                                           ns0:rangeIncludes xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Address
+<https://test.uncefact.org/vocabulary/untp/core/0/Address> rdf:type owl:Class ;
+                                                           rdfs:comment "A postal address." ;
+                                                           rdfs:label "Address" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Attestation
+<https://test.uncefact.org/vocabulary/untp/core/0/Attestation> rdf:type owl:Class ;
+                                                               rdfs:comment "A conformity attestation issued by a competent body that defines one or more assessments (eg carbon intensity) about a product (eg battery) against a specification (eg LCA method) defined in a standard or regulation." ;
+                                                               rdfs:label "Attestation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile
+<https://test.uncefact.org/vocabulary/untp/core/0/BinaryFile> rdf:type owl:Class ;
+                                                              rdfs:comment "A binary file reference including name and file type." ;
+                                                              rdfs:label "BinaryFile" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Characteristics
+<https://test.uncefact.org/vocabulary/untp/core/0/Characteristics> rdf:type owl:Class ;
+                                                                   rdfs:comment "Extension point for commodity specific characteristics like battery capacity, clothing size, etc." ;
+                                                                   rdfs:label "Characteristics" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance
+<https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> rdf:type owl:Class ;
+                                                                          rdfs:comment "High level circularity information about this product.  Note that this does not substitute for detailed product circularity data sheet (PCDS) criteria which would be represented as a self-issued UNTP Digital Conformity Credential as a set of assessments against individual ISO PCDS criteria." ;
+                                                                          rdfs:label "CircularityPerformance" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Claim
+<https://test.uncefact.org/vocabulary/untp/core/0/Claim> rdf:type owl:Class ;
+                                                         rdfs:comment "A declaration of conformance with one or more criteria from a specific standard or regulation.  " ;
+                                                         rdfs:label "Claim" ;
+                                                         rdfs:subClassOf "untp-core:Declaration" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Classification
+<https://test.uncefact.org/vocabulary/untp/core/0/Classification> rdf:type owl:Class ;
+                                                                  rdfs:comment "A classification scheme and code / name representing a category value for a product, entity, or facility." ;
+                                                                  rdfs:label "Classification" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme
+<https://test.uncefact.org/vocabulary/untp/core/0/ConformityScheme> rdf:type owl:Class ;
+                                                                    rdfs:comment "" ;
+                                                                    rdfs:label "ConformityScheme" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer
+<https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> rdf:type owl:Class ;
+                                                                    rdfs:comment "The issuer party (person or organisation) of a verifiable credential." ;
+                                                                    rdfs:label "CredentialIssuer" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Criterion
+<https://test.uncefact.org/vocabulary/untp/core/0/Criterion> rdf:type owl:Class ;
+                                                             rdfs:comment "A specific rule or criterion within a standard or regulation. eg a carbon intensity calculation rule within an emissions standard." ;
+                                                             rdfs:label "Criterion" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Declaration
+<https://test.uncefact.org/vocabulary/untp/core/0/Declaration> rdf:type owl:Class ;
+                                                               rdfs:comment "A specific assessment about the product or facility against a specific specification.  Eg the carbon intensity of a given product or batch." ;
+                                                               rdfs:label "Declaration" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Dimension
+<https://test.uncefact.org/vocabulary/untp/core/0/Dimension> rdf:type owl:Class ;
+                                                             rdfs:comment "Overall (length, width, height) dimensions and weight/volume of an item." ;
+                                                             rdfs:label "Dimension" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance
+<https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> rdf:type owl:Class ;
+                                                                        rdfs:comment "Product specific characteristics.  This class is an extension point for industry specific product characteristics or performance information such as clothing size or battery capacity." ;
+                                                                        rdfs:label "EmissionsPerformance" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Endorsement
+<https://test.uncefact.org/vocabulary/untp/core/0/Endorsement> rdf:type owl:Class ;
+                                                               rdfs:comment "The authority under which a conformity claim is issued.  For example a national accreditation authority may authorise a test lab to issue test certificates about a product against a standard. " ;
+                                                               rdfs:label "Endorsement" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Facility
+<https://test.uncefact.org/vocabulary/untp/core/0/Facility> rdf:type owl:Class ;
+                                                            rdfs:comment "The physical site (eg farm or factory) where the product or materials was produced." ;
+                                                            rdfs:label "Facility" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme
+<https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> rdf:type owl:Class ;
+                                                                    rdfs:comment "An identifier registration scheme for products, facilities, or organisations. Typically operated by a state, national or global authority." ;
+                                                                    rdfs:label "IdentifierScheme" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Link
+<https://test.uncefact.org/vocabulary/untp/core/0/Link> rdf:type owl:Class ;
+                                                        rdfs:comment "A structure to provide a URL link plus metadata associated with the link." ;
+                                                        rdfs:label "Link" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Location
+<https://test.uncefact.org/vocabulary/untp/core/0/Location> rdf:type owl:Class ;
+                                                            rdfs:comment "Location information including address and geo-location of points, areas, and boundaries" ;
+                                                            rdfs:label "Location" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Material
+<https://test.uncefact.org/vocabulary/untp/core/0/Material> rdf:type owl:Class ;
+                                                            rdfs:comment "The material class encapsulates details about the origin or source of raw materials in a product, including the country of origin and the mass fraction." ;
+                                                            rdfs:label "Material" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Measure
+<https://test.uncefact.org/vocabulary/untp/core/0/Measure> rdf:type owl:Class ;
+                                                           rdfs:comment "The measure class defines a numeric measured value (eg 10) and a coded unit of measure (eg KG)." ;
+                                                           rdfs:label "Measure" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Metric
+<https://test.uncefact.org/vocabulary/untp/core/0/Metric> rdf:type owl:Class ;
+                                                          rdfs:comment "A specific measure of performance against the criteria that governs the claim.  Expressed as an array of metric (ie unit of measure) / value (ie the actual numeric value) pairs.  " ;
+                                                          rdfs:label "Metric" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Party
+<https://test.uncefact.org/vocabulary/untp/core/0/Party> rdf:type owl:Class ;
+                                                         rdfs:comment "An organisation.  May be a supply chain actor, a certifier, a government agency." ;
+                                                         rdfs:label "Party" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Product
+<https://test.uncefact.org/vocabulary/untp/core/0/Product> rdf:type owl:Class ;
+                                                           rdfs:comment "The ProductInformation class encapsulates detailed information regarding a specific product, including its identification details, manufacturer, and other pertinent details." ;
+                                                           rdfs:label "Product" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Regulation
+<https://test.uncefact.org/vocabulary/untp/core/0/Regulation> rdf:type owl:Class ;
+                                                              rdfs:comment "A regulation (eg EU deforestation regulation) that defines the criteria for assessment." ;
+                                                              rdfs:label "Regulation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024
+<https://test.uncefact.org/vocabulary/untp/core/0/RenderTemplate2024> rdf:type owl:Class ;
+                                                                      rdfs:comment "A single template format focused render method--where the content/media type decision becomes secondary (and is expressed separately).See https://github.com/w3c-ccg/vc-render-method/issues/9" ;
+                                                                      rdfs:label "RenderTemplate2024" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/SecureLink
+<https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> rdf:type owl:Class ;
+                                                              rdfs:comment "A binary file that is hashed ()for tamper evidence) and optionally encrypted (for confidentiality)." ;
+                                                              rdfs:label "SecureLink" ;
+                                                              rdfs:subClassOf "untp-core:Link" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Standard
+<https://test.uncefact.org/vocabulary/untp/core/0/Standard> rdf:type owl:Class ;
+                                                            rdfs:comment "A standard (eg ISO 14000) that specifies the criteria for conformance." ;
+                                                            rdfs:label "Standard" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/VerifiableCredential
+<https://test.uncefact.org/vocabulary/untp/core/0/VerifiableCredential> rdf:type owl:Class ;
+                                                                        rdfs:comment "A verifiable credential is a digital and verifiable version of everyday credentials such as certificates and licenses.  It conforms to the W3C Verifiable Credentials Data Model v2.0 (VCDM). " ;
+                                                                        rdfs:label "VerifiableCredential" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/WebRenderingTemplate2022
+<https://test.uncefact.org/vocabulary/untp/core/0/WebRenderingTemplate2022> rdf:type owl:Class ;
+                                                                            rdfs:comment "A simple (though non-standard) embedded template." ;
+                                                                            rdfs:label "WebRenderingTemplate2022" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> rdf:type owl:Class ;
+                                                                       rdfs:comment "Type of authority endorsement of the assessment process" ;
+                                                                       rdfs:label "assessmentLevelCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> rdf:type owl:Class ;
+                                                                     rdfs:comment "Code that describes the level of independent assurance of the specific assessment" ;
+                                                                     rdfs:label "assessorLevelCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> rdf:type owl:Class ;
+                                                                       rdfs:comment "A code for the type of the attestation credential" ;
+                                                                       rdfs:label "attestationTypeCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> rdf:type owl:Class ;
+                                                                       rdfs:comment "A high level category scheme for product and facility conformity declarations (claims or attestations)" ;
+                                                                       rdfs:label "conformityTopicCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/countryCode
+<https://test.uncefact.org/vocabulary/untp/core/0/countryCode> rdf:type owl:Class ;
+                                                               rdfs:comment "Country code list." ;
+                                                               rdfs:label "countryCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode
+<https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode> rdf:type owl:Class ;
+                                                                        rdfs:comment "Encryption method code list" ;
+                                                                        rdfs:label "encryptionMethodCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode
+<https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode> rdf:type owl:Class ;
+                                                                  rdfs:comment "Hash method code list" ;
+                                                                  rdfs:label "hashMethodCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/mimeType
+<https://test.uncefact.org/vocabulary/untp/core/0/mimeType> rdf:type owl:Class ;
+                                                            rdfs:comment "IANA multipart media encoding type " ;
+                                                            rdfs:label "mimeType" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode
+<https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode> rdf:type owl:Class ;
+                                                                        rdfs:comment "Code list to indicate scope 3 emissions operational boundaries" ;
+                                                                        rdfs:label "operationalScopeCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/performanceLevelCode
+<https://test.uncefact.org/vocabulary/untp/core/0/performanceLevelCode> rdf:type owl:Class ;
+                                                                        rdfs:comment "Coe list to indicate the performance level (eg A, B, C) at which this criterion is targeted." ;
+                                                                        rdfs:label "performanceLevelCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/statusCode
+<https://test.uncefact.org/vocabulary/untp/core/0/statusCode> rdf:type owl:Class ;
+                                                              rdfs:comment "" ;
+                                                              rdfs:label "statusCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/tagCode
+<https://test.uncefact.org/vocabulary/untp/core/0/tagCode> rdf:type owl:Class ;
+                                                           rdfs:comment "A set of tags that can be used to classify or group criteria" ;
+                                                           rdfs:label "tagCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/topicCode
+<https://test.uncefact.org/vocabulary/untp/core/0/topicCode> rdf:type owl:Class ;
+                                                             rdfs:comment "" ;
+                                                             rdfs:label "topicCode" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/unitOfMeasure
+<https://test.uncefact.org/vocabulary/untp/core/0/unitOfMeasure> rdf:type owl:Class ;
+                                                                 rdfs:comment "UNECE Recommendation 20 Unit of Measure codelist" ;
+                                                                 rdfs:label "unitOfMeasure" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Accredited
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Accredited> rdf:type owl:NamedIndividual ,
+                                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                  rdf:value "Accredited" ;
+                                                                                  rdfs:comment "conformity assessment delivered under an independent accreditation" ;
+                                                                                  rdfs:label "National accreditation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#GlobalMRA
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#GlobalMRA> rdf:type owl:NamedIndividual ,
+                                                                                          <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                 rdf:value "GlobalMRA" ;
+                                                                                 rdfs:comment "conformity assessment delivered under authority granted by IAF/ILAC signatory body" ;
+                                                                                 rdfs:label "Global mutual recognition agreement" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#GovtApproval
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#GovtApproval> rdf:type owl:NamedIndividual ,
+                                                                                             <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                    rdf:value "GovtApproval" ;
+                                                                                    rdfs:comment "conformity assessment delivered under authority granted by national government" ;
+                                                                                    rdfs:label "Government endorsement" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Unspecified
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Unspecified> rdf:type owl:NamedIndividual ,
+                                                                                            <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                   rdf:value "Unspecified" ;
+                                                                                   rdfs:comment "conformity assessment claiming no external authority or else unspecified" ;
+                                                                                   rdfs:label "No endorsement." .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Validated
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Validated> rdf:type owl:NamedIndividual ,
+                                                                                          <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                 rdf:value "Validated" ;
+                                                                                 rdfs:comment "conformity assessment externally validated" ;
+                                                                                 rdfs:label "External validation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Verified
+<https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode#Verified> rdf:type owl:NamedIndividual ,
+                                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/assessmentLevelCode> ;
+                                                                                rdf:value "Verified" ;
+                                                                                rdfs:comment "conformity assessment externally verified" ;
+                                                                                rdfs:label "External verification" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Buyer
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Buyer> rdf:type owl:NamedIndividual ,
+                                                                                    <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                           rdf:value "Buyer" ;
+                                                                           rdfs:comment " conformity assessment by potential purchaser" ;
+                                                                           rdfs:label "Buyer assessment" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Commercial
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Commercial> rdf:type owl:NamedIndividual ,
+                                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                                rdf:value "Commercial" ;
+                                                                                rdfs:comment " conformity assessment by related body or under commercial contract" ;
+                                                                                rdfs:label "Commercial assessment" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Membership
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Membership> rdf:type owl:NamedIndividual ,
+                                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                                rdf:value "Membership" ;
+                                                                                rdfs:comment " conformity assessment by industry representative body or membership body" ;
+                                                                                rdfs:label "Industry body assessment" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Self
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Self> rdf:type owl:NamedIndividual ,
+                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                          rdf:value "Self" ;
+                                                                          rdfs:comment " self-assessment" ;
+                                                                          rdfs:label "Self assessed" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Unspecified
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#Unspecified> rdf:type owl:NamedIndividual ,
+                                                                                          <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                                 rdf:value "Unspecified" ;
+                                                                                 rdfs:comment " conformity assessment by party with unspecified relationship " ;
+                                                                                 rdfs:label "No independent assessment" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#3rdParty
+<https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode#3rdParty> rdf:type owl:NamedIndividual ,
+                                                                                       <https://test.uncefact.org/vocabulary/untp/core/0/assessorLevelCode> ;
+                                                                              rdf:value "3rdParty" ;
+                                                                              rdfs:comment " 3rd party (independent) conformity assessment" ;
+                                                                              rdfs:label "Independent third party assessment" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#calibration
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#calibration> rdf:type owl:NamedIndividual ,
+                                                                                            <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                   rdf:value "calibration" ;
+                                                                                   rdfs:comment "An equipment calibration report" ;
+                                                                                   rdfs:label "calibration" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#certification
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#certification> rdf:type owl:NamedIndividual ,
+                                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                     rdf:value "certification" ;
+                                                                                     rdfs:comment "A formal third party certification of conformity" ;
+                                                                                     rdfs:label "certification" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#declaration
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#declaration> rdf:type owl:NamedIndividual ,
+                                                                                            <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                   rdf:value "declaration" ;
+                                                                                   rdfs:comment "A self assessed declaration of conformity" ;
+                                                                                   rdfs:label "declaration" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#inspection
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#inspection> rdf:type owl:NamedIndividual ,
+                                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                  rdf:value "inspection" ;
+                                                                                  rdfs:comment "An Inspection report " ;
+                                                                                  rdfs:label "inspection" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#testing
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#testing> rdf:type owl:NamedIndividual ,
+                                                                                        <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                               rdf:value "testing" ;
+                                                                               rdfs:comment "A test report" ;
+                                                                               rdfs:label "testing" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#validation
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#validation> rdf:type owl:NamedIndividual ,
+                                                                                           <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                  rdf:value "validation" ;
+                                                                                  rdfs:comment "A validation report" ;
+                                                                                  rdfs:label "validation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#verification
+<https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode#verification> rdf:type owl:NamedIndividual ,
+                                                                                             <https://test.uncefact.org/vocabulary/untp/core/0/attestationTypeCode> ;
+                                                                                    rdf:value "verification" ;
+                                                                                    rdfs:comment "A verification report" ;
+                                                                                    rdfs:label "verification" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#circularity.content
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#circularity.content> rdf:type owl:NamedIndividual ,
+                                                                                                    <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                           rdf:value "circularity.content" ;
+                                                                                           rdfs:comment "claims supporting the use of recycled content in products" ;
+                                                                                           rdfs:label "Circular content" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#circularity.design
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#circularity.design> rdf:type owl:NamedIndividual ,
+                                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                          rdf:value "circularity.design" ;
+                                                                                          rdfs:comment "claims supporting product design for circularity outcomes" ;
+                                                                                          rdfs:label "Circular design" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.biodiversity
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.biodiversity> rdf:type owl:NamedIndividual ,
+                                                                                                         <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                                rdf:value "environment.biodiversity" ;
+                                                                                                rdfs:comment "claims supporting improved biodiversity outcomes" ;
+                                                                                                rdfs:label "Biodiversity" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.deforestation
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.deforestation> rdf:type owl:NamedIndividual ,
+                                                                                                          <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                                 rdf:value "environment.deforestation" ;
+                                                                                                 rdfs:comment "claims supporting native forest restoration" ;
+                                                                                                 rdfs:label "Deforestation" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.emissions
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.emissions> rdf:type owl:NamedIndividual ,
+                                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                             rdf:value "environment.emissions" ;
+                                                                                             rdfs:comment "claims supporting GHG emissions reduction" ;
+                                                                                             rdfs:label "GHG emissions" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.energy
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.energy> rdf:type owl:NamedIndividual ,
+                                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                          rdf:value "environment.energy" ;
+                                                                                          rdfs:comment "claims supporting clean energy transition" ;
+                                                                                          rdfs:label "Clean energy" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.waste
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.waste> rdf:type owl:NamedIndividual ,
+                                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                         rdf:value "environment.waste" ;
+                                                                                         rdfs:comment "claims supporting waste processing and reduction" ;
+                                                                                         rdfs:label "Waste reduction" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.water
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#environment.water> rdf:type owl:NamedIndividual ,
+                                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                         rdf:value "environment.water" ;
+                                                                                         rdfs:comment "claims supporting minimising water usage impact" ;
+                                                                                         rdfs:label "Water usage" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.compliance
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.compliance> rdf:type owl:NamedIndividual ,
+                                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                             rdf:value "governance.compliance" ;
+                                                                                             rdfs:comment "claims supporting regulatory compliance including taxation and community protection" ;
+                                                                                             rdfs:label "Regulatory compliance" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.ethics
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.ethics> rdf:type owl:NamedIndividual ,
+                                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                         rdf:value "governance.ethics" ;
+                                                                                         rdfs:comment "claims supporting ethical conduct and corporate governance" ;
+                                                                                         rdfs:label "Ethics" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.transparency
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#governance.transparency> rdf:type owl:NamedIndividual ,
+                                                                                                        <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                               rdf:value "governance.transparency" ;
+                                                                                               rdfs:comment "claims supporting transparency and traceability" ;
+                                                                                               rdfs:label "Transparency" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.community
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.community> rdf:type owl:NamedIndividual ,
+                                                                                                 <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                        rdf:value "social.community" ;
+                                                                                        rdfs:comment "claims supporting local community development" ;
+                                                                                        rdfs:label "Community development" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.labour
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.labour> rdf:type owl:NamedIndividual ,
+                                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                     rdf:value "social.labour" ;
+                                                                                     rdfs:comment "claims supporting labour rights including fair wages" ;
+                                                                                     rdfs:label "Fair work" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.rights
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.rights> rdf:type owl:NamedIndividual ,
+                                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                     rdf:value "social.rights" ;
+                                                                                     rdfs:comment "claims supporting human rights and anti-discrimination" ;
+                                                                                     rdfs:label "Human rights" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.safety
+<https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode#social.safety> rdf:type owl:NamedIndividual ,
+                                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/conformityTopicCode> ;
+                                                                                     rdf:value "social.safety" ;
+                                                                                     rdfs:comment "claims supporting process and product safety" ;
+                                                                                     rdfs:label "Safety" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode#AES
+<https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode#AES> rdf:type owl:NamedIndividual ,
+                                                                                     <https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode> ;
+                                                                            rdf:value "AES" ;
+                                                                            rdfs:comment "Advanced Encryption Standard (AES)" ;
+                                                                            rdfs:label "AES encrypted" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode#none
+<https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode#none> rdf:type owl:NamedIndividual ,
+                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/encryptionMethodCode> ;
+                                                                             rdf:value "none" ;
+                                                                             rdfs:comment "no encryption" ;
+                                                                             rdfs:label "No encryption" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode#SHA-1
+<https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode#SHA-1> rdf:type owl:NamedIndividual ,
+                                                                                 <https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode> ;
+                                                                        rdf:value "SHA-1" ;
+                                                                        rdfs:comment "Secure Hash Algorithm 160 bits" ;
+                                                                        rdfs:label "SHA 160 bit" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode#SHA-256
+<https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode#SHA-256> rdf:type owl:NamedIndividual ,
+                                                                                   <https://test.uncefact.org/vocabulary/untp/core/0/hashMethodCode> ;
+                                                                          rdf:value "SHA-256" ;
+                                                                          rdfs:comment "Secure Hash Algorithm 256 bits" ;
+                                                                          rdfs:label "SHA 256 bit" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#CradleToGate
+<https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#CradleToGate> rdf:type owl:NamedIndividual ,
+                                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode> ;
+                                                                                     rdf:value "CradleToGate" ;
+                                                                                     rdfs:comment "Includes upstream scope 3 only" ;
+                                                                                     rdfs:label "Cradle to gate" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#CradleToGrave
+<https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#CradleToGrave> rdf:type owl:NamedIndividual ,
+                                                                                               <https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode> ;
+                                                                                      rdf:value "CradleToGrave" ;
+                                                                                      rdfs:comment "includes full lifecycle (upstream and downstream) scope 3" ;
+                                                                                      rdfs:label "Cradle to grave" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#None
+<https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode#None> rdf:type owl:NamedIndividual ,
+                                                                                      <https://test.uncefact.org/vocabulary/untp/core/0/operationalScopeCode> ;
+                                                                             rdf:value "None" ;
+                                                                             rdfs:comment "Scope 1 & 2 only" ;
+                                                                             rdfs:label "Excludes scope 3" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/statusCode#active
+<https://test.uncefact.org/vocabulary/untp/core/0/statusCode#active> rdf:type owl:NamedIndividual ,
+                                                                              <https://test.uncefact.org/vocabulary/untp/core/0/statusCode> ;
+                                                                     rdf:value "active" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/statusCode#deprecated
+<https://test.uncefact.org/vocabulary/untp/core/0/statusCode#deprecated> rdf:type owl:NamedIndividual ,
+                                                                                  <https://test.uncefact.org/vocabulary/untp/core/0/statusCode> ;
+                                                                         rdf:value "deprecated" .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/statusCode#proposed
+<https://test.uncefact.org/vocabulary/untp/core/0/statusCode#proposed> rdf:type owl:NamedIndividual ,
+                                                                                <https://test.uncefact.org/vocabulary/untp/core/0/statusCode> ;
+                                                                       rdf:value "proposed" ;
+                                                                       rdfs:comment "" ;
+                                                                       rdfs:label "" .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
