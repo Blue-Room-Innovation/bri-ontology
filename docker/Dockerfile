@@ -25,8 +25,8 @@ RUN mkdir -p /opt/robot \
 WORKDIR /workspace
 
 # Convenience: copy CLI scripts into PATH (they reference mounted repo paths)
-COPY docs/validation/scripts/validate-owl.sh /usr/local/bin/validate-owl
-COPY docs/validation/scripts/validate-shacl.sh /usr/local/bin/validate-shacl
+COPY scripts/validate-owl.sh /usr/local/bin/validate-owl
+COPY scripts/validate-shacl.sh /usr/local/bin/validate-shacl
 RUN chmod +x /usr/local/bin/validate-owl /usr/local/bin/validate-shacl \
   && sed -i 's/\r$//' /usr/local/bin/validate-owl /usr/local/bin/validate-shacl
 
