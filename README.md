@@ -1,49 +1,37 @@
-## Toolkit Ontología DPP
+## Digital Waste Passport Toolkit
 
-Bienvenido. Si nunca has trabajado con ontologías o pasaportes digitales de producto (Digital Product Passport, DPP), este repositorio ofrece una implementación abierta del modelo semántico (OWL/RDF) y sus reglas de validación (SHACL) para describir productos, su ciclo de vida y eventos de trazabilidad. Lo usamos para experimentar con alineaciones internacionales (UN/CEFACT UNTP) y con el estándar de eventos GS1 EPCIS.
+Bienvenido. Este repositorio contiene la ontología (OWL/RDF) y shapes (SHACL) para el Pasaporte Digital de Residuos (núcleo) y su extensión MARPOL. Incluye tooling de validación, ejemplos reproducibles y alineaciones opcionales con UNTP y EPCIS.
 
 Resumen rápido:
-- OWL: clases y propiedades (modelo semántico) → ver `docs/05-modelo-datos.md`.
-- SHACL: restricciones sobre instancias → ver `docs/13-shapes-referencia.md`.
-- Scripts de validación: `scripts/validate-owl.sh` y `scripts/validate-shacl.sh`.
-- Ejemplo ejecutable rápido: `docs/04-validacion-express.md`.
+- Modelo (OWL): clases y relaciones núcleo + MARPOL → ver `docs/01-introduccion-modelo.md`.
+- Validación (SHACL): contrato de datos → ver `docs/04-shapes-reglas.md`.
+- Instalación y pruebas inmediatas: `docs/02-instalacion-validacion.md`.
+- Ejemplos válidos / inválidos: `docs/05-ejemplos.md`.
 
-Si solo quieres ver algo funcionando, ve directo a la sección "Quickstart" más abajo.
+Si quieres ejecutar algo ya, salta a Quickstart.
 
-### ¿Qué es un DPP?
-Un Pasaporte Digital de Producto es un conjunto estructurado de datos que acompaña al producto físico durante su ciclo de vida (fabricación, uso, mantenimiento, reciclaje). Permite trazabilidad, transparencia y cumplimiento normativo. Aquí lo expresamos en RDF para interoperabilidad y razonamiento automático.
+### ¿Qué es el Pasaporte Digital de Residuos?
+Credencial verificable con la información clave del residuo y su ciclo de vida. La variante MARPOL añade atributos marítimos (buque, puertos, medios descarga, cantidades a bordo / a entregar).
 
 ---
 
 ### Quickstart (mínimo)
 
-1. Explora el ejemplo completo (TTL):
-```ttl
-@prefix dpp: <https://w3id.org/dpp#> .
-@prefix ex: <https://example.org/product/> .
-
-ex:Producto123 a dpp:Product ;
-    dpp:hasGTIN "12345678901234" ;
-    dpp:hasManufacturer "ACME Corp" ;
-    dpp:hasMaterial [ a dpp:Material ; dpp:materialName "Acero" ] .
+1. Ejecuta validación OWL (merge + reasoning) con Docker:
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-owl
 ```
-
-2. Mira el equivalente JSON-LD simplificado:
-```jsonld
-{
-    "@context": "https://w3id.org/dpp/context.jsonld",
-    "@id": "https://example.org/product/Producto123",
-    "@type": "Product",
-    "hasGTIN": "12345678901234",
-    "hasManufacturer": "ACME Corp",
-    "hasMaterial": {
-        "@type": "Material",
-        "materialName": "Acero"
-    }
-}
+2. Valida ejemplo núcleo (SHACL):
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/digital-waste-passport-sample.ttl"
 ```
+3. Valida ejemplo MARPOL:
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/digital-marpol-waste-passport-sample.ttl"
+```
+4. Revisa resultados (Conforms True/False). Para interpretar violaciones ver `docs/04-shapes-reglas.md`.
 
-Más ejemplos y explicación detallada en `docs/18-validacion-ejemplos.md` y `docs/10-validar-ontologia-y-pasaportes.md`.
+Para más detalles sobre instalación y alternativas nativas: `docs/02-instalacion-validacion.md`.
 
 ---
 
@@ -52,7 +40,7 @@ Más ejemplos y explicación detallada en `docs/18-validacion-ejemplos.md` y `do
 ontology/      # Ontología principal y módulos
 shapes/        # Shapes SHACL
 examples/      # Instancias ejemplo
-docs/          # Documentación numerada (00–20)
+docs/          # Documentación consolidada (01–09 + glosario)
 scripts/       # Scripts de validación
 docker/        # Dockerfile tooling
 build/         # Artefactos generados (merged, reasoned)
@@ -60,33 +48,22 @@ build/         # Artefactos generados (merged, reasoned)
 
 ---
 
-### Documentación numerada (orden recomendado)
-00 Portada y mapa → `docs/00-portada.md`
-01 Introducción → `docs/01-introduccion.md`
-02 Conceptos clave → `docs/02-conceptos-clave.md`
-03 Instalación (Docker) → `docs/03-instalacion.md`
-04 Validación express → `docs/04-validacion-express.md`
-05 Modelo de datos → `docs/05-modelo-datos.md`
-06 Módulos ontología → `docs/06-modulos-ontologia.md`
-07 EPCIS → `docs/07-alineacion-epcis.md`
-08 UNTP → `docs/08-alineacion-untp.md`
-09 Artefactos build → `docs/09-build-artefactos.md`
-10 Validar ontología/pasaportes → `docs/10-validar-ontologia-y-pasaportes.md`
-11 Interpretar resultados → `docs/11-interpretar-resultados.md`
-12 Construcción paso a paso → `docs/12-paso-a-paso-construccion.md`
-13 Shapes referencia → `docs/13-shapes-referencia.md`
-14 IRIs y warnings → `docs/14-iri-warnings.md`
-15 Roadmap → `docs/15-roadmap.md`
-16 Vocabularios/imports → `docs/16-vocabularios-imports.md`
-17 Taxonomías plan → `docs/17-taxonomias-plan.md`
-18 Ejemplos validación → `docs/18-validacion-ejemplos.md`
-19 Contribuir → `docs/19-contribuir.md`
+### Documentación (orden recomendado)
+01 Introducción y modelo → `docs/01-introduccion-modelo.md`
+02 Instalación y validación → `docs/02-instalacion-validacion.md`
+03 Arquitectura y build → `docs/03-arquitectura-build.md`
+04 Shapes y reglas → `docs/04-shapes-reglas.md`
+05 Ejemplos → `docs/05-ejemplos.md`
+06 Alineaciones externas → `docs/06-alineaciones.md`
+07 Vocabularios y warnings → `docs/07-vocabularios-warnings.md`
+08 Contribuir y extender → `docs/08-contribuir-extender.md`
+09 Roadmap y taxonomías → `docs/09-roadmap.md`
 20 Glosario → `docs/20-glosario.md`
 
 ---
 
 ### Contribuir
-Flujo: leer 12 → editar ontología/shapes → validar (10/11) → abrir PR con motivación y ejemplos.
+Flujo: seguir `docs/08-contribuir-extender.md` → validar (`docs/02` / `docs/04`) → abrir PR con motivación y ejemplos actualizados.
 
 ### Notas técnicas
 - Stubs externos: `ontology/external-declarations.ttl` (ver 14).
@@ -99,6 +76,8 @@ Indica aquí la licencia (añadir si se define). Si reutilizas, cita la fuente y
 ---
 
 ### Próximos pasos sugeridos
-1. Leer 05 (modelo de datos).
-2. Ejecutar 04 (validación express).
-3. Seguir 12 para extender.
+1. Leer `docs/01-introduccion-modelo.md`.
+2. Ejecutar validaciones (`docs/02-instalacion-validacion.md`).
+3. Revisar shapes (`docs/04-shapes-reglas.md`).
+4. Mirar ejemplos (`docs/05-ejemplos.md`).
+5. Extender según guía (`docs/08-contribuir-extender.md`).

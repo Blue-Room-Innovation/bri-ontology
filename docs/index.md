@@ -1,20 +1,20 @@
-# Documentación Digital Waste Passport Toolkit
+# Digital Waste Passport Toolkit
 
-Portada reducida. Para una guía secuencial usa `00-portada.md`.
+Guía compacta y secuencial para alguien sin contexto previo. Sigue el orden numerado.
 
-Secciones principales:
-- Introducción y conceptos: `01-introduccion.md`, `02-conceptos-clave.md`
-- Instalación / validación rápida: `03-instalacion.md`, `04-validacion-express.md`
-- Modelo y módulos: `05-modelo-datos.md`, `06-modulos-ontologia.md`
-- Alineaciones: `07-alineacion-epcis.md`, `08-alineacion-untp.md`
-- Validar / interpretar: `10-validar-ontologia-y-pasaportes.md`, `11-interpretar-resultados.md`
-- Shapes referencia: `13-shapes-referencia.md`
-- Roadmap y contribución: `15-roadmap.md`, `19-contribuir.md`
-- Glosario: `20-glosario.md`
+1. `01-introduccion-modelo.md` Qué es, objetivos, visión rápida del modelo (núcleo + MARPOL) y conceptos clave mínimos.
+2. `02-instalacion-validacion.md` Instalar entorno (Docker / nativo) y validar OWL + SHACL en 2 minutos.
+3. `03-arquitectura-build.md` Cómo se organizan los módulos, proceso de build y artefactos merged / reasoned.
+4. `04-shapes-reglas.md` Contrato de datos: resumen de NodeShapes y propiedades obligatorias.
+5. `05-ejemplos.md` Pasaportes válidos e inválidos (TTL / JSON-LD) y cómo ejecutarlos.
+6. `06-alineaciones.md` Correspondencias con UNTP, EPCIS y criterios para alinear vs mapear.
+7. `07-vocabularios-warnings.md` Gestión de vocabularios externos (stubs, imports, warnings de IRIs).
+8. `08-contribuir-extender.md` Flujo para añadir clases/propiedades, actualizar shapes y preparar PR.
+9. `09-roadmap.md` Próximas líneas + taxonomías pendientes.
 
-Ejemplos:
-- Waste: `examples/digital-waste-passport-sample.ttl`
+Ejemplos rápidos:
+- Núcleo: `examples/digital-waste-passport-sample.ttl`
 - MARPOL: `examples/digital-marpol-waste-passport-sample.ttl`
 
-Para empezar ya: ve a `01-introduccion.md`.
+Empieza en `01-introduccion-modelo.md`.
 
