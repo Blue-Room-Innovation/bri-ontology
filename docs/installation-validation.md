@@ -1,30 +1,29 @@
-# 2. Instalación y validación rápida
+# Instalación & Validación (Genérico)
 
-Requisitos Docker: Docker Desktop / Engine.
+Herramientas:
+- Docker image: `bri-ontology-tooling` (ROBOT + pySHACL).
+- Alternativa nativa: Java 17 + Python 3.11.
 
-Imagen tooling (ROBOT + pySHACL): `bri-ontology-tooling`.
-
-Validar OWL (merge + reasoning):
+Validar OWL (merge + reasoning dominios seleccionados):
 ```powershell
 docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-owl
 ```
 
-Validar SHACL (núcleo):
+Validar SHACL (ejemplo core Waste):
 ```powershell
 docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/digital-waste-passport-sample.ttl"
 ```
 
-Validar SHACL (MARPOL):
+Validar SHACL (ejemplo MARPOL):
 ```powershell
 docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/digital-marpol-waste-passport-sample.ttl"
 ```
 
-pySHACL nativo (si tienes Python):
+pySHACL directo:
 ```powershell
 python -m pyshacl -s shapes/waste-shapes.ttl -m rdfs -i examples/digital-waste-passport-sample.ttl
 ```
 
-Resultado esperado en ejemplos válidos: `Conforms: True`.
-Si ves warnings de IRIs externas → ver `07-vocabularios-warnings.md`.
-
-Siguiente: `03-arquitectura-build.md`.
+Salida SHACL:
+- Conforms True → correcto
+- Conforms False → revisar reporte y shapes del dominio

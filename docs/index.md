@@ -3,18 +3,20 @@
 Esta documentación cubre un repositorio genérico que alojará múltiples ontologías y taxonomías. La primera familia disponible es el Pasaporte Digital de Residuos (núcleo + MARPOL). A medida que se añadan nuevos dominios, se registrarán aquí.
 
 ## Navegación principal
-1. `CATALOGO-ONTOLOGIAS.md` Inventario de ontologías: propósito, alcance, madurez, prefijos.
-2. `CATALOGO-TAXONOMIAS.md` ConceptSchemes SKOS y codelists disponibles (códigos, estado, evolución).
-3. `01-introduccion-modelo.md` Visión de la familia Waste Passport (contexto y modelo).
-4. `02-instalacion-validacion.md` Instalación y validación genérica (OWL + SHACL).
-5. `03-arquitectura-build.md` Pipeline, artefactos y convenciones de modularización.
-6. `04-shapes-reglas.md` Contrato SHACL y cómo leer los reportes.
-7. `05-ejemplos.md` Instancias válidas / inválidas multi-formato.
-8. `06-alineaciones.md` Estrategia de alineación (UNTP, EPCIS, otros futuros).
-9. `07-vocabularios-warnings.md` Gestión vocabularios externos y política de imports.
-10. `08-contribuir-extender.md` Flujo de extensión y control de calidad.
-11. `09-roadmap.md` Próximas líneas globales (nuevos dominios, taxonomías).
-12. `20-glosario.md` Términos clave unificados.
+Genérico:
+1. `CATALOGO-ONTOLOGIAS.md` Inventario de ontologías.
+2. `CATALOGO-TAXONOMIAS.md` Inventario de taxonomías y codelists.
+3. `overview.md` Visión multi-dominio.
+4. `installation-validation.md` Instalación y validación genérica.
+5. `architecture-build.md` Pipeline y artefactos.
+6. `shapes-contract.md` Principios SHACL transversales.
+7. `08-contribuir-extender.md` Contribución y extensión (flujo general).
+8. `09-roadmap.md` Roadmap global.
+9. `20-glosario.md` Glosario.
+
+Dominios Waste:
+- Core: `domains/digital-waste-passport/overview.md`, `shapes.md`, `examples.md`, `vocabularies.md`, `roadmap.md`
+- MARPOL: `domains/digital-marpol-waste-passport/overview.md`, `shapes.md`, `examples.md`, `vocabularies.md`, `roadmap.md`
 
 ## Familias actuales
 - Waste Passport Core (`digitalWastePassport.ttl`)
@@ -32,5 +34,5 @@ Ejemplos rápidos actuales:
 - Núcleo Waste: `examples/digital-waste-passport-sample.ttl`
 - MARPOL Waste: `examples/digital-marpol-waste-passport-sample.ttl`
 
-Empieza por `CATALOGO-ONTOLOGIAS.md` para visión global o por `01-introduccion-modelo.md` si te interesa Waste.
+Empieza por `CATALOGO-ONTOLOGIAS.md` para visión global o por el core `domains/digital-waste-passport/overview.md` si te interesa Waste.
 
