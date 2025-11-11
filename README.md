@@ -1,17 +1,20 @@
-## Digital Waste Passport Toolkit
+## Ontology & Taxonomy Toolkit
 
-Bienvenido. Este repositorio contiene la ontología (OWL/RDF) y shapes (SHACL) para el Pasaporte Digital de Residuos (núcleo) y su extensión MARPOL. Incluye tooling de validación, ejemplos reproducibles y alineaciones opcionales con UNTP y EPCIS.
+Repositorio genérico para múltiples ontologías de pasaportes digitales y taxonomías asociadas. La primera familia incorporada es el Pasaporte Digital de Residuos (núcleo + MARPOL). Se añadirán más dominios (energía, agua, circularidad de activos) siguiendo la misma gobernanza.
 
 Resumen rápido:
-- Modelo (OWL): clases y relaciones núcleo + MARPOL → ver `docs/01-introduccion-modelo.md`.
-- Validación (SHACL): contrato de datos → ver `docs/04-shapes-reglas.md`.
-- Instalación y pruebas inmediatas: `docs/02-instalacion-validacion.md`.
-- Ejemplos válidos / inválidos: `docs/05-ejemplos.md`.
+- Catálogo ontologías → `docs/CATALOGO-ONTOLOGIAS.md`.
+- Catálogo taxonomías / codelists → `docs/CATALOGO-TAXONOMIAS.md`.
+- Modelo Waste (núcleo + MARPOL) → `docs/01-introduccion-modelo.md`.
+- Validación (SHACL) → `docs/04-shapes-reglas.md`.
+- Instalación genérica → `docs/02-instalacion-validacion.md`.
+- Ejemplos → `docs/05-ejemplos.md`.
 
-Si quieres ejecutar algo ya, salta a Quickstart.
+### ¿Qué es una ontología en este toolkit?
+Representa el modelo semántico de una credencial o dominio (clases, propiedades, alineaciones externas) versionado y validable. Cada ontología se publica con su prefijo base y registro en el catálogo.
 
 ### ¿Qué es el Pasaporte Digital de Residuos?
-Credencial verificable con la información clave del residuo y su ciclo de vida. La variante MARPOL añade atributos marítimos (buque, puertos, medios descarga, cantidades a bordo / a entregar).
+Credencial verificable con la información clave de un residuo o lote. La extensión MARPOL añade elementos regulatorios marítimos (buque, puertos, medios descarga, cantidades). Se apoya en codelists SKOS y shapes SHACL para garantizar conformidad.
 
 ---
 
@@ -63,21 +66,24 @@ build/         # Artefactos generados (merged, reasoned)
 ---
 
 ### Contribuir
-Flujo: seguir `docs/08-contribuir-extender.md` → validar (`docs/02` / `docs/04`) → abrir PR con motivación y ejemplos actualizados.
+Flujo general: crear rama → añadir/editar ontología o taxonomía → actualizar catálogos → añadir/ajustar shapes → validar (OWL + SHACL) → actualizar ejemplos → abrir PR con motivación y evidencias.
+Guía detallada: `docs/08-contribuir-extender.md`.
 
 ### Notas técnicas
-- Stubs externos: `ontology/external-declarations.ttl` (ver 14).
-- Scripts estandarizados: `scripts/validate-owl.sh`, `scripts/validate-shacl.sh`.
-- `build/` se regenera; no editar manualmente.
+- Prefijos coherentes por dominio (`https://ontology.circularpass.io/<slug>/`).
+- Stubs/vocabularios externos: ver política en `docs/07-vocabularios-warnings.md`.
+- Scripts: `scripts/validate-owl.sh` y `scripts/validate-shacl.sh` (contenidos en imagen Docker).
+- Artefactos de reasoning NO son ontología canónica.
 
 ### Licencia y reutilización
-Indica aquí la licencia (añadir si se define). Si reutilizas, cita la fuente y enlaza este repositorio.
+Indicar licencia (pendiente). Para reutilización: mantener prefijos y citar el catálogo correspondiente. Cambios mayores → abrir issue para debatir gobernanza.
 
 ---
 
 ### Próximos pasos sugeridos
-1. Leer `docs/01-introduccion-modelo.md`.
-2. Ejecutar validaciones (`docs/02-instalacion-validacion.md`).
-3. Revisar shapes (`docs/04-shapes-reglas.md`).
-4. Mirar ejemplos (`docs/05-ejemplos.md`).
-5. Extender según guía (`docs/08-contribuir-extender.md`).
+1. Revisar catálogos (`docs/CATALOGO-ONTOLOGIAS.md`, `docs/CATALOGO-TAXONOMIAS.md`).
+2. Leer modelo Waste (`docs/01-introduccion-modelo.md`).
+3. Ejecutar validaciones (`docs/02-instalacion-validacion.md`).
+4. Analizar shapes (`docs/04-shapes-reglas.md`).
+5. Explorar ejemplos (`docs/05-ejemplos.md`).
+6. Contribuir siguiendo (`docs/08-contribuir-extender.md`).
