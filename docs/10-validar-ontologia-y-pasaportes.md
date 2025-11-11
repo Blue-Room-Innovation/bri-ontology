@@ -13,7 +13,7 @@ docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "valid
 
 Modo nativo:
 - ROBOT (ver `04-validacion-express.md`).
-- pySHACL directo: `python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/digital-waste-passport-sample.ttl`
+- pySHACL directo: `python -m pyshacl -s shapes/waste-shapes.ttl -m rdfs -i examples/digital-waste-passport-sample.ttl`
 
 Consejo: primero OWL (estructura), luego SHACL (instancias concretas).
 

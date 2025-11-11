@@ -7,7 +7,7 @@ Archivos y roles actuales:
 - `ontology/external-declarations.ttl`: stubs mínimos (IRIs externas para reducir warnings).
 - `ontology/codelists/*.ttl`: esquemas SKOS importados (códigos de tipo/subtipo residuo, medios descarga, ISO país, UN/LOCODE, tipo entrega).
 
-Build (`validate-owl`): merge núcleo + extensión(es) + codelists → reasoning → artefactos (`build/dpp-merged.ttl`, `build/dpp-reasoned.ttl`). Renombrado pendiente.
+Build (`validate-owl`): merge núcleo + extensión(es) + codelists → reasoning → artefactos (`build/waste-merged.ttl`, `build/waste-reasoned.ttl`).
 
 Buenas prácticas:
 - Declarar clases estables en el núcleo.

@@ -1,6 +1,6 @@
 # 0. Portada y Mapa
 
-Bienvenido al toolkit del Pasaporte Digital de Residuos (Digital Waste Passport, DWP) y su variante MARPOL (Digital Marpol Waste Passport, DMWP). 
+Bienvenido al toolkit del Pasaporte Digital de Residuos (Digital Waste Passport, DWP) y su variante MARPOL (Digital Marpol Waste Passport, DMWP). Los artefactos y shapes ya usan nombres nuevos (`waste-merged.ttl`, `waste-reasoned.ttl`, `waste-shapes.ttl`).
 
 1. `01-introduccion.md` Qué es y por qué existe (residuos, trazabilidad, regulación).
 2. `02-conceptos-clave.md` Mapa mental rápido del dominio (Waste, WastePassport, credencial).
@@ -10,7 +10,7 @@ Bienvenido al toolkit del Pasaporte Digital de Residuos (Digital Waste Passport,
 6. `06-modulos-ontologia.md` División en archivos (núcleo y MARPOL, codelists).
 7. `07-alineacion-epcis.md` Eventos de trazabilidad GS1 EPCIS (si se usan para movimientos / entregas).
 8. `08-alineacion-untp.md` Correspondencia con vocabularios UNTP (VerifiableCredential, ProductPassport).
-9. `09-build-artefactos.md` Artefactos merged/reasoned (nombres heredados todavía con prefijo dpp).
+9. `09-build-artefactos.md` Artefactos merged/reasoned (renombrados a waste-*).
 10. `10-validar-ontologia-y-pasaportes.md` OWL+SHACL juntos.
 11. `11-interpretar-resultados.md` Informes y warnings.
 12. `12-paso-a-paso-construccion.md` Añadir/editar clases y propiedades de waste.

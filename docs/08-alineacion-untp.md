@@ -7,4 +7,3 @@ Equivalencias núcleo (cuando aplican):
 
 MARPOL (extensión): clases como `ResidueInformation`, `Ship` no tienen equivalentes directos; mapear vía SKOS (`skos:closeMatch` / `skos:related`) si se establecen en UNTP futuras.
 
-Recomendación: usar equivalencias OWL solo si semántica exacta. Si hay diferencias contextuales (ej. restricciones MARPOL), optar por SKOS mappings.
