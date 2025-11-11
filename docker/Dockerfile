@@ -2,18 +2,19 @@ FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openjdk-17-jre-headless \
-    python3 \
-    python3-venv \
-    curl \
-    ca-certificates \
+  openjdk-17-jre-headless \
+  python3 \
+  python3-venv \
+  curl \
+  ca-certificates \
+  graphviz \
   && rm -rf /var/lib/apt/lists/*
 
 # Install pySHACL into venv
 RUN python3 -m venv /opt/venv \
   && . /opt/venv/bin/activate \
   && pip install --no-cache-dir --upgrade pip \
-  && pip install --no-cache-dir pyshacl rdflib
+  && pip install --no-cache-dir pyshacl rdflib graphviz
 ENV PATH="/opt/venv/bin:${PATH}"
 
 # Install ROBOT

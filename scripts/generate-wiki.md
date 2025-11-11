@@ -28,6 +28,9 @@ Parámetros opcionales:
 | `--ontology-dir` | Directorio donde buscar `.ttl` | `ontology` |
 | `--output-dir` | Directorio destino de la wiki | `wiki` |
 | `--include-codelists` | Incluye archivos en `ontology/codelists` | `False` |
+| `--generate-diagrams` | Genera diagrama Graphviz por ontología | `False` |
+| `--diagram-format` | Formato (png/svg) | `png` |
+| `--diagram-max-classes` | Máx clases para intentar diagrama | `150` |
 
 Ejemplos:
 
@@ -37,6 +40,9 @@ python scripts/generate-wiki.py
 
 # Incluir codelists
 python scripts/generate-wiki.py --include-codelists
+
+# Generar diagramas en SVG
+python scripts/generate-wiki.py --generate-diagrams --diagram-format svg
 
 # Cambiar directorio de salida
 python scripts/generate-wiki.py --output-dir docs/wiki
@@ -48,8 +54,9 @@ Estructura típica:
 ```
 wiki/
   index.md               # Tabla resumen global
-  digitalWastePassport/  # Un subdirectorio por ontología
-    README.md            # Detalle de clases y propiedades
+  digitalWastePassport/
+    README.md            # Detalle de clases y propiedades + referencia al diagrama (si generado)
+    diagram.png|svg      # Diagrama de clases y propiedades de objeto
   digitalMarpolWastePassport/
     README.md
 ```
@@ -68,7 +75,7 @@ Cada `README.md` incluye:
 
 ## Extensiones Futuras (Ideas)
 - Extracción de restricciones (owl:Restriction) para documentar dominios más precisos.
-- Generar diagrama simple (p.ej. usando Graphviz) de relaciones principales.
+- Mostrar propiedades de datos (datatype) en el diagrama como anotaciones.
 - Exportar también a HTML.
 - Añadir resumen de vocabularios controlados (codelists) con los códigos SKOS.
 
