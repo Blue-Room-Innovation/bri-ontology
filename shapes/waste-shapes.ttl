@@ -60,17 +60,18 @@ dmwp:MarpolWasteShape a sh:NodeShape ;
   sh:property [ sh:path dmwp:ship ; sh:minCount 1 ; sh:class dmwp:Ship ] ;
   sh:property [ sh:path dmwp:residue ; sh:minCount 1 ; sh:class dmwp:ResidueInformation ] ;
   sh:property [ sh:path dmwp:lastDeliveryDate ; sh:minCount 0 ; sh:datatype xsd:dateTime ] ;
-  sh:property [ sh:path dmwp:arrivalPort ; sh:minCount 0 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path dmwp:nextPlannedDeliveryPort ; sh:minCount 0 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:arrivalPort ; sh:minCount 0 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ] ; # UN/LOCODE pattern
+  sh:property [ sh:path dmwp:nextPlannedDeliveryPort ; sh:minCount 0 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ] ; # UN/LOCODE pattern
   sh:property [ sh:path dmwp:wasteAgent ; sh:minCount 0 ; sh:class dmwp:AuthorizedParty ] ;
   sh:closed false .
 
 dmwp:ResidueInformationShape a sh:NodeShape ;
   sh:targetClass dmwp:ResidueInformation ;
   sh:name "Residue Information"@es ;
-  sh:property [ sh:path dmwp:typeCode ; sh:minCount 1 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path dmwp:subtypeCode ; sh:minCount 0 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path dmwp:dischargeMeans ; sh:minCount 0 ; sh:datatype xsd:string ] ;
+  # Enumeraciones desde vocabularios SKOS (inline por simplicidad)
+  sh:property [ sh:path dmwp:typeCode ; sh:minCount 1 ; sh:datatype xsd:string ; sh:in ( "ZTH" "ZTE" "ZTR" "ZTW" ) ] ;
+  sh:property [ sh:path dmwp:subtypeCode ; sh:minCount 0 ; sh:datatype xsd:string ; sh:in ( "ZTH01" "ZTE02" "ZTR03" "ZTW04" ) ] ;
+  sh:property [ sh:path dmwp:dischargeMeans ; sh:minCount 0 ; sh:datatype xsd:string ; sh:in ( "ZTE" "ZTD" "ZTC" "ZTB" ) ] ;
   sh:or (
     [ sh:property [ sh:path dmwp:quantityToDeliver ; sh:minCount 1 ; sh:class untp:Measure ] ]
     [ sh:property [ sh:path dmwp:quantityRemainingOnBoard ; sh:minCount 1 ; sh:class untp:Measure ] ]
@@ -98,7 +99,7 @@ dmwp:InvolvedPartyShape a sh:NodeShape ;
   sh:property [ sh:path dmwp:role ; sh:minCount 0 ] ;
   sh:closed false .
 
-# TODO (validación codelists paso 3): añadir sh:in / SPARQL constraints para typeCode, subtypeCode, dischargeMeans, arrivalPort, nextPlannedDeliveryPort, flag.
+# Validación codelists aplicada (typeCode, subtypeCode, dischargeMeans, arrivalPort/nextPlannedDeliveryPort patrones). Pendiente futura validación referenciada ISO3166 y UN/LOCODE con conceptos explícitos.
 # =============================================================
 # FIN SHAPES Waste / MARPOL
 # =============================================================
