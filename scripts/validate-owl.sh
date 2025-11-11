@@ -104,30 +104,43 @@ if command -v robot >/dev/null 2>&1; then
   robot "${ARGS[@]}"
   MERGE_STATUS=$?
   set -e
-  if [[ $MERGE_STATUS -ne 0 ]]; then warn "[OWL] Merge con warnings (status $MERGE_STATUS)."; OWL_WARN=1; fi
+  # Si el merge falla o no genera el archivo, abortamos para evitar excepciones posteriores.
+  if [[ $MERGE_STATUS -ne 0 || ! -s "$MERGED_FILE" ]]; then
+    warn "[OWL] Merge fallido o sin salida. No existe '$MERGED_FILE'. Código: $MERGE_STATUS"
+    exit $MERGE_STATUS
+  fi
 
   set +e
   robot validate-profile --input "$MERGED_FILE" --profile "$PROFILE"
   PROFILE_STATUS=$?
   set -e
-  if [[ $PROFILE_STATUS -ne 0 ]]; then warn "[OWL] Profile ($PROFILE) con issues."; OWL_WARN=1; fi
+  if [[ $PROFILE_STATUS -ne 0 ]]; then
+    warn "[OWL] Profile ($PROFILE) con issues (exit $PROFILE_STATUS)."
+  else
+    log "[OWL] Profile ($PROFILE) OK."
+  fi
 
   if [[ "$REASONER" != "none" ]]; then
     set +e
     robot reason --input "$MERGED_FILE" --reasoner "$REASONER" --equivalent-classes-allowed all --output "$REASONED_FILE"
     REASON_STATUS=$?
     set -e
-    if [[ $REASON_STATUS -ne 0 ]]; then warn "[OWL] Razonamiento con issues (status $REASON_STATUS)."; OWL_WARN=1; fi
+    if [[ $REASON_STATUS -ne 0 || ! -s "$REASONED_FILE" ]]; then
+      warn "[OWL] Razonamiento fallido o sin salida. Código: $REASON_STATUS"
+      exit $REASON_STATUS
+    else
+      log "[OWL] Razonamiento OK.";
+    fi
   else
     log "[OWL] Saltando razonamiento (--reasoner none)"
   fi
 
-  if [[ $OWL_WARN -eq 1 ]]; then
-    warn "[OWL] Completado con warnings. Revisar salida."; exit 0
-  else
-    log "[OWL] Validación OK."
-    exit 0
+  # Salimos con el peor código (profile puede haber fallado) si hubo algún problema.
+  if [[ $PROFILE_STATUS -ne 0 ]]; then
+    exit $PROFILE_STATUS
   fi
+  log "[OWL] Validación completa sin errores fatales."
+  exit 0
 fi
 
 if command -v riot >/dev/null 2>&1; then
