@@ -46,39 +46,63 @@ Actualiza la imagen solo cuando:
 Consejo: si solo cambias ontologías (`ontology/*.ttl`), shapes o ejemplos, NO necesitas reconstruir la imagen; basta con montar el volumen.
 
 ### 1. Validación SHACL puntual (un ejemplo vs reglas)
+Comando básico (usa shapes y extras auto-descubiertos):
 ```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/digital-waste-passport-sample.ttl"
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl"
+```
+
+Ejemplo con formato JSON-LD y sin extras auto (solo shapes):
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh --data examples/digital-waste-passport-sample.ttl --no-extras --format json-ld"
+```
+
+Ejemplo especificando extras concretos:
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl -e ontology/digitalWastePassport.ttl,ontology/codelists/unlocode.ttl"
 ```
 Salida esperada contiene:
 - `Conforms True` → todo correcto.
 - O lista de violaciones con `path`, `message` y `focusNode`.
 
-### 2. Pipeline completa (ontologías + reasoning + reportes)
+### 2. Validación y razonamiento OWL (merge + profile + reasoner)
+Comando por defecto (descubre ontologías, excluye codelists, perfil DL, razonador HermiT):
 ```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling validate-owl
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh"
+```
+
+Incluir codelists y usar ELK:
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh --include-codelists --reasoner ELK"
+```
+
+Solo validar perfil, sin razonamiento:
+```powershell
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh --reasoner none"
 ```
 Genera carpeta `build/` con artefactos:
 | Archivo | Descripción |
 |---------|-------------|
-| `merged.ttl` | Ontologías fusionadas |
-| `inferred.ttl` | Tripletas inferidas vía razonamiento |
-| `report-shacl.ttl` / `.json` | Resultado detallado de validación |
-| `stats.txt` | Métricas (tripletas, clases, propiedades) |
+| `merged-ontology.ttl` | Ontologías fusionadas (si merge OK o con warnings) |
+| `reasoned-ontology.ttl` | Ontología razonada (omitido si `--reasoner none`) |
+
+Nota: El script no produce informes SHACL; para eso usar `scripts/validate-shacl.sh`.
 
 ### 3. Validar otro ejemplo
-(Reemplaza nombre de archivo)
+Reemplaza el nombre de archivo (manteniendo flags que necesites):
 ```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "validate-shacl examples/mi-dominio-sample.ttl"
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/mi-dominio-sample.ttl"
 ```
 
 ## Interpretar Resultados
 | Indicador | Significado | Acción sugerida |
 |-----------|-------------|-----------------|
 | `Conforms True` | Ejemplo cumple | Nada; opcional añadir nuevo caso de prueba |
-| `Conforms False` | Hay violaciones | Revisar cada `sh:message` y propiedad faltante |
-| Ontology parse error | Sintaxis errónea TTL | Ver líneas cercanas; validar con un parser RDF |
-| Código no encontrado | Valor no pertenece a codelist | Añadir a codelist (si procede) o corregir valor |
-| Tipo incorrecto | Literal con tipo distinto | Ajustar `xsd:` o el shape | 
+| `Conforms False` | Hay violaciones SHACL | Revisar cada `sh:message` y propiedad faltante |
+| Merge warnings (OWL) | Import no resolvible / triple no OWL | Revisar IRIs import, limpiar triples ajenos a OWL |
+| Profile issues | Construct fuera del perfil DL | Ajustar axiomas o cambiar a `--profile OWL2` |
+| Reasoner issues | Posible inconsistencia | Inspeccionar clases equivalentes a `owl:Nothing` |
+| Código no encontrado | Valor no pertenece a codelist | Añadir al codelist o corregir valor |
+| Tipo incorrecto | Literal con tipo distinto | Ajustar `xsd:` o el shape |
 
 ## Errores Frecuentes y Solución
 | Problema | Causa Común | Fix Rápido |
