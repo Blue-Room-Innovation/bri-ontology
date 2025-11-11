@@ -1,20 +1,20 @@
-# Documentación DPP Toolkit
+# Documentación Digital Waste Passport Toolkit
 
-Bienvenido. Esta es la portada de la documentación.
+Portada reducida. Para una guía secuencial usa `00-portada.md`.
 
-- ¿Nuevo aquí? Empieza por `getting-started/overview.md` y `getting-started/quick-validation.md`.
-- ¿Quieres entender el modelo? Lee `concepts/data-model.md` y los alineamientos (`concepts/epcis-alignment.md`, `concepts/untp-alignment.md`).
-- ¿Buscas referencia? Consulta `reference/shapes.md`, `reference/ontology.md`, `reference/iri-warnings.md`.
-- ¿Necesitas recetas? Pasa por `guides/validar-ontologia.md`, `guides/build.md`, `guides/interpretar-resultados.md`.
+Secciones principales:
+- Introducción y conceptos: `01-introduccion.md`, `02-conceptos-clave.md`
+- Instalación / validación rápida: `03-instalacion.md`, `04-validacion-express.md`
+- Modelo y módulos: `05-modelo-datos.md`, `06-modulos-ontologia.md`
+- Alineaciones: `07-alineacion-epcis.md`, `08-alineacion-untp.md`
+- Validar / interpretar: `10-validar-ontologia-y-pasaportes.md`, `11-interpretar-resultados.md`
+- Shapes referencia: `13-shapes-referencia.md`
+- Roadmap y contribución: `15-roadmap.md`, `19-contribuir.md`
+- Glosario: `20-glosario.md`
 
-Enlaces rápidos:
-- Validar un ejemplo SHACL en 30s: `getting-started/quick-validation.md`
-- Instalación (nativa/Docker): `getting-started/installation.md`
-- Ejemplos SHACL: `validation/shacl-examples.md`
+Ejemplos:
+- Waste: `examples/digital-waste-passport-sample.ttl`
+- MARPOL: `examples/digital-marpol-waste-passport-sample.ttl`
 
-Meta y roadmap:
-- Roadmap: `roadmap/roadmap.md`
-- Cambios: `meta/changelog.md`
-- Contribuir: `meta/contributing.md`
-- Glosario: `meta/glossary.md`
+Para empezar ya: ve a `01-introduccion.md`.
 

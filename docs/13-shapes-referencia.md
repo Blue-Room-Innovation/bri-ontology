@@ -1,13 +1,15 @@
 # 13. Shapes referencia
 
-Reglas núcleo:
-- `DigitalProductPassport`: requiere emisión (`dct:issued`), estándar (`dct:conformsTo`), relación con producto y ≥1 identificador.
-- `Product`: exige `schema:name` + identificador (GTIN/serial/mpn) y fabricante.
-- `Identifier`: necesita al menos un dato (`gtin` / `serialNumber` / `mpn`).
-- `LifecycleEvent`: fecha inicio + agente asociado.
+Reglas núcleo (Waste Passport):
+- `DigitalWastePassport`: requiere `dct:issued`, `credentialSubject`, issuer (`dct:publisher` o equivalente) y referencia `waste` indirecta vía WastePassport.
+- `WastePassport`: exige relación `waste` y mínimo un atributo identificador del residuo (ej. código de tipo).
+- `Waste`: debe incluir al menos `schema:name` y clasificación (`typeCode` + opcional `subtypeCode`).
 
-Extensiones:
-- Scorecards: huella de carbono + unidad declarada, indicadores de circularidad.
-- EPCIS: `eventTime` + `bizStep` obligatorios; ObjectEvent con EPCs.
+MARPOL:
+- `DigitalMarpolWastePassport` / `MarpolWastePassport`: mismas reglas núcleo + presencia de `waste` hacia `MarpolWaste`.
+- `ResidueInformation`: cantidad (`quantityToDeliver` o `estimatedGenerated`), método (`dischargeMeans`), tipo (`typeCode`).
+- `Ship`: `imoNumber`, `flag`, `name` mínimos.
 
-Usar shapes como contrato para datos de entrada. Si falta algo, SHACL te lo dirá.
+Eventos EPCIS (si aplican): `eventTime` + `bizStep` obligatorios; ObjectEvent con lista de EPCs.
+
+Uso: shapes = contrato validable. Cualquier ausencia dispara violaciones SHACL (`sh:minCount`, `sh:in`, `sh:datatype`).

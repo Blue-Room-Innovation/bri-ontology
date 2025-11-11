@@ -1,21 +1,21 @@
 # 16. Vocabularios e imports
 
 Opciones:
-- Mantener stubs (simple, offline, sin semántica rica).
-- Import completo (más axiomas, más peso).
-- Subset vía ROBOT `extract` (equilibrio tamaño/semántica).
+- Stubs: simple, offline, sin semántica rica.
+- Import completo: añade axiomas (jerarquías, domain/range) pero aumenta peso.
+- Subset ROBOT `extract`: equilibrio tamaño / semántica.
 
-Migrar cuando: necesitas inferencias externas o muchos stubs del mismo vocabulario.
+Migrar cuando: necesitas inferencias externas (ej. tipos jerárquicos MARPOL) o volumen alto de IRIs de un vocabulario (UN/LOCODE masivo).
 
-SPARQL para detectar IRIs externas sin declaración:
+SPARQL para detectar IRIs externas sin declaración (ajustado al nuevo prefijo):
 ```sparql
 SELECT DISTINCT ?iri WHERE {
   ?s ?p ?iri . FILTER(isIRI(?iri))
-  FILTER(!STRSTARTS(STR(?iri), "https://w3id.org/dpp#"))
+  FILTER(!STRSTARTS(STR(?iri), "https://ontology.circularpass.io/digital-waste-passport"))
   FILTER NOT EXISTS { ?iri a ?t }
 } ORDER BY ?iri
 ```
 
-Camino seguro: inventario → clasificación → piloto → medir impacto → expandir.
+Camino recomendado: inventario → clasificación (codelist vs ontología amplia) → piloto → medir impacto → expandir.
 
 Taxonomías relacionadas: `17-taxonomias-plan.md`.

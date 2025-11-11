@@ -5,11 +5,8 @@ set -euo pipefail
 BUILD_DIR=${BUILD_DIR:-build}
 mkdir -p "$BUILD_DIR"
 INPUT_FILES=(
-  "ontology/dpp.ttl"
-  "ontology/alignments-untp.ttl"
-  "ontology/dpp-extensions.ttl"
-  "ontology/gs1-epcis.ttl"
-  "ontology/external-declarations.ttl"
+  "ontology/digitalWastePassport.ttl"
+  "ontology/digitalMarpolWastePassport.ttl"
 )
 if command -v robot >/dev/null 2>&1; then
   echo "[OWL] Using ROBOT CLI for validation and reasoning"

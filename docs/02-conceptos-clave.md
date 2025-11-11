@@ -1,18 +1,25 @@
 # 2. Conceptos clave
 
-Piensa en el DPP como una ficha enriquecida conectada a un producto físico.
+Piensa en el Digital Waste Passport como un contenedor verificable que describe un residuo específico y sus atributos claves.
 
-Entidades básicas:
-- Producto (`Product`): lo que recibe un pasaporte.
-- Pasaporte (`DigitalProductPassport` / `ProductPassport`): conjunto de metadatos y enlaces a scorecards, identificadores y trazabilidad.
-- Identificador (`Identifier`): números de serie, GTIN, lote.
-- Organización / Instalación: quién fabrica y dónde.
-- Material / Proveniencia: de qué está hecho y de dónde viene.
-- Evento de ciclo de vida (`LifecycleEvent`): hitos relevantes (fabricado, mantenido, reciclado...).
-- Evento EPCIS: granularidad de trazabilidad GS1 (movimientos, transformaciones). Solo si lo necesitas.
-- Scorecards (Circularidad / Emisiones): indicadores cuantitativos.
+Entidades básicas (núcleo):
+- `DigitalWastePassport`: credencial (emisión, vigencia, issuer, referencia al sujeto).
+- `WastePassport` (credentialSubject): estructura interna con datos del residuo.
+- `Waste`: entidad del residuo (tipo, origen, clasificación, relación con regulaciones).
+
+Extensiones MARPOL:
+- `DigitalMarpolWastePassport` / `MarpolWastePassport`: variantes especializadas para requisitos MARPOL.
+- `MarpolWaste`: residuo marítimo con metadatos de viaje y entrega.
+- `ResidueInformation`: detalle por tipo/subtipo, cantidades (generado, a entregar, restante).
+- `Ship`: buque generador (IMO, nombre, bandera ISO 3166-1 alpha2).
+- `AuthorizedParty` / `InvolvedParty`: actores (operador, agente de recogida, autoridad).
+
+Propiedades claves iniciales:
+- `credentialSubject` (DigitalWastePassport → WastePassport / MarpolWastePassport)
+- `waste` (WastePassport → Waste / MarpolWastePassport → MarpolWaste)
+- Códigos: `typeCode`, `subtypeCode`, `deliveryType`, `dischargeMeans`, puertos (`arrivalPort`, `nextPlannedDeliveryPort`, etc.).
 
 Relación mental mínima:
-Pasaporte → describe → Producto → compuesto por → Componentes / Materiales → fabricado en → Instalación → con eventos y métricas.
+DigitalWastePassport → credentialSubject (WastePassport) → waste (Waste) → clasificación y cantidades → actores → puertos / ubicaciones.
 
-Con esto en mente lee `03-instalacion.md` para poner el entorno y validar un ejemplo.
+Con esto en mente pasa a `03-instalacion.md` para montar entorno y validar ejemplos.

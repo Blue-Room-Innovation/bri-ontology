@@ -1,15 +1,20 @@
 # 4. Validación express
 
-Con Docker ya configurado (ver `03-instalacion.md`).
+Con Docker listo (ver `03-instalacion.md`).
 
-OWL + razonamiento:
+OWL + razonamiento (artefactos actuales con prefijo histórico dpp):
 ```powershell
-robot merge --input ontology/dpp.ttl --input ontology/dpp-extensions.ttl --output build/dpp-merged.ttl ; robot reason --input build/dpp-merged.ttl --output build/dpp-reasoned.ttl
+robot merge --input ontology/digitalWastePassport.ttl --input ontology/digitalMarpolWastePassport.ttl --output build/dpp-merged.ttl ; robot reason --input build/dpp-merged.ttl --output build/dpp-reasoned.ttl
 ```
 
-SHACL (pySHACL):
+SHACL (núcleo Waste Passport):
 ```powershell
-python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/product-sample.ttl
+python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/digital-waste-passport-sample.ttl
 ```
 
-Siguiente: entender el modelo en `05-modelo-datos.md`.
+SHACL (variante MARPOL):
+```powershell
+python -m pyshacl -s shapes/dpp-shapes.ttl -m rdfs -i examples/digital-marpol-waste-passport-sample.ttl
+```
+
+Siguiente: modelo de datos en `05-modelo-datos.md`.

@@ -1,12 +1,14 @@
 # 9. Artefactos de build
 
-`build/dpp-merged.ttl`: unión determinista de módulos (solo axiomas afirmados).
-`build/dpp-reasoned.ttl`: merged + inferencias (subclases transitivas, equivalencias desplegadas, etc.).
+`build/dpp-merged.ttl`: unión determinista de módulos (digitalWastePassport + digitalMarpolWastePassport + stubs/codelists).
+`build/dpp-reasoned.ttl`: merged + inferencias (jerarquías desplegadas, consecuencias lógicas de subclases y equivalencias).
 
 Usos:
-- merged: entregar un único archivo, consultas SPARQL limpias.
-- reasoned: inspeccionar consecuencias lógicas, detectar equivalencias accidentales.
+- merged: entregar un único archivo y ejecutar SPARQL sin dependencia de archivos múltiples.
+- reasoned: auditar inferencias (detecta equivalencias accidentales o clases redundantes).
 
-No publicar reasoned como ontología canónica: depende del razonador.
+Nota: prefijo "dpp" es histórico; se renombrará cuando termine la migración completa a Digital Waste Passport.
 
-Ver comandos: `10-validar-ontologia-y-pasaportes.md`.
+No publicar el reasoned como ontología canónica: depende del razonador y versión de herramientas.
+
+Comandos en: `10-validar-ontologia-y-pasaportes.md`.

@@ -1,15 +1,16 @@
 # 17. Taxonomías plan
 
-Faltan esquemas SKOS para:
-- Categoría de producto (`productCategory`).
-- Nivel de granularidad (`granularityLevel`).
-- Alcance operativo (`operationalScope`).
-- (Opcional) Asset taxonomy si catalogamos APIs/datasets.
+Necesidades SKOS (residuos):
+- Clasificación ampliada de residuos (por peligrosidad / origen).
+- Método de tratamiento (incineración, reciclaje, vertido controlado).
+- Estado de manejo (almacenado, en tránsito, entregado).
+- Alcance regulatorio (MARPOL, local, transfronterizo).
 
 Pasos:
-1. Crear `taxonomy/product_category.ttl` etc.
-2. Añadir conceptos mínimos y labels.
-3. Extender shapes: `productCategory` debe ser `skos:Concept` dentro del esquema.
-4. Añadir ejemplos.
+1. Crear `taxonomy/` archivos (ej. `taxonomy/waste_handling_status.ttl`).
+2. Definir esquema (`skos:ConceptScheme`) + 5–10 conceptos iniciales.
+3. Añadir shapes para validar pertenencia a esquema.
+4. Extender ejemplos (añadir estado a MarpolWaste).
+5. Revalidar SHACL y ajustar documentación.
 
-Checklist en este archivo hasta completar implementación.
+Usar este archivo como checklist hasta completar.

@@ -1,13 +1,13 @@
 # 14. IRIs y warnings
 
-Por qué aparecen: validador no sabe si una IRI externa es clase o propiedad.
-Solución: stubs mínimos en `external-declarations.ttl`.
-Cuándo migrar a imports reales: cuando necesitas semántica (domain/range, jerarquías) o muchas IRIs del mismo vocabulario.
+Motivo: el razonador/validador desconoce si una IRI externa (codelist, UNTP, etc.) es clase/propiedad → warning.
+Solución rápida: stubs mínimos en `external-declarations.ttl`.
+Migrar a import completo cuando: necesitas semántica formal (domain/range inferencias) o volumen alto del mismo vocabulario.
 
-Flujo sugerido:
-1. Añade IRI.
-2. Valida OWL.
-3. Si warning molesto → stub.
-4. Si la semántica se vuelve crítica → import/subset.
+Flujo:
+1. Añadir IRI de codelist (ej. `residue-type-code`).
+2. Validar OWL.
+3. Si warning repetitivo → crear stub.
+4. Si se requiere jerarquía o restricciones → realizar import / subset con ROBOT.
 
-Detalles y ejemplos avanzados: `16-vocabularios-imports.md`.
+Más detalles: `16-vocabularios-imports.md`.

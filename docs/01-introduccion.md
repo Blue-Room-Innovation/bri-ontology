@@ -1,13 +1,18 @@
 # 1. Introducción
 
-Un Pasaporte Digital de Producto (Digital Product Passport, DPP) es un conjunto estructurado de datos que acompaña al producto durante todo su ciclo de vida: fabricación, uso, mantenimiento, reciclaje. Su objetivo: trazabilidad, transparencia y soporte a regulaciones (impacto ambiental, circularidad, compliance).
+El Pasaporte Digital de Residuos (Digital Waste Passport, DWP) es una estructura de datos verificable que acompaña a un residuo (o lote de residuos) durante su ciclo de vida: generación, almacenamiento, transporte, tratamiento y descarga final. Objetivos principales: trazabilidad, cumplimiento regulatorio (ambiental / MARPOL), transparencia y soporte a métricas de sostenibilidad.
 
-Este repositorio proporciona:
-- Ontología OWL para describir productos, materiales, eventos y scorecards.
-- Shapes SHACL para validar instancias (pasaportes) con reglas de integridad.
-- Ejemplos (TTL/JSON-LD) y scripts de validación reproducibles (Docker).
-- Guías para extender el modelo y alinear con estándares (EPCIS, UNTP).
+Capas del modelo:
+- Ontología núcleo (`digitalWastePassport.ttl`): define clases centrales (DigitalWastePassport, WastePassport, Waste) y relaciones básicas (`credentialSubject`, `waste`).
+- Ontología MARPOL (`digitalMarpolWastePassport.ttl`): extiende el núcleo para escenarios marítimos (Ship, ResidueInformation, códigos de puerto, medios de descarga, tipos/subtipos de residuo).
+- Codelists importados (ISO3166, UN/LOCODE, residue-type/subtype, delivery-type, discharge-means) para codificación estandarizada.
+- Shapes SHACL (archivo actual `shapes/dpp-shapes.ttl` – pendiente de renombrar) para validar pasaportes y residuos.
+- Ejemplos TTL/JSON-LD para DigitalWastePassport y DigitalMarpolWastePassport reproducibles.
 
-¿Qué NO es todavía? Una plataforma completa de gestión de pasaportes. Es la capa semántica y tooling básico.
+¿Qué NO es? Una plataforma de workflow operativo. Aquí encuentras la capa semántica y tooling mínimo para validar datos.
+
+Relación con estándares:
+- UNTP: se reusa el patrón VerifiableCredential (equivalencias en `08-alineacion-untp.md`).
+- EPCIS: opcional para eventos detallados de movimientos (ver `07-alineacion-epcis.md`).
 
 Siguiente: `02-conceptos-clave.md`.
