@@ -1,20 +1,21 @@
 ## Ontology & Taxonomy Toolkit
 
-Repositorio genérico para múltiples ontologías de pasaportes digitales y taxonomías asociadas. La primera familia incorporada es el Pasaporte Digital de Residuos (núcleo + MARPOL). Se añadirán más dominios (energía, agua, circularidad de activos) siguiendo la misma gobernanza.
+Repositorio genérico para múltiples ontologías de pasaportes digitales y taxonomías asociadas. La primera familia incorporada es la de residuos (Waste Passport núcleo + MARPOL). Más dominios (energía, agua, activos) se añadirán siguiendo la misma gobernanza.
 
 Resumen rápido:
 - Catálogo ontologías → `docs/CATALOGO-ONTOLOGIAS.md`.
-- Catálogo taxonomías / codelists → `docs/CATALOGO-TAXONOMIAS.md`.
-- Modelo Waste (núcleo + MARPOL) → `docs/01-introduccion-modelo.md`.
-- Validación (SHACL) → `docs/04-shapes-reglas.md`.
-- Instalación genérica → `docs/02-instalacion-validacion.md`.
-- Ejemplos → `docs/05-ejemplos.md`.
+- Catálogo taxonomías/codelists → `docs/CATALOGO-TAXONOMIAS.md`.
+- Visión genérica → `docs/generic/overview.md`.
+- Instalación/validación → `docs/generic/installation-validation.md`.
+- Arquitectura build → `docs/generic/architecture-build.md`.
+- Shapes contrato (genérico) → `docs/generic/shapes-contract.md`.
+- Dominio Waste → `docs/domains/waste/overview.md`.
 
 ### ¿Qué es una ontología en este toolkit?
 Representa el modelo semántico de una credencial o dominio (clases, propiedades, alineaciones externas) versionado y validable. Cada ontología se publica con su prefijo base y registro en el catálogo.
 
-### ¿Qué es el Pasaporte Digital de Residuos?
-Credencial verificable con la información clave de un residuo o lote. La extensión MARPOL añade elementos regulatorios marítimos (buque, puertos, medios descarga, cantidades). Se apoya en codelists SKOS y shapes SHACL para garantizar conformidad.
+### Ejemplo: Pasaporte Digital de Residuos
+Credencial verificable con la información clave de un residuo o lote. La extensión MARPOL añade elementos regulatorios marítimos (buque, puertos, medios de descarga, cantidades). Detalle completo en `docs/domains/waste/overview.md`.
 
 ---
 
@@ -51,17 +52,23 @@ build/         # Artefactos generados (merged, reasoned)
 
 ---
 
-### Documentación (orden recomendado)
-01 Introducción y modelo → `docs/01-introduccion-modelo.md`
-02 Instalación y validación → `docs/02-instalacion-validacion.md`
-03 Arquitectura y build → `docs/03-arquitectura-build.md`
-04 Shapes y reglas → `docs/04-shapes-reglas.md`
-05 Ejemplos → `docs/05-ejemplos.md`
-06 Alineaciones externas → `docs/06-alineaciones.md`
-07 Vocabularios y warnings → `docs/07-vocabularios-warnings.md`
-08 Contribuir y extender → `docs/08-contribuir-extender.md`
-09 Roadmap y taxonomías → `docs/09-roadmap.md`
-20 Glosario → `docs/20-glosario.md`
+### Documentación (orden sugerido)
+Genérico:
+1. `docs/CATALOGO-ONTOLOGIAS.md`
+2. `docs/CATALOGO-TAXONOMIAS.md`
+3. `docs/generic/overview.md`
+4. `docs/generic/installation-validation.md`
+5. `docs/generic/architecture-build.md`
+6. `docs/generic/shapes-contract.md`
+7. `docs/08-contribuir-extender.md`
+8. `docs/09-roadmap.md`
+
+Dominio Waste:
+- `docs/domains/waste/overview.md`
+- `docs/domains/waste/shapes.md`
+- `docs/domains/waste/examples.md`
+- `docs/domains/waste/vocabularies.md`
+- `docs/domains/waste/roadmap.md`
 
 ---
 
@@ -81,9 +88,9 @@ Indicar licencia (pendiente). Para reutilización: mantener prefijos y citar el 
 ---
 
 ### Próximos pasos sugeridos
-1. Revisar catálogos (`docs/CATALOGO-ONTOLOGIAS.md`, `docs/CATALOGO-TAXONOMIAS.md`).
-2. Leer modelo Waste (`docs/01-introduccion-modelo.md`).
-3. Ejecutar validaciones (`docs/02-instalacion-validacion.md`).
-4. Analizar shapes (`docs/04-shapes-reglas.md`).
-5. Explorar ejemplos (`docs/05-ejemplos.md`).
-6. Contribuir siguiendo (`docs/08-contribuir-extender.md`).
+1. Catálogos (`docs/CATALOGO-ONTOLOGIAS.md`, `docs/CATALOGO-TAXONOMIAS.md`).
+2. Entender arquitectura genérica (`docs/generic/overview.md`).
+3. Validar entorno (`docs/generic/installation-validation.md`).
+4. Revisar dominio Waste (`docs/domains/waste/overview.md`).
+5. Ejecutar ejemplos (`docs/domains/waste/examples.md`).
+6. Contribuir (`docs/08-contribuir-extender.md`).
