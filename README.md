@@ -33,16 +33,7 @@ ver `docs/00-domains/00-catalogo-ontologias.md`
 Ver `docs/00-domains/00-catalogo-taxonomias.md`
 
 ### 5. Estructura del Repositorio
-```
-ontology/              Ontologías núcleo y extensiones
-ontology/codelists/    Listas controladas SKOS
-shapes/                Shapes SHACL de validación
-examples/              Instancias ejemplo (TTL / JSON-LD)
-docs/                  Documentación temática
-scripts/               Scripts de validación
-docker/                Dockerfile tooling
-build/                 Artefactos generados (merge, inferred, reports)
-```
+Ver `docs/01-overview-estructura.md`
 
 ### 6. Flujo de Uso en una Aplicación
 Ver `docs/02-como-se-usa-la-ontologia-y-para-que.md`
