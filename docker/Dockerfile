@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python3 -m venv /opt/venv \
   && . /opt/venv/bin/activate \
   && pip install --no-cache-dir --upgrade pip \
-  && pip install --no-cache-dir pyshacl
+  && pip install --no-cache-dir pyshacl rdflib
 ENV PATH="/opt/venv/bin:${PATH}"
 
 # Install ROBOT
