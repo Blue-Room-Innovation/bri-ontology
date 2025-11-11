@@ -1,9 +1,3 @@
----
-title: "4. Validación express"
-description: "Primer contacto: validar ontología y un pasaporte en menos de 1 minuto."
-tags: [quickstart, validacion]
----
-
 # 4. Validación express
 
 Con Docker ya configurado (ver `03-instalacion.md`).

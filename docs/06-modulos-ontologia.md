@@ -1,9 +1,3 @@
----
-title: "6. Módulos de ontología"
-description: "Cómo se divide la ontología en archivos y cuándo editar cada uno."
-tags: [modulos, arquitectura]
----
-
 # 6. Módulos de ontología
 
 Archivos y roles:

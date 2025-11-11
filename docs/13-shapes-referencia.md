@@ -1,9 +1,3 @@
----
-title: "13. Shapes referencia"
-description: "Resumen funcional de las reglas SHACL más relevantes."
-tags: [shapes, referencia]
----
-
 # 13. Shapes referencia
 
 Reglas núcleo:

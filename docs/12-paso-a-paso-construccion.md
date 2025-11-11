@@ -1,9 +1,3 @@
----
-title: "12. Construcción paso a paso"
-description: "Procedimiento para añadir clases, propiedades, shapes y ejemplos."
-tags: [edicion, guia]
----
-
 # 12. Construcción paso a paso
 
 Flujo:

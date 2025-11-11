@@ -1,9 +1,3 @@
----
-title: "16. Vocabularios e imports"
-description: "Decidir entre stubs, imports completos o subsets (extract) para vocabularios externos."
-tags: [imports, estrategia]
----
-
 # 16. Vocabularios e imports
 
 Opciones:

@@ -1,9 +1,3 @@
----
-title: "8. Alineación UNTP"
-description: "Correspondencias entre clases y propiedades DPP y vocabularios UNTP."
-tags: [untp, alineacion]
----
-
 # 8. Alineación UNTP
 
 Clases equivalentes (ejemplos):

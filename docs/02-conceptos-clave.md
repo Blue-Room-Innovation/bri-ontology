@@ -1,9 +1,3 @@
----
-title: "2. Conceptos clave"
-description: "Resumen rápido de entidades principales sin jerga técnica pesada."
-tags: [conceptos, resumen]
----
-
 # 2. Conceptos clave
 
 Piensa en el DPP como una ficha enriquecida conectada a un producto físico.

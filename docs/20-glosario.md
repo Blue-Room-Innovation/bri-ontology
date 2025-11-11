@@ -1,9 +1,3 @@
----
-title: "20. Glosario"
-description: "Definiciones básicas de términos usados."
-tags: [glosario]
----
-
 # 20. Glosario
 
 - DPP: Digital Product Passport.

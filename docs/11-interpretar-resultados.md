@@ -1,9 +1,3 @@
----
-title: "11. Interpretar resultados"
-description: "Cómo leer informes de OWL y SHACL y distinguir errores reales de ruido."
-tags: [resultados, diagnostico]
----
-
 # 11. Interpretar resultados
 
 OWL (ROBOT):

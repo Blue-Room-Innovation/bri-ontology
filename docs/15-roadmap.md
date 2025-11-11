@@ -1,9 +1,3 @@
----
-title: "15. Roadmap"
-description: "Líneas de trabajo y prioridades próximas."
-tags: [roadmap]
----
-
 # 15. Roadmap
 
 Prioridades:

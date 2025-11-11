@@ -1,9 +1,3 @@
----
-title: "14. IRIs y warnings"
-description: "Motivo de los warnings por IRIs externas y estrategia de stubs."
-tags: [iri, warnings]
----
-
 # 14. IRIs y warnings
 
 Por qué aparecen: validador no sabe si una IRI externa es clase o propiedad.

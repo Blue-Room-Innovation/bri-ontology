@@ -1,9 +1,3 @@
----
-title: "5. Modelo de datos"
-description: "Vista condensada de clases y relaciones núcleo con diagrama y alineaciones principales."
-tags: [modelo, ontologia]
----
-
 # 5. Modelo de datos (núcleo)
 
 Clases principales: Producto, Pasaporte, Identificador, Material, Organización, Evento de Ciclo de Vida, Documentos, Scorecards, Información de Trazabilidad.

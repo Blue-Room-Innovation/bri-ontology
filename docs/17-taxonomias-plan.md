@@ -1,9 +1,3 @@
----
-title: "17. Taxonomías plan"
-description: "Qué taxonomías SKOS necesitamos y cómo integrarlas con SHACL."
-tags: [taxonomia, skos]
----
-
 # 17. Taxonomías plan
 
 Faltan esquemas SKOS para:

@@ -1,9 +1,3 @@
----
-title: "7. Alineación EPCIS"
-description: "Cómo conectamos DPP con eventos GS1 EPCIS y CBV."
-tags: [epcis, trazabilidad]
----
-
 # 7. Alineación EPCIS
 
 Eventos soportados: Object, Aggregation, Transformation, Transaction.

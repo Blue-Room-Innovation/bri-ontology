@@ -1,9 +1,3 @@
----
-title: "18. Ejemplos de validación"
-description: "Comandos y diferencia entre ejemplos válidos e inválidos (OWL/SHACL)."
-tags: [ejemplos, validacion]
----
-
 # 18. Ejemplos de validación
 
 Archivos:

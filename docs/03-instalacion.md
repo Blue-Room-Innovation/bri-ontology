@@ -1,9 +1,3 @@
----
-title: "3. Instalación"
-description: "Preparar entorno Docker para validar OWL y SHACL."
-tags: [instalacion, docker]
----
-
 # 3. Instalación (Docker)
 
 Requisitos:

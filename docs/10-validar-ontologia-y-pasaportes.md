@@ -1,9 +1,3 @@
----
-title: "10. Validar ontología y pasaportes"
-description: "Guía práctica de validación OWL + SHACL."
-tags: [validar, owl, shacl]
----
-
 # 10. Validar ontología y pasaportes
 
 Scripts Docker:

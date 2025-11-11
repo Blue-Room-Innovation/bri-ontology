@@ -1,9 +1,3 @@
----
-title: "9. Artefactos de build"
-description: "Explica merged vs reasoned y cuándo usar cada uno."
-tags: [build, robot]
----
-
 # 9. Artefactos de build
 
 `build/dpp-merged.ttl`: unión determinista de módulos (solo axiomas afirmados).

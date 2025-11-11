@@ -1,9 +1,3 @@
----
-title: "1. Introducción"
-description: "Visión general: qué es un Pasaporte Digital de Producto y qué ofrece este repo."
-tags: [intro, dpp]
----
-
 # 1. Introducción
 
 Un Pasaporte Digital de Producto (Digital Product Passport, DPP) es un conjunto estructurado de datos que acompaña al producto durante todo su ciclo de vida: fabricación, uso, mantenimiento, reciclaje. Su objetivo: trazabilidad, transparencia y soporte a regulaciones (impacto ambiental, circularidad, compliance).

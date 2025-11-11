@@ -1,9 +1,3 @@
----
-title: "19. Contribuir"
-description: "Proceso para proponer cambios y checklist rápida."
-tags: [contribuir, meta]
----
-
 # 19. Contribuir
 
 Flujo:

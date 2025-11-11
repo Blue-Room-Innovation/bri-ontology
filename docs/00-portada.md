@@ -1,9 +1,3 @@
----
-title: "0. Portada"
-description: "Mapa rápido de toda la documentación del toolkit DPP. Lee en orden numérico si eres nuevo."
-tags: [portada, mapa]
----
-
 # 0. Portada y Mapa
 
 Bienvenido al toolkit de Pasaporte Digital de Producto (DPP). Si no sabes nada todavía, sigue el orden:

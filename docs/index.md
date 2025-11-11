@@ -1,9 +1,3 @@
----
-title: "DPP Toolkit — Documentación"
-description: "Portada con visión general y enlaces rápidos para empezar, conceptos, referencia y guías."
-tags: [dpp, ontology, shacl, owl, quickstart]
----
-
 # Documentación DPP Toolkit
 
 Bienvenido. Esta es la portada de la documentación.
