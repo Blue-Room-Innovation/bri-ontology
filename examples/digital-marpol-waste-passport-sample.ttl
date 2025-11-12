@@ -1,4 +1,5 @@
 @prefix dmw: <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -9,7 +10,12 @@
 # Caso: Entrega de residuos oleosos (sludge) generados en operaciones de maquinaria a puerto.
 
 ex:marpolDWP1 a dmw:DigitalMarpolWastePassport ;
+  dct:issued "2025-10-30T06:10:00Z"^^xsd:dateTime ;
+  dct:publisher ex:publisherOrg ;
   dmw:credentialSubject ex:marpolWastePassport1 .
+
+ex:publisherOrg a dmw:AuthorizedParty ;
+  dmw:identifier "PUB-001" .
 
 ex:marpolWastePassport1 a dmw:MarpolWastePassport ;
   dmw:waste ex:marpolWaste1 .
