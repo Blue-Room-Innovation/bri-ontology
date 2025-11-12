@@ -1,4 +1,4 @@
-@prefix : <https://ontology.circularpass.io/digital-waste-passport/> .
+@prefix : <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -6,49 +6,49 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
-@base <https://ontology.circularpass.io/digital-waste-passport/> .
 
-<https://ontology.circularpass.io/digital-waste-passport> rdf:type owl:Ontology .
+@base <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl> .
+
+<https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl> rdf:type owl:Ontology .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  https://ontology.circularpass.io/digital-waste-passport/credentialSubject
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#credentialSubject
 :credentialSubject rdf:type owl:ObjectProperty ;
-                   rdfs:domain :DigitalWastePassport ;
-                   rdfs:range :WastePassport ;
-                   rdfs:comment "The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified." .
+                                                                                                          rdfs:domain :DigitalWastePassport ;
+                                                                                                          rdfs:range :WastePassport ;
+                                                                                                          rdfs:comment "The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified." .
 
 
-###  https://ontology.circularpass.io/digital-waste-passport/waste
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#waste
 :waste rdf:type owl:ObjectProperty ;
-       rdfs:domain :WastePassport ;
-       rdfs:range :Waste ;
-       rdfs:comment "Relación entre un WastePassport y un objeto de tipo Waste." ,
-                    "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
+                                                                                              rdfs:domain :WastePassport ;
+                                                                                              rdfs:range :Waste ;
+                                                                                              rdfs:comment "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  https://ontology.circularpass.io/digital-waste-passport/DigitalWastePassport
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#DigitalWastePassport
 :DigitalWastePassport rdf:type owl:Class ;
-                      rdfs:subClassOf unece:VerifiableCredential ;
-                      rdfs:comment "The Digital Waste Passport is a comprehensive data structure that encapsulates detailed information pertaining to a specific waste entity, including its identification details, issuing authority, validity period, and provenance information. It also incorporates references to the associated WastePassport, enabling verifiable tracking, traceability, and compliance with waste management and sustainability requirements throughout the waste lifecycle." .
+                                                                                                             rdfs:subClassOf unece:VerifiableCredential ;
+                                                                                                             rdfs:comment "The Digital Waste Passport is a comprehensive data structure that encapsulates detailed information pertaining to a specific waste entity, including its identification details, issuing authority, validity period, and provenance information. It also incorporates references to the associated WastePassport, enabling verifiable tracking, traceability, and compliance with waste management and sustainability requirements throughout the waste lifecycle." .
 
 
-###  https://ontology.circularpass.io/digital-waste-passport/Waste
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#Waste
 :Waste rdf:type owl:Class ;
-       rdfs:subClassOf unece:Product ;
-       rdfs:comment "The Waste class encapsulates detailed information regarding a specific waste item, including its identification details, origin, characteristics, and relevant classification data. It also includes attributes related to its handling, composition, and provenance, supporting accurate documentation and management within the waste lifecycle." .
+                                                                                              rdfs:subClassOf unece:Product ;
+                                                                                              rdfs:comment "The Waste class encapsulates detailed information regarding a specific waste item, including its identification details, origin, characteristics, and relevant classification data. It also includes attributes related to its handling, composition, and provenance, supporting accurate documentation and management within the waste lifecycle." .
 
 
-###  https://ontology.circularpass.io/digital-waste-passport/WastePassport
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#WastePassport
 :WastePassport rdf:type owl:Class ;
-               rdfs:subClassOf unece-dpp:ProductPassport ;
-               rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
+                                                                                                      rdfs:subClassOf unece-dpp:ProductPassport ;
+                                                                                                      rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
 
 
 ###  https://test.uncefact.org/vocabulary/untp/core/0/Product

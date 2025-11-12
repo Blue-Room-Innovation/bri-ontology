@@ -1,4 +1,4 @@
-@prefix dwp: <https://ontology.circularpass.io/digital-waste-passport/> .
+@prefix dwp: <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#> .
 @prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -15,6 +15,7 @@ ex:wastePassport1 a dwp:WastePassport ;
 
 # Waste (residuo concreto)
 ex:waste1 a dwp:Waste ;
+  unece:name "waste1" ;
   unece:productName "PCB Scrap Lot 2024-11" ;
   unece:productDescription "Printed circuit board scrap collected from end-of-life consumer electronics." ;
   unece:hasBatchIdentifier "BATCH-PCB-2025-001" ;

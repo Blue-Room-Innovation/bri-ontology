@@ -40,8 +40,8 @@ Estandariza el significado y la forma de los datos de residuos para que distinto
 ```json
 {
   "@context": {
-    "res": "https://ontology.circularpass.io/digitalWastePassport/",
-    "code": "https://ontology.circularpass.io/digitalWastePassport/code/"
+    "res": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#",
+    "code": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#code"
   },
   "@type": "res:Residuo",
   "res:residueType": {"@id": "code:Organic"},

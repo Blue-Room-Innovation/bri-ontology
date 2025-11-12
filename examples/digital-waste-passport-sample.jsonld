@@ -1,6 +1,6 @@
 {
   "@context": {
-    "dwp": "https://ontology.circularpass.io/digital-waste-passport/",
+    "dwp": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#",
     "unece": "https://test.uncefact.org/vocabulary/untp/core/0/",
     "ex": "https://example.org/resource/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
