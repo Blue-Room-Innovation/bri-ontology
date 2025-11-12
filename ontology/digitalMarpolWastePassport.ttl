@@ -8,12 +8,12 @@
 @base <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl> .
 
 <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
-                                                                   owl:imports <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/delivery-type-code/> ,
-                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code/> ,
-                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/iso3166-iAlpha2/> ,
-                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-subtype-code/> ,
-                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-type-code/> ,
-                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode/> ;
+                                                                   owl:imports <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/delivery-type-code.ttl> ,
+                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl> ,
+                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/iso3166-iAlpha2.ttl> ,
+                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-subtype-code.ttl> ,
+                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-type-code.ttl> ,
+                                                                               <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl> ;
                                                                    rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
                                                                    rdfs:label "Digital MARPOL Waste Passport Ontology" ;
                                                                    owl:versionInfo "v1.0.0" .
@@ -130,7 +130,7 @@
              rdfs:domain :MarpolWaste ;
              rdfs:range xsd:string ;
              rdfs:comment "The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`)." ;
-             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode#UNLocodeScheme> .
+             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#deliveryType
@@ -138,7 +138,7 @@
               rdfs:domain :MarpolWaste ;
               rdfs:range xsd:string ;
               rdfs:comment "Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`)." ;
-              <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/delivery-type-code#DeliveryTypeCodeScheme> .
+              <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#dischargeMeans
@@ -146,7 +146,7 @@
                 rdfs:domain :ResidueInformation ;
                 rdfs:range xsd:string ;
                 rdfs:comment "The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`)." ;
-                <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code#DischargeMeansCodeScheme> .
+                <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#flag
@@ -154,7 +154,7 @@
       rdfs:domain :Ship ;
       rdfs:range xsd:string ;
       rdfs:comment "The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus)." ;
-    <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/iso3166-iAlpha2#ISO3166Alpha2Scheme> .
+    <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> .
 
 
 
@@ -184,7 +184,7 @@
                        rdfs:domain :MarpolWaste ;
                        rdfs:range xsd:string ;
                        rdfs:comment "The last port where waste was delivered, using UN/LOCODE format." ;
-                       <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode#UNLocodeScheme> .
+                       <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#marpolEdition
@@ -213,7 +213,7 @@
                     rdfs:domain :ResidueInformation ;
                     rdfs:range xsd:string ;
                     rdfs:comment "The next port where the residue will be collected, identified by the UN/LOCODE" ;
-                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode#UNLocodeScheme> .
+                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#nextPlannedDeliveryPort
@@ -221,7 +221,7 @@
                          rdfs:domain :MarpolWaste ;
                          rdfs:range xsd:string ;
                          rdfs:comment "The next planned port for waste delivery, identified with UN/LOCODE." ;
-                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode#UNLocodeScheme> .
+                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#remarks
@@ -264,7 +264,7 @@
              rdfs:domain :ResidueInformation ;
              rdfs:range xsd:string ;
              rdfs:comment "Code representing the subtype of residue, providing more detailed categorization." ;
-             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-subtype-code#ResidueSubtypeCodeScheme> .
+             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#typeCode
@@ -272,7 +272,7 @@
           rdfs:domain :ResidueInformation ;
           rdfs:range xsd:string ;
           rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
-          <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-type-code#ResidueTypeCodeScheme> .
+          <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> .
 
 
 #################################################################

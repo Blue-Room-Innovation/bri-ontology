@@ -1,12 +1,12 @@
-@prefix : <https://ontology.circularpass.io/vocab/discharge-means-code/> .
+@prefix : <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-@base <https://ontology.circularpass.io/vocab/discharge-means-code/> .
+@base <https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl> .
 
-<https://ontology.circularpass.io/vocab/discharge-means-code/> a owl:Ontology ;
+<https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl> a owl:Ontology ;
     rdfs:label "Discharge Means Code List"@en ;
     owl:versionInfo "v1.0.0" ;
     rdfs:comment "A SKOS vocabulary that specifies the means or method of discharge for a particular residue or waste material under MARPOL regulations."@en .
