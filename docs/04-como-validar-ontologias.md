@@ -83,60 +83,41 @@ Conforms: True
     - message → la causa del error,
     - focusNode → el recurso donde ocurrió el problema.
 
-### 2. Validación y razonamiento OWL (merge + profile + reasoner)
-Comando por defecto (descubre ontologías, excluye codelists, perfil DL, razonador HermiT):
+### 2. Validación y razonamiento OWL (Combinar ontologías y aplicar un razonador lógico)
+La validación OWL se utiliza para verificar la consistencia lógica de las ontologías y combinar distintos archivos (por ejemplo, módulos o extensiones) en un único modelo coherente.
+Durante este proceso, también puede aplicarse un razonador, que infiere automáticamente nuevas relaciones a partir de las definiciones existentes.
+
+Las validaciones OWL se realizan usando el script `validate-owl.sh`.
+Si quieres ver todas las opciones disponibles, consulta el archivo `validate-owl.md`.
+
+#### Ejemplo de validación completa (fusiona ontologías y aplica razonamiento)
+Este comando ejecuta la validación estándar, combinando ontologías, excluyendo listas de códigos, usando el perfil DL y el razonador HermiT:
+
 ```powershell
 docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh"
 ```
 
-Incluir codelists y usar ELK:
-```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh --include-codelists --reasoner ELK"
+#### Resultado esperado
+```bash
+[OWL] Ontologías (2):
+  - ontology/digitalMarpolWastePassport.ttl
+  - ontology/digitalWastePassport.ttl
+[OWL] Profile  : DL
+[OWL] Reasoner : HermiT
+[OWL] Merge out: build/merged-ontology.ttl
+[OWL] Reasoned : build/reasoned-ontology.ttl
+[OWL] Usando ROBOT CLI
+OWL 2 DL Profile Report: [Ontology and imports closure in profile]
+
+[OWL] Profile (DL) OK.
+[OWL] Razonamiento OK.
+[OWL] Validación completa sin errores fatales.
 ```
 
-Solo validar perfil, sin razonamiento:
-```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-owl.sh --reasoner none"
-```
-Genera carpeta `build/` con artefactos:
-| Archivo | Descripción |
-|---------|-------------|
-| `merged-ontology.ttl` | Ontologías fusionadas (si merge OK o con warnings) |
-| `reasoned-ontology.ttl` | Ontología razonada (omitido si `--reasoner none`) |
+El proceso genera una carpeta build/ con los siguientes archivos:
 
-Nota: El script no produce informes SHACL; para eso usar `scripts/validate-shacl.sh`.
+- **merged-ontology.ttl**: Ontologías fusionadas (si el merge fue correcto o con advertencias)
+- **reasoned-ontology.ttl**: Ontología razonada (no se genera si se usa `--reasoner none`)
 
-### 3. Validar otro ejemplo
-Reemplaza el nombre de archivo (manteniendo flags que necesites):
-```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/mi-dominio-sample.ttl"
-```
-
-## Interpretar Resultados
-| Indicador | Significado | Acción sugerida |
-|-----------|-------------|-----------------|
-| `Conforms True` | Ejemplo cumple | Nada; opcional añadir nuevo caso de prueba |
-| `Conforms False` | Hay violaciones SHACL | Revisar cada `sh:message` y propiedad faltante |
-| Merge warnings (OWL) | Import no resolvible / triple no OWL | Revisar IRIs import, limpiar triples ajenos a OWL |
-| Profile issues | Construct fuera del perfil DL | Ajustar axiomas o cambiar a `--profile OWL2` |
-| Reasoner issues | Posible inconsistencia | Inspeccionar clases equivalentes a `owl:Nothing` |
-| Código no encontrado | Valor no pertenece a codelist | Añadir al codelist o corregir valor |
-| Tipo incorrecto | Literal con tipo distinto | Ajustar `xsd:` o el shape |
-
-## Errores Frecuentes y Solución
-| Problema | Causa Común | Fix Rápido |
-|----------|-------------|-----------|
-| Faltan propiedades obligatorias | Nueva regla añadida en shape | Actualizar ejemplo con campo mínimo |
-| Valor string donde se espera IRI | Omisión de prefijo | Añadir prefijo o usar IRI completa |
-| Código obsoleto | Codelist actualizado | Sincronizar ejemplo con nueva lista |
-| Cardinalidad > permitida | Repetición accidental | Consolidar en una sola declaración |
-| Prefijo no declarado | Copia parcial de ejemplo | Añadir declaración `@prefix` al inicio |
-
-## Flujo de Depuración Sugerido
-1. Ejecutar validación puntual sobre ejemplo concreto.
-2. Leer mensajes y agrupar por tipo de violación (códigos, propiedades, tipos).
-3. Corregir ejemplo primero (rápido).
-4. Si falta vocabulario → extender ontología.
-5. Si regla necesaria no existe → modificar shape.
-6. Revalidar ejemplo.
-7. Ejecutar pipeline completa para asegurar reasoning coherente.
+> 🛈 Nota: Este script no realiza validaciones SHACL.
+> Para comprobar los datos frente a las reglas SHACL, utiliza scripts/validate-shacl.sh.
