@@ -12,26 +12,28 @@
 dwp:DigitalWastePassportShape a sh:NodeShape ;
   sh:targetClass dwp:DigitalWastePassport ;
   sh:name "Digital Waste Passport"@es ;
-  sh:description "Shape principal del DigitalWastePassport; incorpora propiedades básicas de emisión y enlace al WastePassport"@es ;
+  sh:description "Shape principal del DigitalWastePassport; cerrado para detectar propiedades inesperadas."@es ;
   sh:property [ sh:path dct:issued ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Debe tener una fecha de emisión (dct:issued)."@es ] ;
   sh:property [ sh:path dct:publisher ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Debe indicar publisher (dct:publisher)."@es ] ;
   sh:property [ sh:path dwp:credentialSubject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:WastePassport ; sh:message "Debe enlazar exactamente un WastePassport."@es ] ;
   sh:property [ sh:path dct:valid ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
-  sh:closed false .
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
 
 dwp:WastePassportShape a sh:NodeShape ;
   sh:targetClass dwp:WastePassport ;
   sh:name "Waste Passport"@es ;
-  sh:description "Shape del WastePassport; referencia al Waste y metadatos opcionales."@es ;
+  sh:description "Shape del WastePassport cerrado; sólo permite propiedades definidas."@es ;
   sh:property [ sh:path dwp:waste ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:Waste ; sh:message "Debe referenciar un Waste."@es ] ;
   sh:property [ sh:path dct:identifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:reportingStandard ; sh:minCount 0 ; sh:class unece:Standard ] ;
-  sh:closed false .
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
 
 dwp:WasteShape a sh:NodeShape ;
   sh:targetClass dwp:Waste ;
   sh:name "Waste"@es ;
-  sh:description "Shape de Waste con propiedades UNECE heredadas del modelo Product."@es ;
+  sh:description "Shape de Waste cerrado con propiedades UNECE permitidas."@es ;
   sh:property [ sh:path unece:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:message "Debe tener nombre (unece:name)."@es ] ;
   sh:property [ sh:path unece:productName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:productDescription ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
@@ -41,7 +43,8 @@ dwp:WasteShape a sh:NodeShape ;
   sh:property [ sh:path unece:weightQuantity ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minExclusive 0 ] ;
   sh:property [ sh:path unece:declaredUnit ; sh:minCount 0 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path unece:hasConstituent ; sh:minCount 0 ; sh:class unece:MaterialConstituent ] ;
-  sh:closed false .
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
 
 # Constituyentes de materiales
 unece:MaterialConstituentShape a sh:NodeShape ;
@@ -49,11 +52,13 @@ unece:MaterialConstituentShape a sh:NodeShape ;
   sh:name "Material Constituent"@es ;
   sh:property [ sh:path unece:materialType ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path unece:massFraction ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
-  sh:closed false .
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
 
 # Estándar de reporte
 unece:StandardShape a sh:NodeShape ;
   sh:targetClass unece:Standard ;
   sh:name "Reporting Standard"@es ;
   sh:property [ sh:path unece:standardName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
-  sh:closed false .
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
