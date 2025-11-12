@@ -59,12 +59,14 @@ Si quieres ver todas las opciones disponibles, consulta el archivo `validate-owl
 Este comando permite incluir manualmente los archivos necesarios
 ```powershell
 docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-marpol-waste-passport-sample.ttl -e ontology/digitalWastePassport.ttl,ontology/codelists/unlocode.ttl --shapes shapes/digitalMarpolWastePassportShapes.ttl"
+
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl -s shapes/digitalWastePassportShapes.ttl -e ontology/digitalWastePassport.ttl,ontology/codelists/unlocode.ttl"
 ```
 
 #### Resultado esperado
 ```bash
 [SHACL] Data      : examples/digital-waste-passport-sample.ttl
-[SHACL] Shapes    : shapes/waste-shapes.ttl
+[SHACL] Shapes    : shapes/digitalWastePassportShapes.ttl
 [SHACL] Formato   : human
 [SHACL] Extras (2):
   - ontology/digitalWastePassport.ttl
