@@ -1,0 +1,31 @@
+## Waste / MARPOL SHACL Shapes (sin legado DPP)
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix schema:  <http://schema.org/> .
+@prefix dwp:     <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#> .
+
+dwp:DigitalWastePassportShape a sh:NodeShape ;
+  sh:targetClass dwp:DigitalWastePassport ;
+  sh:name "Digital Waste Passport"@es ;
+  sh:property [ sh:path dct:issued ; sh:datatype xsd:dateTime ; sh:minCount 1 ] ;
+  sh:property [ sh:path dct:publisher ; sh:minCount 1 ] ;
+  sh:property [ sh:path dwp:credentialSubject ; sh:minCount 1 ; sh:class dwp:WastePassport ] ;
+  sh:property [ sh:path dct:valid ; sh:minCount 0 ; sh:datatype xsd:dateTime ] ;
+  sh:closed false .
+
+dwp:WastePassportShape a sh:NodeShape ;
+  sh:targetClass dwp:WastePassport ;
+  sh:name "Waste Passport"@es ;
+  sh:property [ sh:path dwp:waste ; sh:minCount 1 ; sh:class dwp:Waste ] ;
+  sh:property [ sh:path dct:identifier ; sh:minCount 0 ; sh:datatype xsd:string ] ;
+  sh:closed false .
+
+dwp:WasteShape a sh:NodeShape ;
+  sh:targetClass dwp:Waste ;
+  sh:name "Waste"@es ;
+  sh:property [ sh:path schema:name ; sh:minCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dct:description ; sh:minCount 0 ; sh:datatype xsd:string ] ;
+  sh:closed false .
