@@ -20,7 +20,7 @@ Proporcionar pasos claros y criterios de decisión para cambios en `ontology/*.t
 
 ## Estructura Mínima de un Archivo Ontología
 ```ttl
-@prefix : <https://ontology.circularpass.io/mi-dominio/> .
+@prefix : <mi-dominio/ontolgia#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .

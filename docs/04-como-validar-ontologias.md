@@ -7,12 +7,10 @@ Centralizar los comandos y criterios para comprobar que:
 - Los ejemplos representan instancias válidas.
 
 ## Componentes que Validamos
-| Tipo | Ubicación | Qué se comprueba |
-|------|-----------|------------------|
-| Ontologías | `ontology/*.ttl` | Sintaxis RDF/OWL y consistencia + reasoning |
-| Shapes | `shapes/*.ttl` | Reglas SHACL (targets, propiedades, cardinalidades, tipos, valores) |
-| Codelists | `ontology/codelists/*.ttl` | Accesibilidad de IRIs y uso en shapes/ejemplos |
-| Ejemplos | `examples/*.ttl` / `.jsonld` | Conformidad con shapes y vocabulario |
+- Ontologías(`ontology/*.ttl`): Sintaxis RDF/OWL y consistencia + reasoning
+- Shapes(`shapes/*.ttl`): Reglas SHACL (targets, propiedades, cardinalidades, tipos, valores)
+- Codelists(`ontology/codelists/*.ttl`): Accesibilidad de IRIs y uso en shapes/ejemplos
+- Ejemplos(`examples/*.ttl|.jsonld`): Conformidad con shapes y vocabulario
 
 ## Comandos Esenciales (PowerShell)
 ### 0. Construir la imagen Docker

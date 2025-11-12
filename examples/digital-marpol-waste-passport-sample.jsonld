@@ -1,6 +1,6 @@
 {
   "@context": {
-    "dmw": "https://ontology.circularpass.io/digital-marpol-waste-passport/",
+    "dmw": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#",
     "core": "https://ontology.untp.io/core/",
     "ex": "https://example.org/resource/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
