@@ -38,11 +38,38 @@ dwp:WasteShape a sh:NodeShape ;
   sh:property [ sh:path unece:productName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:productDescription ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:hasBatchIdentifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
-  sh:property [ sh:path unece:originCountry ; sh:minCount 0 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  # País de origen restringido a un conjunto permitido (ejemplo de enumeración inicial)
+  sh:property [ sh:path unece:originCountry ; sh:minCount 0 ; sh:maxCount 1 ;
+                sh:in ( <https://vocabulary.uncefact.org/CountryId#DE>
+                        <https://vocabulary.uncefact.org/CountryId#ES>
+                        <https://vocabulary.uncefact.org/CountryId#FR>
+                        <https://vocabulary.uncefact.org/CountryId#IT>
+                        <https://vocabulary.uncefact.org/CountryId#NL> ) ;
+                sh:message "originCountry debe estar en el listado permitido (DE, ES, FR, IT, NL)."@es ] ;
   sh:property [ sh:path unece:productionDate ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
   sh:property [ sh:path unece:weightQuantity ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minExclusive 0 ] ;
-  sh:property [ sh:path unece:declaredUnit ; sh:minCount 0 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  # Unidad declarada restringida (subset de UnitMeasureCode)
+  sh:property [ sh:path unece:declaredUnit ; sh:minCount 0 ; sh:maxCount 1 ;
+                sh:in ( <https://vocabulary.uncefact.org/UnitMeasureCode#KGM>
+                        <https://vocabulary.uncefact.org/UnitMeasureCode#TNE>
+                        <https://vocabulary.uncefact.org/UnitMeasureCode#LTR> ) ;
+                sh:message "declaredUnit debe ser una de: KGM, TNE, LTR."@es ] ;
   sh:property [ sh:path unece:hasConstituent ; sh:minCount 0 ; sh:class unece:MaterialConstituent ] ;
+  # Restricción agregada: suma de massFraction <= 1
+  sh:sparql [
+    sh:message "La suma de massFraction de los constituyentes no debe exceder 1."@es ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        OPTIONAL {
+          $this unece:hasConstituent ?c .
+          ?c unece:massFraction ?mf .
+        }
+      }
+      GROUP BY $this
+      HAVING ( SUM(xsd:decimal(?mf)) > 1 )
+    """
+  ] ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:closed true .
 
