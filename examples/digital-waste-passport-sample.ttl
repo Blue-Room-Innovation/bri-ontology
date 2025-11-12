@@ -15,6 +15,7 @@ ex:wastePassport1 a dwp:WastePassport ;
 
 # Waste (residuo concreto)
 ex:waste1 a dwp:Waste ;
+  unece:name "waste1" ;
   unece:productName "PCB Scrap Lot 2024-11" ;
   unece:productDescription "Printed circuit board scrap collected from end-of-life consumer electronics." ;
   unece:hasBatchIdentifier "BATCH-PCB-2025-001" ;

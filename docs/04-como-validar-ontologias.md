@@ -45,24 +45,43 @@ Actualiza la imagen solo cuando:
 
 Consejo: si solo cambias ontologías (`ontology/*.ttl`), shapes o ejemplos, NO necesitas reconstruir la imagen; basta con montar el volumen.
 
-### 1. Validación SHACL puntual (un ejemplo vs reglas)
-Comando básico (usa shapes y extras auto-descubiertos):
+### 1. Ejemplo de validación SHACL (Verificar si los datos cumplen con las reglas definidas en los shapes)
+En una validación SHACL, se comparan dos tipos de archivos:
+- Datos (data) → contienen las _instancias reales_, es decir, los recursos y valores concretos (por ejemplo, un pasaporte de residuos con su contenido).
+- Shapes (shapes) → definen las _reglas_ o _restricciones_ que los datos deben cumplir (por ejemplo, qué propiedades son obligatorias, tipos esperados, formatos, etc.).
+
+El proceso de validación verifica si los datos cumplen con las reglas descritas en los shapes.
+
+Las validaciones se realizan usando el script `validate-shacl.sh`.
+Si quieres ver todas las opciones disponibles, consulta el archivo `validate-owl.md` o `--help`
+
+#### Ejemplo de validación
+Este comando permite incluir manualmente los archivos necesarios
 ```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl"
+docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl -e ontology/digitalWastePassport.ttl,ontology/codelists/unlocode.ttl --shapes shapes/waste-shapes.ttl"
 ```
 
-Ejemplo con formato JSON-LD y sin extras auto (solo shapes):
-```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh --data examples/digital-waste-passport-sample.ttl --no-extras --format json-ld"
+#### Resultado esperado
+```bash
+[SHACL] Data      : examples/digital-waste-passport-sample.ttl
+[SHACL] Shapes    : shapes/waste-shapes.ttl
+[SHACL] Formato   : human
+[SHACL] Extras (2):
+  - ontology/digitalWastePassport.ttl
+  - ontology/codelists/unlocode.ttl
+[SHACL] Intentando python3 -m pyshacl
+/usr/bin/python3: No module named pyshacl
+[SHACL] Falló con python3 -m pyshacl (exit 1)
+[SHACL] Intentando /opt/venv/bin/python -m pyshacl
+Validation Report
+Conforms: True
 ```
 
-Ejemplo especificando extras concretos:
-```powershell
-docker run --rm -v "${PWD}:/workspace" -w /workspace bri-ontology-tooling "scripts/validate-shacl.sh -d examples/digital-waste-passport-sample.ttl -e ontology/digitalWastePassport.ttl,ontology/codelists/unlocode.ttl"
-```
-Salida esperada contiene:
-- `Conforms True` → todo correcto.
-- O lista de violaciones con `path`, `message` y `focusNode`.
+- ✅ Conforms True → todo correcto, los datos cumplen las reglas.
+- ⚠️ Si hay errores, aparece una lista con:
+    - path → qué propiedad falló,
+    - message → la causa del error,
+    - focusNode → el recurso donde ocurrió el problema.
 
 ### 2. Validación y razonamiento OWL (merge + profile + reasoner)
 Comando por defecto (descubre ontologías, excluye codelists, perfil DL, razonador HermiT):
