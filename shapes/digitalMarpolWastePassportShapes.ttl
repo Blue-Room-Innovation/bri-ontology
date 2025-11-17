@@ -5,7 +5,7 @@
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix dct:     <http://purl.org/dc/terms/> .
 @prefix schema:  <http://schema.org/> .
-@prefix dmwp:    <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#> .
+@prefix dmwp:    <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#> .
 @prefix untp:    <https://ontology.untp.io/core/> .
 
 # Refinado: shapes cerrados, enumeraciones alineadas a ejemplo y codelists locales.

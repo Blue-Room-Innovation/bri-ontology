@@ -1,4 +1,4 @@
-@prefix dwp: <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#> .
+@prefix dwp: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#> .
 @prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .

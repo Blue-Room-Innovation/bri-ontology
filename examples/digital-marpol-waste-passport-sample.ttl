@@ -1,4 +1,4 @@
-@prefix dmw: <https://blue-room-innovation.github.io/bri-ontology/ontology/digitalMarpolWastePassport.ttl#> .
+@prefix dmw: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
