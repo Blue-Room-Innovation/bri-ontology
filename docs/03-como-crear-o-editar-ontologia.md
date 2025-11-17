@@ -26,7 +26,7 @@ Proporcionar pasos claros y criterios de decisión para cambios en `ontology/*.t
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 : a owl:Ontology ;
-  owl:versionInfo "0.1.0" ;
+  owl:versionInfo "0.1" ;
   rdfs:comment "Ontología inicial del dominio Mi Dominio"@es .
 
 :Residuo a owl:Class ; rdfs:label "Residuo"@es ; rdfs:comment "Material o sustancia gestionada"@es .

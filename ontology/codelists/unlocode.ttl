@@ -9,7 +9,7 @@
 
 <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl> a owl:Ontology ;
     rdfs:label "UN/LOCODE Reference Vocabulary"@en ;
-    owl:versionInfo "v1.0.0" ;
+    owl:versionInfo "0.1" ;
     rdfs:comment "A SKOS reference vocabulary representing the UN/LOCODE (United Nations Code for Trade and Transport Locations) standard maintained by UNECE. It provides a global reference for ports, airports, railway stations, and other trade-related geographical locations."@en ;
     dcterms:creator "CircularPass Ontology Team" ;
     dcterms:source <https://unece.org/trade/cefact/unlocode-code-list-country-and-territory> ;
