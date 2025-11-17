@@ -1,6 +1,7 @@
 # Catálogo de Ontologías
 
-> Inventario de modelos semánticos disponibles en este repositorio. Todas las ontologías están basadas en estándares UNECE (United Nations Economic Commission for Europe) para asegurar interoperabilidad internacional.
+> [!IMPORTANT]
+Inventario de modelos semánticos disponibles en este repositorio. Todas las ontologías están basadas en estándares **UNECE (United Nations Economic Commission for Europe)** para asegurar interoperabilidad internacional.
 
 ## Estados de Madurez
 - **Experimental**: En desarrollo activo, puede cambiar significativamente
