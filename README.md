@@ -18,6 +18,8 @@ Se prevén futuros dominios siguiendo misma gobernanza y convenciones.
 
 > 📋 **URLs y enlaces directos**: Ver catálogo en `docs/00-domains/00-catalogo-ontologias.md` para acceder a las ontologías y shapes publicados.
 
+> 📖 **Wiki de ontologías**: Documentación autogenerada de clases, propiedades y diagramas en `docs/wiki/` (ver `docs/05-como-generar-la-wiki.md`).
+
 ### 2. Conceptos Clave
 | Concepto | Carpeta | Rol | Analogía |
 |----------|--------|-----|----------|
