@@ -1,11 +1,17 @@
 # digitalMarpolWastePassport Ontology
 
-**Version:**  v1.0.0
-**Imports:**  https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/delivery-type-code.ttl , https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/discharge-means-code.ttl , https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/iso3166-iAlpha2.ttl , https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-subtype-code.ttl , https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/residue-type-code.ttl , https://blue-room-innovation.github.io/bri-ontology/ontology/codelists/unlocode.ttl
+**Version:**  0.1
+**Imports:**  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl
 **Link to ontology:**  ontology/digitalMarpolWastePassport.ttl
 
 ```mermaid
 classDiagram
+   class Link{
+   }
+   class Measure{
+   }
+   class Party{
+   }
    class AuthorizedParty{
        identifier string
    }
@@ -48,12 +54,6 @@ classDiagram
    }
    class WastePassport{
    }
-   class Link{
-   }
-   class Measure{
-   }
-   class Party{
-   }
    AuthorizedParty --> Link : contactPoint
    DigitalMarpolWastePassport --> MarpolWastePassport : credentialSubject
    ResidueInformation --> Measure : estimatedGenerated
@@ -76,6 +76,9 @@ classDiagram
 
 |Name|Description|Datatype properties|Object properties|Subclass of|
 | :--- | :--- | :--- | :--- | :--- |
+|<span id="Link">Link</span>|||||
+|<span id="Measure">Measure</span>|||||
+|<span id="Party">Party</span>|||||
 |<span id="AuthorizedParty">AuthorizedParty</span>|Represents an authorized entity responsible for handling the waste.|[identifier](#identifier)|[contactPoint](#contactPoint)||
 |<span id="DigitalMarpolWastePassport">DigitalMarpolWastePassport</span>|A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`.||[credentialSubject](#credentialSubject)|DigitalWastePassport|
 |<span id="DigitalWastePassport">DigitalWastePassport</span>|||||
@@ -87,9 +90,6 @@ classDiagram
 |<span id="WasdisMetadata">WasdisMetadata</span>|Metadata related to the WASDIS system for auditing purposes.|[messageId](#messageId), [remarks](#remarks), [sender](#sender), [submissionDate](#submissionDate)|||
 |<span id="Waste">Waste</span>|||||
 |<span id="WastePassport">WastePassport</span>|||||
-|<span id="Link">Link</span>|||||
-|<span id="Measure">Measure</span>|||||
-|<span id="Party">Party</span>|||||
 
 ## Data Properties
 
