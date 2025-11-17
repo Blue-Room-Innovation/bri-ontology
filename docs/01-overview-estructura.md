@@ -67,7 +67,7 @@ Ambos representan los mismos datos RDF, solo cambia la sintaxis de serializació
 1. **Desarrollo**: Editar archivos en `ontology/` y `shapes/`
 2. **Validación local**: Ejecutar `scripts/validate-owl.sh` y `scripts/validate-shacl.sh`
 3. **Build**: Generar artefactos en `build/` con merge + reasoning
-4. **Documentación**: Ejecutar `scripts/generate-wiki.py` para actualizar `build/wiki/`
+4. **Documentación**: Ejecutar `scripts/generate-wiki.py` para actualizar `docs/wiki/`
 5. **Commit**: Versionar cambios en git con mensaje descriptivo
 6. **Release**: Crear tag simplificado (ej: `0.2`) para publicar versión estable
 

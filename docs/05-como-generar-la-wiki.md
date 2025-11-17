@@ -8,7 +8,7 @@ Documentar el proceso para producir una "wiki" navegable en Markdown que describ
 - Diagramas opcionales (Graphviz y/o Mermaid) para visualización rápida.
 
 ## Qué se Genera
-Al ejecutar el script se crea (por defecto) `build/wiki/` con:
+Al ejecutar el script se crea (por defecto) `docs/wiki/` con:
 - `index.md` → Tabla resumen (#Clases, #ObjProps, #DataProps y opcional #Shapes).
 - Carpeta por ontología (`<NombreOntologia>/`):
   - `README.md` → Detalle de clases y propiedades (modo básico o rich).
@@ -43,13 +43,13 @@ Wiki rica con shapes, codelists, diagrama Graphviz en SVG y Mermaid:
 docker run --rm -v "${PWD}:/workspace" -w /workspace --entrypoint python3 bri-ontology-tooling scripts/generate-wiki.py --verbose --format rich --mermaid --include-shapes --generate-diagrams --diagram-format svg
 ```
 
-Resultado esperado: carpeta `build/wiki/` con `index.md` y subcarpetas por ontología.
+Resultado esperado: carpeta `docs/wiki/` con `index.md` y subcarpetas por ontología.
 
 ## Opciones Principales
 | Opción | Descripción | Valor por defecto |
 |--------|-------------|-------------------|
 | `--ontology-dir` | Directorio de ontologías | `ontology` |
-| `--output-dir` | Directorio de salida | `build/wiki` |
+| `--output-dir` | Directorio de salida | `docs/wiki` |
 | `--include-codelists` | Incluye `ontology/codelists` | `False` |
 | `--include-shapes` | Genera documentación de shapes | `False` |
 | `--shapes-dir` | Directorio de shapes | `shapes` |

@@ -15,7 +15,7 @@ pip install -r requirements.txt
 (En Docker, añade la instalación de `rdflib` si no está incluida.)
 
 ## Uso
-Desde la raíz del repositorio (PowerShell / Bash). La salida por defecto se crea en `build/wiki/`.
+Desde la raíz del repositorio (PowerShell / Bash). La salida por defecto se crea en `docs/wiki/`.
 
 ```bash
 python scripts/generate-wiki.py
@@ -26,7 +26,7 @@ Parámetros opcionales (CLI):
 | Parámetro | Descripción | Valor por defecto |
 |-----------|-------------|-------------------|
 | `--ontology-dir` | Directorio donde buscar `.ttl` | `ontology` |
-| `--output-dir` | Directorio destino de la wiki | `build/wiki` |
+| `--output-dir` | Directorio destino de la wiki | `docs/wiki` |
 | `--include-codelists` | Incluye archivos en `ontology/codelists` | `False` |
 | `--generate-diagrams` | Genera diagrama Graphviz por ontología | `False` |
 | `--diagram-format` | Formato (png/svg) | `png` |
@@ -123,10 +123,10 @@ El script pretende ser genérico y reutilizable en otros repositorios de ontolog
 ## Test Rápido (Smoke Test)
 ```bash
 python scripts/generate-wiki.py --include-shapes --format rich --mermaid --generate-diagrams --diagram-format svg --verbose
-tree build/wiki
+tree docs/wiki
 ```
 Comprueba:
-1. `build/wiki/index.md` contiene columna `#Shapes`.
+1. `docs/wiki/index.md` contiene columna `#Shapes`.
 2. Cada ontología genera `README.md` y opcionalmente `SHAPES.md` si hay shapes.
 3. Diagramas presentes si el número de clases <= umbral.
 
@@ -158,11 +158,11 @@ docker run --rm -v "$(pwd):/workspace" bri-ontology-wiki python3 scripts/generat
 ```
 
 Tras la ejecución se espera:
-- Carpeta `build/wiki/` creada en el host (porque se monta el volumen).
+- Carpeta `docs/wiki/` creada en el host (porque se monta el volumen).
 - Archivos `README.md`, `SHAPES.md` (si shapes) y `diagram.svg|png` por ontología.
 
 ### Ejemplos mínimos
-Solo wiki básica (salida en build/wiki):
+Solo wiki básica (salida en docs/wiki):
 ```powershell
 docker run --rm -v "${PWD}:/workspace" bri-ontology-wiki python3 scripts/generate-wiki.py
 ```
@@ -177,7 +177,7 @@ Si quieres que el contenedor genere solamente la wiki y termine, estos comandos 
 ### Problemas comunes con Docker
 | Síntoma | Posible causa | Acción |
 |--------|---------------|--------|
-| No aparece carpeta `build/wiki/` | Volumen no montado correctamente | Revisa sintaxis `-v` y ruta absoluta |
+| No aparece carpeta `docs/wiki/` | Volumen no montado correctamente | Revisa sintaxis `-v` y ruta absoluta |
 | Error "command not found" al ejecutar python | PATH no incluye venv | Asegura que usas `python3` (imagen lo provee) |
 | Diagrama no generado | Límite de clases excedido / falta Graphviz | Ajusta `--diagram-max-classes` o verifica instalación |
 | SHAPES.md vacío | Archivo de shapes sin `sh:NodeShape` | Verifica contenido del TTL de shapes |
