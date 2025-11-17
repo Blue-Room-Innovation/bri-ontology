@@ -2,6 +2,13 @@
 
 > Ontología base para pasaportes digitales de residuos, basada en el modelo UNECE UN Transparency Protocol (UNTP) para Product Passports.
 
+## URLs Directas
+
+- **Ontología**: [digitalWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl)
+- **Shapes SHACL**: [digitalWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl)
+- **Ejemplo Turtle**: [digital-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.ttl)
+- **Ejemplo JSON-LD**: [digital-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.jsonld)
+
 ## Propósito
 
 Proporcionar un vocabulario semántico estándar para representar información verificable sobre residuos a lo largo de su ciclo de vida, desde generación hasta disposición final, facilitando:

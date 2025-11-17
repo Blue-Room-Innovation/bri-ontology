@@ -16,6 +16,8 @@ Dominios actuales:
 - Waste MARPOL (extensión marítima regulatoria).
 Se prevén futuros dominios siguiendo misma gobernanza y convenciones.
 
+> 📋 **URLs y enlaces directos**: Ver catálogo en `docs/00-domains/00-catalogo-ontologias.md` para acceder a las ontologías y shapes publicados.
+
 ### 2. Conceptos Clave
 | Concepto | Carpeta | Rol | Analogía |
 |----------|--------|-----|----------|

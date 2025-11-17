@@ -9,7 +9,16 @@
 
 ## Ontologías Disponibles
 
-| Ontología | Archivo | Namespace | Base UNECE | Propósito | Versión | Estado |
-|-----------|---------|-----------|------------|-----------|---------|--------|
-| **Digital Waste Passport** | `digitalWastePassport.ttl` | `dwp:` | `unece:VerifiableCredential`<br/>`unece-dpp:ProductPassport` | Pasaporte digital genérico para trazabilidad de residuos | 0.1 | Beta |
-| **Digital MARPOL Waste Passport** | `digitalMarpolWastePassport.ttl` | `marpol:` | Extiende Digital Waste Passport | Pasaporte específico para residuos marítimos bajo regulación MARPOL | 0.1 | Beta |
+| Ontología | Archivo | URL | Namespace | Base UNECE | Propósito | Versión | Estado |
+|-----------|---------|-----|-----------|------------|-----------|---------|--------|
+| **Digital Waste Passport** | `digitalWastePassport.ttl` | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl) | `dwp:` | `unece:VerifiableCredential`<br/>`unece-dpp:ProductPassport` | Pasaporte digital genérico para trazabilidad de residuos | 0.1 | Beta |
+| **Digital MARPOL Waste Passport** | `digitalMarpolWastePassport.ttl` | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl) | `marpol:` | Extiende Digital Waste Passport | Pasaporte específico para residuos marítimos bajo regulación MARPOL | 0.1 | Beta |
+
+## Shapes SHACL Asociados
+
+| Ontología | Archivo Shape | URL |
+|-----------|---------------|-----|
+| **Digital Waste Passport** | `digitalWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl) |
+| **Digital MARPOL Waste Passport** | `digitalMarpolWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl) |
+
+## Clases Principales por Ontología

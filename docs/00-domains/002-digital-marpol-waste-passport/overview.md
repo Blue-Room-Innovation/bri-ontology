@@ -2,6 +2,14 @@
 
 > Extensión especializada del Digital Waste Passport para residuos marítimos bajo la regulación MARPOL (International Convention for the Prevention of Pollution from Ships).
 
+## URLs Directas
+
+- **Ontología**: [digitalMarpolWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl)
+- **Shapes SHACL**: [digitalMarpolWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl)
+- **Ejemplo Turtle**: [digital-marpol-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.ttl)
+- **Ejemplo JSON-LD**: [digital-marpol-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.jsonld)
+- **Codelists**: Ver `ontology/codelists/*.ttl` (6 listas controladas)
+
 ## Propósito
 
 Modelar información específica de residuos generados y gestionados en el contexto marítimo, cumpliendo con:
