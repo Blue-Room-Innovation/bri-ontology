@@ -1,51 +1,52 @@
 # 02 · Cómo se Usa la Ontología y Para Qué
 
 ## Resumen en una Frase
-Estandariza el significado y la forma de los datos de residuos para que distintos sistemas (generación, transporte, control, reporte) puedan entenderse y validarse automáticamente.
+Proporciona un vocabulario común basado en estándares UNECE para representar, intercambiar y validar datos de pasaportes digitales de residuos de forma consistente entre sistemas heterogéneos.
 
 ## Problemas que Resuelve
 | Problema | Sin ontología | Con ontología |
 |----------|---------------|--------------|
-| Inconsistencia de nombres | `resType`, `tipoResiduo`, `waste_kind` | Propiedad única y documentada |
-| Validaciones incompletas | Reglas dispersas en código | Shapes centralizan reglas |
-| Dificultad de integrar fuentes | Mapeos ad-hoc | Mapeo a vocabulario estándar |
-| Evolución caótica | Cambios sin traza semántica | Versionado y comentarios |
-| Reutilización de códigos | Listas locales divergentes | Codelists semánticos referenciados |
-
-## Casos de Uso Principales
-1. Intercambio de datos entre plataformas (API a API) con formato Turtle o JSON-LD.
-2. Validación automática de declaraciones de residuos antes de su envío a una autoridad.
-3. Normalización interna: ETL que mapea columnas de DB a IRIs de la ontología.
-4. Análisis avanzado: consultas SPARQL sobre grafo consolidado.
-5. Auditoría: ver quién añadió qué concepto y cuándo (historial + versionado).
-6. Extensión sectorial: añadir subclases específicas (ej. MARPOL) sin romper núcleo.
+| **Inconsistencia semántica** | Cada sistema usa nombres diferentes: `resType`, `tipoResiduo`, `waste_kind` | Vocabulario único y documentado basado en UNECE: `unece:productName` |
+| **Validaciones fragmentadas** | Reglas de negocio dispersas en cada aplicación | Shapes SHACL centralizados y reutilizables |
+| **Interoperabilidad limitada** | Mapeos manuales punto a punto entre sistemas | Transformación declarativa a vocabulario estándar |
+| **Trazabilidad de cambios** | Modificaciones sin control de versión semántico | Versionado OWL (`owl:versionInfo`) + control git |
+| **Listas de códigos divergentes** | Catálogos locales incompatibles entre organizaciones | Codelists SKOS referenciables y alineados con ISO/UNECE |
 
 ## Flujo de Integración Típico (Aplicación Consumidora)
-1. Descargar versión publicada (tag/commit) de ontologías y shapes.
-2. Cargar ontología en motor RDF (Jena, RDFLib, GraphDB…).
-3. Mapear campos internos → IRIs (diccionario de mapeo).
-4. Generar instancia JSON-LD o TTL.
-5. Ejecutar validación SHACL previa a enviar/almacenar.
-6. Si OK → Persistir/enviar a API externa.
-7. Registrar logs con hash de commit de ontología usada (trazabilidad).
+1. **Obtener artefactos**: Descargar versión específica (tag/release) de ontologías, shapes y codelists desde el repositorio.
+2. **Configurar entorno RDF**: Cargar ontología en librería semántica (Apache Jena, RDFLib, rdflib.js) o triplestore (GraphDB, Fuseki).
+3. **Definir mapeo**: Crear tabla de correspondencias entre modelo de datos interno y propiedades ontológicas (ej: `db.weight_kg` → `unece:weightQuantity`).
+4. **Generar instancias**: Serializar datos como JSON-LD o Turtle siguiendo la estructura de clases de la ontología.
+5. **Validar con SHACL**: Ejecutar motor de validación contra shapes antes de persistir o transmitir datos.
+6. **Gestionar conformidad**: Si hay violaciones, rechazar o corregir; si es válido, proceder con la operación.
+7. **Registrar trazabilidad**: Almacenar metadata de validación (versión ontología, timestamp, hash commit) para auditoría.
 
 ## Ejemplo de Mapeo Conceptual
 | Campo DB | Significado | IRI Ontología |
 |----------|-------------|---------------|
-| waste_type_code | Código tipo residuo | `:residueType` (valor SKOS del codelist) |
-| quantity_kg | Cantidad en kg | `:hasQuantity` (xsd:decimal) |
-| origin_port | Puerto origen | `:puertoOrigen` |
+| product_name | Nombre del residuo | `unece:productName` (xsd:string) |
+| weight_kg | Peso en kilogramos | `unece:weightQuantity` (xsd:decimal) |
+| origin_country | País de origen | `unece:originCountry` (referencia ISO 3166) |
+| batch_id | Identificador de lote | `unece:hasBatchIdentifier` (xsd:string) |
 
 ## Ejemplo JSON-LD Simplificado
+Ver el archivo completo en `examples/digital-waste-passport-sample.jsonld` para un ejemplo detallado. Estructura básica:
+
 ```json
 {
   "@context": {
-    "res": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#",
-    "code": "https://blue-room-innovation.github.io/bri-ontology/ontology/digitalWastePassport.ttl#code"
+    "dwp": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#",
+    "unece": "https://test.uncefact.org/vocabulary/untp/core/0/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
-  "@type": "res:Residuo",
-  "res:residueType": {"@id": "code:Organic"},
-  "res:hasQuantity": {"@value": 1200, "@type": "http://www.w3.org/2001/XMLSchema#decimal"},
-  "res:puertoOrigen": {"@id": "res:Puerto-ESBCN"}
+  "@id": "ex:wastePassport1",
+  "@type": "dwp:WastePassport",
+  "dwp:waste": {
+    "@id": "ex:waste1",
+    "@type": "dwp:Waste",
+    "unece:productName": "PCB Scrap",
+    "unece:weightQuantity": {"@value": "1250", "@type": "xsd:decimal"},
+    "unece:originCountry": {"@id": "https://vocabulary.uncefact.org/CountryId#DE"}
+  }
 }
 ```

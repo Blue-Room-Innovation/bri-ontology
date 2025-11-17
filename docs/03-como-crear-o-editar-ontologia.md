@@ -8,37 +8,46 @@ Proporcionar pasos claros y criterios de decisión para cambios en `ontology/*.t
 ## Diferencia: ¿Nueva Ontología o Editar Existente?
 | Situación | Acción | Ejemplo |
 |-----------|--------|---------|
-| Nuevo dominio conceptual independiente | Crear nuevo archivo `.ttl` | Pasaporte residuos marítimos vs pasaporte terrestre |
-| Añadir atributo a clase ya existente | Editar ontología actual | Agregar `hasTransportType` a `Residuo` |
-| Refinar etiqueta/descripción | Editar existente (PATCH version) | Cambiar comentario para mayor claridad |
-| Romper compatibilidad (cambiar rango o significado) | Editar y subir MAJOR | Cambiar `hasQuantity` de literal a objeto |
-
-## Checklist de Decisión Antes de Crear
-- ¿El concepto puede modelarse como extensión (subclase) en ontología existente? Si sí → evita nuevo archivo.
-- ¿Comparte >50% de vocabulario con otro dominio? Posible reutilización preferida.
-- ¿Requiere reglas propias (shapes) significativamente distintas? Podría justificar nueva ontología + shape.
+| Nuevo dominio conceptual independiente | Crear nuevo archivo `.ttl` | Pasaporte MARPOL marítimo vs pasaporte genérico |
+| Añadir atributo a clase ya existente | Editar ontología actual | Agregar propiedad `hasTransportMode` a `Waste` |
+| Refinar etiqueta/descripción | Editar existente e incrementar versión | Mejorar comentario `rdfs:comment` para mayor claridad |
+| Romper compatibilidad (cambiar rango o significado) | Editar, incrementar versión y documentar breaking change | Cambiar `unece:weightQuantity` de decimal a objeto `Measure` |
 
 ## Estructura Mínima de un Archivo Ontología
 ```ttl
-@prefix : <mi-dominio/ontolgia#> .
+@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/myDomain.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 
-: a owl:Ontology ;
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/myDomain.ttl> 
+  rdf:type owl:Ontology ;
   owl:versionInfo "0.1" ;
-  rdfs:comment "Ontología inicial del dominio Mi Dominio"@es .
+  rdfs:comment "Ontología para el dominio específico, extendiendo modelo UNECE"@es ;
+  rdfs:label "My Domain Ontology"@en .
 
-:Residuo a owl:Class ; rdfs:label "Residuo"@es ; rdfs:comment "Material o sustancia gestionada"@es .
-:puertoOrigen a owl:ObjectProperty ; rdfs:label "puerto origen"@es ; rdfs:domain :Residuo ; rdfs:range :Puerto .
-:Puerto a owl:Class ; rdfs:label "Puerto"@es .
+:Waste a owl:Class ; 
+  rdfs:subClassOf unece:Product ;
+  rdfs:label "Waste"@en ;
+  rdfs:comment "Material o sustancia gestionada como residuo"@es .
+
+:hasOriginPort a owl:ObjectProperty ; 
+  rdfs:label "has origin port"@en ;
+  rdfs:domain :Waste ; 
+  rdfs:range :Port .
+
+:Port a owl:Class ; 
+  rdfs:label "Port"@en ;
+  rdfs:comment "Puerto marítimo o instalación portuaria"@es .
 ```
 
 ## Buenas Prácticas de Nomenclatura
-- Clases: PascalCase (`ResiduoQuimico`).
-- Propiedades: camelCase (`hasQuantity`, `puertoOrigen`).
-- Evita abreviaturas opacas (`qty`, `resTyp`).
-- Prefijos estables y cortos (no cambiar URIs base salvo MAJOR).
+- **Clases**: PascalCase (`Waste`, `WastePassport`, `MarpolWaste`).
+- **Propiedades**: camelCase (`hasQuantity`, `credentialSubject`, `arrivalPort`).
+- **Idioma**: Preferir inglés para identificadores, usar `rdfs:label` multiidioma para etiquetas.
+- **Evitar**: Abreviaturas opacas (`qty`, `resTyp`, `wst`).
+- **URIs estables**: No cambiar base URI sin causa mayor y versionado explícito.
 
 ## Añadir una Nueva Clase
 1. Crear declaración `:NuevaClase a owl:Class`.
@@ -56,30 +65,42 @@ Proporcionar pasos claros y criterios de decisión para cambios en `ontology/*.t
 6. Ejemplo que contenga la propiedad.
 
 ## Proceso Paso a Paso (Editar)
-1. Crear rama
-2. Localizar archivo en `ontology/` y abrirlo.
-3. Aplicar cambios con comentarios que expliquen razón (`# Cambio: ...`), puedes usar Protégé.
-4. Actualizar `owl:versionInfo` según tipo de cambio.
-5. Ajustar shapes (`shapes/*.ttl`).
-6. Añadir/actualizar ejemplo.
-7. Ejecutar validaciones `10-como-validar-ontologias.md`
-8. Actualizar catálogos si es nueva ontología/codelist.
-9. Pull Request con lista de cambios y resultados de validación.
+1. **Crear rama git**: `git checkout -b feature/add-transport-mode`
+2. **Localizar archivo**: Abrir archivo relevante en `ontology/` (ej: `digitalWastePassport.ttl`)
+3. **Aplicar cambios**: Editar con editor de texto o Protégé, añadiendo comentarios `rdfs:comment`
+4. **Actualizar versión**: Incrementar `owl:versionInfo` (ej: de `"0.1"` a `"0.2"`)
+5. **Ajustar shapes**: Modificar reglas SHACL en `shapes/*.ttl` si es necesario
+6. **Crear/actualizar ejemplo**: Añadir instancia en `examples/` que use la nueva funcionalidad
+7. **Validar**: Ejecutar scripts `validate-owl.sh` y `validate-shacl.sh` (ver `04-como-validar-ontologias.md`)
+8. **Actualizar catálogos**: Si es nueva ontología/codelist, añadir entrada en `docs/00-domains/`
+9. **Pull Request**: Crear PR con descripción de cambios y resultados de validación
 
 ## Buenas Prácticas de Versionado
-| Tipo | Cuándo |
-|------|--------|
-| PATCH | Texto, comentario, label |
-| MINOR | Añadir clases/propiedades compatibles |
-| MAJOR | Cambios que rompen integraciones, renombres, eliminación |
+El versionado se gestiona mediante `owl:versionInfo` con formato incremental simple (ej: `"0.1"`, `"0.2"`, `"1.0"`).
 
-## Deprecación
-1. Anunciar en comentario: `# Deprecado: usar :nuevaPropiedad`.
-2. Mantener ambas durante un ciclo MINOR.
-3. Eliminar en siguiente MAJOR con nota en PR.
+| Tipo de Cambio | Estrategia de Versión | Ejemplo |
+|----------------|----------------------|----------|
+| **Cambios menores** (labels, comentarios, documentación) | Incrementar decimal: `0.1` → `0.2` | Mejorar `rdfs:comment` |
+| **Añadir elementos** (nuevas clases/propiedades compatibles) | Incrementar decimal: `0.5` → `0.6` | Añadir propiedad `hasRecyclingCode` |
+| **Breaking changes** (eliminar, renombrar, cambiar semántica) | Incrementar entero: `0.9` → `1.0` | Cambiar rango de propiedad |
+
+**Recomendación**: Documentar cambios en commit message y comentarios de la ontología.
+
+## Deprecación de Elementos
+1. **Marcar como deprecado**: Añadir anotación `owl:deprecated true` y comentario explicativo
+2. **Mantener temporalmente**: Dejar elemento deprecado durante al menos una versión
+3. **Eliminar**: Quitar en siguiente versión mayor con breaking changes documentados
+
+```ttl
+:oldProperty a owl:ObjectProperty ;
+  owl:deprecated true ;
+  rdfs:comment "DEPRECADO: Usar :newProperty en su lugar. Se eliminará en v2.0"@es .
+```
 
 ## Próximos Pasos
 Tras crear o editar:
-- Validar (ver `10-como-validar-ontologias.md`).
-- Revisar estructura general (`09-overview-estructura.md`).
-- Si introduce lógica compleja → planificar shapes adicionales.
+- **Validar**: Ejecutar validaciones OWL y SHACL (ver `04-como-validar-ontologias.md`)
+- **Revisar estructura**: Consultar convenciones del repositorio (`01-overview-estructura.md`)
+- **Shapes**: Si introduces restricciones complejas, actualizar o crear shapes SHACL correspondientes
+- **Documentación**: Regenerar wiki con `generate-wiki.py` (ver `05-como-generar-la-wiki.md`)
+- **Testing**: Verificar que ejemplos existentes siguen siendo válidos con los cambios

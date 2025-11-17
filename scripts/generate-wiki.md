@@ -119,10 +119,6 @@ Si se activa `--include-shapes`, cada ontología con shapes asociados genera `SH
 ## Licencia / Uso
 El script pretende ser genérico y reutilizable en otros repositorios de ontologías Turtle.
 
-## Mantenimiento
-- Revisa dependencias en `requirements.txt` periódicamente.
-- Añade tests si se expande la lógica (fixture con ontología y shapes mínimos).
-- Verifica que los nombres de archivos de shapes sigan la convención para asociarlos automáticamente.
 
 ## Test Rápido (Smoke Test)
 ```bash

@@ -9,6 +9,8 @@ Estandarizar el significado y la forma de datos intercambiados entre sistemas (g
 - Shapes SHACL (`shapes/*.ttl`) para reglas de calidad y conformidad.
 - Ejemplos (`examples/*.ttl`/`.jsonld`) para prueba y documentación.
 
+**Nota**: Esta ontología está basada en los estándares y modelos de datos de la [UNECE (United Nations Economic Commission for Europe)](https://unece.org/), adaptándolos a las necesidades específicas de los pasaportes digitales de residuos.
+
 Dominios actuales:
 - Waste Core (pasaporte digital de residuo genérico).
 - Waste MARPOL (extensión marítima regulatoria).
