@@ -1,6 +1,7 @@
 # Catálogo de Ontologías
 
-> Inventario de modelos semánticos disponibles en este repositorio. Todas las ontologías están basadas en estándares UNECE (United Nations Economic Commission for Europe) para asegurar interoperabilidad internacional.
+> [!IMPORTANT]
+Inventario de modelos semánticos disponibles en este repositorio. Todas las ontologías están basadas en estándares **UNECE (United Nations Economic Commission for Europe)** para asegurar interoperabilidad internacional.
 
 ## Estados de Madurez
 - **Experimental**: En desarrollo activo, puede cambiar significativamente
@@ -21,8 +22,7 @@
 | **Digital Waste Passport** | `digitalWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl) |
 | **Digital MARPOL Waste Passport** | `digitalMarpolWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl) |
 
-## Clases Principales por Ontología
-
 ## Recursos de Diseño
 
 - **Diagramas conceptuales**: [Perfil sysadmin en Jargon.sh](https://jargon.sh/user/sysadmin)
+
