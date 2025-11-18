@@ -139,3 +139,8 @@ scripts/validate-shacl.sh -d examples/digital-marpol-waste-passport-sample.ttl
 - **MARPOL Anexo V**: [IMO MARPOL](https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Prevention-of-Pollution-from-Ships-(MARPOL).aspx)
 - **Directiva (UE) 2019/883**: Instalaciones receptoras portuarias
 - **UN/LOCODE**: [United Nations Code for Trade and Transport Locations](https://unece.org/trade/cefact/unlocode-code-list-country-and-territory)
+
+## Recursos de Diseño
+
+- **Diseño del modelo**: [MARPOL Waste Passport en Jargon.sh](https://jargon.sh/user/sysadmin/MarpolWastePassport)
+

@@ -85,3 +85,6 @@ Representación del residuo como producto.
   - `examples/digital-waste-passport-sample.jsonld`
 
 
+## Referencias y Recursos
+
+- **Diseño del modelo**: [Digital Product Passport en Jargon.sh](https://jargon.sh/user/sysadmin/DigitalProductPassport)

@@ -22,3 +22,7 @@
 | **Digital MARPOL Waste Passport** | `digitalMarpolWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl) |
 
 ## Clases Principales por Ontología
+
+## Recursos de Diseño
+
+- **Diagramas conceptuales**: [Perfil sysadmin en Jargon.sh](https://jargon.sh/user/sysadmin)
