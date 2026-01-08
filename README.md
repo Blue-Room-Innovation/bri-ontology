@@ -51,13 +51,38 @@ Ver: `docs/03-como-crear-o-editar-ontologia.md`
 ### 8. Validación Detallada
 Ver `docs/04-como-validar-ontologias.md`
 
-### 9. Licencia y Reutilización
+### 9. Generación de JSON Schema desde SHACL
+SHACL es la fuente de verdad semántica, pero para validación estructural de documentos JSON y generación de contratos de API, se puede derivar automáticamente JSON Schema:
+
+```bash
+# Generar JSON Schema para Digital Waste Passport
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalWastePassportShapes.ttl \
+  --output build/digitalWastePassport.schema.json
+
+# Generar JSON Schema para Digital MARPOL Waste Passport  
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalMarpolWastePassportShapes.ttl \
+  --output build/digitalMarpolWastePassport.schema.json
+```
+
+**⚠️ Importante:** JSON Schema generado **NO** es una conversión semántica completa:
+- ✅ Valida estructura de documentos JSON/JSON-LD
+- ✅ Sirve como contrato de API y para generación de tipos TypeScript
+- ❌ NO captura toda la semántica de SHACL (sh:sparql, lógica compleja, etc.)
+- ❌ NO reemplaza la validación SHACL para contextos RDF
+
+Ver documentación completa en:
+- **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
+- **Script:** `scripts/shacl-to-jsonschema.md`
+
+### 10. Licencia y Reutilización
 Licencia: pendiente de confirmación. Al reutilizar:
 - Mantener prefijos y referencias a catálogo.
 - Citar origen y versión (`owl:versionInfo` + commit).
 - Para cambios mayores proponer issue y debatir gobernanza.
 
-### 10. Próximos Pasos Sugeridos
+### 11. Próximos Pasos Sugeridos
 1. Revisar catálogos (`docs/00-domains/00-catalogo-ontologias.md`, `docs/00-domains/00-catalogo-taxonomias.md`).
 2. Leer visión general (`docs/01-overview-estructura.md`).
 3. Entender casos de uso (`docs/02-como-se-usa-la-ontologia-y-para-que.md`).
