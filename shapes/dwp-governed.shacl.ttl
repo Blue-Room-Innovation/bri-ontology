@@ -1,0 +1,318 @@
+#######################################################################
+# Digital Waste Passport – GOVERNED SHACL PROFILE
+#
+# CONTEXT
+# -------
+# This SHACL file defines the GOVERNED semantic constraints for the
+# Digital Waste Passport (DWP) domain, including MARPOL-related
+# waste information.
+#
+# IMPORTANT:
+# - This file is NOT derived from the UNECE DPP JSON Schema
+# - This file intentionally does NOT inherit legacy DPP constraints
+# - This is a domain-specific, governed profile
+#
+# RELATION TO OTHER SHAPES
+# -----------------------
+# - This file MUST be applied on top of:
+#     • UNECE ontologies (UNTD / core)
+#     • DWP ontology (digitalWastePassport.ttl)
+# - This file MAY coexist with a UNECE DPP bootstrap SHACL, but does
+#   NOT depend on it structurally.
+#
+# GOVERNANCE ROLE
+# ---------------
+# - This file represents the SOURCE OF TRUTH for Waste rules
+# - All constraints defined here are normative
+# - Shapes are intentionally CLOSED to detect unexpected properties
+#
+# DESIGN PRINCIPLES
+# -----------------
+# - Strong validation (closed shapes)
+# - Explicit enumerations for regulatory compliance
+# - Aggregate constraints expressed via SPARQL where required
+# - Alignment with UNECE vocabularies without redefining them
+#
+#######################################################################
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix schema:  <http://schema.org/> .
+
+@prefix dwp:     <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#> .
+@prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+
+#######################################################################
+# Digital Waste Passport (top-level wrapper)
+#######################################################################
+
+dwp:DigitalWastePassportShape
+  a sh:NodeShape ;
+  sh:targetClass dwp:DigitalWastePassport ;
+
+  sh:name "Digital Waste Passport"@en ;
+  sh:description """
+  Governed SHACL shape for the Digital Waste Passport.
+  This shape is CLOSED to ensure that only explicitly
+  allowed properties are present.
+  """@en ;
+
+  # Issuance date is mandatory
+  sh:property [
+    sh:path dct:issued ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "The Digital Waste Passport must declare an issuance date (dct:issued)."@en
+  ] ;
+
+  # Publisher (issuer organisation)
+  sh:property [
+    sh:path dct:publisher ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "The Digital Waste Passport must declare a publisher (dct:publisher)."@en
+  ] ;
+
+  # Exactly one WastePassport as credential subject
+  sh:property [
+    sh:path dwp:credentialSubject ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class dwp:WastePassport ;
+    sh:message "The Digital Waste Passport must reference exactly one WastePassport."@en
+  ] ;
+
+  # Optional validity date
+  sh:property [
+    sh:path dct:valid ;
+    sh:datatype xsd:dateTime ;
+    sh:maxCount 1
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+#######################################################################
+# Waste Passport (domain container)
+#######################################################################
+
+dwp:WastePassportShape
+  a sh:NodeShape ;
+  sh:targetClass dwp:WastePassport ;
+
+  sh:name "Waste Passport"@en ;
+  sh:description """
+  Governed WastePassport shape.
+  Acts as a container for waste-specific information.
+  """@en ;
+
+  # Exactly one Waste instance
+  sh:property [
+    sh:path dwp:waste ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:class dwp:Waste ;
+    sh:message "A WastePassport must reference exactly one Waste entity."@en
+  ] ;
+
+  # Optional identifier
+  sh:property [
+    sh:path dct:identifier ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1
+  ] ;
+
+  # Optional reporting standard (UNECE-aligned)
+  sh:property [
+    sh:path unece:reportingStandard ;
+    sh:class unece:Standard ;
+    sh:maxCount 1
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+#######################################################################
+# Waste (core domain entity)
+#######################################################################
+
+dwp:WasteShape
+  a sh:NodeShape ;
+  sh:targetClass dwp:Waste ;
+
+  sh:name "Waste"@en ;
+  sh:description """
+  Governed Waste shape aligned with UNECE concepts.
+  Closed shape with explicit regulatory constraints.
+  """@en ;
+
+  # Mandatory waste name
+  sh:property [
+    sh:path unece:name ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Waste must have a name (unece:name)."@en
+  ] ;
+
+  sh:property [
+    sh:path unece:productName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+
+  sh:property [
+    sh:path unece:productDescription ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1
+  ] ;
+
+  sh:property [
+    sh:path unece:hasBatchIdentifier ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1
+  ] ;
+
+  ###################################################################
+  # Country of origin
+  #
+  # NOTE:
+  # - Restricted subset of UNECE CountryId values (EU + GB sample)
+  # - Intended as an initial controlled list
+  # - Expected to be externalised to a dynamic codelist in the future
+  ###################################################################
+
+  sh:property [
+    sh:path unece:originCountry ;
+    sh:maxCount 1 ;
+    sh:in (
+      <https://vocabulary.uncefact.org/CountryId#DE>
+      <https://vocabulary.uncefact.org/CountryId#ES>
+      <https://vocabulary.uncefact.org/CountryId#FR>
+      <https://vocabulary.uncefact.org/CountryId#IT>
+      <https://vocabulary.uncefact.org/CountryId#NL>
+      <https://vocabulary.uncefact.org/CountryId#PT>
+      <https://vocabulary.uncefact.org/CountryId#BE>
+      <https://vocabulary.uncefact.org/CountryId#DK>
+      <https://vocabulary.uncefact.org/CountryId#SE>
+      <https://vocabulary.uncefact.org/CountryId#NO>
+      <https://vocabulary.uncefact.org/CountryId#FI>
+      <https://vocabulary.uncefact.org/CountryId#GB>
+      <https://vocabulary.uncefact.org/CountryId#IE>
+    ) ;
+    sh:message "originCountry must be one of the allowed UNECE CountryId values (EU + GB subset)."@en
+  ] ;
+
+  sh:property [
+    sh:path unece:productionDate ;
+    sh:datatype xsd:date ;
+    sh:maxCount 1
+  ] ;
+
+  sh:property [
+    sh:path unece:weightQuantity ;
+    sh:datatype xsd:decimal ;
+    sh:minExclusive 0 ;
+    sh:maxCount 1
+  ] ;
+
+  ###################################################################
+  # Declared unit (restricted subset of UNECE Rec20 codes)
+  ###################################################################
+
+  sh:property [
+    sh:path unece:declaredUnit ;
+    sh:maxCount 1 ;
+    sh:in (
+      <https://vocabulary.uncefact.org/UnitMeasureCode#KGM>
+      <https://vocabulary.uncefact.org/UnitMeasureCode#TNE>
+      <https://vocabulary.uncefact.org/UnitMeasureCode#LTR>
+      <https://vocabulary.uncefact.org/UnitMeasureCode#MTR>
+      <https://vocabulary.uncefact.org/UnitMeasureCode#CMQ>
+    ) ;
+    sh:message "declaredUnit must be one of: KGM, TNE, LTR, MTR, CMQ."@en
+  ] ;
+
+  # Material constituents
+  sh:property [
+    sh:path unece:hasConstituent ;
+    sh:class unece:MaterialConstituent ;
+  ] ;
+
+  ###################################################################
+  # Aggregate constraint:
+  # Sum of all massFraction values MUST NOT exceed 1
+  ###################################################################
+
+  sh:sparql [
+    sh:message "The sum of massFraction values of all material constituents must not exceed 1."@en ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        OPTIONAL {
+          $this unece:hasConstituent ?c .
+          ?c unece:massFraction ?mf .
+        }
+      }
+      GROUP BY $this
+      HAVING ( SUM(xsd:decimal(?mf)) > 1 )
+    """
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+#######################################################################
+# Material Constituent
+#######################################################################
+
+unece:MaterialConstituentShape
+  a sh:NodeShape ;
+  sh:targetClass unece:MaterialConstituent ;
+
+  sh:name "Material Constituent"@en ;
+
+  sh:property [
+    sh:path unece:materialType ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+
+  sh:property [
+    sh:path unece:massFraction ;
+    sh:datatype xsd:decimal ;
+    sh:minInclusive 0 ;
+    sh:maxInclusive 1 ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+#######################################################################
+# Reporting Standard
+#######################################################################
+
+unece:StandardShape
+  a sh:NodeShape ;
+  sh:targetClass unece:Standard ;
+
+  sh:name "Reporting Standard"@en ;
+
+  sh:property [
+    sh:path unece:standardName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
