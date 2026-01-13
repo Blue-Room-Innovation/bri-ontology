@@ -1,19 +1,32 @@
-# Generació de TypeScript des de SHACL
+# Autogeneració d'artefactes des de SHACL
 
-Aquest document descriu com utilitzar l'eina `generate-typescript.py` per generar definicions TypeScript a partir de shapes SHACL.
+Aquest document descriu com utilitzar l'eina `autogenerate.py` per autogenerar artefactes (JSON Schema i TypeScript) a partir de shapes SHACL.
 
 ---
 
 ## 📋 Què fa aquesta eina?
 
-Aquest script implementa un pipeline de generació en **2 passos**:
+Aquest script és un **orquestrador** que encadena automàticament dos scripts per implementar un pipeline complet de generació:
 
 ```
 SHACL Shapes → JSON Schema → TypeScript
+       ↓              ↓            ↓
+shacl-to-jsonschema.py → jsonschema-to-typescript.py
+              ↑                    ↑
+         (Pas 1)              (Pas 2)
 ```
 
-1. **Pas 1**: Converteix shapes SHACL a JSON Schema (reutilitza `shacl-to-jsonschema.py`)
-2. **Pas 2**: Converteix JSON Schema a definicions TypeScript (utilitza `json-schema-to-typescript`)
+**Avantatges:**
+- ✅ Execució automàtica de tots els passos
+- ✅ Gestió centralitzada de múltiples fitxers
+- ✅ Configuració predefinida per als passaports digitals del projecte
+- ✅ Un sol comandament per generar tot
+
+**Scripts subjacents:**
+1. **[shacl-to-jsonschema.py](./shacl-to-jsonschema.md)**: Converteix SHACL → JSON Schema
+2. **[jsonschema-to-typescript.py](./jsonschema-to-typescript.md)**: Converteix JSON Schema → TypeScript
+
+> 💡 **Nota**: Pots utilitzar cada script independentment si necessites més control o personalització.
 
 ---
 
@@ -58,13 +71,23 @@ Dependències Node.js (s'instal·len automàticament):
 
 ## 🚀 Ús bàsic
 
-### Generació automàtica de tots els schemas
+### Generació automàtica de tots els artefactes
 
 ```bash
-python scripts/generate-typescript.py
+python scripts/autogenerate.py
+
+# O més curt, des de l'arrel del projecte
+python scripts/autogenerate.py
+
+# O amb npm (si tens les dependencies Python instal·lades globalment)
+npm run autogenerate
 ```
 
-Aquest comandament genera:
+Aquest comandament:
+1. Executa `shacl-to-jsonschema.py` per cada shape configurat
+2. Executa `jsonschema-to-typescript.py` per cada JSON Schema generat
+
+**Genera automàticament:**
 
 **JSON Schemas:**
 - `build/digitalWastePassport.schema.json`
@@ -77,10 +100,49 @@ Aquest comandament genera:
 ### Mode verbós
 
 ```bash
-python scripts/generate-typescript.py --verbose
+python scripts/autogenerate.py --verbose
 ```
 
 Mostra informació detallada del procés de conversió, incloent-hi warnings i debugging.
+
+---
+
+## 🎛️ Ús independent dels scripts
+
+Si necessites més control o vols processar fitxers específics, pots utilitzar cada script directament:
+
+### Opció 1: Pipeline manual complet
+
+```bash
+# Pas 1: SHACL → JSON Schema
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/customShape.ttl \
+  --output build/customSchema.json
+
+# Pas 2: JSON Schema → TypeScript
+python scripts/jsonschema-to-typescript.py \
+  --input build/customSchema.json \
+  --output build/customTypes.ts \
+  --source "shapes/customShape.ttl"
+```
+
+### Opció 2: Només un dels passos
+
+```bash
+# Si només necessites JSON Schema
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/example.ttl \
+  --output build/example.schema.json
+
+# Si ja tens JSON Schema i només vols TypeScript
+python scripts/jsonschema-to-typescript.py \
+  --input build/example.schema.json \
+  --output build/example.ts
+```
+
+**Vegeu:**
+- [shacl-to-jsonschema.md](./shacl-to-jsonschema.md) - Documentació del pas 1
+- [jsonschema-to-typescript.md](./jsonschema-to-typescript.md) - Documentació del pas 2
 
 ---
 
@@ -267,7 +329,7 @@ Ontologia/
 │   ├── digitalMarpolWastePassport.schema.json
 │   └── digitalMarpolWastePassport.ts
 ├── scripts/
-│   ├── generate-typescript.py          # Aquest script
+│   ├── autogenerate.py                 # Aquest script
 │   └── shacl-to-jsonschema.py          # Utilitzat internament
 └── package.json                         # Dependencies Node.js
 ```
@@ -284,12 +346,36 @@ Ontologia/
 
 ## 📝 Notes tècniques
 
-### Per què un pipeline de 2 passos?
+### Per què un pipeline de 2 passos amb scripts separats?
 
-1. **Reutilització** - Aprofita l'script SHACL→JSON Schema existent
-2. **Eina madura** - `json-schema-to-typescript` és molt robusta i mantiguda
-3. **Separació de responsabilitats** - Cada eina fa una cosa i la fa bé
-4. **Flexibilitat** - Els JSON Schemas intermedis són útils per altres propòsits
+1. **Separació de responsabilitats** - Cada script fa una sola cosa
+2. **Reutilització** - Els scripts es poden utilitzar independentment
+3. **Eina madura** - `json-schema-to-typescript` és molt robusta i mantiguda
+4. **Flexibilitat** - Pots processar fitxers individuals o tots automàticament
+5. **Mantenibilitat** - Codi més simple i fàcil de provar
+
+### Configuració dels fitxers a processar
+
+Els fitxers que es processen estan configurats dins de `autogenerate.py`:
+
+```python
+self.shape_configs = [
+    {
+        "name": "digitalWastePassport",
+        "shape_file": "digitalWastePassportShapes.ttl",
+        "json_schema": "digitalWastePassport.schema.json",
+        "typescript": "digitalWastePassport.ts"
+    },
+    {
+        "name": "digitalMarpolWastePassport",
+        "shape_file": "digitalMarpolWastePassportShapes.ttl",
+        "json_schema": "digitalMarpolWastePassport.schema.json",
+        "typescript": "digitalMarpolWastePassport.ts"
+    }
+]
+```
+
+Per afegir nous shapes, afegeix una nova entrada a aquesta llista i reinicia el script.
 
 ### Limitacions conegudes
 

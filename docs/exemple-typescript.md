@@ -12,7 +12,7 @@ pip install -r scripts/requirements.txt
 npm install
 
 # Generar els tipus TypeScript
-python scripts/generate-typescript.py
+python scripts/autogenerate.py
 ```
 
 ## Ús bàsic
@@ -156,5 +156,5 @@ function WastePassportForm() {
 
 ```bash
 # Després de modificar els shapes SHACL
-python scripts/generate-typescript.py
+python scripts/autogenerate.py
 ```

@@ -76,16 +76,36 @@ Ver documentación completa en:
 - **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
 - **Script:** `scripts/shacl-to-jsonschema.md`
 
-### 10. Generación de TypeScript desde SHACL
+### 10. Generació de TypeScript desde SHACL
 Para proyectos TypeScript, se puede generar automáticamente definiciones de tipos a partir de los shapes SHACL mediante un pipeline de 2 pasos (SHACL → JSON Schema → TypeScript):
 
 ```bash
-# Generar JSON Schema Y TypeScript para todos los pasaportes
-python scripts/generate-typescript.py
+# Generar JSON Schema Y TypeScript para todos los pasaportes (recomendado)
+python scripts/autogenerate.py
 
 # O con salida detallada
-python scripts/generate-typescript.py --verbose
+python scripts/autogenerate.py --verbose
+
+# También puedes usar npm (requiere que Python tenga las dependencias instaladas globalmente)
+npm run autogenerate
+
+# Si necesitas más control, puedes ejecutar cada paso independientemente:
+
+# Paso 1: SHACL → JSON Schema
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalWastePassportShapes.ttl \
+  --output build/digitalWastePassport.schema.json
+
+# Paso 2: JSON Schema → TypeScript
+python scripts/jsonschema-to-typescript.py \
+  --input build/digitalWastePassport.schema.json \
+  --output build/digitalWastePassport.ts
 ```
+
+**Scripts disponibles:**
+- **`autogenerate.py`** - Orquestrador que ejecuta todo el pipeline automáticamente (recomendado)
+- **`shacl-to-jsonschema.py`** - Convierte SHACL → JSON Schema (paso 1)
+- **`jsonschema-to-typescript.py`** - Convierte JSON Schema → TypeScript (paso 2)
 
 Este script genera:
 - `build/digitalWastePassport.schema.json` + `build/digitalWastePassport.ts`
@@ -96,6 +116,7 @@ Este script genera:
 - ✅ Autocompletado y detección de errores en IDEs
 - ✅ Contracto de tipos type-safe para desarrollo frontend/backend
 - ✅ Integración con validadores JSON Schema + TypeScript
+- ✅ Scripts modulares - cada uno con una responsabilidad única
 
 **Requisitos:**
 ```bash
@@ -107,7 +128,9 @@ npm install
 ```
 
 Ver documentación completa en:
-- **Script:** `scripts/generate-typescript.md`
+- **Script orquestrador:** `scripts/autogenerate.md`
+- **Conversión SHACL→JSON:** `scripts/shacl-to-jsonschema.md`
+- **Conversión JSON→TypeScript:** `scripts/jsonschema-to-typescript.md`
 - **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
 
 ### 11. Licencia y Reutilización
