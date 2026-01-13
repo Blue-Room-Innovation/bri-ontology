@@ -1,17 +1,120 @@
-# CLI Tools - Ontology Validation
+# CLI Tools - Ontology Management
 
-Aquest directori conté els mòduls per a la validació d'ontologies OWL i SHACL.
+Aquest directori conté els mòduls per a la validació, generació i conversió d'ontologies.
 
 ## Estructura
 
 ```
 scripts/
 ├── ontology_cli.py          # Punt d'entrada principal del CLI
+├── autogenerate.py          # Pipeline de generació TypeScript (manté compatibilitat)
+├── generate-wiki.py         # Generació de wiki (manté compatibilitat)
+├── shacl-to-jsonschema.py   # Conversió SHACL→JSON Schema (manté compatibilitat)
+├── jsonschema-to-typescript.py  # Conversió JSON Schema→TypeScript (manté compatibilitat)
 └── cli/
     ├── __init__.py          # Package initialization
     ├── utils.py             # Utilitats comunes (run_command, which, etc.)
     ├── validate_owl.py      # Validació d'ontologies OWL
     └── validate_shacl.py    # Validació de dades contra SHACL shapes
+```
+
+## Comandes Disponibles
+
+### Validació
+
+#### `validate owl`
+Valida ontologies OWL amb ROBOT o Apache Jena RIOT:
+```bash
+npm run validate:owl                    # Valida ontologies OWL
+npm run validate:owl:quiet              # Mode silenciós
+npm run validate:owl:with-codelists     # Inclou codelists
+```
+
+#### `validate shacl`
+Valida dades RDF contra shapes SHACL:
+```bash
+npm run validate:dwp                    # Valida Digital Waste Passport
+npm run validate:marpol                 # Valida Marpol Waste Passport
+```
+
+### Generació
+
+#### `generate types`
+Genera TypeScript des de shapes SHACL (pipeline complet):
+```bash
+npm run generate:types                  # Genera TypeScript types
+npm run generate:types:verbose          # Mode verbose
+npm run autogenerate                    # Alias (compatibilitat)
+```
+
+#### `generate wiki`
+Genera documentació wiki des d'ontologies:
+```bash
+npm run generate:wiki                   # Genera wiki
+npm run generate:wiki:with-codelists    # Inclou codelists
+npm run generate:wiki:verbose           # Mode verbose
+```
+
+### Conversió
+
+#### `convert shacl`
+Converteix SHACL shapes a JSON Schema:
+```bash
+npm run convert:shacl:dwp               # Digital Waste Passport
+npm run convert:shacl:marpol            # Marpol Waste Passport
+```
+
+#### `convert ts`
+Converteix JSON Schema a TypeScript:
+```bash
+npm run convert:ts:dwp                  # Digital Waste Passport
+npm run convert:ts:marpol               # Marpol Waste Passport
+```
+
+## Ús des de package.json
+
+Tots els scripts estan disponibles com a comandes npm:
+
+```bash
+# Validació
+npm run validate:owl
+npm run validate:dwp
+npm run validate:marpol
+
+# Generació
+npm run generate:types
+npm run generate:wiki
+
+# Conversió
+npm run convert:shacl:dwp
+npm run convert:ts:dwp
+
+# Ajuda
+npm run help
+```
+
+## Ús directe amb Python
+
+També pots utilitzar el CLI directament:
+
+```bash
+# Validació
+python scripts/ontology_cli.py validate owl [opcions]
+python scripts/ontology_cli.py validate shacl -d DATA -s SHAPES [opcions]
+
+# Generació
+python scripts/ontology_cli.py generate types [--verbose]
+python scripts/ontology_cli.py generate wiki [--include-codelists]
+
+# Conversió
+python scripts/ontology_cli.py convert shacl -i INPUT.ttl -o OUTPUT.json
+python scripts/ontology_cli.py convert ts -i INPUT.json -o OUTPUT.ts
+
+# Ajuda per cada comanda
+python scripts/ontology_cli.py --help
+python scripts/ontology_cli.py validate owl --help
+python scripts/ontology_cli.py generate types --help
+python scripts/ontology_cli.py convert shacl --help
 ```
 
 ## Mòduls
@@ -40,54 +143,20 @@ Validació SHACL:
 ### `ontology_cli.py`
 CLI principal que:
 - Defineix l'interfície de comandes (argparse)
-- Delega l'execució als mòduls específics
+- Delega l'execució als mòduls específics o scripts originals
 - Gestiona el flux principal del programa
 
-## Ús des de package.json
+## Compatibilitat
 
-El `package.json` inclou scripts predefinits per facilitar l'ús:
-
-```bash
-# Validació OWL
-npm run validate:owl                    # Valida ontologies OWL
-npm run validate:owl:quiet              # Validació silenciosa
-npm run validate:owl:with-codelists     # Inclou codelists
-
-# Validació SHACL - Digital Waste Passport
-npm run validate:dwp                    # Valida exemple DWP (TTL)
-npm run validate:dwp:json               # Valida exemple DWP (JSON-LD)
-
-# Validació SHACL - Marpol Waste Passport
-npm run validate:marpol                 # Valida exemple Marpol (TTL)
-npm run validate:marpol:json            # Valida exemple Marpol (JSON-LD)
-
-# Ajuda
-npm run help                            # Mostra ajuda del CLI
-```
-
-## Ús directe
-
-També pots utilitzar el CLI directament amb Python:
-
-```bash
-# Validació OWL
-python scripts/ontology_cli.py validate owl [opcions]
-
-# Validació SHACL
-python scripts/ontology_cli.py validate shacl -d DATA -s SHAPES [opcions]
-
-# Ajuda completa
-python scripts/ontology_cli.py --help
-python scripts/ontology_cli.py validate owl --help
-python scripts/ontology_cli.py validate shacl --help
-```
+Els scripts originals (`autogenerate.py`, `generate-wiki.py`, etc.) es mantenen intactes per compatibilitat. El CLI nou els invoca directament, així que no hi ha risc de trencar funcionalitat existent.
 
 ## Avantatges de la nova estructura
 
-1. **Modularitat**: Cada mòdul té una responsabilitat clara
-2. **Reutilització**: Funcions comunes en `utils.py`
-3. **Mantenibilitat**: Codi més fàcil de mantenir i testejar
-4. **Extensibilitat**: Fàcil afegir nous tipus de validació
-5. **Documentació**: Docstrings per a totes les funcions i classes
-6. **Type hints**: Millor suport d'IDE i detecció d'errors
-7. **Scripts npm**: Accessibilitat des del package.json
+1. **Unificació**: Un únic punt d'entrada per totes les operacions
+2. **Consistència**: Interfície coherent per validar, generar i convertir
+3. **Descobribilitat**: `npm run help` mostra totes les opcions
+4. **Modularitat**: Codi organitzat per responsabilitats
+5. **Extensibilitat**: Fàcil afegir noves comandes
+6. **Compatibilitat**: Els scripts originals continuen funcionant
+7. **Scripts npm**: Accés ràpid a operacions comunes
+8. **Documentació**: Ajuda integrada per cada comanda
