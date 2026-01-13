@@ -21,8 +21,8 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from cli import OwlConfig, ShaclConfig, validate_owl, validate_shacl
-from cli.utils import get_workspace_root
+from lib import OwlConfig, ShaclConfig, validate_owl, validate_shacl
+from lib.utils import get_workspace_root
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -245,7 +245,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         if ns.generate_cmd == "types":
             # Import here to avoid unnecessary dependencies
             import subprocess
-            autogenerate_script = workspace_root / "scripts" / "autogenerate.py"
+            autogenerate_script = workspace_root / "scripts" / "lib" / "autogenerate.py"
             cmd = [sys.executable, str(autogenerate_script)]
             if ns.verbose:
                 cmd.append("--verbose")
@@ -254,7 +254,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         
         elif ns.generate_cmd == "wiki":
             import subprocess
-            wiki_script = workspace_root / "scripts" / "generate-wiki.py"
+            wiki_script = workspace_root / "scripts" / "lib" / "generate_wiki.py"
             cmd = [
                 sys.executable,
                 str(wiki_script),
@@ -272,7 +272,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     elif ns.command == "convert":
         if ns.convert_cmd == "shacl":
             import subprocess
-            shacl_script = workspace_root / "scripts" / "shacl-to-jsonschema.py"
+            shacl_script = workspace_root / "scripts" / "lib" / "shacl_to_jsonschema.py"
             cmd = [
                 sys.executable,
                 str(shacl_script),
@@ -286,7 +286,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         
         elif ns.convert_cmd == "ts":
             import subprocess
-            ts_script = workspace_root / "scripts" / "jsonschema-to-typescript.py"
+            ts_script = workspace_root / "scripts" / "lib" / "jsonschema_to_typescript.py"
             cmd = [
                 sys.executable,
                 str(ts_script),
