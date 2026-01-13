@@ -1,8 +1,8 @@
 /**
- * Auto-generated TypeScript definitions from SHACL shapes
- * Source: shapes/digitalWastePassportShapes.ttl
+ * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-13 09:47:20
+ * Generated: 2026-01-13 10:10:36
+ * Source: shapes/digitalWastePassportShapes.ttl
  */
 
 /**
