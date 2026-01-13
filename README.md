@@ -76,13 +76,47 @@ Ver documentación completa en:
 - **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
 - **Script:** `scripts/shacl-to-jsonschema.md`
 
-### 10. Licencia y Reutilización
+### 10. Generación de TypeScript desde SHACL
+Para proyectos TypeScript, se puede generar automáticamente definiciones de tipos a partir de los shapes SHACL mediante un pipeline de 2 pasos (SHACL → JSON Schema → TypeScript):
+
+```bash
+# Generar JSON Schema Y TypeScript para todos los pasaportes
+python scripts/generate-typescript.py
+
+# O con salida detallada
+python scripts/generate-typescript.py --verbose
+```
+
+Este script genera:
+- `build/digitalWastePassport.schema.json` + `build/digitalWastePassport.ts`
+- `build/digitalMarpolWastePassport.schema.json` + `build/digitalMarpolWastePassport.ts`
+
+**Ventajas:**
+- ✅ Validación estática en tiempo de compilación
+- ✅ Autocompletado y detección de errores en IDEs
+- ✅ Contracto de tipos type-safe para desarrollo frontend/backend
+- ✅ Integración con validadores JSON Schema + TypeScript
+
+**Requisitos:**
+```bash
+# Python
+pip install -r scripts/requirements.txt
+
+# Node.js
+npm install
+```
+
+Ver documentación completa en:
+- **Script:** `scripts/generate-typescript.md`
+- **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
+
+### 11. Licencia y Reutilización
 Licencia: pendiente de confirmación. Al reutilizar:
 - Mantener prefijos y referencias a catálogo.
 - Citar origen y versión (`owl:versionInfo` + commit).
 - Para cambios mayores proponer issue y debatir gobernanza.
 
-### 11. Próximos Pasos Sugeridos
+### 12. Próximos Pasos Sugeridos
 1. Revisar catálogos (`docs/00-domains/00-catalogo-ontologias.md`, `docs/00-domains/00-catalogo-taxonomias.md`).
 2. Leer visión general (`docs/01-overview-estructura.md`).
 3. Entender casos de uso (`docs/02-como-se-usa-la-ontologia-y-para-que.md`).

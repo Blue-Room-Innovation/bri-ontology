@@ -1,0 +1,16 @@
+{
+  "name": "dataspace-ontology-tools",
+  "version": "0.1.0",
+  "description": "TypeScript generation tools for DataSpace ontology",
+  "private": true,
+  "scripts": {
+    "generate:typescript": "python scripts/generate-typescript.py"
+  },
+  "dependencies": {
+    "json-schema-to-typescript": "^14.1.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
