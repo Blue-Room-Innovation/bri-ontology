@@ -1,6 +1,9 @@
 Protege/catalog*
 ontology/catalog-v001.xml
 
+# python
+__pycache__
+
 # Node.js
 node_modules/
 package-lock.json

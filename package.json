@@ -5,7 +5,16 @@
   "private": true,
   "scripts": {
     "autogenerate": "python scripts/autogenerate.py",
-    "generate": "python scripts/autogenerate.py"
+    "generate": "python scripts/autogenerate.py",
+    "validate:owl": "python scripts/ontology_cli.py validate owl",
+    "validate:owl:quiet": "python scripts/ontology_cli.py validate owl --quiet",
+    "validate:owl:with-codelists": "python scripts/ontology_cli.py validate owl --include-codelists",
+    "validate:shacl": "python scripts/ontology_cli.py validate shacl",
+    "validate:dwp": "python scripts/ontology_cli.py validate shacl -d examples/digital-waste-passport-sample.ttl -s shapes/digitalWastePassportShapes.ttl -e ontology/digitalWastePassport.ttl",
+    "validate:dwp:json": "python scripts/ontology_cli.py validate shacl -d examples/digital-waste-passport-sample.jsonld -s shapes/digitalWastePassportShapes.ttl -e ontology/digitalWastePassport.ttl -f json-ld",
+    "validate:marpol": "python scripts/ontology_cli.py validate shacl -d examples/digital-marpol-waste-passport-sample.ttl -s shapes/digitalMarpolWastePassportShapes.ttl -e ontology/digitalMarpolWastePassport.ttl",
+    "validate:marpol:json": "python scripts/ontology_cli.py validate shacl -d examples/digital-marpol-waste-passport-sample.jsonld -s shapes/digitalMarpolWastePassportShapes.ttl -e ontology/digitalMarpolWastePassport.ttl -f json-ld",
+    "help": "python scripts/ontology_cli.py --help"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
