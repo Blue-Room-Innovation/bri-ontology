@@ -1,10 +1,11 @@
 {
   "name": "dataspace-ontology-tools",
   "version": "0.1.0",
-  "description": "TypeScript generation tools for DataSpace ontology",
+  "description": "Auto-generation tools for DataSpace ontology artifacts",
   "private": true,
   "scripts": {
-    "generate:typescript": "python scripts/generate-typescript.py"
+    "autogenerate": "python scripts/autogenerate.py",
+    "generate": "python scripts/autogenerate.py"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
