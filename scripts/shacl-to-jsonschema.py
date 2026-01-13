@@ -47,6 +47,7 @@ class SHACLToJSONSchemaConverter:
         self.graph = graph
         self.definitions: Dict[str, Any] = {}
         self.warnings: List[str] = []
+        self.class_to_shape_map: Dict[str, str] = {}  # Maps class URIs to shape names
         
         # XSD to JSON Schema type mapping
         self.xsd_to_json_type = {
@@ -86,6 +87,9 @@ class SHACLToJSONSchemaConverter:
             logger.warning("No SHACL NodeShapes found in input file")
             return self._create_empty_schema()
         
+        # Build mapping from classes to shapes (for sh:class resolution)
+        self._build_class_to_shape_map(node_shapes)
+        
         # Convert each shape to a JSON Schema definition
         for shape in node_shapes:
             self._convert_node_shape(shape)
@@ -102,6 +106,15 @@ class SHACLToJSONSchemaConverter:
             logger.info("Conversion completed successfully with no warnings")
         
         return schema
+    
+    def _build_class_to_shape_map(self, node_shapes: List[URIRef]):
+        """Build a mapping from targetClass to Shape name for sh:class resolution."""
+        for shape in node_shapes:
+            target_class = self.graph.value(shape, SH.targetClass)
+            if target_class:
+                shape_name = self._get_local_name(shape)
+                self.class_to_shape_map[str(target_class)] = shape_name
+                logger.debug(f"Mapped class {target_class} -> shape {shape_name}")
     
     def _create_empty_schema(self) -> Dict[str, Any]:
         """Create an empty schema when no shapes are found."""
@@ -205,8 +218,23 @@ class SHACLToJSONSchemaConverter:
                 prop_def["format"] = json_format
         
         elif class_ref:
-            class_name = self._get_local_name(class_ref)
-            prop_def["$ref"] = f"#/definitions/{class_name}"
+            # sh:class points to an ontology class. Find the Shape that targets this class.
+            class_uri = str(class_ref)
+            shape_name = self.class_to_shape_map.get(class_uri)
+            
+            if shape_name:
+                # Found a shape that targets this class
+                prop_def["$ref"] = f"#/definitions/{shape_name}"
+            else:
+                # No shape found for this class - might be external or missing
+                self.warnings.append(f"No shape found with sh:targetClass {class_ref} for property {prop_name}")
+                prop_def["$comment"] = f"sh:class {class_ref} - no corresponding shape found"
+        
+        elif self.graph.value(prop_shape, SH.node):
+            # sh:node directly references another shape
+            node_shape = self.graph.value(prop_shape, SH.node)
+            shape_name = self._get_local_name(node_shape)
+            prop_def["$ref"] = f"#/definitions/{shape_name}"
         
         else:
             # No explicit type - default to allowing any type

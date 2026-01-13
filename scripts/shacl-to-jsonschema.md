@@ -89,7 +89,8 @@ python scripts/shacl-to-jsonschema.py -i shapes/digitalMarpolWastePassportShapes
 | `sh:minCount 1`         | `"required": ["prop"]`         | Propietat obligatòria                |
 | `sh:maxCount > 1`       | `"type": "array"`              | Múltiples valors                     |
 | `sh:minCount`, `sh:maxCount` | `"minItems"`, `"maxItems"` | Cardinalitat d'arrays                |
-| `sh:class`              | `"$ref": "#/definitions/ClassName"` | Referència a objecte            |
+| `sh:class`              | `"$ref": "#/definitions/ShapeName"` | Referència a Shape (veure detalls avall) |
+| `sh:node`               | `"$ref": "#/definitions/ShapeName"` | Referència directa a Shape      |
 | `sh:in (...)`           | `"enum": [...]`                | Valors permesos                      |
 | `sh:minInclusive`       | `"minimum"`                    | Valor mínim (inclusiu)               |
 | `sh:maxInclusive`       | `"maximum"`                    | Valor màxim (inclusiu)               |
@@ -99,6 +100,116 @@ python scripts/shacl-to-jsonschema.py -i shapes/digitalMarpolWastePassportShapes
 | `sh:maxLength`          | `"maxLength"`                  | Longitud màxima de cadena            |
 | `sh:pattern`            | `"pattern"`                    | Expressió regular                    |
 | `sh:closed true`        | `"additionalProperties": false"` | Propietats tancades                |
+
+### Com funciona `sh:class` → `$ref`
+
+**⚠️ Important:** El script **no apunta a l'ontologia**, sinó als **Shapes SHACL**.
+
+#### Per què?
+
+En SHACL, quan escrius:
+
+```turtle
+sh:property [
+  sh:path dwp:credentialSubject ;
+  sh:class dwp:WastePassport ;  # Apunta a la CLASSE de l'ontologia
+] ;
+```
+
+Estàs dient: "El valor d'aquesta propietat ha de ser una instància de la classe `dwp:WastePassport`".
+
+Però en JSON Schema necessitem definir **l'estructura** d'aquest objecte, no només el seu tipus. Per això, el script:
+
+1. **Busca el Shape** que valida aquesta classe:
+   ```turtle
+   dwp:WastePassportShape a sh:NodeShape ;
+     sh:targetClass dwp:WastePassport ;  # Aquest Shape valida WastePassport
+     sh:property [...] ;
+   ```
+
+2. **Genera la referència** al Shape en JSON Schema:
+   ```json
+   {
+     "$ref": "#/definitions/WastePassportShape"
+   }
+   ```
+
+#### Procés de resolució
+
+El script construeix un **mapa de classes a Shapes** basant-se en `sh:targetClass`:
+
+```
+dwp:WastePassport      → dwp:WastePassportShape
+dwp:Waste              → dwp:WasteShape
+unece:Standard         → unece:StandardShape
+unece:MaterialConstituent → unece:MaterialConstituentShape
+```
+
+Quan troba `sh:class X`, busca automàticament el Shape amb `sh:targetClass X`.
+
+#### Què passa si no troba el Shape?
+
+Si una classe no té un Shape definit (per exemple, classes externes), el script:
+
+1. **Genera un warning:**
+   ```
+   WARNING: No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:quantityToDeliver
+   ```
+
+2. **Afegeix un comentari** en el JSON Schema en lloc del `$ref`:
+   ```json
+   {
+     "dmwp:quantityToDeliver": {
+       "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
+     }
+   }
+   ```
+
+**Això significa que:**
+- ✅ El script continua funcionant
+- ⚠️ La propietat no tindrà validació estructural en JSON Schema
+- ⚠️ Cal definir un Shape per aquesta classe si vols validació completa
+
+#### Exemple pràctic
+
+**SHACL:**
+```turtle
+dwp:DigitalWastePassportShape a sh:NodeShape ;
+  sh:targetClass dwp:DigitalWastePassport ;
+  sh:property [
+    sh:path dwp:credentialSubject ;
+    sh:class dwp:WastePassport ;  # ← Apunta a la CLASSE
+  ] ;
+
+dwp:WastePassportShape a sh:NodeShape ;
+  sh:targetClass dwp:WastePassport ;  # ← El script mapeja això
+  sh:property [...] ;
+```
+
+**JSON Schema generat:**
+```json
+{
+  "DigitalWastePassportShape": {
+    "properties": {
+      "dwp:credentialSubject": {
+        "$ref": "#/definitions/WastePassportShape"  // ← Referència al Shape
+      }
+    }
+  },
+  "WastePassportShape": {
+    "properties": { ... }
+  }
+}
+```
+
+### Diferència entre `sh:class` i `sh:node`
+
+| Construcció | Significat en SHACL | Com es genera JSON Schema |
+|-------------|---------------------|---------------------------|
+| `sh:class dwp:WastePassport` | El valor és una instància de la classe `dwp:WastePassport` | Busca el Shape amb `sh:targetClass dwp:WastePassport` |
+| `sh:node dwp:WastePassportShape` | El valor ha de complir el Shape `dwp:WastePassportShape` | Usa directament `dwp:WastePassportShape` |
+
+**Recomanació:** Usa `sh:class` per seguir els estàndards SHACL. El script s'encarrega de la resolució automàticament.
 
 ### No suportades (generen warnings)
 
@@ -265,18 +376,221 @@ jobs:
 | 1    | Error crític (fitxer no trobat, parse error)    |
 | 2    | Conversió completada però amb warnings          |
 
-### Exemples de warnings
+### Tipus de warnings
+
+#### 1. Shape no trobat per una classe (`sh:class`)
 
 ```
-WARNING: sh:sparql found in unece:name - CANNOT be converted to JSON Schema
-WARNING: sh:or found in dwp:waste - partial conversion to anyOf
+WARNING: No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:quantityToDeliver
 ```
 
-Aquests warnings indiquen que algunes construccions SHACL no s'han pogut convertir completament.
+**Què significa:**
+- Has utilitzat `sh:class X` en una propietat
+- No existeix cap Shape amb `sh:targetClass X` en el fitxer SHACL
+
+**Què genera en el JSON Schema:**
+```json
+{
+  "dmwp:quantityToDeliver": {
+    "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
+  }
+}
+```
+
+**Causes comunes:**
+1. **Classe externa:** La classe és d'una ontologia externa (ex: UNTP Core) que no tens en el teu SHACL
+2. **Shape faltant:** Has oblidat definir el Shape per aquesta classe
+3. **Typo en `sh:targetClass`:** El nom de la classe en `sh:targetClass` no coincideix exactament
+
+**Solucions:**
+- ✅ **Si és una classe externa:** Ignora el warning. La validació estructural no estarà disponible en JSON Schema, però això és esperat.
+- ✅ **Si és una classe pròpia:** Defineix un Shape amb `sh:targetClass` apuntant a aquesta classe:
+  ```turtle
+  myns:MyClassShape a sh:NodeShape ;
+    sh:targetClass myns:MyClass ;
+    sh:property [...] ;
+  ```
+
+#### 2. Construcció SHACL no convertible (`sh:sparql`)
+
+```
+WARNING: sh:sparql found in dwp:waste - CANNOT be converted to JSON Schema
+```
+
+**Què significa:**
+- El Shape conté lògica SPARQL que no es pot expressar en JSON Schema
+
+**Què genera en el JSON Schema:**
+```json
+{
+  "dwp:waste": {
+    "$comment": "Contains sh:sparql constraint not convertible to JSON Schema",
+    "type": "object"
+  }
+}
+```
 
 **Acció recomanada:**
-- ✅ Si el warning és esperat (sh:sparql, lògica complexa), ignorar-lo
-- ⚠️ Si el warning és inesperat, revisar el SHACL original
+- ✅ **Aquest warning és esperat** si uses `sh:sparql` per validacions complexes
+- ⚠️ Recorda que JSON Schema només valida estructura, no aquesta lògica
+- ✅ Continua executant validació SHACL per garantir totes les regles
+
+#### 3. Conversió parcial de lògica (`sh:or`, `sh:and`, `sh:xone`)
+
+```
+WARNING: sh:or found in dwp:status - partial conversion to anyOf
+```
+
+**Què significa:**
+- El Shape usa lògica combinatòria (`sh:or`, `sh:and`, `sh:xone`)
+- JSON Schema té equivalents (`anyOf`, `allOf`, `oneOf`) però pot perdre semàntica
+
+**Acció recomanada:**
+- ⚠️ Revisa el JSON Schema generat per assegurar que la conversió és adequada
+- ✅ Si la conversió no és suficient, simplifica el SHACL o mantén la validació SHACL
+
+### Exemples de resolució de problemes
+
+#### Problema: Warning "No shape found" per classe pròpia
+
+```turtle
+# ❌ MAL: Fas servir sh:class però no hi ha Shape
+dwp:OrderShape a sh:NodeShape ;
+  sh:property [
+    sh:path dwp:customer ;
+    sh:class dwp:Customer ;  # ← No hi ha dwp:CustomerShape definit
+  ] ;
+```
+
+**Solució:**
+```turtle
+# ✅ SOLUCIÓ: Defineix el Shape corresponent
+dwp:CustomerShape a sh:NodeShape ;
+  sh:targetClass dwp:Customer ;  # ← Això connecta la classe amb el Shape
+  sh:property [
+    sh:path schema:name ;
+    sh:datatype xsd:string ;
+  ] ;
+```
+
+#### Problema: Confusió entre classe i Shape
+
+```turtle
+# ❌ MAL: Tries fer referència directa al Shape
+dwp:OrderShape a sh:NodeShape ;
+  sh:property [
+    sh:path dwp:customer ;
+    sh:class dwp:CustomerShape ;  # ← Incorrecte! És un Shape, no una classe
+  ] ;
+```
+
+**Solució 1 (recomanada):**
+```turtle
+# ✅ Usa sh:class amb la classe de l'ontologia
+dwp:OrderShape a sh:NodeShape ;
+  sh:property [
+    sh:path dwp:customer ;
+    sh:class dwp:Customer ;  # ← Classe de l'ontologia
+  ] ;
+
+dwp:CustomerShape a sh:NodeShape ;
+  sh:targetClass dwp:Customer ;  # ← El script fa el mapping automàtic
+```
+
+**Solució 2 (alternativa):**
+```turtle
+# ✅ Usa sh:node per referenciar directament el Shape
+dwp:OrderShape a sh:NodeShape ;
+  sh:property [
+    sh:path dwp:customer ;
+    sh:node dwp:CustomerShape ;  # ← Referència directa al Shape
+  ] ;
+```
+
+### Exemples de warnings
+
+### Interpretació dels warnings en la sortida
+
+Quan executis el script, podràs veure warnings com aquests:
+
+```
+INFO: Starting SHACL to JSON Schema conversion...
+INFO: Found 7 NodeShapes
+INFO: Converting shape: DigitalMarpolWastePassportShape
+INFO: Converting shape: MarpolWastePassportShape
+WARNING: Conversion completed with 4 warnings:
+WARNING:   - No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:quantityToDeliver
+WARNING:   - No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:quantityRemainingOnBoard
+WARNING:   - No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:estimatedGenerated
+WARNING:   - No shape found with sh:targetClass https://ontology.untp.io/core/Measure for property dmwp:maxCapacity
+INFO: Writing JSON Schema to: build/digitalMarpolWastePassport.schema.json
+INFO: ✅ Conversion complete
+```
+
+**Interpretació:**
+- ✅ El script ha completat la conversió correctament
+- ⚠️ Hi ha 4 propietats que usen la classe externa `https://ontology.untp.io/core/Measure`
+- ⚠️ Com aquesta classe no té Shape definit al fitxer, aquestes propietats no tindran validació estructural
+- ✅ La resta de Shapes s'han convertit correctament
+
+**Què fer:**
+- Si les classes són **externes** (d'altres ontologies): És normal, ignora els warnings
+- Si les classes són **pròpies**: Defineix els Shapes corresponents
+
+---
+
+## Bones pràctiques per evitar warnings
+
+### 1. Un Shape per cada classe
+
+Per cada classe de la teva ontologia que utilitzis en `sh:class`, defineix el seu Shape:
+
+```turtle
+# Ontologia (defines les classes)
+dwp:WastePassport a owl:Class .
+dwp:Waste a owl:Class .
+
+# SHACL (defines els Shapes)
+dwp:WastePassportShape a sh:NodeShape ;
+  sh:targetClass dwp:WastePassport ;  # ← Connecta classe amb Shape
+  sh:property [...] ;
+
+dwp:WasteShape a sh:NodeShape ;
+  sh:targetClass dwp:Waste ;  # ← Connecta classe amb Shape
+  sh:property [...] ;
+```
+
+### 2. Consistència en la nomenclatura
+
+Encara que el script no requereix cap convenció específica, seguir un patró ajuda a mantenir el codi:
+
+```turtle
+# ✅ BÉ: Nomenclatura consistent
+dwp:Person a owl:Class .
+dwp:PersonShape a sh:NodeShape ;
+  sh:targetClass dwp:Person ;
+
+# ✅ TAMBÉ BÉ: Altres convencions
+dwp:Product a owl:Class .
+dwp:Product_Constraint a sh:NodeShape ;
+  sh:targetClass dwp:Product ;
+```
+
+El que importa és que **`sh:targetClass` apunti correctament a la classe**.
+
+### 3. Documenta classes externes
+
+Si uses classes externes que no tens Shapes, documenta-ho:
+
+```turtle
+# Classe externa d'UNTP Core - no té Shape definit aquí
+# WARNING esperat: "No shape found for https://ontology.untp.io/core/Measure"
+dmwp:MarpolWasteShape a sh:NodeShape ;
+  sh:property [
+    sh:path dmwp:quantityToDeliver ;
+    sh:class <https://ontology.untp.io/core/Measure> ;  # Classe externa
+  ] ;
+```
 
 ---
 
