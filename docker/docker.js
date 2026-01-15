@@ -108,24 +108,25 @@ function run(scriptName, ...args) {
   
   console.log('🐳 Running in Docker:', allArgs.join(' '));
   
-  // Build docker run command with proper argument handling
-  const dockerArgs = [
-    'run', '--rm',
-    '-v', `${workspaceRoot}:/workspace`,
-    '-w', '/workspace',
-    IMAGE_NAME,
-    ...allArgs
-  ];
+  // Build docker run command - properly escape arguments for shell
+  const escapedArgs = allArgs.map(arg => {
+    // Quote arguments that contain spaces or special chars
+    if (arg.includes(' ') || arg.includes('|') || arg.includes('&')) {
+      return `"${arg}"`;
+    }
+    return arg;
+  }).join(' ');
   
-  const result = spawnSync('docker', dockerArgs, { stdio: 'inherit', shell: true });
+  const cmd = `docker run --rm -v "${workspaceRoot}:/workspace" -w /workspace ${IMAGE_NAME} ${escapedArgs}`;
   
-  if (result.error) {
-    console.error('❌ Error running Docker:', result.error.message);
+  try {
+    execSync(cmd, { stdio: 'inherit', shell: true });
+  } catch (error) {
+    if (error.status) {
+      process.exit(error.status);
+    }
+    console.error('❌ Error running Docker:', error.message);
     process.exit(1);
-  }
-  
-  if (result.status !== 0) {
-    process.exit(result.status || 1);
   }
 }
 
