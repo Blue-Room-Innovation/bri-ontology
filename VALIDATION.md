@@ -60,7 +60,7 @@ npm run validate:owl:quiet
 ```bash
 npm run validate:owl:with-codelists
 ```
-**Resultat esperat**: Valida 9 fitxers (ontology/v0.1/ + codelists/v1/), possibles warnings de merge a la consola
+**Resultat esperat**: Valida 9 fitxers (ontology/v0.1/ + codelists/v0.1/), possibles warnings de merge a la consola
 
 ### SHACL Validation
 ```bash

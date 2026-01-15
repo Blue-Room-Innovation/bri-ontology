@@ -8,8 +8,8 @@
 ontology_version: "v0.1"        # Digital Waste Passport & MARPOL ontologies
 shapes_version: "v0.1"          # SHACL shape definitions
 examples_version: "v0.1"        # Example data files
-codelists_version: "v1"         # Code lists (independent versioning)
-contexts_version: "0.1"         # JSON-LD contexts (no 'v' prefix)
+codelists_version: "v0.1"       # Code lists (standardized versioning)
+contexts_version: "v0.1"        # JSON-LD contexts (standardized versioning)
 
 # Build Configuration
 # -------------------

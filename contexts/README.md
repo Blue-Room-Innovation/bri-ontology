@@ -108,8 +108,8 @@ Los contextos deben versionarse.
 Ejemplo:
 
 ```
-/contexts/0.1/digitalWastePassport.jsonld
-/contexts/0.2/digitalWastePassport.jsonld
+/contexts/v0.1/digitalWastePassport.jsonld
+/contexts/v0.2/digitalWastePassport.jsonld
 ```
 
 Los datos deben apuntar siempre a una versión concreta para garantizar estabilidad.

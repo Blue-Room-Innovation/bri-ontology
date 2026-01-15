@@ -1,13 +1,13 @@
-@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-subtype-code.ttl#> .
+@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-subtype-code.ttl> .
+@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl> .
 
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-subtype-code.ttl> a owl:Ontology ;
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl> a owl:Ontology ;
     rdfs:label "Residue Subtype Code List"@en ;
     owl:versionInfo "0.1" ;
     rdfs:comment "A SKOS vocabulary that specifies the subtype of residue, providing a more granular classification of the waste material within the MARPOL waste management framework."@en ;

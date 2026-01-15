@@ -32,8 +32,8 @@ class Config:
         self.ontology_version: str = config_data.get("ontology_version", "v0.1")
         self.shapes_version: str = config_data.get("shapes_version", "v0.1")
         self.examples_version: str = config_data.get("examples_version", "v0.1")
-        self.codelists_version: str = config_data.get("codelists_version", "v1")
-        self.contexts_version: str = config_data.get("contexts_version", "0.1")
+        self.codelists_version: str = config_data.get("codelists_version", "v0.1")
+        self.contexts_version: str = config_data.get("contexts_version", "v0.1")
         self.build_version: str = config_data.get("build_version", "v0.1")
         
         # Paths

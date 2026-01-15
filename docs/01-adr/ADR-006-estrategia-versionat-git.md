@@ -83,12 +83,11 @@ build/
 
 ### Convencions de Nomenclatura
 
-- **Ontologies, Shapes, Examples:** `vX.Y` (amb prefix "v")
-  - Exemple: `ontology/v0.1/`, `shapes/v0.2/`
-- **Codelists:** `vX` (versió major només, versionat independent)
-  - Exemple: `codelists/v1/`, `codelists/v2/`
-- **Contexts:** `X.Y` (sense prefix "v", compatibilitat JSON-LD)
-  - Exemple: `contexts/0.1/`, `contexts/0.2/`
+- **Ontologies, Shapes, Examples, Codelists, Contexts:** `vX.Y` (amb prefix "v")
+  - Exemple ontologies: `ontology/v0.1/`, `shapes/v0.2/`
+  - Exemple codelists: `codelists/v0.1/`, `codelists/v1.0/`
+  - Exemple contexts: `contexts/v0.1/`, `contexts/v0.2/`
+  - **Nota:** Tots els components usen el mateix format per consistència
 
 ### Patró d'URIs
 
@@ -98,10 +97,10 @@ build/
 @base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl> .
 
 # Codelists
-@prefix delivery: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/delivery-type-code.ttl#> .
+@prefix delivery: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#> .
 
-# Contexts (sense "v")
-"@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/0.1/waste-actors-context.jsonld"
+# Contexts
+"@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/v0.1/waste-actors-context.jsonld"
 ```
 
 **Estructura URI:**
@@ -225,12 +224,12 @@ ontology/v0.2/
 
 ```bash
 # Codelists evolucionen independentment
-codelists/v1/residue-type-code.ttl    # Versió estable
-codelists/v2/residue-type-code.ttl    # Nova versió amb valors addicionals
+codelists/v0.1/residue-type-code.ttl    # Versió inicial
+codelists/v1.0/residue-type-code.ttl    # Nova versió amb valors addicionals
 
 # Ontologies poden referenciar diferents versions de codelists
-ontology/v0.1/ → imports codelists/v1/
-ontology/v0.2/ → imports codelists/v2/ (si necessari)
+ontology/v0.1/ → imports codelists/v0.1/
+ontology/v0.2/ → imports codelists/v1.0/ (si necessari)
 ```
 
 ---

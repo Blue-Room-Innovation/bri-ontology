@@ -8,12 +8,12 @@
 @base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> .
 
 <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
-                                                                   owl:imports <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/delivery-type-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/discharge-means-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/iso3166-iAlpha2.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-subtype-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-type-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/unlocode.ttl> ;
+                                                                   owl:imports <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/iso3166-iAlpha2.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl> ;
                                                                    rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
                                                                    rdfs:label "Digital MARPOL Waste Passport Ontology" ;
                                                                    owl:versionInfo "0.1" .

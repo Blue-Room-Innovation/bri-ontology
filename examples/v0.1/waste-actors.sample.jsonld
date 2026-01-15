@@ -1,5 +1,5 @@
 {
-  "@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/waste-actors-context.jsonld",
+  "@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/v0.1/waste-actors-context.jsonld",
   
   "@id": "https://example.org/recycler/12345",
   "@type": "untp-core:Organisation",
