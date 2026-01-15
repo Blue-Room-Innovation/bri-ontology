@@ -56,7 +56,7 @@ def build_parser() -> argparse.ArgumentParser:
     owl.add_argument(
         "--include-codelists",
         action="store_true",
-        help="Include ontology/codelists/ in auto-discovery",
+        help="Include codelists/v*/ in auto-discovery",
     )
     owl.add_argument(
         "--no-auto", action="store_true", help="Disable auto-discovery"

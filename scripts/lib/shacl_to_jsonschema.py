@@ -10,8 +10,8 @@ constraints that can be expressed in JSON Schema. SHACL remains the source
 of truth for semantic validation.
 
 Usage:
-    python shacl-to-jsonschema.py --input shapes/digitalWastePassportShapes.ttl --output build/digitalWastePassport.schema.json
-    python shacl-to-jsonschema.py --input shapes/digitalMarpolWastePassportShapes.ttl --output build/digitalMarpolWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digitalWastePassportShapes.ttl --output build/v0.1/digitalWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digitalMarpolWastePassportShapes.ttl --output build/v0.1/digitalMarpolWastePassport.schema.json
 
 Author: Blue Room Innovation
 Date: 2026-01-08
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 SHACL = Namespace("http://www.w3.org/ns/shacl#")
 DCT = Namespace("http://purl.org/dc/terms/")
 SCHEMA = Namespace("http://schema.org/")
-DWP = Namespace("https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#")
+DWP = Namespace("https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#")
 UNECE = Namespace("https://test.uncefact.org/vocabulary/untp/core/0/")
 UNECE_DPP = Namespace("https://test.uncefact.org/vocabulary/untp/dpp/0/")
 
@@ -408,7 +408,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python shacl-to-jsonschema.py -i shapes/digitalWastePassportShapes.ttl -o build/digitalWastePassport.schema.json
+  python shacl-to-jsonschema.py -i shapes/v0.1/digitalWastePassportShapes.ttl -o build/v0.1/digitalWastePassport.schema.json
   python shacl-to-jsonschema.py --input shapes/digitalMarpolWastePassportShapes.ttl --output build/digitalMarpolWastePassport.schema.json
         """
     )

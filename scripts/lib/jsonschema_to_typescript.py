@@ -185,7 +185,7 @@ Examples:
     
     parser.add_argument(
         "-s", "--source",
-        help="Source file name to include in the default banner (e.g., 'shapes/example.ttl')"
+        help="Source file name to include in the default banner (e.g., 'shapes/v0.1/example.ttl')"
     )
     
     parser.add_argument(

@@ -79,7 +79,7 @@ def iter_ontology_files(include_codelists: bool = False) -> List[Path]:
     """Iterate over ontology TTL files in the workspace.
     
     Args:
-        include_codelists: If True, include files from ontology/codelists/
+        include_codelists: If True, include files from codelists/v*/
         
     Returns:
         List of Path objects to TTL files
@@ -87,16 +87,22 @@ def iter_ontology_files(include_codelists: bool = False) -> List[Path]:
     workspace_root = get_workspace_root()
     ontology_dir = workspace_root / "ontology"
     
-    if not ontology_dir.exists():
-        return []
-
     candidates: List[Path] = []
-    for path in sorted(ontology_dir.rglob("*.ttl")):
-        rel = path.relative_to(workspace_root).as_posix()
-        # Only include depth <= 2 under ontology (ontology/* or ontology/*/*)
-        if len(Path(rel).parts) > 3:
-            continue
-        if not include_codelists and rel.startswith("ontology/codelists/"):
-            continue
-        candidates.append(path)
+    
+    # Look for versioned ontology files (ontology/v*/*.ttl)
+    if ontology_dir.exists():
+        for version_dir in sorted(ontology_dir.glob("v*")):
+            if version_dir.is_dir():
+                for ttl_file in sorted(version_dir.glob("*.ttl")):
+                    candidates.append(ttl_file)
+    
+    # Include codelists if requested (codelists/v*/*.ttl)
+    if include_codelists:
+        codelists_dir = workspace_root / "codelists"
+        if codelists_dir.exists():
+            for version_dir in sorted(codelists_dir.glob("v*")):
+                if version_dir.is_dir():
+                    for ttl_file in sorted(version_dir.rglob("*.ttl")):
+                        candidates.append(ttl_file)
+    
     return candidates

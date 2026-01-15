@@ -1,19 +1,19 @@
-@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#> .
+@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl> .
+@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> .
 
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
-                                                                   owl:imports <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl> ,
-                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl> ;
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
+                                                                   owl:imports <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/delivery-type-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/discharge-means-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/iso3166-iAlpha2.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-subtype-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/residue-type-code.ttl> ,
+                                                                               <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v1/unlocode.ttl> ;
                                                                    rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
                                                                    rdfs:label "Digital MARPOL Waste Passport Ontology" ;
                                                                    owl:versionInfo "0.1" .

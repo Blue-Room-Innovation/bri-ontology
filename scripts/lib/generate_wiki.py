@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Generador de wiki Markdown para ontologías Turtle en el directorio `ontology/`.
+Generador de wiki Markdown para ontologías Turtle en el directorio `ontology/v*/`.
 
 Requisitos:
     pip install -r requirements.txt

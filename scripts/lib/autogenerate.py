@@ -136,7 +136,7 @@ class TypeScriptGenerator:
             str(self.scripts_dir / "jsonschema-to-typescript.py"),
             "--input", str(json_schema_file),
             "--output", str(typescript_file),
-            "--source", f"shapes/{config['shape_file']}"
+            "--source", f"shapes/v0.1/{config['shape_file']}"
         ]
         
         if self.verbose:
@@ -193,8 +193,8 @@ This script orchestrates a two-step pipeline:
   2. JSON Schema → TypeScript (using jsonschema-to-typescript.py)
 
 You can also run each script independently if needed:
-  python scripts/shacl-to-jsonschema.py -i shapes/example.ttl -o build/example.schema.json
-  python scripts/jsonschema-to-typescript.py -i build/example.schema.json -o build/example.ts
+  python scripts/shacl-to-jsonschema.py -i shapes/v0.1/example.ttl -o build/v0.1/example.schema.json
+  python scripts/jsonschema-to-typescript.py -i build/v0.1/example.schema.json -o build/v0.1/example.ts
 
 Examples:
   python autogenerate.py
