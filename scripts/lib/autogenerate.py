@@ -39,6 +39,14 @@ import sys
 from pathlib import Path
 from typing import List, Dict
 
+# Import config with proper error handling
+try:
+    from .config import load_config
+except ImportError:
+    # Fallback: add parent to path and import directly
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from lib.config import load_config
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
@@ -49,26 +57,14 @@ class TypeScriptGenerator:
     
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
-        self.workspace_root = Path(__file__).parent.parent
-        self.build_dir = self.workspace_root / "build"
-        self.shapes_dir = self.workspace_root / "shapes"
-        self.scripts_dir = self.workspace_root / "scripts"
+        self.config = load_config()
+        self.workspace_root = Path(__file__).parent.parent.parent
+        self.build_dir = self.workspace_root / self.config.paths['build'] / self.config.build_version
+        self.shapes_dir = self.workspace_root / self.config.paths['shapes'] / self.config.shapes_version
+        self.scripts_dir = self.workspace_root / self.config.paths['scripts']
         
-        # Define shape files to process
-        self.shape_configs = [
-            {
-                "name": "digitalWastePassport",
-                "shape_file": "digitalWastePassportShapes.ttl",
-                "json_schema": "digitalWastePassport.schema.json",
-                "typescript": "digitalWastePassport.ts"
-            },
-            {
-                "name": "digitalMarpolWastePassport",
-                "shape_file": "digitalMarpolWastePassportShapes.ttl",
-                "json_schema": "digitalMarpolWastePassport.schema.json",
-                "typescript": "digitalMarpolWastePassport.ts"
-            }
-        ]
+        # Load shape configurations from config.yml
+        self.shape_configs = self.config.get_generation_artifacts()
     
     def run(self) -> bool:
         """Execute the full generation pipeline."""
@@ -136,7 +132,7 @@ class TypeScriptGenerator:
             str(self.scripts_dir / "jsonschema-to-typescript.py"),
             "--input", str(json_schema_file),
             "--output", str(typescript_file),
-            "--source", f"shapes/v0.1/{config['shape_file']}"
+            "--source", self.config.get_shapes_path(config['shape_file'])
         ]
         
         if self.verbose:
@@ -192,9 +188,9 @@ This script orchestrates a two-step pipeline:
   1. SHACL → JSON Schema (using shacl-to-jsonschema.py)
   2. JSON Schema → TypeScript (using jsonschema-to-typescript.py)
 
-You can also run each script independently if needed:
-  python scripts/shacl-to-jsonschema.py -i shapes/v0.1/example.ttl -o build/v0.1/example.schema.json
-  python scripts/jsonschema-to-typescript.py -i build/v0.1/example.schema.json -o build/v0.1/example.ts
+Versions are configured in config.yml. Current settings will be used automatically.
+
+You can also run each script independently if needed with explicit paths.
 
 Examples:
   python autogenerate.py

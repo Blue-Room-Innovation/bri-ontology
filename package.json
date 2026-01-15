@@ -4,35 +4,33 @@
   "description": "Auto-generation tools for DataSpace ontology artifacts",
   "private": true,
   "scripts": {
-    "cli": "python scripts/ontology_cli.py",
-    "help": "python scripts/ontology_cli.py --help",
-    "validate:owl": "python scripts/ontology_cli.py validate owl",
-    "validate:owl:quiet": "python scripts/ontology_cli.py validate owl --quiet",
-    "validate:owl:with-codelists": "python scripts/ontology_cli.py validate owl --include-codelists",
-    "validate:shacl": "python scripts/ontology_cli.py validate shacl",
-    "validate:dwp": "python scripts/ontology_cli.py validate shacl -d examples/digital-waste-passport-sample.ttl -s shapes/digitalWastePassportShapes.ttl -e ontology/digitalWastePassport.ttl",
-    "validate:dwp:json": "python scripts/ontology_cli.py validate shacl -d examples/digital-waste-passport-sample.jsonld -s shapes/digitalWastePassportShapes.ttl -e ontology/digitalWastePassport.ttl -f json-ld",
-    "validate:marpol": "python scripts/ontology_cli.py validate shacl -d examples/digital-marpol-waste-passport-sample.ttl -s shapes/digitalMarpolWastePassportShapes.ttl -e ontology/digitalMarpolWastePassport.ttl",
-    "validate:marpol:json": "python scripts/ontology_cli.py validate shacl -d examples/digital-marpol-waste-passport-sample.jsonld -s shapes/digitalMarpolWastePassportShapes.ttl -e ontology/digitalMarpolWastePassport.ttl -f json-ld",
-    "generate:types": "python scripts/ontology_cli.py generate types",
-    "generate:types:verbose": "python scripts/ontology_cli.py generate types --verbose",
-    "generate:wiki": "python scripts/ontology_cli.py generate wiki",
-    "generate:wiki:with-codelists": "python scripts/ontology_cli.py generate wiki --include-codelists",
-    "generate:wiki:verbose": "python scripts/ontology_cli.py generate wiki --verbose",
-    "convert:shacl": "python scripts/ontology_cli.py convert shacl",
-    "convert:shacl:dwp": "python scripts/ontology_cli.py convert shacl -i shapes/digitalWastePassportShapes.ttl -o build/digitalWastePassport.schema.json",
-    "convert:shacl:marpol": "python scripts/ontology_cli.py convert shacl -i shapes/digitalMarpolWastePassportShapes.ttl -o build/digitalMarpolWastePassport.schema.json",
-    "convert:ts": "python scripts/ontology_cli.py convert ts",
-    "convert:ts:dwp": "python scripts/ontology_cli.py convert ts -i build/digitalWastePassport.schema.json -o build/digitalWastePassport.ts -s shapes/digitalWastePassportShapes.ttl",
-    "convert:ts:marpol": "python scripts/ontology_cli.py convert ts -i build/digitalMarpolWastePassport.schema.json -o build/digitalMarpolWastePassport.ts -s shapes/digitalMarpolWastePassportShapes.ttl",
-    "autogenerate": "python scripts/ontology_cli.py generate types",
-    "generate": "python scripts/ontology_cli.py generate types"
+    "cli": "scripts\\run-with-venv.bat scripts/ontology_cli.py",
+    "help": "scripts\\run-with-venv.bat scripts/ontology_cli.py --help",
+    "validate:owl": "scripts\\run-with-venv.bat scripts/ontology_cli.py validate owl",
+    "validate:owl:quiet": "scripts\\run-with-venv.bat scripts/ontology_cli.py validate owl --quiet",
+    "validate:owl:with-codelists": "scripts\\run-with-venv.bat scripts/ontology_cli.py validate owl --include-codelists",
+    "validate:shacl": "scripts\\run-with-venv.bat scripts/ontology_cli.py validate shacl",
+    "validate:all": "npm run validate:owl:with-codelists && npm run validate:shacl",
+    "generate:types": "scripts\\run-with-venv.bat scripts/ontology_cli.py generate types",
+    "generate:types:verbose": "scripts\\run-with-venv.bat scripts/ontology_cli.py generate types --verbose",
+    "generate:wiki": "scripts\\run-with-venv.bat scripts/ontology_cli.py generate wiki",
+    "generate:wiki:with-codelists": "scripts\\run-with-venv.bat scripts/ontology_cli.py generate wiki --include-codelists",
+    "generate:wiki:verbose": "scripts\\run-with-venv.bat scripts/ontology_cli.py generate wiki --verbose",
+    "generate:all": "npm run generate:types && npm run generate:wiki",
+    "convert:shacl": "scripts\\run-with-venv.bat scripts/ontology_cli.py convert shacl",
+    "convert:ts": "scripts\\run-with-venv.bat scripts/ontology_cli.py convert ts",
+    "build": "npm run generate:types",
+    "build:all": "npm run validate:all && npm run generate:all",
+    "release:version": "scripts\\run-with-venv.bat scripts/release-version.py",
+    "release:all": "scripts\\run-with-venv.bat scripts/release-version.py --all",
+    "config:show": "scripts\\show-config.bat"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "python": ">=3.8.0"
   }
 }

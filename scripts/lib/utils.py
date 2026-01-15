@@ -8,6 +8,12 @@ from pathlib import Path
 from shutil import which as shutil_which
 from typing import List, Optional
 
+try:
+    from .config import load_config
+except ImportError:
+    # Fallback if config module not available yet
+    load_config = None
+
 
 def which(cmd: str) -> Optional[str]:
     """Check if a command is available in PATH.
@@ -85,24 +91,37 @@ def iter_ontology_files(include_codelists: bool = False) -> List[Path]:
         List of Path objects to TTL files
     """
     workspace_root = get_workspace_root()
-    ontology_dir = workspace_root / "ontology"
+    
+    # Load configuration to get current versions
+    config = load_config() if load_config else None
+    
+    if config:
+        ontology_dir = workspace_root / config.paths['ontology'] / config.ontology_version
+        codelists_dir = workspace_root / config.paths['codelists'] / config.codelists_version if include_codelists else None
+    else:
+        # Fallback to discovering all versioned folders
+        ontology_dir = workspace_root / "ontology"
+        codelists_dir = workspace_root / "codelists" if include_codelists else None
     
     candidates: List[Path] = []
     
-    # Look for versioned ontology files (ontology/v*/*.ttl)
+    # Look for ontology files
     if ontology_dir.exists():
-        for version_dir in sorted(ontology_dir.glob("v*")):
-            if version_dir.is_dir():
-                for ttl_file in sorted(version_dir.glob("*.ttl")):
-                    candidates.append(ttl_file)
-    
-    # Include codelists if requested (codelists/v*/*.ttl)
-    if include_codelists:
-        codelists_dir = workspace_root / "codelists"
-        if codelists_dir.exists():
-            for version_dir in sorted(codelists_dir.glob("v*")):
+        if config:
+            # Use specific version from config
+            for ttl_file in sorted(ontology_dir.glob("*.ttl")):
+                candidates.append(ttl_file)
+        else:
+            # Discover all versioned folders
+            for version_dir in sorted(ontology_dir.parent.glob("v*")):
                 if version_dir.is_dir():
-                    for ttl_file in sorted(version_dir.rglob("*.ttl")):
+                    for ttl_file in sorted(version_dir.glob("*.ttl")):
                         candidates.append(ttl_file)
+    
+    # Include codelists if requested
+    if include_codelists and codelists_dir:
+        if codelists_dir.exists():
+            for ttl_file in sorted(codelists_dir.rglob("*.ttl")):
+                candidates.append(ttl_file)
     
     return candidates
