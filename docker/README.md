@@ -11,12 +11,11 @@ This project includes Docker support for running all validation and generation s
 Build the Docker image with all dependencies:
 
 ```bash
-# Using the build script (recommended)
-docker/build.bat              # Windows
-docker/build.sh               # Linux/Mac
+# Using npm (cross-platform, recommended)
+npm run docker:build
 
-# Or manually
-docker build -t bri-ontology-tooling:latest -f docker/Dockerfile .
+# Or directly with Node.js
+node docker/docker.js build
 ```
 
 ### Running Commands
@@ -24,12 +23,19 @@ docker build -t bri-ontology-tooling:latest -f docker/Dockerfile .
 Run any npm script inside the Docker container:
 
 ```bash
-# Using the run script (recommended)
-docker/run.bat config:show                      # Windows
-docker/run.sh config:show                       # Linux/Mac
+# Using npm scripts
+npm run docker:run config:show
+npm run docker:run validate:owl:with-codelists
+npm run docker:run generate:types
+npm run docker:run build:all
 
-# Or manually
-docker run --rm -v "$(pwd):/workspace" -w /workspace bri-ontology-tooling:latest npm run config:show
+# Or directly with Node.js (same thing)
+node docker/docker.js run config:show
+node docker/docker.js run generate:types
+
+# Open interactive shell
+npm run docker:shell
+node docker/docker.js shell
 ```
 
 ## Available Commands
@@ -37,7 +43,7 @@ docker run --rm -v "$(pwd):/workspace" -w /workspace bri-ontology-tooling:latest
 ### Configuration
 
 ```bash
-docker/run.bat config:show
+npm run docker:run config:show
 ```
 
 Shows current configuration from `config.yml`.
@@ -46,46 +52,46 @@ Shows current configuration from `config.yml`.
 
 ```bash
 # Validate OWL ontologies
-docker/run.bat validate:owl
+npm run docker:run validate:owl
 
 # Validate OWL with codelists
-docker/run.bat validate:owl:with-codelists
+npm run docker:run validate:owl:with-codelists
 
 # Validate all
-docker/run.bat validate:all
+npm run docker:run validate:all
 ```
 
 ### Generation
 
 ```bash
 # Generate TypeScript definitions
-docker/run.bat generate:types
+npm run docker:run generate:types
 
 # Generate wiki documentation
-docker/run.bat generate:wiki
+npm run docker:run generate:wiki
 
 # Generate all artifacts
-docker/run.bat generate:all
+npm run docker:run generate:all
 ```
 
 ### Build Pipeline
 
 ```bash
 # Build TypeScript types
-docker/run.bat build
+npm run docker:run build
 
 # Run full validation + generation pipeline
-docker/run.bat build:all
+npm run docker:run build:all
 ```
 
 ### Version Release
 
 ```bash
 # Interactive version release
-docker/run.bat release:version
+npm run docker:run release:version
 
 # Release all components at once
-docker/run.bat release:all
+npm run docker:run release:all
 ```
 
 ## What's Inside the Docker Image
@@ -180,8 +186,5 @@ docker build --progress=plain -t bri-ontology-tooling:latest -f docker/Dockerfil
 ```
 docker/
 ├── Dockerfile          # Image definition
-├── build.bat           # Windows build helper
-├── build.sh            # Unix build helper
-├── run.bat             # Windows run helper
-└── run.sh              # Unix run helper
+└── docker.js           # Cross-platform build/run wrapper (Node.js)
 ```

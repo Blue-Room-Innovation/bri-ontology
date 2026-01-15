@@ -53,14 +53,16 @@ Docker provides a consistent environment with all dependencies pre-installed:
 
 ```bash
 # 1. Build the Docker image
-docker/build.bat              # Windows
-docker/build.sh               # Linux/Mac
+npm run docker:build
 
 # 2. Run any command
-docker/run.bat config:show                    # Show configuration
-docker/run.bat generate:types                 # Generate TypeScript
-docker/run.bat validate:owl:with-codelists   # Validate ontologies
-docker/run.bat build:all                      # Full pipeline
+npm run docker:run config:show                    # Show configuration
+npm run docker:run generate:types                 # Generate TypeScript
+npm run docker:run validate:owl:with-codelists   # Validate ontologies
+npm run docker:run build:all                      # Full pipeline
+
+# 3. Interactive shell (optional)
+npm run docker:shell
 ```
 
 See [docker/README.md](docker/README.md) for complete Docker documentation.

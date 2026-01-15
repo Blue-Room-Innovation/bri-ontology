@@ -23,7 +23,10 @@
     "build:all": "npm run validate:all && npm run generate:all",
     "release:version": "node scripts/run-python.js scripts/release-version.py",
     "release:all": "node scripts/run-python.js scripts/release-version.py --all",
-    "config:show": "node scripts/run-python.js scripts/show-config.py"
+    "config:show": "node scripts/run-python.js scripts/show-config.py",
+    "docker:build": "node docker/docker.js build",
+    "docker:run": "node docker/docker.js run",
+    "docker:shell": "node docker/docker.js shell"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
