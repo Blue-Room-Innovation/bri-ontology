@@ -1,15 +1,15 @@
-@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#> .
+@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl> .
+@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> .
 
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
-                                                                                                                   rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
-                                                                                                                   rdfs:label "Digital MARPOL Waste Passport Ontology" ;
-                                                                                                                   owl:versionInfo "0.1" .
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
+                                                                                                                         rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
+                                                                                                                         rdfs:label "Digital MARPOL Waste Passport Ontology" ;
+                                                                                                                         owl:versionInfo "0.1" .
 
 #################################################################
 #    Annotation properties
@@ -47,116 +47,144 @@
 #    Object Properties
 #################################################################
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#contactPoint
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#contactPoint
 :contactPoint rdf:type owl:ObjectProperty ;
               rdfs:domain :AuthorizedParty ;
               rdfs:range <https://ontology.untp.io/core/Link> ;
               rdfs:comment "Contact information for the authorized party, represented as a link." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#credentialSubject
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#credentialSubject
 :credentialSubject rdf:type owl:ObjectProperty ;
                    rdfs:domain :DigitalMarpolWastePassport ;
                    rdfs:range :MarpolWastePassport ;
                    rdfs:comment "References the MARPOL-specific waste passport subject (`MarpolWastePassport`)." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#estimatedGenerated
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#estimatedGenerated
 :estimatedGenerated rdf:type owl:ObjectProperty ;
                     rdfs:domain :ResidueInformation ;
                     rdfs:range <https://ontology.untp.io/core/Measure> ;
                     rdfs:comment "The estimated quantity of residue generated, represented as a measure." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#involvedParty
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#involvedParty
 :involvedParty rdf:type owl:ObjectProperty ;
                rdfs:domain :MarpolWaste ;
                rdfs:range :InvolvedParty ;
                rdfs:comment "The party involved in the waste management process, such as the ship operator or company." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#maxCapacity
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#maxCapacity
 :maxCapacity rdf:type owl:ObjectProperty ;
              rdfs:domain :ResidueInformation ;
              rdfs:range <https://ontology.untp.io/core/Measure> ;
              rdfs:comment "The maximum capacity for residue storage, represented as a measure." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#message
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#message
 :message rdf:type owl:ObjectProperty ;
          rdfs:domain :MarpolWaste ;
          rdfs:range :WasdisMetadata ;
          rdfs:comment "Metadata related to the WASDIS system, including the sender, message ID, and submission details." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#quantityRemainingOnBoard
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityRemainingOnBoard
 :quantityRemainingOnBoard rdf:type owl:ObjectProperty ;
                           rdfs:domain :ResidueInformation ;
                           rdfs:range <https://ontology.untp.io/core/Measure> ;
                           rdfs:comment "The quantity of residue still remaining onboard, represented as a measure." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#quantityToDeliver
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityToDeliver
 :quantityToDeliver rdf:type owl:ObjectProperty ;
                    rdfs:domain :ResidueInformation ;
                    rdfs:range <https://ontology.untp.io/core/Measure> ;
                    rdfs:comment "The quantity of residue to be delivered, represented as a measure." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#residue
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#residue
 :residue rdf:type owl:ObjectProperty ;
          rdfs:domain :MarpolWaste ;
          rdfs:range :ResidueInformation ;
          rdfs:comment "Detailed information about the waste residue, including type, quantity, and discharge method." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#role
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#role
 :role rdf:type owl:ObjectProperty ;
       rdfs:domain :InvolvedParty ;
       rdfs:range <https://ontology.untp.io/core/Party> ;
       rdfs:comment "The role of the involved party, as defined by the regulatory framework." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#ship
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ship
 :ship rdf:type owl:ObjectProperty ;
       rdfs:domain :MarpolWaste ;
       rdfs:range :Ship ;
       rdfs:comment "Details about the ship responsible for the waste, including the IMO number, name, and flag." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#waste
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#waste
 :waste rdf:type owl:ObjectProperty ;
        rdfs:domain :MarpolWastePassport ;
        rdfs:range :MarpolWaste ;
        rdfs:comment "Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#wasteAgent
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#wasteAgent
 :wasteAgent rdf:type owl:ObjectProperty ;
             rdfs:domain :MarpolWaste ;
             rdfs:range :AuthorizedParty ;
             rdfs:comment "The authorized waste collection company handling the waste." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#credentialSubject
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#credentialSubject> rdf:type owl:ObjectProperty ;
-                                                                                                                              rdfs:domain <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#DigitalWastePassport> ;
-                                                                                                                              rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#WastePassport> ;
-                                                                                                                              rdfs:comment "The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified." .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#credentialSubject
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#credentialSubject> rdf:type owl:ObjectProperty ;
+                                                                                                                                    rdfs:domain <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassport> ;
+                                                                                                                                    rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassport> ;
+                                                                                                                                    rdfs:comment "The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#waste
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#waste> rdf:type owl:ObjectProperty ;
-                                                                                                                  rdfs:domain <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#WastePassport> ;
-                                                                                                                  rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#Waste> ;
-                                                                                                                  rdfs:comment "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#waste
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#waste> rdf:type owl:ObjectProperty ;
+                                                                                                                        rdfs:domain <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassport> ;
+                                                                                                                        rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#Waste> ;
+                                                                                                                        rdfs:comment "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation> rdf:type owl:ObjectProperty ;
+                                                                                                                     rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                     rdfs:range <https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation> ;
+                                                                                                                     rdfs:comment "Geographic coordinates of the organization." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteHandler
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteHandler> rdf:type owl:ObjectProperty ;
+                                                                                                                      rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                                                                      rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler> ;
+                                                                                                                      rdfs:comment "Links a Waste (UNECE Product) to the Recycler responsible for its treatment." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteProducer
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteProducer> rdf:type owl:ObjectProperty ;
+                                                                                                                       rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                                                                       rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer> ;
+                                                                                                                       rdfs:comment "Links a Waste to the organization that generated it." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteTransporter
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteTransporter> rdf:type owl:ObjectProperty ;
+                                                                                                                          rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                                                                          rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter> ;
+                                                                                                                          rdfs:comment "Links a Waste to the organization responsible for transporting it." .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#arrivalPort
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#arrivalPort
 :arrivalPort rdf:type owl:DatatypeProperty ;
              rdfs:domain :MarpolWaste ;
              rdfs:range xsd:string ;
@@ -164,7 +192,7 @@
              <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#deliveryType
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#deliveryType
 :deliveryType rdf:type owl:DatatypeProperty ;
               rdfs:domain :MarpolWaste ;
               rdfs:range xsd:string ;
@@ -172,7 +200,7 @@
               <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#dischargeMeans
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#dischargeMeans
 :dischargeMeans rdf:type owl:DatatypeProperty ;
                 rdfs:domain :ResidueInformation ;
                 rdfs:range xsd:string ;
@@ -180,7 +208,7 @@
                 <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#flag
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#flag
 :flag rdf:type owl:DatatypeProperty ;
       rdfs:domain :Ship ;
       rdfs:range xsd:string ;
@@ -188,28 +216,28 @@
       <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#identifier
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#identifier
 :identifier rdf:type owl:DatatypeProperty ;
             rdfs:domain :AuthorizedParty ;
             rdfs:range xsd:string ;
             rdfs:comment "A unique identifier for the authorized party." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#imoNumber
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#imoNumber
 :imoNumber rdf:type owl:DatatypeProperty ;
            rdfs:domain :Ship ;
            rdfs:range xsd:string ;
            rdfs:comment "The International Maritime Organization (IMO) number, a 7-digit identifier for ships." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#lastDeliveryDate
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#lastDeliveryDate
 :lastDeliveryDate rdf:type owl:DatatypeProperty ;
                   rdfs:domain :MarpolWaste ;
                   rdfs:range xsd:dateTime ;
                   rdfs:comment "The date and time of the last waste delivery, in ISO-8601 format with timezone." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#lastWasteDeliveryPort
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#lastWasteDeliveryPort
 :lastWasteDeliveryPort rdf:type owl:DatatypeProperty ;
                        rdfs:domain :MarpolWaste ;
                        rdfs:range xsd:string ;
@@ -217,28 +245,28 @@
                        <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#marpolEdition
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#marpolEdition
 :marpolEdition rdf:type owl:DatatypeProperty ;
                rdfs:domain :MarpolWaste ;
                rdfs:range xsd:string ;
                rdfs:comment "The edition of MARPOL applicable to the waste being documented (if relevant)." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#messageId
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#messageId
 :messageId rdf:type owl:DatatypeProperty ;
            rdfs:domain :WasdisMetadata ;
            rdfs:range xsd:string ;
            rdfs:comment "A unique identifier for the message." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#name
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:domain :Ship ;
       rdfs:range xsd:string ;
       rdfs:comment "The name of the ship." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#nextCollectionPort
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#nextCollectionPort
 :nextCollectionPort rdf:type owl:DatatypeProperty ;
                     rdfs:domain :ResidueInformation ;
                     rdfs:range xsd:string ;
@@ -246,7 +274,7 @@
                     <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#nextPlannedDeliveryPort
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#nextPlannedDeliveryPort
 :nextPlannedDeliveryPort rdf:type owl:DatatypeProperty ;
                          rdfs:domain :MarpolWaste ;
                          rdfs:range xsd:string ;
@@ -254,42 +282,42 @@
                          <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#remarks
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#remarks
 :remarks rdf:type owl:DatatypeProperty ;
          rdfs:domain :WasdisMetadata ;
          rdfs:range xsd:string ;
          rdfs:comment "Any additional remarks or notes regarding the waste delivery or process." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#sender
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#sender
 :sender rdf:type owl:DatatypeProperty ;
         rdfs:domain :WasdisMetadata ;
         rdfs:range xsd:string ;
         rdfs:comment "The entity that sent the waste notification." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#shipScale
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#shipScale
 :shipScale rdf:type owl:DatatypeProperty ;
            rdfs:domain :MarpolWaste ;
            rdfs:range xsd:string ;
            rdfs:comment "An identifier for the ship scale or port call, useful for traceability." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#submissionDate
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#submissionDate
 :submissionDate rdf:type owl:DatatypeProperty ;
                 rdfs:domain :WasdisMetadata ;
                 rdfs:range xsd:dateTime ;
                 rdfs:comment "The date and time when the waste notification was submitted." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#substance
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#substance
 :substance rdf:type owl:DatatypeProperty ;
            rdfs:domain :ResidueInformation ;
            rdfs:range xsd:string ;
            rdfs:comment "The substance of the residue, e.g., oil, sewage, or waste sludge." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#subtypeCode
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#subtypeCode
 :subtypeCode rdf:type owl:DatatypeProperty ;
              rdfs:domain :ResidueInformation ;
              rdfs:range xsd:string ;
@@ -297,12 +325,107 @@
              <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#typeCode
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#typeCode
 :typeCode rdf:type owl:DatatypeProperty ;
           rdfs:domain :ResidueInformation ;
           rdfs:range xsd:string ;
           rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
           <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#addressLocality
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#addressLocality> rdf:type owl:DatatypeProperty ;
+                                                                                                                         rdfs:subPropertyOf <https://schema.org/addressLocality> ;
+                                                                                                                         rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                         rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#country
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#country> rdf:type owl:DatatypeProperty ;
+                                                                                                                 rdfs:subPropertyOf <https://schema.org/addressCountry> ;
+                                                                                                                 rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                 rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#email
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#email> rdf:type owl:DatatypeProperty ;
+                                                                                                               rdfs:subPropertyOf <https://schema.org/email> ;
+                                                                                                               rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                               rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#legalName
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#legalName> rdf:type owl:DatatypeProperty ;
+                                                                                                                   rdfs:subPropertyOf <https://schema.org/name> ;
+                                                                                                                   rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                   rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#phone
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#phone> rdf:type owl:DatatypeProperty ;
+                                                                                                               rdfs:subPropertyOf <https://schema.org/telephone> ;
+                                                                                                               rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                               rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#postalCode
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#postalCode> rdf:type owl:DatatypeProperty ;
+                                                                                                                    rdfs:subPropertyOf <https://schema.org/postalCode> ;
+                                                                                                                    rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                    rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#registeredId
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#registeredId> rdf:type owl:DatatypeProperty ;
+                                                                                                                      rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                      rdfs:range xsd:string ;
+                                                                                                                      rdfs:comment "Official registration identifier such as VAT, company number or national waste registry code." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#streetAddress
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#streetAddress> rdf:type owl:DatatypeProperty ;
+                                                                                                                       rdfs:subPropertyOf <https://schema.org/streetAddress> ;
+                                                                                                                       rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                       rdfs:range xsd:string .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#website
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#website> rdf:type owl:DatatypeProperty ;
+                                                                                                                 rdfs:subPropertyOf <https://schema.org/url> ;
+                                                                                                                 rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                 rdfs:range xsd:anyURI .
+
+
+###  https://schema.org/addressCountry
+<https://schema.org/addressCountry> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/addressLocality
+<https://schema.org/addressLocality> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/email
+<https://schema.org/email> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/name
+<https://schema.org/name> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/postalCode
+<https://schema.org/postalCode> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/streetAddress
+<https://schema.org/streetAddress> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/telephone
+<https://schema.org/telephone> rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/url
+<https://schema.org/url> rdf:type owl:DatatypeProperty .
 
 
 #################################################################
@@ -334,85 +457,113 @@
                                       rdfs:subClassOf owl:Thing .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#AuthorizedParty
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty
 :AuthorizedParty rdf:type owl:Class ;
                  rdfs:subClassOf owl:Thing ;
                  rdfs:comment "Represents an authorized entity responsible for handling the waste." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport
 :DigitalMarpolWastePassport rdf:type owl:Class ;
                             rdfs:subClassOf :DigitalWastePassport ;
                             rdfs:comment "A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#DigitalWastePassport
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalWastePassport
 :DigitalWastePassport rdf:type owl:Class ;
                       rdfs:subClassOf owl:Thing .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#InvolvedParty
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty
 :InvolvedParty rdf:type owl:Class ;
                rdfs:subClassOf owl:Thing ;
                rdfs:comment "A party involved in the waste management process, such as the ship operator." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#MarpolWaste
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste
 :MarpolWaste rdf:type owl:Class ;
              rdfs:subClassOf :Waste ;
              rdfs:comment "Represents a specific waste entity within the MARPOL context, including regulatory attributes for ship-generated waste." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#MarpolWastePassport
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport
 :MarpolWastePassport rdf:type owl:Class ;
                      rdfs:subClassOf :WastePassport ;
                      rdfs:comment "Represents the waste passport data specific to MARPOL regulations." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#ResidueInformation
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation
 :ResidueInformation rdf:type owl:Class ;
                     rdfs:subClassOf owl:Thing ;
                     rdfs:comment "Details of a specific waste residue, including type, quantity, and handling." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#Ship
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship
 :Ship rdf:type owl:Class ;
       rdfs:subClassOf owl:Thing ;
       rdfs:comment "Details about the ship generating the waste." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#WasdisMetadata
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata
 :WasdisMetadata rdf:type owl:Class ;
                 rdfs:subClassOf owl:Thing ;
                 rdfs:comment "Metadata related to the WASDIS system for auditing purposes." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#Waste
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#Waste
 :Waste rdf:type owl:Class ;
        rdfs:subClassOf owl:Thing .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl#WastePassport
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#WastePassport
 :WastePassport rdf:type owl:Class ;
                rdfs:subClassOf owl:Thing .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#DigitalWastePassport
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#DigitalWastePassport> rdf:type owl:Class ;
-                                                                                                                                 rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/VerifiableCredential> ;
-                                                                                                                                 rdfs:comment "The Digital Waste Passport is a comprehensive data structure that encapsulates detailed information pertaining to a specific waste entity, including its identification details, issuing authority, validity period, and provenance information. It also incorporates references to the associated WastePassport, enabling verifiable tracking, traceability, and compliance with waste management and sustainability requirements throughout the waste lifecycle." .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassport
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassport> rdf:type owl:Class ;
+                                                                                                                                       rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/VerifiableCredential> ;
+                                                                                                                                       rdfs:comment "The Digital Waste Passport is a comprehensive data structure that encapsulates detailed information pertaining to a specific waste entity, including its identification details, issuing authority, validity period, and provenance information. It also incorporates references to the associated WastePassport, enabling verifiable tracking, traceability, and compliance with waste management and sustainability requirements throughout the waste lifecycle." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#Waste
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#Waste> rdf:type owl:Class ;
-                                                                                                                  rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
-                                                                                                                  rdfs:comment "The Waste class encapsulates detailed information regarding a specific waste item, including its identification details, origin, characteristics, and relevant classification data. It also includes attributes related to its handling, composition, and provenance, supporting accurate documentation and management within the waste lifecycle." .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#Waste
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#Waste> rdf:type owl:Class ;
+                                                                                                                        rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
+                                                                                                                        rdfs:comment "The Waste class encapsulates detailed information regarding a specific waste item, including its identification details, origin, characteristics, and relevant classification data. It also includes attributes related to its handling, composition, and provenance, supporting accurate documentation and management within the waste lifecycle." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#WastePassport
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl#WastePassport> rdf:type owl:Class ;
-                                                                                                                          rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport> ;
-                                                                                                                          rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassport
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassport> rdf:type owl:Class ;
+                                                                                                                                rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport> ;
+                                                                                                                                rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer> rdf:type owl:Class ;
+                                                                                                                  rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                  rdfs:comment "The organization that produced or placed the product on the market, and therefore generated the waste." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler> rdf:type owl:Class ;
+                                                                                                                  rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                  rdfs:comment "A legally registered organization authorized to manage, treat, recycle or dispose of waste." .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter> rdf:type owl:Class ;
+                                                                                                                     rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
+                                                                                                                     rdfs:comment "An organization responsible for transporting waste between locations." .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation
+<https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation> rdf:type owl:Class ;
+                                                               rdfs:subClassOf owl:Thing .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/Party
+<https://test.uncefact.org/vocabulary/untp/core/0/Party> rdf:type owl:Class ;
+                                                         rdfs:subClassOf owl:Thing .
 
 
 ###  https://test.uncefact.org/vocabulary/untp/core/0/Product
@@ -434,180 +585,180 @@
 #    Individuals
 #################################################################
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DIS
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DIS> rdf:type owl:NamedIndividual ,
-                                                                                                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#definition> "Discharged waste."@en ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "DIS"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DIS
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DIS> rdf:type owl:NamedIndividual ,
+                                                                                                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#definition> "Discharged waste."@en ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "DIS"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                                    <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                                           rdfs:comment "Defines delivery types for MARPOL waste, indicating how waste is collected, recycled, or discharged at port reception facilities."@en ;
-                                                                                                                                           <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the type of delivery for ship-generated waste, as defined by a local codelist."@en ;
-                                                                                                                                           <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :deliveryType in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
-                                                                                                                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Delivery Type Code"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> rdf:type owl:NamedIndividual ,
+                                                                                                                                                 <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                                        rdfs:comment "Defines delivery types for MARPOL waste, indicating how waste is collected, recycled, or discharged at port reception facilities."@en ;
+                                                                                                                                        <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the type of delivery for ship-generated waste, as defined by a local codelist."@en ;
+                                                                                                                                        <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :deliveryType in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
+                                                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Delivery Type Code"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#REC
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#REC> rdf:type owl:NamedIndividual ,
-                                                                                                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#definition> "Recycled waste."@en ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "REC"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#REC
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#REC> rdf:type owl:NamedIndividual ,
+                                                                                                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#definition> "Recycled waste."@en ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "REC"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#ZTO
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#ZTO> rdf:type owl:NamedIndividual ,
-                                                                                                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#definition> "Example of a local code for a specific waste delivery type (to be defined in the local codelist)."@en ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
-                                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTO"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#ZTO
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#ZTO> rdf:type owl:NamedIndividual ,
+                                                                                                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#definition> "Example of a local code for a specific waste delivery type (to be defined in the local codelist)."@en ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> ;
+                                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTO"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                                        <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                                               rdfs:comment "Defines the possible discharge methods under MARPOL waste handling processes."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the means or method of discharge for a particular residue or waste material."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :dischargeMeans in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Discharge Means Code"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme> rdf:type owl:NamedIndividual ,
+                                                                                                                                                     <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                                            rdfs:comment "Defines the possible discharge methods under MARPOL waste handling processes."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the means or method of discharge for a particular residue or waste material."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :dischargeMeans in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Discharge Means Code"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTB
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTB> rdf:type owl:NamedIndividual ,
-                                                                                                                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a designated waste collection area."@en ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTB"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTC
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTC> rdf:type owl:NamedIndividual ,
-                                                                                                                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#definition> "Direct discharge to sea (per MARPOL regulations)."@en ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTC"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTD
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTD> rdf:type owl:NamedIndividual ,
-                                                                                                                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a designated waste treatment system."@en ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTD"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTE
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#ZTE> rdf:type owl:NamedIndividual ,
-                                                                                                                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a port reception facility."@en ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
-                                                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTE"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                              <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                                     <http://purl.org/dc/terms/source> <https://www.iso.org/obp/ui/#search> ;
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#definition> "Standardized two-letter country codes established by ISO 3166-1 Alpha-2."@en ;
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :flag within the Digital MARPOL Waste Passport ontology, indicating the flag state of a ship using standardized ISO 3166-1 Alpha-2 codes."@en ;
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "ISO 3166-1 Alpha-2 Country Codes"@en ;
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "This scheme references the official ISO publication and does not reproduce the codes locally. Implementations should resolve codes directly from the ISO OBP or an authorized registry."@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                                        <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                                               rdfs:comment "Controlled vocabulary defining subtypes of residues generated on ships, used to refine MARPOL waste categorization."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the subtype of residue, providing a more granular classification of the waste material."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :subtypeCode in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
-                                                                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Residue Subtype Code"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTE02
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTE02> rdf:type owl:NamedIndividual ,
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "Non-hazardous solid waste from kitchen operations."@en ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTE02"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTH01
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTH01> rdf:type owl:NamedIndividual ,
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "Hazardous liquid waste from fuel systems."@en ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTH01"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTR03
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTR03> rdf:type owl:NamedIndividual ,
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "Sludge from ballast water treatment systems."@en ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTR03"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTW04
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ZTW04> rdf:type owl:NamedIndividual ,
-                                                                                                                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "Wastewater from sewage systems."@en ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
-                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTW04"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                                  <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                                         rdfs:comment "Defines the main waste types under MARPOL Annexes, such as hazardous, non-hazardous, sludge, and wastewater residues."@en ;
-                                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the type of residue (waste material) generated by the ship, as defined by MARPOL standards."@en ;
-                                                                                                                                         <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :typeCode in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
-                                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Residue Type Code"@en .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTE
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTE> rdf:type owl:NamedIndividual ,
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTB
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTB> rdf:type owl:NamedIndividual ,
                                                                                                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Non-hazardous solid waste."@en ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a designated waste collection area."@en ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTB"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTC
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTC> rdf:type owl:NamedIndividual ,
+                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Direct discharge to sea (per MARPOL regulations)."@en ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTC"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTD
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTD> rdf:type owl:NamedIndividual ,
+                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a designated waste treatment system."@en ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTD"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTE
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#ZTE> rdf:type owl:NamedIndividual ,
+                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Discharge to a port reception facility."@en ;
+                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl#DischargeMeansCodeScheme> ;
                                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTE"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTH
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTH> rdf:type owl:NamedIndividual ,
-                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Hazardous liquid waste (as per MARPOL Annex II)."@en ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTH"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> rdf:type owl:NamedIndividual ,
+                                                                                                                                           <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                                  <http://purl.org/dc/terms/source> <https://www.iso.org/obp/ui/#search> ;
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#definition> "Standardized two-letter country codes established by ISO 3166-1 Alpha-2."@en ;
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :flag within the Digital MARPOL Waste Passport ontology, indicating the flag state of a ship using standardized ISO 3166-1 Alpha-2 codes."@en ;
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "ISO 3166-1 Alpha-2 Country Codes"@en ;
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "This scheme references the official ISO publication and does not reproduce the codes locally. Implementations should resolve codes directly from the ISO OBP or an authorized registry."@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTR
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTR> rdf:type owl:NamedIndividual ,
-                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Sludge waste."@en ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTR"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> rdf:type owl:NamedIndividual ,
+                                                                                                                                                     <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                                            rdfs:comment "Controlled vocabulary defining subtypes of residues generated on ships, used to refine MARPOL waste categorization."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the subtype of residue, providing a more granular classification of the waste material."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :subtypeCode in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
+                                                                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Residue Subtype Code"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTW
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ZTW> rdf:type owl:NamedIndividual ,
-                                                                                                                                <http://www.w3.org/2004/02/skos/core#Concept> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#definition> "Wastewater (from ship operations)."@en ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> ;
-                                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTW"@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTE02
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTE02> rdf:type owl:NamedIndividual ,
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "Non-hazardous solid waste from kitchen operations."@en ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTE02"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl#UNLocodeScheme> rdf:type owl:NamedIndividual ,
-                                                                                                                                  <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                                         <http://purl.org/dc/terms/source> <https://unece.org/trade/cefact/unlocode-code-list-country-and-territory> ;
-                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "A standardized code that uniquely identifies geographical locations used in international trade and transport, as defined by UNECE."@en ;
-                                                                                                                         <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :arrivalPort, :nextPlannedDeliveryPort, :lastWasteDeliveryPort, and :nextCollectionPort in the Digital MARPOL Waste Passport ontology. These properties should use valid UN/LOCODE values to identify ports or geographical locations."@en ;
-                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "UN/LOCODE"@en ;
-                                                                                                                         <http://www.w3.org/2004/02/skos/core#scopeNote> "This scheme references the official UN/LOCODE dataset published by UNECE. Implementations should use codes directly from that source (e.g., ESPMI for Palma de Mallorca, ESBCN for Barcelona)."@en .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTH01
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTH01> rdf:type owl:NamedIndividual ,
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "Hazardous liquid waste from fuel systems."@en ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTH01"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTR03
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTR03> rdf:type owl:NamedIndividual ,
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "Sludge from ballast water treatment systems."@en ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTR03"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTW04
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ZTW04> rdf:type owl:NamedIndividual ,
+                                                                                                                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#definition> "Wastewater from sewage systems."@en ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTW04"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> rdf:type owl:NamedIndividual ,
+                                                                                                                                               <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                                      rdfs:comment "Defines the main waste types under MARPOL Annexes, such as hazardous, non-hazardous, sludge, and wastewater residues."@en ;
+                                                                                                                                      <http://www.w3.org/2004/02/skos/core#definition> "A code that specifies the type of residue (waste material) generated by the ship, as defined by MARPOL standards."@en ;
+                                                                                                                                      <http://www.w3.org/2004/02/skos/core#note> "Linked to the property :typeCode in the Digital MARPOL Waste Passport ontology, constraining allowed values to this controlled vocabulary."@en ;
+                                                                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Residue Type Code"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTE
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTE> rdf:type owl:NamedIndividual ,
+                                                                                                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#definition> "Non-hazardous solid waste."@en ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTE"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTH
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTH> rdf:type owl:NamedIndividual ,
+                                                                                                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#definition> "Hazardous liquid waste (as per MARPOL Annex II)."@en ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTH"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTR
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTR> rdf:type owl:NamedIndividual ,
+                                                                                                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#definition> "Sludge waste."@en ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTR"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTW
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ZTW> rdf:type owl:NamedIndividual ,
+                                                                                                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#definition> "Wastewater (from ship operations)."@en ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#inScheme> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> ;
+                                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "ZTW"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl#UNLocodeScheme
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl#UNLocodeScheme> rdf:type owl:NamedIndividual ,
+                                                                                                                               <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                                                                                                                      <http://purl.org/dc/terms/source> <https://unece.org/trade/cefact/unlocode-code-list-country-and-territory> ;
+                                                                                                                      <http://www.w3.org/2004/02/skos/core#definition> "A standardized code that uniquely identifies geographical locations used in international trade and transport, as defined by UNECE."@en ;
+                                                                                                                      <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :arrivalPort, :nextPlannedDeliveryPort, :lastWasteDeliveryPort, and :nextCollectionPort in the Digital MARPOL Waste Passport ontology. These properties should use valid UN/LOCODE values to identify ports or geographical locations."@en ;
+                                                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "UN/LOCODE"@en ;
+                                                                                                                      <http://www.w3.org/2004/02/skos/core#scopeNote> "This scheme references the official UN/LOCODE dataset published by UNECE. Implementations should use codes directly from that source (e.g., ESPMI for Palma de Mallorca, ESBCN for Barcelona)."@en .
 
 
 ###  Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi

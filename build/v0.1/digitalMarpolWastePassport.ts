@@ -1,7 +1,8 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-15 13:17:38
+ * Generated: 2026-01-15 14:46:59
+ * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
  */
 
 /**

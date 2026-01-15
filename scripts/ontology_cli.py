@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import List, Optional
 
 from lib import OwlConfig, ShaclConfig, validate_owl, validate_shacl
+from lib.config import load_config
 from lib.utils import get_workspace_root
 
 
@@ -76,7 +77,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="OWL profile",
     )
     owl.add_argument(
-        "--build-dir", default="build", help="Build output dir"
+        "--build-dir", default=None, help="Build output dir (default: build/<version>)"
     )
     owl.add_argument(
         "-m",
@@ -214,17 +215,23 @@ def main(argv: Optional[List[str]] = None) -> int:
     ns = parser.parse_args(argv)
     
     workspace_root = get_workspace_root()
+    config_obj = load_config()
 
     # ===== VALIDATE COMMANDS =====
     if ns.command == "validate":
         if ns.validate_cmd == "owl":
+            # Use versioned build directory if not explicitly specified
+            build_dir = ns.build_dir
+            if build_dir is None:
+                build_dir = f"{config_obj.paths['build']}/{config_obj.build_version}"
+            
             config = OwlConfig(
                 inputs_csv=ns.inputs_csv,
                 include_codelists=ns.include_codelists,
                 no_auto=ns.no_auto,
                 reasoner=ns.reasoner,
                 profile=ns.profile,
-                build_dir=Path(ns.build_dir),
+                build_dir=Path(build_dir),
                 merged=ns.merged,
                 output=ns.output,
                 quiet=ns.quiet,

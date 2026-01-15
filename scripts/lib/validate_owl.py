@@ -91,8 +91,20 @@ def _validate_with_robot(
     if not config.quiet:
         print("[OWL] Usant ROBOT CLI")
     
+    # Check for catalog file
+    # ----------------------
+    # The catalog.xml file (OASIS XML Catalog standard) redirects external URIs 
+    # to local files. This is needed because our ontologies have owl:imports with 
+    # absolute GitHub URLs (e.g., https://raw.githubusercontent.com/.../*.ttl).
+    # Without the catalog, ROBOT tries to download from those URLs and fails.
+    # The catalog maps those GitHub URIs to local files in codelists/v0.1/
+    workspace_root = get_workspace_root()
+    catalog_path = workspace_root / "ontology" / "catalog-v001.xml"
+    
     # Merge ontologies
     merge_cmd: List[str] = [robot, "merge"]
+    if catalog_path.exists():
+        merge_cmd += ["--catalog", str(catalog_path)]
     for p in input_files:
         merge_cmd += ["--input", str(p)]
     merge_cmd += ["--output", str(merged_path)]
@@ -113,6 +125,10 @@ def _validate_with_robot(
     profile_cmd = [
         robot,
         "validate-profile",
+    ]
+    if catalog_path.exists():
+        profile_cmd += ["--catalog", str(catalog_path)]
+    profile_cmd += [
         "--input",
         str(merged_path),
         "--profile",
@@ -130,6 +146,10 @@ def _validate_with_robot(
         reason_cmd = [
             robot,
             "reason",
+        ]
+        if catalog_path.exists():
+            reason_cmd += ["--catalog", str(catalog_path)]
+        reason_cmd += [
             "--input",
             str(merged_path),
             "--reasoner",

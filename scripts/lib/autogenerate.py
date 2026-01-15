@@ -112,7 +112,7 @@ class TypeScriptGenerator:
         
         cmd = [
             sys.executable,
-            str(self.scripts_dir / "shacl-to-jsonschema.py"),
+            str(self.scripts_dir / "lib" / "shacl_to_jsonschema.py"),
             "--input", str(shape_file),
             "--output", str(json_schema_file)
         ]
@@ -131,7 +131,7 @@ class TypeScriptGenerator:
         
         cmd = [
             sys.executable,
-            str(self.scripts_dir / "jsonschema-to-typescript.py"),
+            str(self.scripts_dir / "lib" / "jsonschema_to_typescript.py"),
             "--input", str(json_schema_file),
             "--output", str(typescript_file),
             "--source", self.config.get_shapes_path(config['shape_file'])
