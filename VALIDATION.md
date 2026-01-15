@@ -37,11 +37,14 @@ npm run help
 
 ### CLI Direct
 ```bash
-npm run cli -- <args>
-# Exemple:
-npm run cli -- validate shacl -d examples/v0.1/digital-waste-passport-sample.ttl -s shapes/v0.1/digitalWastePassportShapes.ttl
+# Direct call (recommended for complex commands with flags):
+node docker/docker.js run cli validate shacl -d examples/v0.1/digital-waste-passport-sample.ttl -s shapes/v0.1/digitalWastePassportShapes.ttl
+
+# Via npm (Windows PowerShell limitation: flags after -- are consumed):
+npm run cli -- validate shacl examples/v0.1/digital-waste-passport-sample.ttl shapes/v0.1/digitalWastePassportShapes.ttl
 ```
 **Resultat esperat**: Executa comanda CLI personalitzada dins del contenidor
+**Nota**: A Windows PowerShell, utilitzar `node docker/docker.js run cli` directament per comandes amb flags (`-d`, `-s`, etc.)
 
 ### OWL Validation
 ```bash

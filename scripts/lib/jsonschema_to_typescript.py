@@ -27,7 +27,11 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
-from .utils import get_workspace_root
+# Handle both direct execution and package import
+try:
+    from .utils import get_workspace_root
+except ImportError:
+    from utils import get_workspace_root
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
