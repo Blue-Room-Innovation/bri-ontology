@@ -27,6 +27,8 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+from .utils import get_workspace_root
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
@@ -37,8 +39,7 @@ class JSONSchemaToTypeScriptConverter:
     
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
-        # workspace_root should be two levels up from this file: lib/ -> scripts/ -> workspace/
-        self.workspace_root = Path(__file__).parent.parent.parent
+        self.workspace_root = get_workspace_root()
         
     def convert(self, input_file: Path, output_file: Path, banner_comment: str = None) -> bool:
         """Convert a JSON Schema file to TypeScript."""

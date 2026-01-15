@@ -4,8 +4,10 @@
 import sys
 from pathlib import Path
 
-# Add parent directory to path to import config
-sys.path.insert(0, str(Path(__file__).parent))
+# Add scripts directory to path to import lib modules
+scripts_dir = Path(__file__).resolve().parent
+if str(scripts_dir) not in sys.path:
+    sys.path.insert(0, str(scripts_dir))
 
 from lib.config import load_config
 

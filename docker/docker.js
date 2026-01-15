@@ -117,7 +117,7 @@ function run(scriptName, ...args) {
     ...allArgs
   ];
   
-  const result = spawnSync('docker', dockerArgs, { stdio: 'inherit' });
+  const result = spawnSync('docker', dockerArgs, { stdio: 'inherit', shell: true });
   
   if (result.error) {
     console.error('❌ Error running Docker:', result.error.message);

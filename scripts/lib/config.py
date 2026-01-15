@@ -78,17 +78,30 @@ class Config:
     
     @staticmethod
     def _find_config_file() -> Path:
-        """Find config.yml by searching upwards from current file."""
-        current = Path(__file__).resolve()
+        """Find config.yml using WORKSPACE_ROOT from .env file."""
+        # Import here to avoid circular dependency
+        import sys
+        from pathlib import Path as P
         
-        # Search upwards from lib/ → scripts/ → workspace root
-        for parent in [current.parent.parent.parent, current.parent.parent, current.parent]:
-            config_path = parent / "config.yml"
-            if config_path.exists():
-                return config_path
+        # Try to import get_workspace_root from utils
+        try:
+            from .utils import get_workspace_root
+        except ImportError:
+            # Fallback: add parent to path
+            script_dir = P(__file__).parent
+            if str(script_dir.parent) not in sys.path:
+                sys.path.insert(0, str(script_dir.parent))
+            from lib.utils import get_workspace_root
         
-        # Fallback to workspace root
-        return current.parent.parent.parent / "config.yml"
+        workspace = get_workspace_root()
+        config_path = workspace / 'config.yml'
+        
+        if not config_path.exists():
+            raise FileNotFoundError(
+                f"config.yml not found in WORKSPACE_ROOT: {workspace}"
+            )
+        
+        return config_path
     
     def get_ontology_path(self, filename: str) -> str:
         """Get versioned path to ontology file.

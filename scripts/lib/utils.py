@@ -73,12 +73,55 @@ def run_command(cmd: List[str], quiet: bool = False) -> int:
 
 
 def get_workspace_root() -> Path:
-    """Get the workspace root directory.
+    """Get the workspace root directory from .env file.
     
     Returns:
-        Path to workspace root (parent of scripts/ directory)
+        Path to workspace root
+        
+    Raises:
+        FileNotFoundError: If .env file not found
+        EnvironmentError: If WORKSPACE_ROOT is not set in .env
     """
-    return Path(__file__).resolve().parent.parent.parent
+    from dotenv import load_dotenv
+    import os
+    
+    # Find .env file (search upward from current directory)
+    env_file = None
+    current = Path.cwd()
+    for _ in range(10):
+        candidate = current / '.env'
+        if candidate.exists():
+            env_file = candidate
+            break
+        parent = current.parent
+        if parent == current:
+            break
+        current = parent
+    
+    if env_file is None:
+        raise FileNotFoundError(
+            ".env file not found.\n"
+            f"Create .env file in project root based on .env.example"
+        )
+    
+    # Load .env file
+    load_dotenv(env_file)
+    
+    # Check WORKSPACE_ROOT is defined
+    if 'WORKSPACE_ROOT' not in os.environ:
+        raise EnvironmentError(
+            f"WORKSPACE_ROOT not defined in {env_file}\n"
+            "Add: WORKSPACE_ROOT=/path/to/workspace"
+        )
+    
+    workspace = Path(os.environ['WORKSPACE_ROOT']).resolve()
+    
+    if not workspace.exists():
+        raise FileNotFoundError(
+            f"WORKSPACE_ROOT points to non-existent directory: {workspace}"
+        )
+    
+    return workspace
 
 
 def iter_ontology_files(include_codelists: bool = False) -> List[Path]:
@@ -91,37 +134,21 @@ def iter_ontology_files(include_codelists: bool = False) -> List[Path]:
         List of Path objects to TTL files
     """
     workspace_root = get_workspace_root()
+    config = load_config()
     
-    # Load configuration to get current versions
-    config = load_config() if load_config else None
-    
-    if config:
-        ontology_dir = workspace_root / config.paths['ontology'] / config.ontology_version
-        codelists_dir = workspace_root / config.paths['codelists'] / config.codelists_version if include_codelists else None
-    else:
-        # Fallback to discovering all versioned folders
-        ontology_dir = workspace_root / "ontology"
-        codelists_dir = workspace_root / "codelists" if include_codelists else None
+    ontology_dir = workspace_root / config.paths['ontology'] / config.ontology_version
+    codelists_dir = workspace_root / config.paths['codelists'] / config.codelists_version if include_codelists else None
     
     candidates: List[Path] = []
     
     # Look for ontology files
     if ontology_dir.exists():
-        if config:
-            # Use specific version from config
-            for ttl_file in sorted(ontology_dir.glob("*.ttl")):
-                candidates.append(ttl_file)
-        else:
-            # Discover all versioned folders
-            for version_dir in sorted(ontology_dir.parent.glob("v*")):
-                if version_dir.is_dir():
-                    for ttl_file in sorted(version_dir.glob("*.ttl")):
-                        candidates.append(ttl_file)
+        for ttl_file in sorted(ontology_dir.glob("*.ttl")):
+            candidates.append(ttl_file)
     
     # Include codelists if requested
-    if include_codelists and codelists_dir:
-        if codelists_dir.exists():
-            for ttl_file in sorted(codelists_dir.rglob("*.ttl")):
-                candidates.append(ttl_file)
+    if include_codelists and codelists_dir and codelists_dir.exists():
+        for ttl_file in sorted(codelists_dir.rglob("*.ttl")):
+            candidates.append(ttl_file)
     
     return candidates

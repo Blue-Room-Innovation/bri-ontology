@@ -1,6 +1,7 @@
 FROM node:20-bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV WORKSPACE_ROOT=/workspace
 RUN apt-get update && apt-get install -y --no-install-recommends \
   openjdk-17-jre-headless \
   python3 \

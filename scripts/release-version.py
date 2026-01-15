@@ -29,10 +29,12 @@ import sys
 from pathlib import Path
 from typing import List, Tuple
 
+# Add scripts directory to path
+scripts_dir = Path(__file__).resolve().parent
+if str(scripts_dir) not in sys.path:
+    sys.path.insert(0, str(scripts_dir))
 
-def get_workspace_root() -> Path:
-    """Get workspace root directory."""
-    return Path(__file__).resolve().parent.parent
+from lib.utils import get_workspace_root
 
 
 def copy_version_folder(component: str, from_ver: str, to_ver: str, workspace: Path) -> Path:
