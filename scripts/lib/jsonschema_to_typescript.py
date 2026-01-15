@@ -37,7 +37,8 @@ class JSONSchemaToTypeScriptConverter:
     
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
-        self.workspace_root = Path(__file__).parent.parent
+        # workspace_root should be two levels up from this file: lib/ -> scripts/ -> workspace/
+        self.workspace_root = Path(__file__).parent.parent.parent
         
     def convert(self, input_file: Path, output_file: Path, banner_comment: str = None) -> bool:
         """Convert a JSON Schema file to TypeScript."""

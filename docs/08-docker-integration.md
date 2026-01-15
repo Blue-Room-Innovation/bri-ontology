@@ -1,5 +1,57 @@
 # Docker Integration Summary
 
+## How It Works (Simple)
+
+When you run a command like `npm run generate:types`, this is what happens:
+
+### 1️⃣ You type in terminal:
+```bash
+npm run generate:types
+```
+
+### 2️⃣ NPM reads package.json and executes:
+```bash
+node docker/docker.js run generate:types
+```
+
+### 3️⃣ docker.js maps the script name to a Python command:
+```javascript
+SCRIPT_COMMANDS = {
+  'generate:types': 'python scripts/ontology_cli.py generate types'
+}
+```
+
+### 4️⃣ docker.js builds the full Docker command:
+```bash
+docker run --rm \
+  -v "C:\Users\...\Ontologia:/workspace" \
+  -w /workspace \
+  bri-ontology-tooling:latest \
+  python scripts/ontology_cli.py generate types
+```
+
+**What each part does:**
+- `docker run --rm` → launches temporary container
+- `-v "...:/workspace"` → mounts your folder inside container
+- `-w /workspace` → sets working directory
+- `bri-ontology-tooling:latest` → uses Docker image
+- `python scripts/ontology_cli.py generate types` → executes Python inside container
+
+### 5️⃣ Docker executes Python inside the container
+Python already has everything installed (venv, dependencies, ROBOT)
+
+### 6️⃣ Generated files appear on your PC
+Thanks to volume mounting (`-v`), everything Python creates inside `/workspace` is saved to your actual folder.
+
+---
+
+**Ultra-simple summary:**
+```
+npm run X  →  docker.js maps X  →  Docker executes Python  →  Files appear on your PC
+```
+
+---
+
 ## Implementation Completed
 
 ### Files Created
@@ -20,19 +72,19 @@
    - [docker/run.bat](../docker/run.bat) - Windows run helper
    - [docker/run.sh](../docker/run.sh) - Unix run helper
 
-4. **[scripts/run-python.js](../scripts/run-python.js)** - Cross-platform Python executor
-   - Auto-detects OS (Windows/Linux/Mac)
-   - Uses venv Python if available, falls back to system Python
-   - Works identically in Docker and local environments
+4. **[docker/docker.js](../docker/docker.js)** - Docker execution wrapper
+   - Executes Python scripts directly inside Docker container
+   - Maps npm script names to Python commands
+   - No local Python installation required
 
 5. **[docker/README.md](../docker/README.md)** - Complete Docker usage documentation
 
 ### Files Modified
 
-1. **[package.json](../package.json)** - All scripts now use `node scripts/run-python.js`
-   - Cross-platform compatible (Windows, Linux, Mac)
-   - Works in Docker containers
-   - Works locally with or without venv
+1. **[package.json](../package.json)** - All scripts now use `node docker/docker.js run <script>`
+   - Executes Python directly inside Docker container
+   - No local Python installation needed
+   - Clean separation: Node.js on host, Python in Docker
 
 2. **[README.md](../README.md)** - Added Quick Start section with Docker instructions
 
@@ -84,30 +136,28 @@ npm run generate:types
 ```
 npm run <command>
     ↓
-package.json script
+package.json script: node docker/docker.js run <script>
     ↓
-node scripts/run-python.js scripts/<script>.py [args]
+docker.js maps script name to Python command
     ↓
-Auto-detects environment (Windows/Linux/Docker)
+Docker container launches with workspace mounted
     ↓
-Finds Python executable (.venv or system)
-    ↓
-Executes Python script with config.yml
+Python executes directly in container (venv pre-activated)
     ↓
 Python script uses scripts/lib/config.py
     ↓
-Returns result
+Output returned, files written to mounted volume
 ```
 
 ### Cross-Platform Compatibility
 
 | Component | Windows | Linux | Mac | Docker |
 |-----------|---------|-------|-----|--------|
-| run-python.js | ✅ | ✅ | ✅ | ✅ |
+| docker.js | ✅ | ✅ | ✅ | N/A |
 | config.yml | ✅ | ✅ | ✅ | ✅ |
-| Python venv | ✅ | ✅ | ✅ | ✅ |
-| Node.js | ✅ | ✅ | ✅ | ✅ |
-| npm scripts | ✅ | ✅ | ✅ | ✅ |
+| Python (in Docker) | ✅ | ✅ | ✅ | ✅ |
+| Node.js (on host) | ✅ | ✅ | ✅ | N/A |
+| npm scripts | ✅ | ✅ | ✅ | N/A |
 
 ## Usage Examples
 

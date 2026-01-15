@@ -23,10 +23,8 @@ RUN mkdir -p /opt/robot \
 
 WORKDIR /workspace
 
-# Copy package files for npm dependencies
+# Copy package files and install npm dependencies
 COPY package*.json ./
-
-# Install npm dependencies
 RUN npm ci --quiet
 
 # Copy Python requirements and install
@@ -36,7 +34,7 @@ RUN . /opt/venv/bin/activate && pip install --no-cache-dir -r scripts/requiremen
 # Copy all project files
 COPY . .
 
-# Create wrapper script for running commands with venv
+# Create wrapper script to activate venv before running commands
 RUN echo '#!/bin/bash\n. /opt/venv/bin/activate\nexec "$@"' > /usr/local/bin/run-with-venv \
   && chmod +x /usr/local/bin/run-with-venv
 
