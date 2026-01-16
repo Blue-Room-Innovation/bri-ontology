@@ -100,25 +100,30 @@ def build_parser() -> argparse.ArgumentParser:
         "shacl", help="Validate data graph against SHACL shapes (pyshacl)"
     )
     shacl.add_argument(
+        "scenario",
+        nargs="?",
+        help="Validation scenario name from config.yml (e.g., 'dwp', 'dmwp'). If not provided, uses default scenario.",
+    )
+    shacl.add_argument(
         "-d",
         "--data",
         dest="data",
         required=False,
-        help="Data graph file (ttl/jsonld) - uses config default if not provided",
+        help="Data graph file (ttl/jsonld) - overrides scenario config",
     )
     shacl.add_argument(
         "-s", 
         "--shapes", 
         dest="shapes", 
         required=False, 
-        help="Shapes file (ttl) - uses config default if not provided"
+        help="Shapes file (ttl) - overrides scenario config"
     )
     shacl.add_argument(
         "-e",
         "--extras",
         dest="extras_csv",
         required=False,
-        help="CSV list of extra ttl files - uses config default if not provided",
+        help="CSV list of extra ttl files - overrides scenario config",
     )
     shacl.add_argument(
         "-f",
@@ -126,7 +131,12 @@ def build_parser() -> argparse.ArgumentParser:
         dest="fmt",
         required=False,
         choices=["human", "text", "turtle", "json-ld"],
-        help="Output format - uses config default if not provided",
+        help="Output format - overrides scenario config",
+    )
+    shacl.add_argument(
+        "--list",
+        action="store_true",
+        help="List all available validation scenarios from config.yml",
     )
 
     # ===== GENERATE COMMANDS =====
@@ -249,35 +259,85 @@ def main(argv: Optional[List[str]] = None) -> int:
             return validate_owl(config)
         
         elif ns.validate_cmd == "shacl":
-            # Apply defaults from config if arguments not provided
+            # Handle --list flag
+            if ns.list:
+                scenarios = config_obj._data.get("validation", {}).get("shacl", {}).get("scenarios", {})
+                default_scenario = config_obj._data.get("validation", {}).get("shacl", {}).get("default", "")
+                
+                print("\n📋 Available SHACL Validation Scenarios")
+                print("=" * 60)
+                if not scenarios:
+                    print("❌ No scenarios configured in config.yml")
+                    return 1
+                
+                for key, scenario in scenarios.items():
+                    is_default = " (default)" if key == default_scenario else ""
+                    print(f"\n🔹 {key}{is_default}")
+                    print(f"   Name: {scenario.get('name', 'N/A')}")
+                    print(f"   Description: {scenario.get('description', 'N/A')}")
+                    print(f"   Data: {scenario.get('data', 'N/A')}")
+                    print(f"   Shapes: {scenario.get('shapes', 'N/A')}")
+                
+                print("\n💡 Usage:")
+                print(f"   npm run validate:shacl <scenario-name>")
+                print(f"   node docker/docker.js run cli validate shacl <scenario-name>")
+                print(f"   node docker/docker.js run cli validate shacl dwp")
+                return 0
+            
+            # Get scenario configuration
+            shacl_config = config_obj._data.get("validation", {}).get("shacl", {})
+            scenarios = shacl_config.get("scenarios", {})
+            default_scenario_name = shacl_config.get("default", "")
+            
+            # Determine which scenario to use
+            scenario_name = ns.scenario or default_scenario_name
+            scenario = None
+            
+            if scenario_name:
+                scenario = scenarios.get(scenario_name)
+                if scenario:
+                    print(f"[SHACL] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                else:
+                    print(f"❌ ERROR: Scenario '{scenario_name}' not found in config.yml")
+                    print(f"Available scenarios: {', '.join(scenarios.keys())}")
+                    print("Run 'npm run validate:shacl --list' to see all scenarios")
+                    return 1
+            
+            # Get values from scenario or arguments
             data_file = ns.data
             shapes_file = ns.shapes
             extras_csv = ns.extras_csv
             fmt = ns.fmt
             
-            # Get defaults from config
-            defaults = config_obj._data.get("defaults", {}).get("shacl", {})
-            
-            # Apply defaults
-            if data_file is None:
-                data_file = defaults.get("data")
+            # Apply scenario defaults if not overridden by arguments
+            if scenario:
                 if data_file is None:
-                    print("❌ ERROR: --data argument is required or must be configured in config.yml under 'defaults.shacl.data'")
-                    return 1
-                print(f"[SHACL] Using default data file from config: {data_file}")
+                    data_file = scenario.get("data")
+                if shapes_file is None:
+                    shapes_file = scenario.get("shapes")
+                if extras_csv is None:
+                    extras_csv = scenario.get("extras", "")
+                if fmt is None:
+                    fmt = scenario.get("format", "human")
+            
+            # Final validation - ensure we have required values
+            if data_file is None:
+                print("❌ ERROR: --data argument is required or must be configured in a scenario")
+                print("Available scenarios: " + ", ".join(scenarios.keys()) if scenarios else "No scenarios configured")
+                print("Run 'npm run validate:shacl --list' to see all scenarios")
+                return 1
             
             if shapes_file is None:
-                shapes_file = defaults.get("shapes")
-                if shapes_file is None:
-                    print("❌ ERROR: --shapes argument is required or must be configured in config.yml under 'defaults.shacl.shapes'")
-                    return 1
-                print(f"[SHACL] Using default shapes file from config: {shapes_file}")
+                print("❌ ERROR: --shapes argument is required or must be configured in a scenario")
+                print("Available scenarios: " + ", ".join(scenarios.keys()) if scenarios else "No scenarios configured")
+                print("Run 'npm run validate:shacl --list' to see all scenarios")
+                return 1
             
+            # Set defaults for optional parameters
             if extras_csv is None:
-                extras_csv = defaults.get("extras", "")
-            
+                extras_csv = ""
             if fmt is None:
-                fmt = defaults.get("format", "human")
+                fmt = "human"
             
             config = ShaclConfig(
                 data_file=workspace_root / Path(data_file),

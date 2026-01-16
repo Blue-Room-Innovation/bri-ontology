@@ -214,67 +214,102 @@ Validates ontologies + all codelists (9 files total).
 
 ### 2. SHACL Validation
 
-**Purpose**: Validate RDF data against SHACL constraint shapes.
+**Purpose**: Validate RDF data against SHACL constraint shapes using configurable scenarios.
 
-#### Quick Start (Using Config Defaults)
+#### Understanding Scenarios
+
+All SHACL validation scenarios are defined in `config.yml` under `validation.shacl.scenarios`. This makes it easy to:
+- Add new validation scenarios without modifying code
+- Reuse common validation patterns
+- Document what each validation does
+- Run validations consistently across the team
+
+#### List Available Scenarios
 ```bash
-# Uses defaults from config.yml (digital-waste-passport example)
-npm run validate:shacl
-```
-
-**What it does**:
-- Reads `defaults.shacl.data` from config.yml
-- Reads `defaults.shacl.shapes` from config.yml
-- Validates the data against shapes
-- Reports conformance and violations
-
-#### Specific Presets
-```bash
-# Validate Digital Waste Passport example
-npm run validate:shacl:dwp
-
-# Validate Digital MARPOL Waste Passport example
-npm run validate:shacl:dmwp
-```
-
-#### Custom Files (CLI Direct)
-```bash
-node docker/docker.js run cli validate shacl \
-  -d <data-file.ttl> \
-  -s <shapes-file.ttl> \
-  [-f <format>]
-```
-
-#### Example: Using Defaults
-```bash
-npm run validate:shacl
+npm run validate:shacl:list
 ```
 
 **Output**:
 ```
-[SHACL] Using default data file from config: examples/v0.1/digital-waste-passport-sample.ttl
-[SHACL] Using default shapes file from config: shapes/v0.1/digitalWastePassportShapes.ttl
-[SHACL] Data   : examples/v0.1/digital-waste-passport-sample.ttl
-[SHACL] Shapes : shapes/v0.1/digitalWastePassportShapes.ttl
-[SHACL] Format : human
-✅ Conforms: True
+📋 Available SHACL Validation Scenarios
+============================================================
+
+🔹 dwp (default)
+   Name: Digital Waste Passport
+   Description: Validates DWP sample data against DWP shapes
+   Data: examples/v0.1/digital-waste-passport-sample.ttl
+   Shapes: shapes/v0.1/digitalWastePassportShapes.ttl
+
+🔹 dmwp
+   Name: Digital MARPOL Waste Passport
+   Description: Validates MARPOL sample data against MARPOL shapes
+   Data: examples/v0.1/digital-marpol-waste-passport-sample.ttl
+   Shapes: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
 ```
 
-#### Example: Custom Files
+#### Run Default Scenario
 ```bash
-node docker/docker.js run cli validate shacl \
-  -d examples/v0.1/invalid-waste-passport-sample.ttl \
-  -s shapes/v0.1/digitalWastePassportShapes.ttl
+# Uses the scenario marked as 'default' in config.yml
+npm run validate:shacl
 ```
 
-**Output**:
+#### Run Specific Scenario
+```bash
+# Run by scenario name
+node docker/docker.js run cli validate shacl dwp
+node docker/docker.js run cli validate shacl dmwp
+node docker/docker.js run cli validate shacl <your-scenario-name>
 ```
-[SHACL] Data   : examples/v0.1/invalid-waste-passport-sample.ttl
-[SHACL] Shapes : shapes/v0.1/digitalWastePassportShapes.ttl
-❌ Conforms: False
-Violations:
-  - Missing dct:issued (minCount 1)
-  - Invalid data type for dct:publisher
+
+#### Override Scenario Values
+```bash
+# Use scenario 'dwp' but with different data file
+node docker/docker.js run cli validate shacl dwp -d examples/v0.1/custom-data.ttl
+
+# Use scenario but change format
+node docker/docker.js run cli validate shacl dmwp -f json-ld
+```
+
+#### Custom Validation (No Scenario)
+```bash
+# Provide all parameters manually
+node docker/docker.js run cli validate shacl \
+  -d examples/v0.1/my-data.ttl \
+  -s shapes/v0.1/my-shapes.ttl \
+  -f human
+```
+
+#### Adding New Scenarios
+
+Edit `config.yml` and add your scenario under `validation.shacl.scenarios`:
+
+```yaml
+validation:
+  shacl:
+    default: "dwp"  # Which scenario to use by default
+    
+    scenarios:
+      dwp:
+        name: "Digital Waste Passport"
+        description: "Validates DWP sample data against DWP shapes"
+        data: "examples/v0.1/digital-waste-passport-sample.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        format: "human"
+        extras: ""
+      
+      # Add your own scenario here
+      my-test:
+        name: "My Custom Test"
+        description: "Tests my custom data against specific shapes"
+        data: "examples/v0.1/my-custom-data.ttl"
+        shapes: "shapes/v0.1/my-custom-shapes.ttl"
+        format: "human"
+        extras: "ontology/v0.1/digitalWastePassport.ttl"  # Optional extra context
+```
+
+Then run it:
+```bash
+node docker/docker.js run cli validate shacl my-test
 ```
 
 #### Format Options
@@ -283,19 +318,22 @@ Violations:
 - `turtle`: RDF/Turtle format
 - `json-ld`: JSON-LD format
 
-#### Configuration in config.yml
-```yaml
-defaults:
-  shacl:
-    data: "examples/v0.1/digital-waste-passport-sample.ttl"
-    shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
-    format: "human"
-    extras: ""
+#### Example Output
+```
+[SHACL] Using scenario 'dwp': Digital Waste Passport
+[SHACL] Data   : examples/v0.1/digital-waste-passport-sample.ttl
+[SHACL] Shapes : shapes/v0.1/digitalWastePassportShapes.ttl
+[SHACL] Format : human
+✅ Conforms: True
 ```
 
-**Use case**: Validate incoming data before ingestion into the system.
+**Use case**: Validate incoming data before ingestion, test shape changes, ensure data quality.
 
-**Error Handling**: If no defaults are configured and no arguments provided, the command will fail with a clear error message.
+**Best practices**:
+- Define a scenario for each common validation pattern
+- Use descriptive names and descriptions
+- Set one scenario as default for CI/CD pipelines
+- Document special requirements in the description field
 
 ---
 
@@ -872,7 +910,95 @@ node docker/docker.js run cli validate shacl -d file.ttl -s shapes.ttl
 
 ## Best Practices
 
-### 1. Version Management
+### 1. Configuration Management (config.yml as Single Source of Truth)
+
+The `config.yml` file is the **central configuration** for all ontology operations. Instead of hardcoding values or modifying scripts, define everything here.
+
+#### Adding New SHACL Validation Scenarios
+
+**Why?** Create reusable validation patterns without touching code.
+
+**How?** Edit `config.yml`:
+
+```yaml
+validation:
+  shacl:
+    default: "dwp"  # Scenario used when no name specified
+    
+    scenarios:
+      # Existing scenarios
+      dwp: { ... }
+      dmwp: { ... }
+      
+      # Add your new scenario
+      my-integration-test:
+        name: "Integration Test - Port Operations"
+        description: "Validates port waste collection data with actors"
+        data: "examples/v0.1/port-integration-test.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        format: "human"
+        extras: "ontology/v0.1/wasteActors.ttl"  # Extra context if needed
+      
+      my-ci-test:
+        name: "CI Pipeline - Smoke Test"
+        description: "Quick validation for CI/CD pipeline"
+        data: "examples/v0.1/minimal-valid-sample.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        format: "text"
+        extras: ""
+```
+
+**Usage**:
+```bash
+# List all scenarios (including your new ones)
+npm run validate:shacl:list
+
+# Run your new scenario
+node docker/docker.js run cli validate shacl my-integration-test
+node docker/docker.js run cli validate shacl my-ci-test
+```
+
+**Benefits**:
+- ✅ No code changes needed
+- ✅ Self-documenting (name + description)
+- ✅ Version controlled with the project
+- ✅ Easy to share with team
+- ✅ CI/CD friendly
+
+#### Organizing Scenarios by Purpose
+
+```yaml
+validation:
+  shacl:
+    scenarios:
+      # Development scenarios
+      dwp-dev:
+        name: "Development - Quick DWP Test"
+        data: "examples/v0.1/digital-waste-passport-sample.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      
+      # Integration scenarios
+      dwp-integration:
+        name: "Integration - Full Context"
+        data: "examples/v0.1/digital-waste-passport-sample.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        extras: "ontology/v0.1/wasteActors.ttl,codelists/v0.1/residue-type-code.ttl"
+      
+      # CI/CD scenarios
+      dwp-ci-fast:
+        name: "CI - Fast Validation"
+        data: "examples/v0.1/minimal-dwp.ttl"
+        shapes: "shapes/v0.1/dwp-bootstrap.shacl.ttl"  # Subset of constraints
+      
+      # Production scenarios
+      dwp-prod:
+        name: "Production - Full Validation"
+        data: "examples/v0.1/production-sample.ttl"
+        shapes: "shapes/v0.1/dwp-governed.shacl.ttl"  # All constraints
+        format: "json-ld"  # Machine-readable for automation
+```
+
+### 2. Version Management
 
 ```yaml
 # config.yml
@@ -993,9 +1119,13 @@ npm run config:show               # Verify configuration
 # Validation
 npm run validate:owl              # Validate OWL ontologies
 npm run validate:owl:with-codelists  # Include codelists
-npm run validate:shacl            # SHACL validation (uses config defaults)
-npm run validate:shacl:dwp        # Digital Waste Passport preset
-npm run validate:shacl:dmwp       # Digital MARPOL Waste Passport preset
+npm run validate:shacl            # SHACL validation (uses default scenario)
+npm run validate:shacl:list       # List all available SHACL scenarios
+
+# Run specific SHACL scenario
+node docker/docker.js run cli validate shacl dwp
+node docker/docker.js run cli validate shacl dmwp
+node docker/docker.js run cli validate shacl <scenario-name>
 
 # Generation
 npm run generate:types            # Generate TypeScript types
@@ -1005,11 +1135,6 @@ npm run generate:all              # Generate everything
 # Build
 npm run build                     # Quick build (types only)
 npm run build:all                 # Full build (validate + generate)
-
-# Custom SHACL Validation
-node docker/docker.js run cli validate shacl \
-  -d examples/v0.1/digital-waste-passport-sample.ttl \
-  -s shapes/v0.1/digitalWastePassportShapes.ttl
 
 # Help
 npm run help                      # CLI overview

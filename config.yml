@@ -85,6 +85,9 @@ generation:
 
 # Validation Configuration
 # ------------------------
+# Define all your validation scenarios here. You can run them by name:
+#   npm run validate:shacl <name>
+#   Example: npm run validate:shacl dwp
 validation:
   # OWL validation settings
   owl:
@@ -92,43 +95,68 @@ validation:
     profile: "DL"               # Options: DL, OWL2
     include_codelists: true
     
-  # SHACL validation examples
-  shacl_examples:
-    - name: "digital-waste-passport"
-      data_file: "digital-waste-passport-sample.ttl"
-      shape_file: "digitalWastePassportShapes.ttl"
-      format: "turtle"
-      
-    - name: "digital-marpol-waste-passport"
-      data_file: "digital-marpol-waste-passport-sample.ttl"
-      shape_file: "digitalMarpolWastePassportShapes.ttl"
-      format: "turtle"
-
-# Default Values for CLI Commands (Single Source of Truth)
-# ---------------------------------------------------------
-# These defaults are used when commands are invoked via npm scripts
-# without explicit parameters. If no value is provided and no default
-# exists, the command will fail with a clear error message.
-defaults:
-  # SHACL validation defaults
+  # SHACL validation scenarios
+  # Add as many as you need - they're all accessible via CLI
   shacl:
-    # Default data file (relative to workspace root)
-    data: "examples/v0.1/digital-waste-passport-sample.ttl"
-    # Default shapes file (relative to workspace root)
-    shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
-    # Default output format
-    format: "human"
-    # Extra files (comma-separated, optional)
-    extras: ""
-  
-  # Conversion defaults
-  convert:
-    shacl:
+    # Default validation (used when no name specified)
+    default: "dwp"
+    
+    # Available validation scenarios
+    scenarios:
+      dwp:
+        name: "Digital Waste Passport"
+        description: "Validates DWP sample data against DWP shapes"
+        data: "examples/v0.1/digital-waste-passport-sample.ttl"
+        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        format: "human"
+        extras: ""
+        
+      dmwp:
+        name: "Digital MARPOL Waste Passport"
+        description: "Validates MARPOL sample data against MARPOL shapes"
+        data: "examples/v0.1/digital-marpol-waste-passport-sample.ttl"
+        shapes: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+        format: "human"
+        extras: ""
+      
+      # Example: Add your own validation scenarios
+      # my-test:
+      #   name: "My Custom Test"
+      #   description: "Description of what this validates"
+      #   data: "examples/v0.1/my-data.ttl"
+      #   shapes: "shapes/v0.1/my-shapes.ttl"
+      #   format: "human"
+      #   extras: ""
+
+# Conversion Configuration
+# ------------------------
+# Define conversion scenarios for SHACL → JSON Schema → TypeScript
+conversion:
+  # SHACL to JSON Schema conversions
+  shacl_to_json:
+    dwp:
+      name: "Digital Waste Passport"
       input: "shapes/v0.1/digitalWastePassportShapes.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
-    ts:
+    
+    dmwp:
+      name: "Digital MARPOL Waste Passport"
+      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      output: "build/v0.1/digitalMarpolWastePassport.schema.json"
+  
+  # JSON Schema to TypeScript conversions
+  json_to_ts:
+    dwp:
+      name: "Digital Waste Passport"
       input: "build/v0.1/digitalWastePassport.schema.json"
       output: "build/v0.1/digitalWastePassport.ts"
+      source: "shapes/v0.1/digitalWastePassportShapes.ttl"
+    
+    dmwp:
+      name: "Digital MARPOL Waste Passport"
+      input: "build/v0.1/digitalMarpolWastePassport.schema.json"
+      output: "build/v0.1/digitalMarpolWastePassport.ts"
+      source: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
 
 # Wiki Documentation Configuration
 # --------------------------------
