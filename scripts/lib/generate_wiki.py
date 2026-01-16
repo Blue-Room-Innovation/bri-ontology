@@ -509,6 +509,11 @@ def main():
         if args.include_shapes and name in shapes_graphs:
             shape_graph = shapes_graphs[name]
             shapes_count = len(extract_node_shapes(shape_graph))
+        
+        # When include_shapes is True, always pass a shapes count (0 if missing/failed)
+        if args.include_shapes:
+            shapes_count = shapes_count if shapes_count is not None else 0
+        
         index_lines.append(build_index_row(name, len(classes), len(obj_props), len(data_props), shapes_count))
 
         ont_out_dir = out_dir / name
