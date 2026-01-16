@@ -1,20 +1,19 @@
-FROM debian:bookworm-slim
+FROM node:20-bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV WORKSPACE_ROOT=/workspace
 RUN apt-get update && apt-get install -y --no-install-recommends \
   openjdk-17-jre-headless \
   python3 \
+  python3-pip \
   python3-venv \
   curl \
   ca-certificates \
   graphviz \
   && rm -rf /var/lib/apt/lists/*
 
-# Install pySHACL into venv
-RUN python3 -m venv /opt/venv \
-  && . /opt/venv/bin/activate \
-  && pip install --no-cache-dir --upgrade pip \
-  && pip install --no-cache-dir pyshacl rdflib graphviz
+# Create venv and install Python dependencies
+RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
 
 # Install ROBOT
@@ -25,10 +24,20 @@ RUN mkdir -p /opt/robot \
 
 WORKDIR /workspace
 
-# Convenience: copy CLI scripts into PATH (they reference mounted repo paths)
-COPY scripts/validate-owl.sh /usr/local/bin/validate-owl
-COPY scripts/validate-shacl.sh /usr/local/bin/validate-shacl
-RUN chmod +x /usr/local/bin/validate-owl /usr/local/bin/validate-shacl \
-  && sed -i 's/\r$//' /usr/local/bin/validate-owl /usr/local/bin/validate-shacl
+# Copy package files and install npm dependencies
+COPY package*.json ./
+RUN npm ci --quiet
 
-ENTRYPOINT ["bash","-lc"]
+# Copy Python requirements and install
+COPY scripts/requirements.txt ./scripts/
+RUN . /opt/venv/bin/activate && pip install --no-cache-dir -r scripts/requirements.txt
+
+# Copy all project files
+COPY . .
+
+# Create wrapper script to activate venv before running commands
+RUN echo '#!/bin/bash\n. /opt/venv/bin/activate\nexec "$@"' > /usr/local/bin/run-with-venv \
+  && chmod +x /usr/local/bin/run-with-venv
+
+ENTRYPOINT ["/usr/local/bin/run-with-venv"]
+CMD ["bash"]

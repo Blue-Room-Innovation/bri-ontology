@@ -1,0 +1,100 @@
+@prefix dmw: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <https://example.org/resource/> .
+@prefix core: <https://ontology.untp.io/core/> . # Añadimos prefijo para clases core
+
+# Ejemplo completo de DigitalMarpolWastePassport
+# Caso: Entrega de residuos oleosos (sludge) generados en operaciones de maquinaria a puerto.
+
+ex:marpolDWP1 a dmw:DigitalMarpolWastePassport ;
+  dct:issued "2025-10-30T06:10:00Z"^^xsd:dateTime ;
+  dct:publisher ex:publisherOrg ;
+  dmw:credentialSubject ex:marpolWastePassport1 .
+
+ex:publisherOrg a dmw:AuthorizedParty ;
+  dmw:identifier "PUB-001" .
+
+ex:marpolWastePassport1 a dmw:MarpolWastePassport ;
+  dmw:waste ex:marpolWaste1 .
+
+# Instancia principal del residuo MARPOL
+ex:marpolWaste1 a dmw:MarpolWaste ;
+  dmw:ship ex:shipA ;
+  dmw:arrivalPort "ESPMI" ; # Palma de Mallorca
+  dmw:lastWasteDeliveryPort "ESALG" ; # Algeciras
+  dmw:nextPlannedDeliveryPort "ESVLC" ; # Valencia
+  dmw:lastDeliveryDate "2025-10-30T06:15:00Z"^^xsd:dateTime ;
+  dmw:deliveryType "ZTO" ; # Código ficticio listado delivery-type-code
+  dmw:shipScale "PORTCALL-2025-10-30-001" ;
+  dmw:marpolEdition "Annex I 2025" ;
+  dmw:wasteAgent ex:authorizedCollector1 ;
+  dmw:message ex:wasdisMsg1 ;
+  dmw:involvedParty ex:involvedPartyShipOp ;
+  dmw:residue ex:residueLot1 , ex:residueLot2 .
+
+# Datos del barco
+ex:shipA a dmw:Ship ;
+  dmw:imoNumber "9391234" ;
+  dmw:name "MV EcoSea" ;
+  dmw:flag "ES" .
+
+# Authorized waste collection company
+ex:authorizedCollector1 a dmw:AuthorizedParty ;
+  dmw:identifier "AUTH-COLL-9981" ;
+  dmw:contactPoint ex:collectorContactLink .
+
+ex:collectorContactLink a <https://ontology.untp.io/core/Link> ;
+  rdfs:comment "Contacto web seguro del agente autorizado" ;
+  rdfs:seeAlso <https://waste-collector.example.org/contact> .
+
+# WASDIS metadata
+ex:wasdisMsg1 a dmw:WasdisMetadata ;
+  dmw:sender "EcoSeaOps" ;
+  dmw:messageId "WASDIS-MSG-2025-1030-77" ;
+  dmw:submissionDate "2025-10-30T05:55:00Z"^^xsd:dateTime ;
+  dmw:remarks "Entrega programada en menos de 2 horas tras atraque." .
+
+# Involved party (ship operator)
+ex:involvedPartyShipOp a dmw:InvolvedParty ;
+  dmw:role ex:shipOpParty .
+
+ex:shipOpParty a <https://ontology.untp.io/core/Party> ;
+  rdfs:comment "Operador del buque" .
+
+# Residue information lote 1
+ex:residueLot1 a dmw:ResidueInformation ;
+  dmw:typeCode "OIL" ; # Código de tipo (residue-type-code)
+  dmw:subtypeCode "SLU" ; # Código de subtipo (residue-subtype-code)
+  dmw:substance "Oily engine room sludge" ;
+  dmw:dischargeMeans "ZTE" ; # Código (discharge-means-code)
+  dmw:nextCollectionPort "ESBCN" ;
+  dmw:quantityToDeliver ex:qtyDeliver1 ;
+  dmw:quantityRemainingOnBoard ex:qtyRemain1 ;
+  dmw:estimatedGenerated ex:qtyGenerated1 ;
+  dmw:maxCapacity ex:qtyCapacity1 .
+
+# Residue information lote 2 (ejemplo adicional para mezclar fracciones)
+ex:residueLot2 a dmw:ResidueInformation ;
+  dmw:typeCode "OIL" ;
+  dmw:subtypeCode "SLU" ;
+  dmw:substance "Bilge water mixture" ;
+  dmw:dischargeMeans "ZTE" ;
+  dmw:nextCollectionPort "ESBCN" ;
+  dmw:quantityToDeliver ex:qtyDeliver2 ;
+  dmw:quantityRemainingOnBoard ex:qtyRemain2 ;
+  dmw:estimatedGenerated ex:qtyGenerated2 ;
+  dmw:maxCapacity ex:qtyCapacity2 .
+
+# Medidas (core:Measure) con rdf:value para representar cantidad + comentario descriptivo
+ex:qtyDeliver1 a core:Measure ; rdfs:comment "m3 a descargar (12.5 m3)" ; rdf:value "12.5"^^xsd:decimal .
+ex:qtyRemain1 a core:Measure ; rdfs:comment "m3 permanecen a bordo (3.2 m3)" ; rdf:value "3.2"^^xsd:decimal .
+ex:qtyGenerated1 a core:Measure ; rdfs:comment "m3 generados estimados (15.7 m3)" ; rdf:value "15.7"^^xsd:decimal .
+ex:qtyCapacity1 a core:Measure ; rdfs:comment "Capacidad máxima tanque (20.0 m3)" ; rdf:value "20.0"^^xsd:decimal .
+
+ex:qtyDeliver2 a core:Measure ; rdfs:comment "m3 a descargar (8.0 m3)" ; rdf:value "8.0"^^xsd:decimal .
+ex:qtyRemain2 a core:Measure ; rdfs:comment "m3 permanecen a bordo (1.1 m3)" ; rdf:value "1.1"^^xsd:decimal .
+ex:qtyGenerated2 a core:Measure ; rdfs:comment "m3 generados estimados (9.3 m3)" ; rdf:value "9.3"^^xsd:decimal .
+ex:qtyCapacity2 a core:Measure ; rdfs:comment "Capacidad máxima tanque (12.0 m3)" ; rdf:value "12.0"^^xsd:decimal .

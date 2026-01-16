@@ -4,3 +4,4 @@
 |-----------|---------|-----------|-----------|---------|
 | digitalMarpolWastePassport | 14 | 13 | 20 | 7 |
 | digitalWastePassport | 6 | 2 | 0 | 5 |
+| wasteActors | 3 | 4 | 9 | 0 |

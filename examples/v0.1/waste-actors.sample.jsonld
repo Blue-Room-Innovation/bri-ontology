@@ -1,0 +1,31 @@
+{
+  "@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/v0.1/waste-actors-context.jsonld",
+  
+  "@id": "https://example.org/recycler/12345",
+  "@type": "untp-core:Organisation",
+
+  "recyclerId": "REC-12345",
+  "nimaCode": "08-123456",
+  "recyclerName": "Gestió Ambiental del Vallès, S.A.",
+
+  "web": "https://www.gavalles.cat",
+  "phone": "+34-937-123-456",
+  "fax": "+34-937-123-457",
+  "email": "info@gavalles.cat",
+
+  "address": "Carrer de la Indústria, 15",
+  "zipCode": "08205",
+  "addressLocality": "Sabadell",
+
+  "addressCorrespondence": "Apartat de Correus 120",
+  "zipCodeCorrespondence": "08200",
+  "addressLocalityCorrespondence": "Sabadell",
+
+  "geoLocation": {
+    "@type": "geojson:Point",
+    "geojson:coordinates": [2.109, 41.548]
+  },
+
+  "adaptedToRD1102015": "RD 110/2015 compliant",
+  "treatmentActivity": "WEEE recycling and treatment"
+}

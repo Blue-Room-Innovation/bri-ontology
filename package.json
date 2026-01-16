@@ -4,14 +4,35 @@
   "description": "Auto-generation tools for DataSpace ontology artifacts",
   "private": true,
   "scripts": {
-    "autogenerate": "python scripts/autogenerate.py",
-    "generate": "python scripts/autogenerate.py"
+    "cli": "node docker/docker.js run cli",
+    "help": "node docker/docker.js run help",
+    "validate:owl": "node docker/docker.js run validate:owl",
+    "validate:owl:quiet": "node docker/docker.js run validate:owl:quiet",
+    "validate:owl:with-codelists": "node docker/docker.js run validate:owl:with-codelists",
+    "validate:shacl": "node docker/docker.js run validate:shacl",
+    "validate:shacl:list": "node docker/docker.js run validate:shacl:list",
+    "generate:types": "node docker/docker.js run generate:types",
+    "generate:types:verbose": "node docker/docker.js run generate:types:verbose",
+    "generate:wiki": "node docker/docker.js run generate:wiki",
+    "generate:wiki:with-codelists": "node docker/docker.js run generate:wiki:with-codelists",
+    "generate:wiki:verbose": "node docker/docker.js run generate:wiki:verbose",
+    "generate:all": "npm run generate:types && npm run generate:wiki",
+    "convert:shacl": "node docker/docker.js run convert:shacl",
+    "convert:ts": "node docker/docker.js run convert:ts",
+    "build": "npm run generate:types",
+    "build:all": "npm run validate:owl:with-codelists && npm run generate:all",
+    "release:version": "node docker/docker.js run release:version",
+    "release:all": "node docker/docker.js run release:all",
+    "config:show": "node docker/docker.js run config:show",
+    "docker:build": "node docker/docker.js build",
+    "docker:shell": "node docker/docker.js shell"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
   },
   "devDependencies": {},
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "python": ">=3.8.0"
   }
 }

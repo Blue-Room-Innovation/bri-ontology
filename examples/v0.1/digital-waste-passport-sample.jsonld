@@ -1,0 +1,50 @@
+{
+  "@context": {
+    "dwp": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#",
+    "unece": "https://test.uncefact.org/vocabulary/untp/core/0/",
+    "ex": "https://example.org/resource/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  },
+  "@graph": [
+    {
+      "@id": "ex:dwPassport1",
+      "@type": "dwp:DigitalWastePassport",
+      "dwp:credentialSubject": {"@id": "ex:wastePassport1"}
+    },
+    {
+      "@id": "ex:wastePassport1",
+      "@type": "dwp:WastePassport",
+      "dwp:waste": {"@id": "ex:waste1"},
+      "unece:reportingStandard": {"@id": "ex:stdEnv1"}
+    },
+    {
+      "@id": "ex:waste1",
+      "@type": "dwp:Waste",
+      "unece:productName": "PCB Scrap Lot 2024-11",
+      "unece:productDescription": "Printed circuit board scrap collected from end-of-life consumer electronics.",
+      "unece:hasBatchIdentifier": "BATCH-PCB-2025-001",
+      "unece:originCountry": {"@id": "https://vocabulary.uncefact.org/CountryId#DE"},
+      "unece:productionDate": {"@value": "2025-10-25", "@type": "xsd:date"},
+      "unece:weightQuantity": {"@value": "1250", "@type": "xsd:decimal"},
+      "unece:declaredUnit": {"@id": "https://vocabulary.uncefact.org/UnitMeasureCode#KGM"},
+      "unece:hasConstituent": [
+        {
+          "@type": "unece:MaterialConstituent",
+          "unece:materialType": {"@id": "https://vocabulary.uncefact.org/MaterialType#Copper"},
+          "unece:massFraction": {"@value": "0.28", "@type": "xsd:decimal"}
+        },
+        {
+          "@type": "unece:MaterialConstituent",
+          "unece:materialType": {"@id": "https://vocabulary.uncefact.org/MaterialType#Plastic"},
+          "unece:massFraction": {"@value": "0.35", "@type": "xsd:decimal"}
+        }
+      ]
+    },
+    {
+      "@id": "ex:stdEnv1",
+      "@type": "unece:Standard",
+      "unece:standardName": "WEEE Reuse/Recycling Directive"
+    }
+  ]
+}

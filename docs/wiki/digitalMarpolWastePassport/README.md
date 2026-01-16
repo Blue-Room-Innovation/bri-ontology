@@ -1,8 +1,8 @@
 # digitalMarpolWastePassport Ontology
 
 **Version:**  0.1
-**Imports:**  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/delivery-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/discharge-means-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/iso3166-iAlpha2.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-subtype-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/unlocode.ttl
-**Link to ontology:**  ontology/digitalMarpolWastePassport.ttl
+**Imports:**  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/discharge-means-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/iso3166-iAlpha2.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-subtype-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/residue-type-code.ttl , https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl
+**Link to ontology:**  ontology/v0.1/digitalMarpolWastePassport.ttl
 
 ```mermaid
 classDiagram

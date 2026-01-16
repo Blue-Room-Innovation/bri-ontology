@@ -45,7 +45,49 @@ Ver `docs/01-overview-estructura.md`
 ### 6. Flujo de Uso en una Aplicación
 Ver `docs/02-como-se-usa-la-ontologia-y-para-que.md`
 
-### 7. Crear o Editar una Ontología
+### 7. Quick Start
+
+#### Option A: Using Docker (Recommended)
+
+Docker provides a consistent environment with all dependencies pre-installed:
+
+```bash
+# 1. Build the Docker image
+npm run docker:build
+
+# 2. Run any command
+npm run docker:run config:show                    # Show configuration
+npm run docker:run generate:types                 # Generate TypeScript
+npm run docker:run validate:owl:with-codelists   # Validate ontologies
+npm run docker:run build:all                      # Full pipeline
+
+# 3. Interactive shell (optional)
+npm run docker:shell
+```
+
+See [docker/README.md](docker/README.md) for complete Docker documentation.
+
+#### Option B: Local Setup
+
+Install dependencies locally:
+
+```bash
+# Python dependencies
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+source .venv/bin/activate   # Linux/Mac
+pip install -r scripts/requirements.txt
+
+# Node.js dependencies
+npm install
+
+# Run commands
+npm run config:show
+npm run generate:types
+npm run validate:owl:with-codelists
+```
+
+### 8. Crear o Editar una Ontología
 Ver: `docs/03-como-crear-o-editar-ontologia.md`
 
 ### 8. Validación Detallada

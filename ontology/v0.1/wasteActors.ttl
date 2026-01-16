@@ -1,0 +1,120 @@
+@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+@prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix schema: <https://schema.org/> .
+
+@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl> .
+
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl> rdf:type owl:Ontology .
+
+#################################################################
+#   Classes
+#################################################################
+
+### Recycler / Waste Manager
+:Recycler rdf:type owl:Class ;
+    rdfs:subClassOf unece:Party ;
+    rdfs:comment "A legally registered organization authorized to manage, treat, recycle or dispose of waste." .
+
+### Producer
+:Producer rdf:type owl:Class ;
+    rdfs:subClassOf unece:Party ;
+    rdfs:comment "The organization that produced or placed the product on the market, and therefore generated the waste." .
+
+### Transporter
+:Transporter rdf:type owl:Class ;
+    rdfs:subClassOf unece:Party ;
+    rdfs:comment "An organization responsible for transporting waste between locations." .
+
+#################################################################
+#   Object Properties (roles)
+#################################################################
+
+### Waste is handled by a Recycler
+:wasteHandler rdf:type owl:ObjectProperty ;
+    rdfs:domain unece:Product ;
+    rdfs:range :Recycler ;
+    rdfs:comment "Links a Waste (UNECE Product) to the Recycler responsible for its treatment." .
+
+### Waste is produced by a Producer
+:wasteProducer rdf:type owl:ObjectProperty ;
+    rdfs:domain unece:Product ;
+    rdfs:range :Producer ;
+    rdfs:comment "Links a Waste to the organization that generated it." .
+
+### Waste is transported by
+:wasteTransporter rdf:type owl:ObjectProperty ;
+    rdfs:domain unece:Product ;
+    rdfs:range :Transporter ;
+    rdfs:comment "Links a Waste to the organization responsible for transporting it." .
+
+#################################################################
+#   Datatype Properties (mapped to schema.org)
+#################################################################
+
+### Organization legal name
+:legalName rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:name ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+### Registered company identifier (VAT, NIMA, etc.)
+:registeredId rdf:type owl:DatatypeProperty ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Official registration identifier such as VAT, company number or national waste registry code." .
+
+### Email
+:email rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:email ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+### Phone
+:phone rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:telephone ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+### Website
+:website rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:url ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:anyURI .
+
+#################################################################
+#   Address (mapped to UNECE + Schema)
+#################################################################
+
+:streetAddress rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:streetAddress ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+:addressLocality rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:addressLocality ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+:postalCode rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:postalCode ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+:country rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf schema:addressCountry ;
+    rdfs:domain unece:Party ;
+    rdfs:range xsd:string .
+
+#################################################################
+#   Geolocation
+#################################################################
+
+:geoLocation rdf:type owl:ObjectProperty ;
+    rdfs:domain unece:Party ;
+    rdfs:range unece:GeoLocation ;
+    rdfs:comment "Geographic coordinates of the organization." .
