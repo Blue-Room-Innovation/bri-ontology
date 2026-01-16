@@ -15,6 +15,8 @@ const SCRIPT_COMMANDS = {
   'validate:owl:quiet': 'python scripts/ontology_cli.py validate owl --quiet',
   'validate:owl:with-codelists': 'python scripts/ontology_cli.py validate owl --include-codelists',
   'validate:shacl': 'python scripts/ontology_cli.py validate shacl',
+  'validate:shacl:dwp': 'python scripts/ontology_cli.py validate shacl -d examples/v0.1/digital-waste-passport-sample.ttl -s shapes/v0.1/digitalWastePassportShapes.ttl',
+  'validate:shacl:dmwp': 'python scripts/ontology_cli.py validate shacl -d examples/v0.1/digital-marpol-waste-passport-sample.ttl -s shapes/v0.1/digitalMarpolWastePassportShapes.ttl',
   'generate:types': 'python scripts/ontology_cli.py generate types',
   'generate:types:verbose': 'python scripts/ontology_cli.py generate types --verbose',
   'generate:wiki': 'python scripts/ontology_cli.py generate wiki',

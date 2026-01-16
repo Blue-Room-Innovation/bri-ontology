@@ -104,6 +104,32 @@ validation:
       shape_file: "digitalMarpolWastePassportShapes.ttl"
       format: "turtle"
 
+# Default Values for CLI Commands (Single Source of Truth)
+# ---------------------------------------------------------
+# These defaults are used when commands are invoked via npm scripts
+# without explicit parameters. If no value is provided and no default
+# exists, the command will fail with a clear error message.
+defaults:
+  # SHACL validation defaults
+  shacl:
+    # Default data file (relative to workspace root)
+    data: "examples/v0.1/digital-waste-passport-sample.ttl"
+    # Default shapes file (relative to workspace root)
+    shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+    # Default output format
+    format: "human"
+    # Extra files (comma-separated, optional)
+    extras: ""
+  
+  # Conversion defaults
+  convert:
+    shacl:
+      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      output: "build/v0.1/digitalWastePassport.schema.json"
+    ts:
+      input: "build/v0.1/digitalWastePassport.schema.json"
+      output: "build/v0.1/digitalWastePassport.ts"
+
 # Wiki Documentation Configuration
 # --------------------------------
 wiki:

@@ -103,26 +103,30 @@ def build_parser() -> argparse.ArgumentParser:
         "-d",
         "--data",
         dest="data",
-        required=True,
-        help="Data graph file (ttl/jsonld)",
+        required=False,
+        help="Data graph file (ttl/jsonld) - uses config default if not provided",
     )
     shacl.add_argument(
-        "-s", "--shapes", dest="shapes", required=True, help="Shapes file (ttl)"
+        "-s", 
+        "--shapes", 
+        dest="shapes", 
+        required=False, 
+        help="Shapes file (ttl) - uses config default if not provided"
     )
     shacl.add_argument(
         "-e",
         "--extras",
         dest="extras_csv",
-        default="",
-        help="CSV list of extra ttl files",
+        required=False,
+        help="CSV list of extra ttl files - uses config default if not provided",
     )
     shacl.add_argument(
         "-f",
         "--format",
         dest="fmt",
-        default="human",
+        required=False,
         choices=["human", "text", "turtle", "json-ld"],
-        help="Output format",
+        help="Output format - uses config default if not provided",
     )
 
     # ===== GENERATE COMMANDS =====
@@ -245,11 +249,41 @@ def main(argv: Optional[List[str]] = None) -> int:
             return validate_owl(config)
         
         elif ns.validate_cmd == "shacl":
+            # Apply defaults from config if arguments not provided
+            data_file = ns.data
+            shapes_file = ns.shapes
+            extras_csv = ns.extras_csv
+            fmt = ns.fmt
+            
+            # Get defaults from config
+            defaults = config_obj._data.get("defaults", {}).get("shacl", {})
+            
+            # Apply defaults
+            if data_file is None:
+                data_file = defaults.get("data")
+                if data_file is None:
+                    print("❌ ERROR: --data argument is required or must be configured in config.yml under 'defaults.shacl.data'")
+                    return 1
+                print(f"[SHACL] Using default data file from config: {data_file}")
+            
+            if shapes_file is None:
+                shapes_file = defaults.get("shapes")
+                if shapes_file is None:
+                    print("❌ ERROR: --shapes argument is required or must be configured in config.yml under 'defaults.shacl.shapes'")
+                    return 1
+                print(f"[SHACL] Using default shapes file from config: {shapes_file}")
+            
+            if extras_csv is None:
+                extras_csv = defaults.get("extras", "")
+            
+            if fmt is None:
+                fmt = defaults.get("format", "human")
+            
             config = ShaclConfig(
-                data_file=workspace_root / Path(ns.data),
-                shapes_file=workspace_root / Path(ns.shapes),
-                extras_csv=ns.extras_csv,
-                output_format=ns.fmt,
+                data_file=workspace_root / Path(data_file),
+                shapes_file=workspace_root / Path(shapes_file),
+                extras_csv=extras_csv,
+                output_format=fmt,
             )
             return validate_shacl(config)
 

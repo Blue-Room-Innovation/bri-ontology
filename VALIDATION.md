@@ -64,11 +64,25 @@ npm run validate:owl:with-codelists
 
 ### SHACL Validation
 ```bash
+# Use defaults from config.yml
+npm run validate:shacl
+
+# Use specific preset (dwp or dmwp)
+npm run validate:shacl:dwp
+npm run validate:shacl:dmwp
+
+# Custom files (CLI direct)
+node docker/docker.js run cli validate shacl \
+  -d examples/v0.1/digital-waste-passport-sample.ttl \
+  -s shapes/v0.1/digitalWastePassportShapes.ttl
+
+# Legacy syntax (still works)
 npm run validate:shacl -- <data.ttl> <shapes.ttl>
-# Exemple:
-npm run validate:shacl -- examples/v0.1/digital-waste-passport-sample.ttl shapes/v0.1/digitalWastePassportShapes.ttl
+# Note: Windows PowerShell may have issues with flags, use CLI direct instead
 ```
 **Resultat esperat**: Report de validació (conforms: true/false) a la consola
+
+**Configuration**: Default files can be changed in `config.yml` under `defaults.shacl`
 
 ### Generate TypeScript
 ```bash
