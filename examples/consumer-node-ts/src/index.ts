@@ -1,12 +1,12 @@
 import {
   createValidator,
   type DigitalWastePassport,
-  type SchemaKeyV01
+  type SchemaKeyCurrent
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
 
-const schemaKey: SchemaKeyV01 = "digitalWastePassport";
+const schemaKey: SchemaKeyCurrent = "digitalWastePassport";
 
 const payload: unknown = {
   "dct:issued": "2026-01-16T00:00:00Z",

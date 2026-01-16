@@ -1,7 +1,8 @@
 import type { Ajv as AjvClass } from "ajv";
-import type { SchemaKeyV01, SchemaTypeV01 } from "./v0.1/index.js";
-export type SchemaVersion = "v0.1";
-export type SchemaKey = SchemaKeyV01;
+import { CURRENT_BUILD_VERSION } from "./current/index.js";
+import type { SchemaKeyCurrent, SchemaTypeCurrent } from "./current/index.js";
+export type SchemaVersion = typeof CURRENT_BUILD_VERSION;
+export type SchemaKey = SchemaKeyCurrent;
 export type ValidationError = {
     instancePath: string;
     schemaPath: string;
@@ -11,7 +12,7 @@ export type ValidationError = {
 export type ValidateResult<K extends SchemaKey> = {
     ok: true;
     schemaKey: K;
-    value: SchemaTypeV01<K>;
+    value: SchemaTypeCurrent<K>;
 } | {
     ok: false;
     schemaKey: K;
@@ -21,10 +22,9 @@ export type OntologyValidator = {
     version: SchemaVersion;
     ajv: AjvInstance;
     validate<K extends SchemaKey>(data: unknown, schemaKey: K): ValidateResult<K>;
-    assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeV01<K>;
+    assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeCurrent<K>;
 };
 export type CreateValidatorOptions = {
-    version?: SchemaVersion;
     ajv?: AjvInstance;
 };
 export type AjvInstance = AjvClass;

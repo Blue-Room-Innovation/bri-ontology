@@ -10,6 +10,12 @@ export type {
 } from "./validator.js";
 
 export type {
+  SchemaKeyCurrent,
+  SchemaTypeMapCurrent,
+  SchemaTypeCurrent
+} from "./current/index.js";
+
+export type {
   SchemaKeyV01,
   SchemaTypeMapV01,
   SchemaTypeV01,

@@ -5,11 +5,13 @@ import type { Ajv as AjvClass, Options as AjvOptions } from "ajv";
 import type { AnySchema, ValidateFunction } from "ajv";
 import type { FormatsPlugin } from "ajv-formats";
 
-import type { SchemaKeyV01, SchemaTypeV01 } from "./v0.1/index.js";
+import { CURRENT_BUILD_VERSION } from "./current/index.js";
+import type { SchemaKeyCurrent, SchemaTypeCurrent } from "./current/index.js";
+import { schemaUrlsCurrent } from "./schema-registry.js";
 
-export type SchemaVersion = "v0.1";
+export type SchemaVersion = typeof CURRENT_BUILD_VERSION;
 
-export type SchemaKey = SchemaKeyV01;
+export type SchemaKey = SchemaKeyCurrent;
 
 export type ValidationError = {
   instancePath: string;
@@ -19,18 +21,17 @@ export type ValidationError = {
 };
 
 export type ValidateResult<K extends SchemaKey> =
-  | { ok: true; schemaKey: K; value: SchemaTypeV01<K> }
+  | { ok: true; schemaKey: K; value: SchemaTypeCurrent<K> }
   | { ok: false; schemaKey: K; errors: ValidationError[] };
 
 export type OntologyValidator = {
   version: SchemaVersion;
   ajv: AjvInstance;
   validate<K extends SchemaKey>(data: unknown, schemaKey: K): ValidateResult<K>;
-  assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeV01<K>;
+  assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeCurrent<K>;
 };
 
 export type CreateValidatorOptions = {
-  version?: SchemaVersion;
   ajv?: AjvInstance;
 };
 
@@ -38,28 +39,14 @@ export type AjvInstance = AjvClass;
 
 type AjvCtor = new (opts?: AjvOptions) => AjvClass;
 
-const schemaUrlsV01: Record<SchemaKeyV01, URL> = {
-  digitalWastePassport: new URL("../schemas/v0.1/digitalWastePassport.schema.json", import.meta.url),
-  digitalMarpolWastePassport: new URL("../schemas/v0.1/digitalMarpolWastePassport.schema.json", import.meta.url)
-};
-
 const schemaObjectCache = new Map<string, AnySchema>();
 
-function loadSchemaObject(version: SchemaVersion, schemaKey: SchemaKey): AnySchema {
-  const cacheKey = `${version}:${schemaKey}`;
+function loadSchemaObject(schemaKey: SchemaKey): AnySchema {
+  const cacheKey = `${schemaKey}`;
   const cached = schemaObjectCache.get(cacheKey);
   if (cached) return cached;
 
-  let url: URL;
-  switch (version) {
-    case "v0.1":
-      url = schemaUrlsV01[schemaKey as SchemaKeyV01];
-      break;
-    default: {
-      const exhaustiveCheck: never = version;
-      throw new Error(`Unsupported schema version: ${exhaustiveCheck}`);
-    }
-  }
+  const url = schemaUrlsCurrent[schemaKey];
 
   const raw = fs.readFileSync(url, "utf8");
   const parsed = JSON.parse(raw) as AnySchema;
@@ -69,18 +56,18 @@ function loadSchemaObject(version: SchemaVersion, schemaKey: SchemaKey): AnySche
 
 const compiledValidatorsCache = new WeakMap<AjvInstance, Map<string, ValidateFunction>>();
 
-function getCompiledValidator<K extends SchemaKey>(ajv: AjvInstance, version: SchemaVersion, schemaKey: K): ValidateFunction {
+function getCompiledValidator<K extends SchemaKey>(ajv: AjvInstance, schemaKey: K): ValidateFunction {
   let perAjvCache = compiledValidatorsCache.get(ajv);
   if (!perAjvCache) {
     perAjvCache = new Map();
     compiledValidatorsCache.set(ajv, perAjvCache);
   }
 
-  const cacheKey = `${version}:${schemaKey}`;
+  const cacheKey = `${schemaKey}`;
   const cached = perAjvCache.get(cacheKey);
   if (cached) return cached;
 
-  const schema = loadSchemaObject(version, schemaKey);
+  const schema = loadSchemaObject(schemaKey);
   const validate = ajv.compile(schema);
   perAjvCache.set(cacheKey, validate);
   return validate;
@@ -98,8 +85,6 @@ function normalizeErrors(errors: ValidateFunction["errors"]): ValidationError[] 
 }
 
 export function createValidator(options: CreateValidatorOptions = {}): OntologyValidator {
-  const version = options.version ?? "v0.1";
-
   const require = createRequire(import.meta.url);
   const Ajv = require("ajv") as unknown as AjvCtor;
   const addFormats = require("ajv-formats") as unknown as FormatsPlugin;
@@ -114,21 +99,21 @@ export function createValidator(options: CreateValidatorOptions = {}): OntologyV
   addFormats(ajv);
 
   return {
-    version,
+    version: CURRENT_BUILD_VERSION,
     ajv,
 
     validate<K extends SchemaKey>(data: unknown, schemaKey: K): ValidateResult<K> {
-      const validateFn = getCompiledValidator(ajv, version, schemaKey);
+      const validateFn = getCompiledValidator(ajv, schemaKey);
       const ok = validateFn(data);
 
       if (ok) {
-        return { ok: true, schemaKey, value: data as SchemaTypeV01<K> };
+        return { ok: true, schemaKey, value: data as SchemaTypeCurrent<K> };
       }
 
       return { ok: false, schemaKey, errors: normalizeErrors(validateFn.errors) };
     },
 
-    assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeV01<K> {
+    assertValid<K extends SchemaKey>(data: unknown, schemaKey: K): asserts data is SchemaTypeCurrent<K> {
       const result = this.validate(data, schemaKey);
       if (result.ok) return;
 

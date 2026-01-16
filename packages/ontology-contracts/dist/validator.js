@@ -1,42 +1,31 @@
 import fs from "node:fs";
 import { createRequire } from "node:module";
-const schemaUrlsV01 = {
-    digitalWastePassport: new URL("../schemas/v0.1/digitalWastePassport.schema.json", import.meta.url),
-    digitalMarpolWastePassport: new URL("../schemas/v0.1/digitalMarpolWastePassport.schema.json", import.meta.url)
-};
+import { CURRENT_BUILD_VERSION } from "./current/index.js";
+import { schemaUrlsCurrent } from "./schema-registry.js";
 const schemaObjectCache = new Map();
-function loadSchemaObject(version, schemaKey) {
-    const cacheKey = `${version}:${schemaKey}`;
+function loadSchemaObject(schemaKey) {
+    const cacheKey = `${schemaKey}`;
     const cached = schemaObjectCache.get(cacheKey);
     if (cached)
         return cached;
-    let url;
-    switch (version) {
-        case "v0.1":
-            url = schemaUrlsV01[schemaKey];
-            break;
-        default: {
-            const exhaustiveCheck = version;
-            throw new Error(`Unsupported schema version: ${exhaustiveCheck}`);
-        }
-    }
+    const url = schemaUrlsCurrent[schemaKey];
     const raw = fs.readFileSync(url, "utf8");
     const parsed = JSON.parse(raw);
     schemaObjectCache.set(cacheKey, parsed);
     return parsed;
 }
 const compiledValidatorsCache = new WeakMap();
-function getCompiledValidator(ajv, version, schemaKey) {
+function getCompiledValidator(ajv, schemaKey) {
     let perAjvCache = compiledValidatorsCache.get(ajv);
     if (!perAjvCache) {
         perAjvCache = new Map();
         compiledValidatorsCache.set(ajv, perAjvCache);
     }
-    const cacheKey = `${version}:${schemaKey}`;
+    const cacheKey = `${schemaKey}`;
     const cached = perAjvCache.get(cacheKey);
     if (cached)
         return cached;
-    const schema = loadSchemaObject(version, schemaKey);
+    const schema = loadSchemaObject(schemaKey);
     const validate = ajv.compile(schema);
     perAjvCache.set(cacheKey, validate);
     return validate;
@@ -52,7 +41,6 @@ function normalizeErrors(errors) {
     }));
 }
 export function createValidator(options = {}) {
-    const version = options.version ?? "v0.1";
     const require = createRequire(import.meta.url);
     const Ajv = require("ajv");
     const addFormats = require("ajv-formats");
@@ -64,10 +52,10 @@ export function createValidator(options = {}) {
         });
     addFormats(ajv);
     return {
-        version,
+        version: CURRENT_BUILD_VERSION,
         ajv,
         validate(data, schemaKey) {
-            const validateFn = getCompiledValidator(ajv, version, schemaKey);
+            const validateFn = getCompiledValidator(ajv, schemaKey);
             const ok = validateFn(data);
             if (ok) {
                 return { ok: true, schemaKey, value: data };

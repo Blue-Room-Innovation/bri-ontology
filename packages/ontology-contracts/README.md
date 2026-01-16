@@ -110,6 +110,18 @@ També pots importar només el “contracte” de versió:
 import type { SchemaKeyV01, DigitalWastePassport } from "@blueroominnovation/ontology-contracts/v0.1";
 ```
 
+### Recomanat: entrypoint `current`
+
+Per no haver de tocar imports quan canvies `build_version` a `config.yml`, tens un entrypoint estable:
+
+```ts
+import type { SchemaKeyCurrent } from "@blueroominnovation/ontology-contracts/current";
+```
+
+I schemas a:
+
+- `@blueroominnovation/ontology-contracts/schemas/current/*`
+
 ### Accés als JSON Schema (power users)
 
 El paquet publica els fitxers a `./schemas/v0.1/*.schema.json`.
@@ -136,3 +148,16 @@ Des de l'arrel del repo:
 - `npm run contracts:test` (executa l'exemple-consumer com a test d'integració)
 
 L'exemple-consumer és a `examples/consumer-node-ts/`.
+
+### Com s'actualitza quan canvies versions / shapes
+
+La part “packages” **llegeix `config.yml`** i sincronitza automàticament el que hi ha a:
+
+- `build/<build_version>/...` (ex. `build/v0.2/`)
+
+Concretament fa servir `generation.artifacts` per saber quins schemas i quins `.ts` de tipus ha de copiar.
+Quan fas `npm run contracts:build`, el script:
+
+1) Copia schemas cap a `schemas/current/` i `schemas/<build_version>/`
+2) Copia tipus cap a `src/generated/current/` i `src/generated/<build_version>/`
+3) Genera `src/current/index.ts` (schema keys + map de tipus) i `src/schema-registry.ts` (runtime urls)
