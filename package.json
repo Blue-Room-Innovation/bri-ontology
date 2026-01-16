@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Auto-generation tools for DataSpace ontology artifacts",
   "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
     "cli": "node docker/docker.js run cli",
     "help": "node docker/docker.js run help",
@@ -25,7 +29,10 @@
     "release:all": "node docker/docker.js run release:all",
     "config:show": "node docker/docker.js run config:show",
     "docker:build": "node docker/docker.js build",
-    "docker:shell": "node docker/docker.js shell"
+    "docker:shell": "node docker/docker.js shell",
+
+    "contracts:build": "npm -w packages/ontology-contracts run build",
+    "contracts:test": "npm -w examples/consumer-node-ts run test"
   },
   "dependencies": {
     "json-schema-to-typescript": "^14.1.0"
