@@ -148,12 +148,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="Ontology directory (default: ontology)",
     )
     gen_wiki.add_argument(
-        "--output-dir", default="wiki", help="Output directory (default: wiki)"
+        "--output-dir", default="docs/wiki", help="Output directory (default: docs/wiki)"
     )
     gen_wiki.add_argument(
         "--include-codelists",
         action="store_true",
         help="Include codelists in wiki generation",
+    )
+    gen_wiki.add_argument(
+        "--include-shapes",
+        action="store_true",
+        default=True,
+        help="Include shapes count in index (default: True)",
     )
     gen_wiki.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
@@ -262,14 +268,19 @@ def main(argv: Optional[List[str]] = None) -> int:
         elif ns.generate_cmd == "wiki":
             import subprocess
             wiki_script = workspace_root / "scripts" / "lib" / "generate_wiki.py"
+            # Construir path de shapes amb la versió del config
+            shapes_dir = f"{config_obj.paths['shapes']}/{config_obj.shapes_version}"
             cmd = [
                 sys.executable,
                 str(wiki_script),
                 "--ontology-dir", ns.ontology_dir,
                 "--output-dir", ns.output_dir,
+                "--shapes-dir", shapes_dir,
             ]
             if ns.include_codelists:
                 cmd.append("--include-codelists")
+            if ns.include_shapes:
+                cmd.append("--include-shapes")
             if ns.verbose:
                 cmd.append("--verbose")
             result = subprocess.run(cmd)

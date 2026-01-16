@@ -1,6 +1,6 @@
 # digitalWastePassport Ontology
 
-**Link to ontology:**  ontology/digitalWastePassport.ttl
+**Link to ontology:**  ontology/v0.1/digitalWastePassport.ttl
 
 ```mermaid
 classDiagram
