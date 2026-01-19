@@ -13,8 +13,7 @@ All version numbers, paths, and component settings are defined in the root `conf
 ontology_version: "v0.1"
 shapes_version: "v0.1"
 examples_version: "v0.1"
-codelists_version: "v1"
-contexts_version: "0.1"
+codelists_version: "v0.1"
 build_version: "v0.1"
 
 # Component definitions
@@ -44,7 +43,7 @@ config = load_config()
 # Access version numbers
 print(config.ontology_version)  # "v0.1"
 print(config.shapes_version)     # "v0.1"
-print(config.codelists_version)  # "v1"
+print(config.codelists_version)  # "v0.1"
 
 # Get versioned paths
 ontology_path = config.get_ontology_path("digitalWastePassport.ttl")
@@ -87,9 +86,9 @@ Edit `config.yml`:
 
 ```yaml
 # Change versions
-ontology_version: "v0.2"  # was "v0.1"
-shapes_version: "v0.2"    # was "v0.1"
-build_version: "v0.2"     # was "v0.1"
+ontology_version: "v0.2" # was "v0.1"
+shapes_version: "v0.2" # was "v0.1"
+build_version: "v0.2" # was "v0.1"
 ```
 
 All scripts will automatically use the new versions on next run.
@@ -116,14 +115,13 @@ npm run generate:types
 
 ### Component Versions
 
-| Key | Description | Example | Notes |
-|-----|-------------|---------|-------|
-| `ontology_version` | Ontologies version | `v0.1` | With "v" prefix |
-| `shapes_version` | SHACL shapes version | `v0.1` | With "v" prefix |
-| `examples_version` | Examples version | `v0.1` | With "v" prefix |
-| `codelists_version` | Codelists version | `v1` | Major version only |
-| `contexts_version` | JSON-LD contexts version | `0.1` | **Without** "v" prefix |
-| `build_version` | Build output version | `v0.1` | With "v" prefix |
+| Key                 | Description          | Example | Notes           |
+| ------------------- | -------------------- | ------- | --------------- |
+| `ontology_version`  | Ontologies version   | `v0.1`  | With "v" prefix |
+| `shapes_version`    | SHACL shapes version | `v0.1`  | With "v" prefix |
+| `examples_version`  | Examples version     | `v0.1`  | With "v" prefix |
+| `codelists_version` | Codelists version    | `v0.1`  | With "v" prefix |
+| `build_version`     | Build output version | `v0.1`  | With "v" prefix |
 
 ### Path Helpers
 
@@ -132,7 +130,6 @@ config.get_ontology_path(filename)   # ontology/{version}/{filename}
 config.get_shapes_path(filename)     # shapes/{version}/{filename}
 config.get_examples_path(filename)   # examples/{version}/{filename}
 config.get_codelists_path(filename)  # codelists/{version}/{filename}
-config.get_contexts_path(filename)   # contexts/{version}/{filename}
 config.get_build_path(filename)      # build/{version}/{filename}
 ```
 
@@ -211,6 +208,7 @@ ImportError: cannot import name 'load_config'
 ```
 
 **Solution**: Install dependencies:
+
 ```bash
 pip install -r scripts/requirements.txt
 ```

@@ -33,7 +33,6 @@ class Config:
         self.shapes_version: str = config_data.get("shapes_version", "v0.1")
         self.examples_version: str = config_data.get("examples_version", "v0.1")
         self.codelists_version: str = config_data.get("codelists_version", "v0.1")
-        self.contexts_version: str = config_data.get("contexts_version", "v0.1")
         self.build_version: str = config_data.get("build_version", "v0.1")
         
         # Paths
@@ -127,8 +126,11 @@ class Config:
         return f"{self.paths['codelists']}/{self.codelists_version}/{filename}"
     
     def get_contexts_path(self, filename: str) -> str:
-        """Get versioned path to contexts file (no 'v' prefix)."""
-        return f"{self.paths['contexts']}/{self.contexts_version}/{filename}"
+        """Get versioned path to a JSON-LD context file.
+
+        Contexts are treated as build artifacts and live under build/<build_version>/.
+        """
+        return self.get_build_path(filename)
     
     def get_build_path(self, filename: str) -> str:
         """Get versioned path to build output file."""
@@ -157,6 +159,7 @@ class Config:
         elif component == "codelists":
             path = self.get_codelists_path(filename)
         elif component == "contexts":
+            # Contexts are published under build/<build_version>/
             path = self.get_contexts_path(filename)
         else:
             raise ValueError(f"Unknown component: {component}")

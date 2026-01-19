@@ -33,7 +33,7 @@ npm run docker:shell
 npm run config:show
 ```
 
-**Resultat esperat**: Mostra versions (ontology_version: v0.1, shapes_version: v0.1, codelists_version: v1, contexts_version: 0.1, build_version: v0.1) a la consola
+**Resultat esperat**: Mostra versions (ontology_version: v0.1, shapes_version: v0.1, codelists_version: v0.1, build_version: v0.1) a la consola
 
 ### CLI Help
 

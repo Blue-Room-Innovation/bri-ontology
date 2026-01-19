@@ -20,7 +20,6 @@ def main():
         print(f"Shapes version:    {config.shapes_version}")
         print(f"Examples version:  {config.examples_version}")
         print(f"Codelists version: {config.codelists_version}")
-        print(f"Contexts version:  {config.contexts_version}")
         print(f"Build version:     {config.build_version}")
         print("\n📁 Example Paths")
         print("=" * 50)
