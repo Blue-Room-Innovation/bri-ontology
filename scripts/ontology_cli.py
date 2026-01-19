@@ -188,10 +188,20 @@ def build_parser() -> argparse.ArgumentParser:
         "shacl", help="Convert SHACL shapes to JSON Schema"
     )
     conv_shacl.add_argument(
-        "-i", "--input", required=True, help="Input SHACL shapes file (TTL)"
+        "scenario",
+        nargs="?",
+        help="Conversion scenario name from config.yml (conversion.shacl_to_json). If not provided, converts all configured scenarios.",
     )
     conv_shacl.add_argument(
-        "-o", "--output", required=True, help="Output JSON Schema file"
+        "-i", "--input", required=False, help="Input SHACL shapes file (TTL) - overrides scenario config"
+    )
+    conv_shacl.add_argument(
+        "-o", "--output", required=False, help="Output JSON Schema file - overrides scenario config"
+    )
+    conv_shacl.add_argument(
+        "--list",
+        action="store_true",
+        help="List all available SHACL->JSON conversion scenarios from config.yml",
     )
     conv_shacl.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
@@ -202,10 +212,15 @@ def build_parser() -> argparse.ArgumentParser:
         "ts", help="Convert JSON Schema to TypeScript"
     )
     conv_ts.add_argument(
-        "-i", "--input", required=True, help="Input JSON Schema file"
+        "scenario",
+        nargs="?",
+        help="Conversion scenario name from config.yml (conversion.json_to_ts). If not provided, converts all configured scenarios.",
     )
     conv_ts.add_argument(
-        "-o", "--output", required=True, help="Output TypeScript file"
+        "-i", "--input", required=False, help="Input JSON Schema file - overrides scenario config"
+    )
+    conv_ts.add_argument(
+        "-o", "--output", required=False, help="Output TypeScript file - overrides scenario config"
     )
     conv_ts.add_argument(
         "-b", "--banner", help="Custom banner comment for TypeScript file"
@@ -214,6 +229,11 @@ def build_parser() -> argparse.ArgumentParser:
         "-s",
         "--source",
         help="Source file name for default banner (e.g., 'shapes/example.ttl')",
+    )
+    conv_ts.add_argument(
+        "--list",
+        action="store_true",
+        help="List all available JSON->TS conversion scenarios from config.yml",
     )
     conv_ts.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
@@ -430,34 +450,249 @@ def main(argv: Optional[List[str]] = None) -> int:
         if ns.convert_cmd == "shacl":
             import subprocess
             shacl_script = workspace_root / "scripts" / "lib" / "shacl_to_jsonschema.py"
-            cmd = [
-                sys.executable,
-                str(shacl_script),
-                "--input", ns.input,
-                "--output", ns.output,
-            ]
-            if ns.verbose:
-                cmd.append("--verbose")
-            result = subprocess.run(cmd)
-            return result.returncode
+            conversions = config_obj._data.get("conversion", {}).get("shacl_to_json", {})
+
+            # Handle --list
+            if getattr(ns, "list", False):
+                print("\n📋 Available SHACL → JSON Schema Conversion Scenarios")
+                print("=" * 60)
+                if not conversions:
+                    print("❌ No conversion.shacl_to_json scenarios configured in config.yml")
+                    return 1
+                for key, scenario in conversions.items():
+                    print(f"\n🔹 {key}")
+                    print(f"   Name:   {scenario.get('name', 'N/A')}")
+                    print(f"   Input:  {scenario.get('input', 'N/A')}")
+                    print(f"   Output: {scenario.get('output', 'N/A')}")
+                print("\n💡 Usage:")
+                print("   npm run convert:shacl                 # converts all scenarios")
+                print("   npm run convert:shacl <scenario-name> # converts one scenario")
+                print("   npm run convert:shacl -- -i in.ttl -o out.json")
+                return 0
+
+            has_overrides = any(v is not None for v in (ns.input, ns.output))
+            scenario_name = getattr(ns, "scenario", None)
+
+            # Case 1: specific scenario
+            if scenario_name:
+                scenario = conversions.get(scenario_name)
+                if not scenario:
+                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
+                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    print("Run 'node docker/docker.js run cli convert shacl --list' to see all scenarios")
+                    return 1
+
+                input_file = ns.input or scenario.get("input")
+                output_file = ns.output or scenario.get("output")
+
+                if not input_file or not output_file:
+                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    return 1
+
+                print(f"[CONVERT:SHACL] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                cmd = [
+                    sys.executable,
+                    str(shacl_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                # shacl_to_jsonschema.py uses exit code 2 to signal warnings.
+                # Treat warnings as non-fatal at the CLI level.
+                return 0 if result.returncode == 2 else result.returncode
+
+            # Case 2: explicit overrides (single run)
+            if has_overrides:
+                if ns.input is None:
+                    print("❌ ERROR: --input is required when using overrides without a scenario")
+                    return 1
+                if ns.output is None:
+                    print("❌ ERROR: --output is required when using overrides without a scenario")
+                    return 1
+
+                cmd = [
+                    sys.executable,
+                    str(shacl_script),
+                    "--input",
+                    str(workspace_root / Path(ns.input)),
+                    "--output",
+                    str(workspace_root / Path(ns.output)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                return 0 if result.returncode == 2 else result.returncode
+
+            # Case 3: no scenario and no overrides => convert all
+            if not conversions:
+                print("❌ ERROR: No conversion.shacl_to_json scenarios configured in config.yml")
+                return 1
+
+            print(
+                f"[CONVERT:SHACL] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
+            )
+
+            worst_exit = 0
+            for key in sorted(conversions.keys()):
+                scenario = conversions.get(key) or {}
+                input_file = scenario.get("input")
+                output_file = scenario.get("output")
+
+                if not input_file or not output_file:
+                    print(f"\n[CONVERT:SHACL] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
+                    worst_exit = max(worst_exit, 1)
+                    continue
+
+                print(f"\n[CONVERT:SHACL] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                cmd = [
+                    sys.executable,
+                    str(shacl_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                code = 0 if result.returncode == 2 else result.returncode
+                worst_exit = max(worst_exit, code)
+
+            return worst_exit
         
         elif ns.convert_cmd == "ts":
             import subprocess
             ts_script = workspace_root / "scripts" / "lib" / "jsonschema_to_typescript.py"
-            cmd = [
-                sys.executable,
-                str(ts_script),
-                "--input", ns.input,
-                "--output", ns.output,
-            ]
-            if ns.banner:
-                cmd.extend(["--banner", ns.banner])
-            if ns.source:
-                cmd.extend(["--source", ns.source])
-            if ns.verbose:
-                cmd.append("--verbose")
-            result = subprocess.run(cmd)
-            return result.returncode
+            conversions = config_obj._data.get("conversion", {}).get("json_to_ts", {})
+
+            # Handle --list
+            if getattr(ns, "list", False):
+                print("\n📋 Available JSON Schema → TypeScript Conversion Scenarios")
+                print("=" * 60)
+                if not conversions:
+                    print("❌ No conversion.json_to_ts scenarios configured in config.yml")
+                    return 1
+                for key, scenario in conversions.items():
+                    print(f"\n🔹 {key}")
+                    print(f"   Name:   {scenario.get('name', 'N/A')}")
+                    print(f"   Input:  {scenario.get('input', 'N/A')}")
+                    print(f"   Output: {scenario.get('output', 'N/A')}")
+                    if scenario.get("source"):
+                        print(f"   Source: {scenario.get('source')}")
+                print("\n💡 Usage:")
+                print("   npm run convert:ts                 # converts all scenarios")
+                print("   npm run convert:ts <scenario-name> # converts one scenario")
+                print("   npm run convert:ts -- -i in.json -o out.ts")
+                return 0
+
+            has_overrides = any(v is not None for v in (ns.input, ns.output, ns.source, ns.banner))
+            scenario_name = getattr(ns, "scenario", None)
+
+            # Case 1: specific scenario
+            if scenario_name:
+                scenario = conversions.get(scenario_name)
+                if not scenario:
+                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
+                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    print("Run 'node docker/docker.js run cli convert ts --list' to see all scenarios")
+                    return 1
+
+                input_file = ns.input or scenario.get("input")
+                output_file = ns.output or scenario.get("output")
+                source_file = ns.source or scenario.get("source")
+
+                if not input_file or not output_file:
+                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    return 1
+
+                print(f"[CONVERT:TS] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                cmd = [
+                    sys.executable,
+                    str(ts_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.banner:
+                    cmd.extend(["--banner", ns.banner])
+                if source_file:
+                    cmd.extend(["--source", source_file])
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                return result.returncode
+
+            # Case 2: explicit overrides (single run)
+            if has_overrides:
+                if ns.input is None:
+                    print("❌ ERROR: --input is required when using overrides without a scenario")
+                    return 1
+                if ns.output is None:
+                    print("❌ ERROR: --output is required when using overrides without a scenario")
+                    return 1
+
+                cmd = [
+                    sys.executable,
+                    str(ts_script),
+                    "--input",
+                    str(workspace_root / Path(ns.input)),
+                    "--output",
+                    str(workspace_root / Path(ns.output)),
+                ]
+                if ns.banner:
+                    cmd.extend(["--banner", ns.banner])
+                if ns.source:
+                    cmd.extend(["--source", ns.source])
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                return result.returncode
+
+            # Case 3: no scenario and no overrides => convert all
+            if not conversions:
+                print("❌ ERROR: No conversion.json_to_ts scenarios configured in config.yml")
+                return 1
+
+            print(
+                f"[CONVERT:TS] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
+            )
+
+            worst_exit = 0
+            for key in sorted(conversions.keys()):
+                scenario = conversions.get(key) or {}
+                input_file = scenario.get("input")
+                output_file = scenario.get("output")
+                source_file = scenario.get("source")
+
+                if not input_file or not output_file:
+                    print(f"\n[CONVERT:TS] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
+                    worst_exit = max(worst_exit, 1)
+                    continue
+
+                print(f"\n[CONVERT:TS] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                cmd = [
+                    sys.executable,
+                    str(ts_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.banner:
+                    cmd.extend(["--banner", ns.banner])
+                if source_file:
+                    cmd.extend(["--source", source_file])
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                worst_exit = max(worst_exit, result.returncode)
+
+            return worst_exit
 
     print("Unknown command", file=sys.stderr)
     return 2
