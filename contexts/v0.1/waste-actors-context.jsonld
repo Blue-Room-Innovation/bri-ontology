@@ -3,57 +3,25 @@
   "@protected": true,
   "@context": {
     "untp-core": "https://test.uncefact.org/vocabulary/untp/core/0/",
-    "xsd": "http://www.w3.org/2001/XMLSchema#",
-
-    "recyclerId": {
-      "@id": "untp-core:registeredId"
-    },
-    "nimaCode": {
-      "@id": "untp-core:registeredId"
-    },
-    "recyclerName": {
-      "@id": "untp-core:name"
-    },
-    "web": {
-      "@id": "untp-core:organisationWebsite"
-    },
-    "phone": {
-      "@id": "untp-core:telephone"
-    },
-    "fax": {
-      "@id": "untp-core:faxNumber"
-    },
-    "email": {
-      "@id": "untp-core:email"
-    },
-    "address": {
-      "@id": "untp-core:streetAddress"
-    },
-    "zipCode": {
-      "@id": "untp-core:postalCode"
-    },
-    "addressLocality": {
-      "@id": "untp-core:addressLocality"
-    },
-    "addressCorrespondence": {
-      "@id": "untp-core:streetAddress"
-    },
-    "zipCodeCorrespondence": {
-      "@id": "untp-core:postalCode"
-    },
-    "addressLocalityCorrespondence": {
-      "@id": "untp-core:addressLocality"
-    },
-    "geoLocation": {
-      "@id": "untp-core:geoLocation"
-    },
-    "adaptedToRD1102015": {
-      "@id": "untp-core:conformance"
-    },
-    "treatmentActivity": {
-      "@id": "untp-core:industryCategory"
-    }
+    "schema": "https://schema.org/",
+    "wgs84": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+    "bri-recycling": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#",
+    "managerCode": "bri-recycling:managerCode",
+    "nimaCode": "bri-recycling:nimaCode",
+    "recyclerName": "schema:name",
+    "physicalAddress": "schema:streetAddress",
+    "municipality": "schema:addressLocality",
+    "postalCode": "schema:postalCode",
+    "correspondenceAddress": "schema:streetAddress",
+    "municipalityCorrespondence": "schema:addressLocality",
+    "postalCodeCorrespondence": "schema:postalCode",
+    "telephone": "schema:telephone",
+    "fax": "schema:faxNumber",
+    "email": "schema:email",
+    "web": "schema:url",
+    "lat": "wgs84:lat",
+    "long": "wgs84:long",
+    "adaptedToRD1102015": "bri-recycling:adaptedToRD1102015",
+    "activityDescription": "bri-recycling:wasteTreatmentActivity"
   }
 }
-
-

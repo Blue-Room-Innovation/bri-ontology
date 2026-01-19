@@ -152,6 +152,13 @@
                                                                                                                         rdfs:comment "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
 
 
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#adaptedToRD1102015
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#adaptedToRD1102015> rdf:type owl:ObjectProperty ;
+                                                                                                                          rdfs:subPropertyOf <https://test.uncefact.org/vocabulary/untp/core/0/conformance> ;
+                                                                                                                          rdfs:comment "Conformance with Spanish Royal Decree 110/2015 on WEEE"@en ;
+                                                                                                                          rdfs:label "Adapted to RD 110/2015 (WEEE)"@en .
+
+
 ###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation
 <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation> rdf:type owl:ObjectProperty ;
                                                                                                                      rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
@@ -178,6 +185,10 @@
                                                                                                                           rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
                                                                                                                           rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter> ;
                                                                                                                           rdfs:comment "Links a Waste to the organization responsible for transporting it." .
+
+
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformance
+<https://test.uncefact.org/vocabulary/untp/core/0/conformance> rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -331,6 +342,27 @@
           rdfs:range xsd:string ;
           rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
           <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#managerCode
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#managerCode> rdf:type owl:DatatypeProperty ;
+                                                                                                                   rdfs:range xsd:string ;
+                                                                                                                   rdfs:comment "Regional waste manager registration code"@en ;
+                                                                                                                   rdfs:label "Waste manager code"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#nimaCode
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#nimaCode> rdf:type owl:DatatypeProperty ;
+                                                                                                                rdfs:range xsd:string ;
+                                                                                                                rdfs:comment "Spanish environmental registration number (NIMA)"@en ;
+                                                                                                                rdfs:label "NIMA code"@en .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#wasteTreatmentActivity
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#wasteTreatmentActivity> rdf:type owl:DatatypeProperty ;
+                                                                                                                              rdfs:range xsd:string ;
+                                                                                                                              rdfs:comment "Textual description of waste treatment activities"@en ;
+                                                                                                                              rdfs:label "Waste treatment activity description"@en .
 
 
 ###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#addressLocality

@@ -1,0 +1,50 @@
+@prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
+@prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+############################
+# Ontologia
+############################
+
+bri-recycling:RecyclingOntology
+  a owl:Ontology ;
+  rdfs:label "BRI Recycling Ontology"@en ;
+  rdfs:comment "Minimal extensions for recycling and waste management registries"@en .
+
+############################
+# Identificadors
+############################
+
+bri-recycling:managerCode
+  a owl:DatatypeProperty ;
+  rdfs:label "Waste manager code"@en ;
+  rdfs:comment "Regional waste manager registration code"@en ;
+  rdfs:range xsd:string .
+
+bri-recycling:nimaCode
+  a owl:DatatypeProperty ;
+  rdfs:label "NIMA code"@en ;
+  rdfs:comment "Spanish environmental registration number (NIMA)"@en ;
+  rdfs:range xsd:string .
+
+############################
+# Conformitat normativa
+############################
+
+bri-recycling:adaptedToRD1102015
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf untp-core:conformance ;
+  rdfs:label "Adapted to RD 110/2015 (WEEE)"@en ;
+  rdfs:comment "Conformance with Spanish Royal Decree 110/2015 on WEEE"@en .
+
+############################
+# Activitat
+############################
+
+bri-recycling:wasteTreatmentActivity
+  a owl:DatatypeProperty ;
+  rdfs:label "Waste treatment activity description"@en ;
+  rdfs:comment "Textual description of waste treatment activities"@en ;
+  rdfs:range xsd:string .
