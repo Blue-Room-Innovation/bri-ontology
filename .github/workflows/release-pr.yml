@@ -1,0 +1,116 @@
+name: Release (open PR with generated artifacts)
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  release_open_pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout main (base for PR)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Compute target version from tag
+        id: versions
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid tag '$TAG' (expected vMAJOR.MINOR.PATCH)" >&2
+            exit 1
+          fi
+
+          MAJOR_MINOR="${TAG%.*}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "target=$MAJOR_MINOR" >> "$GITHUB_OUTPUT"
+
+      - name: Determine FROM_VERSION from config.yml
+        id: from_version
+        shell: bash
+        run: |
+          FROM_VERSION=$(python - << 'PY'
+          import re
+          from pathlib import Path
+
+          text = Path('config.yml').read_text(encoding='utf-8')
+          m = re.search(r'^ontology_version:\s*"?([^"\n]+)"?\s*$', text, re.MULTILINE)
+          if not m:
+              raise SystemExit('Could not find ontology_version in config.yml')
+          print(m.group(1))
+          PY
+          )
+          echo "from=$FROM_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Create .env for tooling
+        run: echo WORKSPACE_ROOT=/workspace > .env
+
+      - name: Build tooling image
+        run: docker build -t bri-ontology-tooling:ci -f docker/Dockerfile .
+
+      - name: Create versioned folders if missing
+        shell: bash
+        run: |
+          TARGET="${{ steps.versions.outputs.target }}"
+          FROM="${{ steps.from_version.outputs.from }}"
+
+          if [[ -d "ontology/$TARGET" && -d "shapes/$TARGET" && -d "examples/$TARGET" ]]; then
+            echo "Version folders already exist for $TARGET; skipping release-version.py"
+            exit 0
+          fi
+
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            bri-ontology-tooling:ci \
+            python scripts/release-version.py --all --from "$FROM" --to "$TARGET"
+
+      - name: Update config.yml to target version
+        shell: bash
+        run: |
+          TARGET="${{ steps.versions.outputs.target }}"
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            -w /workspace \
+            bri-ontology-tooling:ci \
+            python scripts/update_config_versions.py --target "$TARGET"
+
+      - name: Validate + generate artifacts
+        shell: bash
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace bri-ontology-tooling:ci \
+            python scripts/ontology_cli.py validate owl --include-codelists
+
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace bri-ontology-tooling:ci \
+            python scripts/ontology_cli.py generate types
+
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace bri-ontology-tooling:ci \
+            python scripts/ontology_cli.py generate wiki --include-codelists
+
+      - name: Open PR with generated changes
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          branch: release/${{ steps.versions.outputs.tag }}
+          delete-branch: true
+          commit-message: "chore(release): ${{ steps.versions.outputs.tag }} (target ${{ steps.versions.outputs.target }})"
+          title: "Release ${{ steps.versions.outputs.tag }} (generate ${{ steps.versions.outputs.target }} artifacts)"
+          body: |
+            Automated release preparation.
+
+            - Tag: `${{ steps.versions.outputs.tag }}`
+            - Version folder: `${{ steps.versions.outputs.target }}`
+            - Actions: create versioned folders (if missing), update `config.yml`, regenerate `build/` + wiki.
+
+            Notes:
+            - `codelists_version` and `contexts_version` are intentionally not bumped automatically.

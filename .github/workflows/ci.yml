@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate_generate_drift:
+    name: Validate + Generate (fail on drift)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create .env for tooling
+        run: echo WORKSPACE_ROOT=/workspace > .env
+
+      - name: Build tooling image
+        run: docker build -t bri-ontology-tooling:ci -f docker/Dockerfile .
+
+      - name: OWL validation (merge + reason)
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:/workspace"
+          -w /workspace
+          bri-ontology-tooling:ci
+          python scripts/ontology_cli.py validate owl --include-codelists
+
+      - name: SHACL validation (DWP)
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:/workspace"
+          -w /workspace
+          bri-ontology-tooling:ci
+          python scripts/ontology_cli.py validate shacl dwp
+
+      - name: SHACL validation (DMWP)
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:/workspace"
+          -w /workspace
+          bri-ontology-tooling:ci
+          python scripts/ontology_cli.py validate shacl dmwp
+
+      - name: Generate TypeScript + JSON Schemas
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:/workspace"
+          -w /workspace
+          bri-ontology-tooling:ci
+          python scripts/ontology_cli.py generate types
+
+      - name: Generate wiki docs
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:/workspace"
+          -w /workspace
+          bri-ontology-tooling:ci
+          python scripts/ontology_cli.py generate wiki --include-codelists
+
+      - name: Fail if generated outputs changed
+        run: |
+          git status --porcelain
+          git diff --exit-code
