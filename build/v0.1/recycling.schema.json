@@ -8,122 +8,122 @@
       "type": "object",
       "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#RecyclingOrganisationShape",
       "properties": {
-        "bri-recycling:managerCode": {
+        "managerCode": {
           "type": "string"
         },
-        "bri-recycling:nimaCode": {
+        "nimaCode": {
           "type": "string"
         },
-        "schema:name": {
+        "name": {
           "type": "string"
         },
-        "schema:streetAddress": {
+        "streetAddress": {
           "type": "string"
         },
-        "schema:addressLocality": {
+        "addressLocality": {
           "type": "string"
         },
-        "schema:postalCode": {
+        "postalCode": {
           "type": "string"
         },
-        "schema:telephone": {
+        "telephone": {
           "type": "string"
         },
-        "schema:faxNumber": {
+        "faxNumber": {
           "type": "string"
         },
-        "schema:email": {
+        "email": {
           "type": "string"
         },
-        "schema:url": {
+        "url": {
           "type": "string",
           "format": "uri"
         },
-        "wgs84:lat": {
+        "lat": {
           "type": "number",
           "minimum": -90.0,
           "maximum": 90.0
         },
-        "wgs84:long": {
+        "long": {
           "type": "number",
           "minimum": -180.0,
           "maximum": 180.0
         },
-        "bri-recycling:adaptedToRD1102015": {
+        "adaptedToRD1102015": {
           "$comment": "No explicit sh:datatype or sh:class found"
         },
-        "bri-recycling:wasteTreatmentActivity": {
+        "wasteTreatmentActivity": {
           "type": "string"
         }
       },
       "required": [
-        "bri-recycling:managerCode",
-        "bri-recycling:nimaCode",
-        "schema:name",
-        "schema:streetAddress",
-        "schema:addressLocality",
-        "schema:postalCode",
-        "bri-recycling:wasteTreatmentActivity"
+        "managerCode",
+        "nimaCode",
+        "name",
+        "streetAddress",
+        "addressLocality",
+        "postalCode",
+        "wasteTreatmentActivity"
       ]
     }
   },
   "type": "object",
   "properties": {
-    "bri-recycling:managerCode": {
+    "managerCode": {
       "type": "string"
     },
-    "bri-recycling:nimaCode": {
+    "nimaCode": {
       "type": "string"
     },
-    "schema:name": {
+    "name": {
       "type": "string"
     },
-    "schema:streetAddress": {
+    "streetAddress": {
       "type": "string"
     },
-    "schema:addressLocality": {
+    "addressLocality": {
       "type": "string"
     },
-    "schema:postalCode": {
+    "postalCode": {
       "type": "string"
     },
-    "schema:telephone": {
+    "telephone": {
       "type": "string"
     },
-    "schema:faxNumber": {
+    "faxNumber": {
       "type": "string"
     },
-    "schema:email": {
+    "email": {
       "type": "string"
     },
-    "schema:url": {
+    "url": {
       "type": "string",
       "format": "uri"
     },
-    "wgs84:lat": {
+    "lat": {
       "type": "number",
       "minimum": -90.0,
       "maximum": 90.0
     },
-    "wgs84:long": {
+    "long": {
       "type": "number",
       "minimum": -180.0,
       "maximum": 180.0
     },
-    "bri-recycling:adaptedToRD1102015": {
+    "adaptedToRD1102015": {
       "$comment": "No explicit sh:datatype or sh:class found"
     },
-    "bri-recycling:wasteTreatmentActivity": {
+    "wasteTreatmentActivity": {
       "type": "string"
     }
   },
   "required": [
-    "bri-recycling:managerCode",
-    "bri-recycling:nimaCode",
-    "schema:name",
-    "schema:streetAddress",
-    "schema:addressLocality",
-    "schema:postalCode",
-    "bri-recycling:wasteTreatmentActivity"
+    "managerCode",
+    "nimaCode",
+    "name",
+    "streetAddress",
+    "addressLocality",
+    "postalCode",
+    "wasteTreatmentActivity"
   ]
 }

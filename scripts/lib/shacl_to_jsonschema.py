@@ -22,6 +22,7 @@ import argparse
 import json
 import sys
 import logging
+from dataclasses import dataclass
 from typing import Dict, List, Any, Optional, Set
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD
 from rdflib.namespace import SH
@@ -43,11 +44,25 @@ UNECE_DPP = Namespace("https://test.uncefact.org/vocabulary/untp/dpp/0/")
 class SHACLToJSONSchemaConverter:
     """Converts SHACL shapes to JSON Schema."""
     
-    def __init__(self, graph: Graph):
+    def __init__(
+        self,
+        graph: Graph,
+        *,
+        naming: str = "curie",
+        context_path: Optional[Path] = None,
+    ):
         self.graph = graph
+        self.naming = naming
+        self.context_path = context_path
         self.definitions: Dict[str, Any] = {}
         self.warnings: List[str] = []
         self.class_to_shape_map: Dict[str, str] = {}  # Maps class URIs to shape names
+
+        self._iri_to_term: Dict[str, str] = {}
+        if self.naming == "context":
+            if not self.context_path:
+                raise ValueError("naming='context' requires context_path")
+            self._iri_to_term = self._load_jsonld_context_inverse(self.context_path)
         
         # XSD to JSON Schema type mapping
         self.xsd_to_json_type = {
@@ -373,16 +388,71 @@ class SHACLToJSONSchemaConverter:
     
     def _get_property_name(self, path: URIRef) -> str:
         """Get a JSON-friendly property name from a path URI."""
-        # Use prefix notation if possible
+        iri = str(path)
+
+        if self.naming == "local":
+            return self._get_local_name(path)
+
+        if self.naming == "context":
+            term = self._iri_to_term.get(iri)
+            if term:
+                return term
+            # If not found in context, fall back to local name (best effort).
+            return self._get_local_name(path)
+
+        # Default: "curie" naming (stable and collision-resistant)
         local_name = self._get_local_name(path)
-        
-        # Try to get namespace prefix
         for prefix, namespace in self.graph.namespaces():
             if str(path).startswith(str(namespace)):
                 return f"{prefix}:{local_name}"
-        
-        # Fallback to local name
         return local_name
+
+    def _load_jsonld_context_inverse(self, context_path: Path) -> Dict[str, str]:
+        """Load a JSON-LD context file and build an inverse mapping: IRI -> term.
+
+        Supports string term definitions like:
+          {"@context": {"schema": "https://schema.org/", "name": "schema:name"}}
+        """
+        try:
+            with context_path.open("r", encoding="utf-8") as f:
+                doc = json.load(f)
+        except Exception as e:
+            raise ValueError(f"Failed to load JSON-LD context: {context_path} ({e})")
+
+        ctx = doc.get("@context") if isinstance(doc, dict) else None
+        if not isinstance(ctx, dict):
+            raise ValueError(f"Invalid JSON-LD context document (missing @context): {context_path}")
+
+        # Prefix mappings inside the context
+        prefixes: Dict[str, str] = {
+            k: v for k, v in ctx.items() if isinstance(k, str) and isinstance(v, str) and v.endswith(('/', '#'))
+        }
+
+        def expand(value: str) -> str:
+            if value.startswith("http://") or value.startswith("https://"):
+                return value
+            if ":" in value:
+                pfx, suffix = value.split(":", 1)
+                base = prefixes.get(pfx)
+                if base:
+                    return f"{base}{suffix}"
+            return value
+
+        iri_to_term: Dict[str, str] = {}
+        for term, value in ctx.items():
+            if not isinstance(term, str):
+                continue
+            if not isinstance(value, str):
+                continue
+            # Skip prefix declarations themselves
+            if value.endswith(('/', '#')):
+                continue
+
+            iri = expand(value)
+            # First term wins to keep deterministic output
+            iri_to_term.setdefault(iri, term)
+
+        return iri_to_term
     
     def _get_local_name(self, uri: URIRef) -> str:
         """Extract the local name from a URI."""
@@ -424,6 +494,19 @@ Examples:
         required=True,
         help="Output JSON Schema file"
     )
+
+    parser.add_argument(
+        "--naming",
+        default="curie",
+        choices=["curie", "local", "context"],
+        help="Property naming strategy: curie (schema:name), local (name), or context (use term from JSON-LD context).",
+    )
+
+    parser.add_argument(
+        "--context",
+        default=None,
+        help="Path to a JSON-LD context file (required when --naming=context).",
+    )
     
     parser.add_argument(
         "-v", "--verbose",
@@ -453,7 +536,16 @@ Examples:
         sys.exit(1)
     
     # Convert
-    converter = SHACLToJSONSchemaConverter(graph)
+    context_path = Path(args.context) if args.context else None
+    try:
+        converter = SHACLToJSONSchemaConverter(
+            graph,
+            naming=args.naming,
+            context_path=context_path,
+        )
+    except ValueError as e:
+        logger.error(str(e))
+        sys.exit(1)
     schema = converter.convert()
     
     # Write output

@@ -22,6 +22,7 @@
     "generate:wiki:verbose": "node docker/docker.js run generate:wiki:verbose",
     "generate:all": "npm run generate:types && npm run generate:wiki",
     "convert:shacl": "node docker/docker.js run convert:shacl",
+    "convert:context": "node docker/docker.js run convert:context",
     "convert:ts": "node docker/docker.js run convert:ts",
     "build": "npm run generate:types",
     "build:all": "npm run validate:owl:with-codelists && npm run generate:all",

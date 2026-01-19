@@ -136,6 +136,14 @@ conversion:
       name: "Recycling"
       input: "shapes/v0.1/recycling.shacl.ttl"
       output: "build/v0.1/recycling.schema.json"
+      naming: "local"
+
+  # SHACL to JSON-LD context conversions (baseline contexts)
+  shacl_to_context:
+    recycling:
+      name: "Recycling (generated context)"
+      input: "shapes/v0.1/recycling.shacl.ttl"
+      output: "build/v0.1/recycling.context.jsonld"
 
   # JSON Schema to TypeScript conversions
   json_to_ts:
