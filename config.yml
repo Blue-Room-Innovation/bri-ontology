@@ -132,6 +132,11 @@ conversion:
       input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
 
+    recycling:
+      name: "Recycling"
+      input: "shapes/v0.1/recycling.shacl.ttl"
+      output: "build/v0.1/recycling.schema.json"
+
   # JSON Schema to TypeScript conversions
   json_to_ts:
     dwp:
@@ -145,6 +150,12 @@ conversion:
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
       output: "build/v0.1/digitalMarpolWastePassport.ts"
       source: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+
+    recycling:
+      name: "Recycling"
+      input: "build/v0.1/recycling.schema.json"
+      output: "build/v0.1/recycling.ts"
+      source: "shapes/v0.1/recycling.shacl.ttl"
 
 # Wiki Documentation Configuration
 # --------------------------------
