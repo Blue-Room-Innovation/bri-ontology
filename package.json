@@ -30,7 +30,6 @@
     "config:show": "node docker/docker.js run config:show",
     "docker:build": "node docker/docker.js build",
     "docker:shell": "node docker/docker.js shell",
-
     "contracts:build": "npm -w packages/ontology-contracts run build",
     "contracts:test": "npm -w examples/consumer-node-ts run test"
   },

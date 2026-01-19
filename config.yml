@@ -5,15 +5,15 @@
 
 # Current Component Versions
 # --------------------------
-ontology_version: "v0.1"        # Digital Waste Passport & MARPOL ontologies
-shapes_version: "v0.1"          # SHACL shape definitions
-examples_version: "v0.1"        # Example data files
-codelists_version: "v0.1"       # Code lists (standardized versioning)
-contexts_version: "v0.1"        # JSON-LD contexts (standardized versioning)
+ontology_version: "v0.1" # Digital Waste Passport & MARPOL ontologies
+shapes_version: "v0.1" # SHACL shape definitions
+examples_version: "v0.1" # Example data files
+codelists_version: "v0.1" # Code lists (standardized versioning)
+contexts_version: "v0.1" # JSON-LD contexts (standardized versioning)
 
 # Build Configuration
 # -------------------
-build_version: "v0.1"           # Output directory for generated artifacts
+build_version: "v0.1" # Output directory for generated artifacts
 
 # Component Paths (relative to workspace root)
 # --------------------------------------------
@@ -42,12 +42,12 @@ ontologies:
     file: "digitalWastePassport.ttl"
     display_name: "Digital Waste Passport"
     description: "Core waste passport ontology"
-    
+
   - name: "digitalMarpolWastePassport"
     file: "digitalMarpolWastePassport.ttl"
     display_name: "Digital MARPOL Waste Passport"
     description: "MARPOL-specific waste documentation ontology"
-    
+
   - name: "wasteActors"
     file: "wasteActors.ttl"
     display_name: "Waste Actors"
@@ -59,11 +59,11 @@ shapes:
   - name: "digitalWastePassport"
     file: "digitalWastePassportShapes.ttl"
     ontology: "digitalWastePassport"
-    
+
   - name: "digitalMarpolWastePassport"
     file: "digitalMarpolWastePassportShapes.ttl"
     ontology: "digitalMarpolWastePassport"
-    
+
   - name: "wasteActors"
     file: "waste-actors.shacl.ttl"
     ontology: "wasteActors"
@@ -77,7 +77,7 @@ generation:
       shape_file: "digitalWastePassportShapes.ttl"
       json_schema: "digitalWastePassport.schema.json"
       typescript: "digitalWastePassport.ts"
-      
+
     - name: "digitalMarpolWastePassport"
       shape_file: "digitalMarpolWastePassportShapes.ttl"
       json_schema: "digitalMarpolWastePassport.schema.json"
@@ -91,16 +91,13 @@ generation:
 validation:
   # OWL validation settings
   owl:
-    reasoner: "HermiT"          # Options: HermiT, ELK, none
-    profile: "DL"               # Options: DL, OWL2
+    reasoner: "HermiT" # Options: HermiT, ELK, none
+    profile: "DL" # Options: DL, OWL2
     include_codelists: true
-    
+
   # SHACL validation scenarios
   # Add as many as you need - they're all accessible via CLI
   shacl:
-    # Default validation (used when no name specified)
-    default: "dwp"
-    
     # Available validation scenarios
     scenarios:
       dwp:
@@ -110,7 +107,7 @@ validation:
         shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
         format: "human"
         extras: ""
-        
+
       dmwp:
         name: "Digital MARPOL Waste Passport"
         description: "Validates MARPOL sample data against MARPOL shapes"
@@ -118,15 +115,6 @@ validation:
         shapes: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
         format: "human"
         extras: ""
-      
-      # Example: Add your own validation scenarios
-      # my-test:
-      #   name: "My Custom Test"
-      #   description: "Description of what this validates"
-      #   data: "examples/v0.1/my-data.ttl"
-      #   shapes: "shapes/v0.1/my-shapes.ttl"
-      #   format: "human"
-      #   extras: ""
 
 # Conversion Configuration
 # ------------------------
@@ -138,12 +126,12 @@ conversion:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digitalWastePassportShapes.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
-    
+
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
-  
+
   # JSON Schema to TypeScript conversions
   json_to_ts:
     dwp:
@@ -151,7 +139,7 @@ conversion:
       input: "build/v0.1/digitalWastePassport.schema.json"
       output: "build/v0.1/digitalWastePassport.ts"
       source: "shapes/v0.1/digitalWastePassportShapes.ttl"
-    
+
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
@@ -165,7 +153,7 @@ wiki:
   include_codelists: true
   formats:
     - markdown
-  
+
 # Release Configuration
 # ---------------------
 release:
@@ -174,11 +162,11 @@ release:
     major: "Breaking changes (API incompatible)"
     minor: "New features (backward compatible)"
     patch: "Bug fixes (backward compatible)"
-  
+
   # Components that can be released independently
   independent_components:
     - codelists
-  
+
   # Components that should be released together
   synchronized_components:
     - ontology

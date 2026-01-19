@@ -33,8 +33,6 @@ The `config.yml` file is the **single source of truth** for all ontology operati
 ```yaml
 validation:
   shacl:
-    default: "<scenario-name>"  # Which scenario runs by default
-    
     scenarios:
       <scenario-name>:
         name: "Display Name"
@@ -45,26 +43,20 @@ validation:
         extras: "optional,comma,separated,files.ttl"
 ```
 
-### Default Scenario
+### Running Scenarios
 
-The `default` field determines which scenario runs when you don't specify a name:
-
-```yaml
-validation:
-  shacl:
-    default: "dwp"  # This runs when you call: npm run validate:shacl
-```
+When you run `npm run validate:shacl` without a name, the CLI validates **all** scenarios configured under `validation.shacl.scenarios`.
 
 ### Scenario Fields
 
-| Field | Required | Description | Example |
-|-------|----------|-------------|---------|
-| `name` | Yes | Human-readable display name | `"Digital Waste Passport"` |
-| `description` | Yes | What this scenario validates | `"Validates DWP sample data"` |
-| `data` | Yes | Path to RDF data file (relative to workspace root) | `"examples/v0.1/sample.ttl"` |
-| `shapes` | Yes | Path to SHACL shapes file | `"shapes/v0.1/shapes.ttl"` |
-| `format` | No | Output format (default: `human`) | `"human"`, `"text"`, `"turtle"`, `"json-ld"` |
-| `extras` | No | Comma-separated list of extra context files | `"ontology/v0.1/actors.ttl"` |
+| Field         | Required | Description                                        | Example                                      |
+| ------------- | -------- | -------------------------------------------------- | -------------------------------------------- |
+| `name`        | Yes      | Human-readable display name                        | `"Digital Waste Passport"`                   |
+| `description` | Yes      | What this scenario validates                       | `"Validates DWP sample data"`                |
+| `data`        | Yes      | Path to RDF data file (relative to workspace root) | `"examples/v0.1/sample.ttl"`                 |
+| `shapes`      | Yes      | Path to SHACL shapes file                          | `"shapes/v0.1/shapes.ttl"`                   |
+| `format`      | No       | Output format (default: `human`)                   | `"human"`, `"text"`, `"turtle"`, `"json-ld"` |
+| `extras`      | No       | Comma-separated list of extra context files        | `"ontology/v0.1/actors.ttl"`                 |
 
 ---
 
@@ -94,7 +86,7 @@ conversion:
       name: "Display Name"
       input: "build/v0.1/input.schema.json"
       output: "build/v0.1/output.ts"
-      source: "shapes/v0.1/original-shapes.ttl"  # For documentation banner
+      source: "shapes/v0.1/original-shapes.ttl" # For documentation banner
 ```
 
 ---
@@ -106,11 +98,9 @@ conversion:
 ```yaml
 validation:
   shacl:
-    default: "dwp"
-    
     scenarios:
       # ... existing scenarios ...
-      
+
       dwp-dev:
         name: "DWP Development Test"
         description: "Quick validation for local development"
@@ -121,6 +111,7 @@ validation:
 ```
 
 **Run it**:
+
 ```bash
 node docker/docker.js run cli validate shacl dwp-dev
 ```
@@ -141,6 +132,7 @@ validation:
 ```
 
 **Run it**:
+
 ```bash
 node docker/docker.js run cli validate shacl dwp-integration
 ```
@@ -156,11 +148,12 @@ validation:
         description: "Fast validation for CI pipeline"
         data: "examples/v0.1/minimal-valid-sample.ttl"
         shapes: "shapes/v0.1/dwp-bootstrap.shacl.ttl"
-        format: "text"  # Machine-readable
+        format: "text" # Machine-readable
         extras: ""
 ```
 
 **Use in CI**:
+
 ```yaml
 # .github/workflows/ci.yml
 - name: Quick Validation
@@ -178,18 +171,18 @@ validation:
         name: "DWP Valid - Basic"
         data: "examples/v0.1/valid-basic.ttl"
         shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
-      
+
       dwp-valid-complex:
         name: "DWP Valid - Complex"
         data: "examples/v0.1/valid-complex.ttl"
         shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
-      
+
       # Invalid data tests (should fail)
       dwp-invalid-missing-issued:
         name: "DWP Invalid - Missing dct:issued"
         data: "examples/v0.1/invalid-no-issued.ttl"
         shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
-      
+
       dwp-invalid-wrong-type:
         name: "DWP Invalid - Wrong Data Type"
         data: "examples/v0.1/invalid-wrong-type.ttl"
@@ -197,6 +190,7 @@ validation:
 ```
 
 **Run all tests**:
+
 ```bash
 # List scenarios
 npm run validate:shacl:list
@@ -220,11 +214,9 @@ validation:
     reasoner: "HermiT"
     profile: "DL"
     include_codelists: true
-  
+
   # SHACL validation scenarios
   shacl:
-    default: "dwp"  # Default scenario
-    
     scenarios:
       # Production scenarios
       dwp:
@@ -234,7 +226,7 @@ validation:
         shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
         format: "human"
         extras: ""
-      
+
       dmwp:
         name: "Digital MARPOL Waste Passport"
         description: "Validates MARPOL sample data against MARPOL shapes"
@@ -242,7 +234,7 @@ validation:
         shapes: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
         format: "human"
         extras: ""
-      
+
       # Development scenarios
       dwp-dev:
         name: "DWP Development"
@@ -251,7 +243,7 @@ validation:
         shapes: "shapes/v0.1/dwp-bootstrap.shacl.ttl"
         format: "human"
         extras: ""
-      
+
       # Integration scenarios
       dwp-full:
         name: "DWP Full Integration"
@@ -260,7 +252,7 @@ validation:
         shapes: "shapes/v0.1/dwp-governed.shacl.ttl"
         format: "human"
         extras: "ontology/v0.1/wasteActors.ttl,codelists/v0.1/residue-type-code.ttl"
-      
+
       # CI/CD scenarios
       ci-fast:
         name: "CI Fast Test"
@@ -269,7 +261,7 @@ validation:
         shapes: "shapes/v0.1/dwp-bootstrap.shacl.ttl"
         format: "text"
         extras: ""
-      
+
       ci-full:
         name: "CI Full Test"
         description: "Complete validation for release pipeline"
@@ -289,17 +281,17 @@ conversion:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digitalWastePassportShapes.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
-    
+
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
-    
+
     actors:
       name: "Waste Actors"
       input: "shapes/v0.1/waste-actors.shacl.ttl"
       output: "build/v0.1/wasteActors.schema.json"
-  
+
   # JSON Schema → TypeScript
   json_to_ts:
     dwp:
@@ -307,7 +299,7 @@ conversion:
       input: "build/v0.1/digitalWastePassport.schema.json"
       output: "build/v0.1/digitalWastePassport.ts"
       source: "shapes/v0.1/digitalWastePassportShapes.ttl"
-    
+
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
@@ -345,11 +337,11 @@ scenarios:
   # === Production Scenarios ===
   dwp: { ... }
   dmwp: { ... }
-  
+
   # === Development Scenarios ===
   dwp-dev: { ... }
   dmwp-dev: { ... }
-  
+
   # === CI/CD Scenarios ===
   ci-fast: { ... }
   ci-full: { ... }
@@ -417,6 +409,7 @@ Available scenarios: dwp, dmwp
 If you have old `defaults.shacl` configuration, migrate to scenarios:
 
 **Old format**:
+
 ```yaml
 defaults:
   shacl:
@@ -425,6 +418,7 @@ defaults:
 ```
 
 **New format**:
+
 ```yaml
 validation:
   shacl:

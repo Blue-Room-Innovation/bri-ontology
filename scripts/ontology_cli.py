@@ -102,7 +102,7 @@ def build_parser() -> argparse.ArgumentParser:
     shacl.add_argument(
         "scenario",
         nargs="?",
-        help="Validation scenario name from config.yml (e.g., 'dwp', 'dmwp'). If not provided, uses default scenario.",
+        help="Validation scenario name from config.yml (e.g., 'dwp', 'dmwp'). If not provided, validates all configured scenarios.",
     )
     shacl.add_argument(
         "-d",
@@ -271,7 +271,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                     return 1
                 
                 for key, scenario in scenarios.items():
-                    is_default = " (default)" if key == default_scenario else ""
+                    is_default = " (default; informational)" if key == default_scenario else ""
                     print(f"\n🔹 {key}{is_default}")
                     print(f"   Name: {scenario.get('name', 'N/A')}")
                     print(f"   Description: {scenario.get('description', 'N/A')}")
@@ -279,7 +279,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                     print(f"   Shapes: {scenario.get('shapes', 'N/A')}")
                 
                 print("\n💡 Usage:")
-                print(f"   npm run validate:shacl <scenario-name>")
+                print(f"   npm run validate:shacl                # validates all scenarios")
+                print(f"   npm run validate:shacl <scenario-name> # validates one scenario")
                 print(f"   node docker/docker.js run cli validate shacl <scenario-name>")
                 print(f"   node docker/docker.js run cli validate shacl dwp")
                 return 0
@@ -287,30 +288,31 @@ def main(argv: Optional[List[str]] = None) -> int:
             # Get scenario configuration
             shacl_config = config_obj._data.get("validation", {}).get("shacl", {})
             scenarios = shacl_config.get("scenarios", {})
-            default_scenario_name = shacl_config.get("default", "")
-            
-            # Determine which scenario to use
-            scenario_name = ns.scenario or default_scenario_name
-            scenario = None
-            
-            if scenario_name:
-                scenario = scenarios.get(scenario_name)
-                if scenario:
-                    print(f"[SHACL] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
-                else:
-                    print(f"❌ ERROR: Scenario '{scenario_name}' not found in config.yml")
-                    print(f"Available scenarios: {', '.join(scenarios.keys())}")
-                    print("Run 'npm run validate:shacl --list' to see all scenarios")
-                    return 1
+
+            # Determine which scenario(s) to run
+            has_overrides = any(
+                v is not None
+                for v in (ns.data, ns.shapes, ns.extras_csv, ns.fmt)
+            )
+            scenario_name = ns.scenario
             
             # Get values from scenario or arguments
             data_file = ns.data
             shapes_file = ns.shapes
             extras_csv = ns.extras_csv
             fmt = ns.fmt
-            
-            # Apply scenario defaults if not overridden by arguments
-            if scenario:
+
+            # Case 1: specific scenario
+            if scenario_name:
+                scenario = scenarios.get(scenario_name)
+                if not scenario:
+                    print(f"❌ ERROR: Scenario '{scenario_name}' not found in config.yml")
+                    print(f"Available scenarios: {', '.join(scenarios.keys())}")
+                    print("Run 'npm run validate:shacl:list' to see all scenarios")
+                    return 1
+
+                print(f"[SHACL] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+
                 if data_file is None:
                     data_file = scenario.get("data")
                 if shapes_file is None:
@@ -319,33 +321,76 @@ def main(argv: Optional[List[str]] = None) -> int:
                     extras_csv = scenario.get("extras", "")
                 if fmt is None:
                     fmt = scenario.get("format", "human")
-            
-            # Final validation - ensure we have required values
-            if data_file is None:
-                print("❌ ERROR: --data argument is required or must be configured in a scenario")
-                print("Available scenarios: " + ", ".join(scenarios.keys()) if scenarios else "No scenarios configured")
-                print("Run 'npm run validate:shacl --list' to see all scenarios")
+
+                if data_file is None or shapes_file is None:
+                    print("❌ ERROR: Scenario is missing required 'data' or 'shapes' values")
+                    return 1
+
+                if extras_csv is None:
+                    extras_csv = ""
+                if fmt is None:
+                    fmt = "human"
+
+                config = ShaclConfig(
+                    data_file=workspace_root / Path(data_file),
+                    shapes_file=workspace_root / Path(shapes_file),
+                    extras_csv=extras_csv,
+                    output_format=fmt,
+                )
+                return validate_shacl(config)
+
+            # Case 2: explicit overrides (single run)
+            if has_overrides:
+                if data_file is None:
+                    print("❌ ERROR: --data is required when using overrides without a scenario")
+                    return 1
+                if shapes_file is None:
+                    print("❌ ERROR: --shapes is required when using overrides without a scenario")
+                    return 1
+                if extras_csv is None:
+                    extras_csv = ""
+                if fmt is None:
+                    fmt = "human"
+
+                config = ShaclConfig(
+                    data_file=workspace_root / Path(data_file),
+                    shapes_file=workspace_root / Path(shapes_file),
+                    extras_csv=extras_csv,
+                    output_format=fmt,
+                )
+                return validate_shacl(config)
+
+            # Case 3: no scenario and no overrides => validate all scenarios
+            if not scenarios:
+                print("❌ ERROR: No validation.shacl.scenarios configured in config.yml")
                 return 1
-            
-            if shapes_file is None:
-                print("❌ ERROR: --shapes argument is required or must be configured in a scenario")
-                print("Available scenarios: " + ", ".join(scenarios.keys()) if scenarios else "No scenarios configured")
-                print("Run 'npm run validate:shacl --list' to see all scenarios")
-                return 1
-            
-            # Set defaults for optional parameters
-            if extras_csv is None:
-                extras_csv = ""
-            if fmt is None:
-                fmt = "human"
-            
-            config = ShaclConfig(
-                data_file=workspace_root / Path(data_file),
-                shapes_file=workspace_root / Path(shapes_file),
-                extras_csv=extras_csv,
-                output_format=fmt,
-            )
-            return validate_shacl(config)
+
+            print(f"[SHACL] Validating all scenarios ({len(scenarios)}): {', '.join(sorted(scenarios.keys()))}")
+
+            worst_exit = 0
+            for key in sorted(scenarios.keys()):
+                scenario = scenarios.get(key) or {}
+                data_file = scenario.get("data")
+                shapes_file = scenario.get("shapes")
+                extras_csv = scenario.get("extras", "")
+                fmt = scenario.get("format", "human")
+
+                if not data_file or not shapes_file:
+                    print(f"\n[SHACL] ❌ Scenario '{key}' is missing 'data' or 'shapes' in config.yml")
+                    worst_exit = max(worst_exit, 1)
+                    continue
+
+                print(f"\n[SHACL] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                config = ShaclConfig(
+                    data_file=workspace_root / Path(data_file),
+                    shapes_file=workspace_root / Path(shapes_file),
+                    extras_csv=extras_csv or "",
+                    output_format=fmt or "human",
+                )
+                code = validate_shacl(config)
+                worst_exit = max(worst_exit, code)
+
+            return worst_exit
 
     # ===== GENERATE COMMANDS =====
     elif ns.command == "generate":
