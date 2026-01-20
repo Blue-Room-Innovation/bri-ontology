@@ -181,14 +181,21 @@ class SHACLToJSONSchemaConverter:
             "$comment": f"Generated from SHACL shape {shape}"
         }
         
-        # Get shape name and description
+        # Get shape labels and description.
+        # IMPORTANT: json-schema-to-typescript uses JSON Schema "title" to name interfaces.
+        # We want interface names to match SHACL NodeShape names (local part of the shape IRI)
+        # rather than sh:name (human label) or sh:targetClass.
         name = self._get_literal_value(shape, SH.name)
         description = self._get_literal_value(shape, SH.description)
-        
-        if name:
-            definition["title"] = name
+
+        # Always title by shape name for stable, 1:1 typing.
+        definition["title"] = shape_name
+
         if description:
             definition["description"] = description
+        elif name:
+            # If there is no explicit description, fall back to sh:name as a description.
+            definition["description"] = name
         
         # Process properties
         properties: Dict[str, Any] = {}
