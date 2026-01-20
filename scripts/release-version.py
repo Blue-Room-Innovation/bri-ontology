@@ -233,23 +233,19 @@ def release_examples(from_ver: str, to_ver: str, workspace: Path) -> None:
     Updates:
     - ontology URIs: /ontology/vX/ → /ontology/vY/
     - codelists URIs: /codelists/vX/ → /codelists/vY/ (if needed)
-    - contexts URIs: /contexts/X/ → /contexts/Y/ (note: no 'v' prefix in contexts)
+    - build artifact URIs (including JSON-LD contexts): /build/vX/ → /build/vY/
     """
     print(f"\n🔧 Releasing examples: {from_ver} → {to_ver}")
     
     dest_folder = copy_version_folder("examples", from_ver, to_ver, workspace)
     
-    # For contexts, remove 'v' prefix (contexts use 0.1, 0.2 not v0.1, v0.2)
-    from_context_ver = from_ver.lstrip('v')
-    to_context_ver = to_ver.lstrip('v')
-    
     replacements = [
         # Update ontology URIs
         (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/ontology/{re.escape(from_ver)}/',
          f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/{to_ver}/'),
-        # Update contexts URIs (no 'v' prefix)
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/contexts/{re.escape(from_context_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/{to_context_ver}/'),
+        # Update build artifact URIs (schemas, TS, generated contexts, etc.)
+        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/build/{re.escape(from_ver)}/',
+         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/build/{to_ver}/'),
     ]
     
     total_replacements = 0

@@ -9,7 +9,6 @@ ontology_version: "v0.1" # Digital Waste Passport & MARPOL ontologies
 shapes_version: "v0.1" # SHACL shape definitions
 examples_version: "v0.1" # Example data files
 codelists_version: "v0.1" # Code lists (standardized versioning)
-contexts_version: "v0.1" # JSON-LD contexts (standardized versioning)
 
 # Build Configuration
 # -------------------
@@ -22,7 +21,6 @@ paths:
   shapes: "shapes"
   examples: "examples"
   codelists: "codelists"
-  contexts: "contexts"
   build: "build"
   docs: "docs"
   scripts: "scripts"
@@ -73,15 +71,9 @@ shapes:
 generation:
   # Artifacts to generate (SHACL → JSON Schema → TypeScript)
   artifacts:
-    - name: "digitalWastePassport"
-      shape_file: "digitalWastePassportShapes.ttl"
-      json_schema: "digitalWastePassport.schema.json"
-      typescript: "digitalWastePassport.ts"
-
-    - name: "digitalMarpolWastePassport"
-      shape_file: "digitalMarpolWastePassportShapes.ttl"
-      json_schema: "digitalMarpolWastePassport.schema.json"
-      typescript: "digitalMarpolWastePassport.ts"
+    - dwp
+    - dmwp
+    - recycling
 
 # Validation Configuration
 # ------------------------
@@ -116,6 +108,14 @@ validation:
         format: "human"
         extras: ""
 
+      recycling:
+        name: "Recycling"
+        description: ""
+        data: "examples/v0.1/recycling.sample.jsonld"
+        shapes: "shapes/v0.1/recycling.shacl.ttl"
+        format: "human"
+        extras: ""
+
 # Conversion Configuration
 # ------------------------
 # Define conversion scenarios for SHACL → JSON Schema → TypeScript
@@ -132,6 +132,19 @@ conversion:
       input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
 
+    recycling:
+      name: "Recycling"
+      input: "shapes/v0.1/recycling.shacl.ttl"
+      output: "build/v0.1/recycling.schema.json"
+      naming: "local"
+
+  # SHACL to JSON-LD context conversions (baseline contexts)
+  shacl_to_context:
+    recycling:
+      name: "Recycling"
+      input: "shapes/v0.1/recycling.shacl.ttl"
+      output: "build/v0.1/recycling.context.jsonld"
+
   # JSON Schema to TypeScript conversions
   json_to_ts:
     dwp:
@@ -145,6 +158,12 @@ conversion:
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
       output: "build/v0.1/digitalMarpolWastePassport.ts"
       source: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+
+    recycling:
+      name: "Recycling"
+      input: "build/v0.1/recycling.schema.json"
+      output: "build/v0.1/recycling.ts"
+      source: "shapes/v0.1/recycling.shacl.ttl"
 
 # Wiki Documentation Configuration
 # --------------------------------

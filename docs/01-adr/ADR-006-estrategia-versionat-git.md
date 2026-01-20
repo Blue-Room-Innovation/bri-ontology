@@ -21,10 +21,12 @@ El projecte d'ontologies necessita un sistema de versionat que permeti:
 S'han considerat dues estratègies principals:
 
 ### Opció A: Git Tags
+
 - **Pros:** Immutabilitat garantida per Git, workflow estàndard, releases clares
 - **Contres:** Versionat global (tot el repo a la mateixa versió), refactorització massiva d'URIs a cada release, DWP i MARPOL forçats a sincronitzar versions
 
 ### Opció B: Carpetes Versionades
+
 - **Pros:** Versionat independent per component, URIs estables dins cada versió, patró RDF estàndard (DBpedia, Schema.org), granularitat fine
 - **Contres:** Redundància de fitxers (mitigat: ontologies són petites), necessita disciplina per no editar versions antigues
 
@@ -68,17 +70,14 @@ codelists/
 ├── v2/                 # Codelists v2 (futura)
 └── README.md
 
-contexts/
-├── 0.1/                # JSON-LD contexts (sense prefix "v")
-│   └── waste-actors-context.jsonld
-├── 0.2/                # Futura versió
-└── README.md
-
 build/
 ├── v0.1/               # Artifacts generats per v0.1
 │   ├── digitalWastePassport.schema.json
 │   └── digitalWastePassport.ts
 └── v0.2/               # Artifacts generats per v0.2 (futura)
+
+# Nota: els JSON-LD contexts es poden versionar i publicar com a artefactes dins de build/
+# (p. ex. build/v0.1/recycling.context.jsonld), en comptes de mantenir una carpeta contexts/.
 ```
 
 ### Convencions de Nomenclatura
@@ -86,7 +85,7 @@ build/
 - **Ontologies, Shapes, Examples, Codelists, Contexts:** `vX.Y` (amb prefix "v")
   - Exemple ontologies: `ontology/v0.1/`, `shapes/v0.2/`
   - Exemple codelists: `codelists/v0.1/`, `codelists/v1.0/`
-  - Exemple contexts: `contexts/v0.1/`, `contexts/v0.2/`
+  - Exemple contexts (publicats com a build artifacts): `build/v0.1/*.context.jsonld`
   - **Nota:** Tots els components usen el mateix format per consistència
 
 ### Patró d'URIs
@@ -100,10 +99,11 @@ build/
 @prefix delivery: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#> .
 
 # Contexts
-"@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/contexts/v0.1/waste-actors-context.jsonld"
+"@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/build/v0.1/recycling.context.jsonld"
 ```
 
 **Estructura URI:**
+
 - `https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/` (base repo)
 - `main/` (branch estable)
 - `{component}/{version}/` (carpeta versionada)
@@ -125,6 +125,7 @@ git push --tags
 ```
 
 **Tags segueixen semàntica de l'ontologia principal (DWP):**
+
 - `v0.1` = Versió 0.1 del projecte (ontology/v0.1, shapes/v0.1, etc.)
 - `v0.2` = Versió 0.2 del projecte
 - `codelists-v2` = Tag específic per codelists si evolucionen independentment
@@ -147,6 +148,7 @@ python scripts/release-version.py --component codelists --from v1 --to v2
 ```
 
 L'script:
+
 1. Copia carpeta antiga → nova carpeta
 2. Actualitza URIs interns per referenciar nova versió
 3. Actualitza `owl:versionInfo` metadata
@@ -191,6 +193,7 @@ git push origin v0.2
 ### 4. Crear GitHub Release
 
 GitHub Actions (futur) o manual:
+
 1. Anar a Releases → New Release
 2. Seleccionar tag `v0.2`
 3. Afegir changelog (pot ser auto-generat des de commits)
@@ -239,6 +242,7 @@ ontology/v0.2/ → imports codelists/v1.0/ (si necessari)
 ### Non-Breaking Changes (Increment MINOR: v0.1 → v0.2)
 
 **Permès:**
+
 - Afegir propietats opcionals
 - Afegir classes noves
 - Afegir valors nous a codelists
@@ -246,6 +250,7 @@ ontology/v0.2/ → imports codelists/v1.0/ (si necessari)
 - Afegir shapes noves
 
 **Workflow:**
+
 ```bash
 python scripts/release-version.py --all --from v0.1 --to v0.2
 # Consumers a v0.1 continuen funcionant
@@ -255,6 +260,7 @@ python scripts/release-version.py --all --from v0.1 --to v0.2
 ### Breaking Changes (Increment MAJOR: v0.2 → v1.0)
 
 **Exemples:**
+
 - Eliminar propietat
 - Canviar cardinalitat (opcional → obligatori)
 - Canviar tipus de dada
@@ -262,6 +268,7 @@ python scripts/release-version.py --all --from v0.1 --to v0.2
 - Eliminar valor de codelist
 
 **Workflow:**
+
 ```bash
 python scripts/release-version.py --all --from v0.2 --to v1.0
 
@@ -306,6 +313,7 @@ git tag -a v0.1.1 -m "Security patch for v0.1"
 ```
 
 **Risc:** Trenca immutabilitat de `v0.1`. Mitigació:
+
 - CI check: bloquejar edicions a versions antigues sense `[BACKPORT]` en commit message
 - Branch protection: requerir approval per edicions a carpetes `v0.*`
 
@@ -319,16 +327,16 @@ git tag -a v0.1.1 -m "Security patch for v0.1"
 
 ## Comparativa Resum: Carpetes vs Tags
 
-| Criteri | Carpetes Versionades (escollit) | Git Tags |
-|---------|----------------------------------|----------|
-| **Versionat independent** | ✅ Cada component pot tenir versió diferent | ❌ Tot el repo a la mateixa versió |
-| **URIs estables** | ✅ URIs no canvien dins cada versió | ❌ Cal refactoritzar tots els URIs |
-| **Immutabilitat** | ⚠️ Necessita disciplina (branch protection) | ✅ Tags immutables per Git |
-| **Coexistència versions** | ✅ Múltiples versions visibles en mateix commit | ✅ Accessibles via tags diferents |
-| **Patró RDF estàndard** | ✅ DBpedia, Schema.org usen carpetes | ❌ Poc comú en RDF |
-| **Developer UX** | ✅ Clara separació, menys refactoring | ⚠️ Refactoring massiu a cada release |
-| **Backports** | ✅ Editar carpeta antiga directament | ⚠️ Crear nous tags (v0.1.1) |
-| **Desplegament** | ✅ GitHub raw URLs gratuït | ✅ GitHub raw URLs gratuït |
+| Criteri                   | Carpetes Versionades (escollit)                 | Git Tags                             |
+| ------------------------- | ----------------------------------------------- | ------------------------------------ |
+| **Versionat independent** | ✅ Cada component pot tenir versió diferent     | ❌ Tot el repo a la mateixa versió   |
+| **URIs estables**         | ✅ URIs no canvien dins cada versió             | ❌ Cal refactoritzar tots els URIs   |
+| **Immutabilitat**         | ⚠️ Necessita disciplina (branch protection)     | ✅ Tags immutables per Git           |
+| **Coexistència versions** | ✅ Múltiples versions visibles en mateix commit | ✅ Accessibles via tags diferents    |
+| **Patró RDF estàndard**   | ✅ DBpedia, Schema.org usen carpetes            | ❌ Poc comú en RDF                   |
+| **Developer UX**          | ✅ Clara separació, menys refactoring           | ⚠️ Refactoring massiu a cada release |
+| **Backports**             | ✅ Editar carpeta antiga directament            | ⚠️ Crear nous tags (v0.1.1)          |
+| **Desplegament**          | ✅ GitHub raw URLs gratuït                      | ✅ GitHub raw URLs gratuït           |
 
 ---
 
@@ -350,11 +358,11 @@ git tag -a v0.1.1 -m "Security patch for v0.1"
 
 ### Riscos
 
-| Risc | Probabilitat | Impacte | Mitigació |
-|------|--------------|---------|-----------|
-| Edició accidental v0.1 | Medium | High | Branch protection + CI checks |
-| Version drift | Low | Medium | Automated tests per consistència URIs |
-| Confusió developers | Medium | Low | Documentació clara + CLI tooling |
+| Risc                   | Probabilitat | Impacte | Mitigació                             |
+| ---------------------- | ------------ | ------- | ------------------------------------- |
+| Edició accidental v0.1 | Medium       | High    | Branch protection + CI checks         |
+| Version drift          | Low          | Medium  | Automated tests per consistència URIs |
+| Confusió developers    | Medium       | Low     | Documentació clara + CLI tooling      |
 
 ---
 
@@ -393,6 +401,6 @@ https://ontology.blueroominnovation.com/dwp/
 
 ## Changelog
 
-| Versió | Data | Autor | Canvis |
-|--------|------|-------|--------|
-| 1.0 | 2026-01-15 | BRI Ontology Team | Decisió inicial: carpetes versionades + tags opcionals |
+| Versió | Data       | Autor             | Canvis                                                 |
+| ------ | ---------- | ----------------- | ------------------------------------------------------ |
+| 1.0    | 2026-01-15 | BRI Ontology Team | Decisió inicial: carpetes versionades + tags opcionals |

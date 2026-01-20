@@ -1,0 +1,20 @@
+{
+  "@context": "../../build/v0.1/recycling.context.jsonld",
+  "@type": "Recycler",
+  "managerCode": "eiusmod Duis quis incididunt",
+  "nimaCode": "officia",
+  "name": "est eu elit dolore",
+  "streetAddress": "dolor est sint",
+  "addressLocality": "nulla consequat",
+  "postalCode": "in consectetur sed",
+  "telephone": "qui ut in eu",
+  "faxNumber": "cupidatat",
+  "email": "laboris pariatur",
+  "url": {
+    "@id": "http://example.cat"
+  },
+  "lat": -85.77639435600175,
+  "long": 16.9527833017753,
+  "adaptedToRD1102015": true,
+  "wasteTreatmentActivity": "culpa deserunt"
+}

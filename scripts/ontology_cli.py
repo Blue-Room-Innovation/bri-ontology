@@ -204,6 +204,41 @@ def build_parser() -> argparse.ArgumentParser:
         help="List all available SHACL->JSON conversion scenarios from config.yml",
     )
     conv_shacl.add_argument(
+        "--naming",
+        required=False,
+        choices=["curie", "local", "context"],
+        help="Property naming strategy for generated JSON Schema (overrides scenario config).",
+    )
+    conv_shacl.add_argument(
+        "--context",
+        required=False,
+        help="JSON-LD context file to use when --naming=context (overrides scenario config).",
+    )
+    conv_shacl.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose output"
+    )
+
+    # SHACL to JSON-LD context
+    conv_ctx = convert_sub.add_parser(
+        "context", help="Generate a JSON-LD context from SHACL shapes"
+    )
+    conv_ctx.add_argument(
+        "scenario",
+        nargs="?",
+        help="Conversion scenario name from config.yml (conversion.shacl_to_context). If not provided, converts all configured scenarios.",
+    )
+    conv_ctx.add_argument(
+        "-i", "--input", required=False, help="Input SHACL shapes file (TTL) - overrides scenario config"
+    )
+    conv_ctx.add_argument(
+        "-o", "--output", required=False, help="Output JSON-LD context file - overrides scenario config"
+    )
+    conv_ctx.add_argument(
+        "--list",
+        action="store_true",
+        help="List all available SHACL->JSON-LD-context conversion scenarios from config.yml",
+    )
+    conv_ctx.add_argument(
         "-v", "--verbose", action="store_true", help="Enable verbose output"
     )
 
@@ -429,12 +464,14 @@ def main(argv: Optional[List[str]] = None) -> int:
             wiki_script = workspace_root / "scripts" / "lib" / "generate_wiki.py"
             # Construir path de shapes amb la versió del config
             shapes_dir = f"{config_obj.paths['shapes']}/{config_obj.shapes_version}"
+            contexts_dir = f"{config_obj.paths['build']}/{config_obj.build_version}"
             cmd = [
                 sys.executable,
                 str(wiki_script),
                 "--ontology-dir", ns.ontology_dir,
                 "--output-dir", ns.output_dir,
                 "--shapes-dir", shapes_dir,
+                "--contexts-dir", contexts_dir,
             ]
             if ns.include_codelists:
                 cmd.append("--include-codelists")
@@ -484,6 +521,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
                 input_file = ns.input or scenario.get("input")
                 output_file = ns.output or scenario.get("output")
+                naming = ns.naming or scenario.get("naming") or "curie"
+                ctx_file = ns.context or scenario.get("context")
 
                 if not input_file or not output_file:
                     print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
@@ -498,6 +537,13 @@ def main(argv: Optional[List[str]] = None) -> int:
                     "--output",
                     str(workspace_root / Path(output_file)),
                 ]
+                if naming:
+                    cmd.extend(["--naming", naming])
+                if naming == "context":
+                    if not ctx_file:
+                        print("❌ ERROR: naming=context requires a context file (scenario.context or --context)")
+                        return 1
+                    cmd.extend(["--context", str(workspace_root / Path(ctx_file))])
                 if ns.verbose:
                     cmd.append("--verbose")
                 result = subprocess.run(cmd)
@@ -514,6 +560,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                     print("❌ ERROR: --output is required when using overrides without a scenario")
                     return 1
 
+                naming = ns.naming or "curie"
+                ctx_file = ns.context
+
                 cmd = [
                     sys.executable,
                     str(shacl_script),
@@ -522,6 +571,12 @@ def main(argv: Optional[List[str]] = None) -> int:
                     "--output",
                     str(workspace_root / Path(ns.output)),
                 ]
+                cmd.extend(["--naming", naming])
+                if naming == "context":
+                    if not ctx_file:
+                        print("❌ ERROR: naming=context requires --context")
+                        return 1
+                    cmd.extend(["--context", str(workspace_root / Path(ctx_file))])
                 if ns.verbose:
                     cmd.append("--verbose")
                 result = subprocess.run(cmd)
@@ -541,6 +596,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 scenario = conversions.get(key) or {}
                 input_file = scenario.get("input")
                 output_file = scenario.get("output")
+                naming = ns.naming or scenario.get("naming") or "curie"
+                ctx_file = ns.context or scenario.get("context")
 
                 if not input_file or not output_file:
                     print(f"\n[CONVERT:SHACL] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
@@ -556,11 +613,126 @@ def main(argv: Optional[List[str]] = None) -> int:
                     "--output",
                     str(workspace_root / Path(output_file)),
                 ]
+                if naming:
+                    cmd.extend(["--naming", naming])
+                if naming == "context":
+                    if not ctx_file:
+                        print(f"[CONVERT:SHACL] ❌ Scenario '{key}' has naming=context but no context file configured")
+                        worst_exit = max(worst_exit, 1)
+                        continue
+                    cmd.extend(["--context", str(workspace_root / Path(ctx_file))])
                 if ns.verbose:
                     cmd.append("--verbose")
                 result = subprocess.run(cmd)
                 code = 0 if result.returncode == 2 else result.returncode
                 worst_exit = max(worst_exit, code)
+
+            return worst_exit
+
+        elif ns.convert_cmd == "context":
+            import subprocess
+            ctx_script = workspace_root / "scripts" / "lib" / "shacl_to_jsonld_context.py"
+            conversions = config_obj._data.get("conversion", {}).get("shacl_to_context", {})
+
+            if getattr(ns, "list", False):
+                print("\n📋 Available SHACL → JSON-LD Context Conversion Scenarios")
+                print("=" * 60)
+                if not conversions:
+                    print("❌ No conversion.shacl_to_context scenarios configured in config.yml")
+                    return 1
+                for key, scenario in conversions.items():
+                    print(f"\n🔹 {key}")
+                    print(f"   Name:   {scenario.get('name', 'N/A')}")
+                    print(f"   Input:  {scenario.get('input', 'N/A')}")
+                    print(f"   Output: {scenario.get('output', 'N/A')}")
+                print("\n💡 Usage:")
+                print("   npm run convert:context                 # converts all scenarios")
+                print("   npm run convert:context <scenario-name> # converts one scenario")
+                print("   npm run convert:context -- -i in.ttl -o out.jsonld")
+                return 0
+
+            has_overrides = any(v is not None for v in (ns.input, ns.output))
+            scenario_name = getattr(ns, "scenario", None)
+
+            if scenario_name:
+                scenario = conversions.get(scenario_name)
+                if not scenario:
+                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
+                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    print("Run 'node docker/docker.js run cli convert context --list' to see all scenarios")
+                    return 1
+
+                input_file = ns.input or scenario.get("input")
+                output_file = ns.output or scenario.get("output")
+
+                if not input_file or not output_file:
+                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    return 1
+
+                print(f"[CONVERT:CONTEXT] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                cmd = [
+                    sys.executable,
+                    str(ctx_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                return result.returncode
+
+            if has_overrides:
+                if ns.input is None:
+                    print("❌ ERROR: --input is required when using overrides without a scenario")
+                    return 1
+                if ns.output is None:
+                    print("❌ ERROR: --output is required when using overrides without a scenario")
+                    return 1
+                cmd = [
+                    sys.executable,
+                    str(ctx_script),
+                    "--input",
+                    str(workspace_root / Path(ns.input)),
+                    "--output",
+                    str(workspace_root / Path(ns.output)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                return result.returncode
+
+            if not conversions:
+                print("❌ ERROR: No conversion.shacl_to_context scenarios configured in config.yml")
+                return 1
+
+            print(
+                f"[CONVERT:CONTEXT] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
+            )
+            worst_exit = 0
+            for key in sorted(conversions.keys()):
+                scenario = conversions.get(key) or {}
+                input_file = scenario.get("input")
+                output_file = scenario.get("output")
+                if not input_file or not output_file:
+                    print(f"\n[CONVERT:CONTEXT] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
+                    worst_exit = max(worst_exit, 1)
+                    continue
+
+                print(f"\n[CONVERT:CONTEXT] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                cmd = [
+                    sys.executable,
+                    str(ctx_script),
+                    "--input",
+                    str(workspace_root / Path(input_file)),
+                    "--output",
+                    str(workspace_root / Path(output_file)),
+                ]
+                if ns.verbose:
+                    cmd.append("--verbose")
+                result = subprocess.run(cmd)
+                worst_exit = max(worst_exit, result.returncode)
 
             return worst_exit
         

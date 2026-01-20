@@ -1,13 +1,13 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-16 12:11:38
+ * Generated: 2026-01-20 11:35:47
  * Source: shapes/v0.1/digitalWastePassportShapes.ttl
  */
 /**
  * Shape principal del DigitalWastePassport; cerrado para detectar propiedades inesperadas.
  */
-export interface DigitalWastePassport {
+export interface DigitalWastePassportShape {
     /**
      * Debe tener una fecha de emisión (dct:issued).
      */
@@ -18,21 +18,21 @@ export interface DigitalWastePassport {
     "dct:publisher": {
         [k: string]: unknown;
     };
-    "dwp:credentialSubject": WastePassport;
+    "dwp:credentialSubject": WastePassportShape;
     "dct:valid"?: string;
 }
 /**
  * Debe enlazar exactamente un WastePassport.
  */
-export interface WastePassport {
-    "dwp:waste": Waste;
+export interface WastePassportShape {
+    "dwp:waste": WasteShape;
     "dct:identifier"?: string;
-    "unece:reportingStandard"?: ReportingStandard;
+    "unece:reportingStandard"?: StandardShape;
 }
 /**
  * Debe referenciar un Waste.
  */
-export interface Waste {
+export interface WasteShape {
     /**
      * Debe tener nombre (unece:name).
      */
@@ -50,15 +50,22 @@ export interface Waste {
      * declaredUnit debe ser una de: KGM, TNE, LTR, MTR, CMQ.
      */
     "unece:declaredUnit"?: "https://vocabulary.uncefact.org/UnitMeasureCode#KGM" | "https://vocabulary.uncefact.org/UnitMeasureCode#TNE" | "https://vocabulary.uncefact.org/UnitMeasureCode#LTR" | "https://vocabulary.uncefact.org/UnitMeasureCode#MTR" | "https://vocabulary.uncefact.org/UnitMeasureCode#CMQ";
-    "unece:hasConstituent"?: MaterialConstituent;
+    "unece:hasConstituent"?: MaterialConstituentShape;
 }
-export interface MaterialConstituent {
-    "unece:materialType": {
+/**
+ * Material Constituent
+ */
+export interface MaterialConstituentShape {
+    "unece:materialType": string | {
+        "@id": string;
         [k: string]: unknown;
     };
     "unece:massFraction": number;
 }
-export interface ReportingStandard {
+/**
+ * Reporting Standard
+ */
+export interface StandardShape {
     "unece:standardName": string;
 }
 //# sourceMappingURL=digitalWastePassport.d.ts.map

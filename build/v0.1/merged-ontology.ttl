@@ -152,32 +152,15 @@
                                                                                                                         rdfs:comment "The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented." .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#geoLocation> rdf:type owl:ObjectProperty ;
-                                                                                                                     rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                     rdfs:range <https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation> ;
-                                                                                                                     rdfs:comment "Geographic coordinates of the organization." .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#adaptedToRD1102015
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#adaptedToRD1102015> rdf:type owl:ObjectProperty ;
+                                                                                                                          rdfs:subPropertyOf <https://test.uncefact.org/vocabulary/untp/core/0/conformance> ;
+                                                                                                                          rdfs:comment "Conformance with Spanish Royal Decree 110/2015 on WEEE"@en ;
+                                                                                                                          rdfs:label "Adapted to RD 110/2015 (WEEE)"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteHandler
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteHandler> rdf:type owl:ObjectProperty ;
-                                                                                                                      rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
-                                                                                                                      rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler> ;
-                                                                                                                      rdfs:comment "Links a Waste (UNECE Product) to the Recycler responsible for its treatment." .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteProducer
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteProducer> rdf:type owl:ObjectProperty ;
-                                                                                                                       rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
-                                                                                                                       rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer> ;
-                                                                                                                       rdfs:comment "Links a Waste to the organization that generated it." .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteTransporter
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#wasteTransporter> rdf:type owl:ObjectProperty ;
-                                                                                                                          rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
-                                                                                                                          rdfs:range <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter> ;
-                                                                                                                          rdfs:comment "Links a Waste to the organization responsible for transporting it." .
+###  https://test.uncefact.org/vocabulary/untp/core/0/conformance
+<https://test.uncefact.org/vocabulary/untp/core/0/conformance> rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -333,104 +316,34 @@
           <http://www.w3.org/2004/02/skos/core#related> <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/codelists/residue-type-code.ttl#ResidueTypeCodeScheme> .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#addressLocality
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#addressLocality> rdf:type owl:DatatypeProperty ;
-                                                                                                                         rdfs:subPropertyOf <https://schema.org/addressLocality> ;
-                                                                                                                         rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                         rdfs:range xsd:string .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#managerCode
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#managerCode> rdf:type owl:DatatypeProperty ;
+                                                                                                                   rdfs:range xsd:string ;
+                                                                                                                   rdfs:comment "Regional waste manager registration code"@en ;
+                                                                                                                   rdfs:label "Waste manager code"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#country
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#country> rdf:type owl:DatatypeProperty ;
-                                                                                                                 rdfs:subPropertyOf <https://schema.org/addressCountry> ;
-                                                                                                                 rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                 rdfs:range xsd:string .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#nimaCode
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#nimaCode> rdf:type owl:DatatypeProperty ;
+                                                                                                                rdfs:range xsd:string ;
+                                                                                                                rdfs:comment "Spanish environmental registration number (NIMA)"@en ;
+                                                                                                                rdfs:label "NIMA code"@en .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#email
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#email> rdf:type owl:DatatypeProperty ;
-                                                                                                               rdfs:subPropertyOf <https://schema.org/email> ;
-                                                                                                               rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                               rdfs:range xsd:string .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#legalName
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#legalName> rdf:type owl:DatatypeProperty ;
-                                                                                                                   rdfs:subPropertyOf <https://schema.org/name> ;
-                                                                                                                   rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                   rdfs:range xsd:string .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#phone
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#phone> rdf:type owl:DatatypeProperty ;
-                                                                                                               rdfs:subPropertyOf <https://schema.org/telephone> ;
-                                                                                                               rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                               rdfs:range xsd:string .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#postalCode
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#postalCode> rdf:type owl:DatatypeProperty ;
-                                                                                                                    rdfs:subPropertyOf <https://schema.org/postalCode> ;
-                                                                                                                    rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                    rdfs:range xsd:string .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#registeredId
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#registeredId> rdf:type owl:DatatypeProperty ;
-                                                                                                                      rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                      rdfs:range xsd:string ;
-                                                                                                                      rdfs:comment "Official registration identifier such as VAT, company number or national waste registry code." .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#streetAddress
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#streetAddress> rdf:type owl:DatatypeProperty ;
-                                                                                                                       rdfs:subPropertyOf <https://schema.org/streetAddress> ;
-                                                                                                                       rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                       rdfs:range xsd:string .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#website
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#website> rdf:type owl:DatatypeProperty ;
-                                                                                                                 rdfs:subPropertyOf <https://schema.org/url> ;
-                                                                                                                 rdfs:domain <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                 rdfs:range xsd:anyURI .
-
-
-###  https://schema.org/addressCountry
-<https://schema.org/addressCountry> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/addressLocality
-<https://schema.org/addressLocality> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/email
-<https://schema.org/email> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/name
-<https://schema.org/name> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/postalCode
-<https://schema.org/postalCode> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/streetAddress
-<https://schema.org/streetAddress> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/telephone
-<https://schema.org/telephone> rdf:type owl:DatatypeProperty .
-
-
-###  https://schema.org/url
-<https://schema.org/url> rdf:type owl:DatatypeProperty .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#wasteTreatmentActivity
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#wasteTreatmentActivity> rdf:type owl:DatatypeProperty ;
+                                                                                                                              rdfs:range xsd:string ;
+                                                                                                                              rdfs:comment "Textual description of waste treatment activities"@en ;
+                                                                                                                              rdfs:label "Waste treatment activity description"@en .
 
 
 #################################################################
 #    Classes
 #################################################################
+
+###  http://schema.org/Organization
+<http://schema.org/Organization> rdf:type owl:Class .
+
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
@@ -525,30 +438,11 @@
                                                                                                                                 rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
 
 
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Producer> rdf:type owl:Class ;
-                                                                                                                  rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                  rdfs:comment "The organization that produced or placed the product on the market, and therefore generated the waste." .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Recycler> rdf:type owl:Class ;
-                                                                                                                  rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                  rdfs:comment "A legally registered organization authorized to manage, treat, recycle or dispose of waste." .
-
-
-###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/wasteActors.ttl#Transporter> rdf:type owl:Class ;
-                                                                                                                     rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
-                                                                                                                     rdfs:comment "An organization responsible for transporting waste between locations." .
-
-
-###  https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation
-<https://test.uncefact.org/vocabulary/untp/core/0/GeoLocation> rdf:type owl:Class .
-
-
-###  https://test.uncefact.org/vocabulary/untp/core/0/Party
-<https://test.uncefact.org/vocabulary/untp/core/0/Party> rdf:type owl:Class .
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#Recycler
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#Recycler> rdf:type owl:Class ;
+                                                                                                                rdfs:subClassOf <http://schema.org/Organization> ;
+                                                                                                                rdfs:comment "An organization that processes waste materials for recycling"@en ;
+                                                                                                                rdfs:label "Recycler"@en .
 
 
 ###  https://test.uncefact.org/vocabulary/untp/core/0/Product

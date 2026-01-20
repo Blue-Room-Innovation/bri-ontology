@@ -40,8 +40,45 @@ def _load_graph(path: Path):
     """
     from rdflib import Graph
 
+    try:
+        from urllib.error import HTTPError, URLError
+    except Exception:  # pragma: no cover
+        HTTPError = None  # type: ignore[assignment]
+        URLError = None  # type: ignore[assignment]
+
     graph = Graph()
-    graph.parse(str(path))
+    try:
+        graph.parse(str(path))
+    except Exception as exc:
+        # Common case for JSON-LD: remote @context fetch fails (HTTP 404, DNS, etc.)
+        if HTTPError is not None and isinstance(exc, HTTPError):
+            url = getattr(exc, "url", None) or "(unknown URL)"
+            code = getattr(exc, "code", None)
+            code_str = f"HTTP {code}" if code is not None else "HTTP error"
+            raise RuntimeError(
+                "No s'ha pogut carregar RDF des del fitxer: "
+                f"{path}\n"
+                f"Motiu: {code_str} en intentar descarregar un recurs remot: {url}\n"
+                "Això acostuma a passar quan el JSON-LD té un @context (o imports) remot que no existeix o no és accessible.\n"
+                "Solució: usa un @context local (p. ex. build/<version>/*.context.jsonld) o arregla la URL perquè sigui accessible."
+            ) from exc
+
+        if URLError is not None and isinstance(exc, URLError):
+            reason = getattr(exc, "reason", None)
+            reason_str = f"{reason}" if reason is not None else "(unknown reason)"
+            raise RuntimeError(
+                "No s'ha pogut carregar RDF des del fitxer: "
+                f"{path}\n"
+                "Motiu: error d'accés a recurs remot (URLError): "
+                f"{reason_str}\n"
+                "Revisa el @context JSON-LD (i qualsevol import remot) o fes-lo local."
+            ) from exc
+
+        raise RuntimeError(
+            "No s'ha pogut carregar/parsejar RDF des del fitxer: "
+            f"{path}\n"
+            f"Motiu: {exc}"
+        ) from exc
     return graph
 
 
@@ -106,13 +143,14 @@ def _merge_extras_into_data(data_graph, extras: List[Path]):
             data_graph.add(triple)
 
 
-def _serialize_report(report_graph, output_format: str) -> int:
+def _serialize_report(report_graph, report_text: str, output_format: str) -> int:
     """Serialize validation report to specified format.
-    
+
     Args:
-        report_graph: Validation report graph or text
+        report_graph: Validation report graph
+        report_text: Human-readable validation report text
         output_format: Output format (human, text, turtle, json-ld)
-        
+
     Returns:
         Exit code (0 for success, 2 for error)
     """
@@ -121,7 +159,7 @@ def _serialize_report(report_graph, output_format: str) -> int:
     fmt = output_format.lower()
     
     if fmt in {"human", "text"}:
-        print(report_graph)
+        print(report_text)
         return 0
     
     if fmt == "turtle":
@@ -202,7 +240,9 @@ def validate_shacl(config: ShaclConfig) -> int:
         )
         
         # Serialize output
-        status = _serialize_report(report_graph, config.output_format)
+        print(f"[SHACL] Conforms: {'true' if conforms else 'false'}")
+
+        status = _serialize_report(report_graph, report_text, config.output_format)
         if status != 0:
             return status
         
@@ -212,5 +252,10 @@ def validate_shacl(config: ShaclConfig) -> int:
         print_err(f"[SHACL] pyshacl no està instal·lat: {exc}")
         return 2
     except Exception as exc:
-        print_err(f"[SHACL] Error executant validació: {exc}")
+        # If the exception already provides a helpful multi-line message, keep it.
+        msg = str(exc)
+        if "\n" in msg:
+            print_err(f"[SHACL] Error executant validació:\n{msg}")
+        else:
+            print_err(f"[SHACL] Error executant validació: {msg}")
         return 2

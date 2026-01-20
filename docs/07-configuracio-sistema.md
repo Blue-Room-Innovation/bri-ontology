@@ -13,8 +13,7 @@ All version numbers, paths, and component settings are defined in the root `conf
 ontology_version: "v0.1"
 shapes_version: "v0.1"
 examples_version: "v0.1"
-codelists_version: "v1"
-contexts_version: "0.1"
+codelists_version: "v0.1"
 build_version: "v0.1"
 
 # Component definitions
@@ -26,9 +25,21 @@ ontologies:
 # Generation pipeline
 generation:
   artifacts:
-    - name: "digitalWastePassport"
-      shape_file: "digitalWastePassportShapes.ttl"
-      ...
+    - dwp
+    - dmwp
+    - recycling
+
+# Conversions (explicit inputs/outputs)
+conversion:
+  shacl_to_json:
+    dwp:
+      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      output: "build/v0.1/digitalWastePassport.schema.json"
+  json_to_ts:
+    dwp:
+      input: "build/v0.1/digitalWastePassport.schema.json"
+      output: "build/v0.1/digitalWastePassport.ts"
+      source: "shapes/v0.1/digitalWastePassportShapes.ttl"
 ```
 
 ## 🔧 Using Configuration in Scripts
@@ -44,7 +55,7 @@ config = load_config()
 # Access version numbers
 print(config.ontology_version)  # "v0.1"
 print(config.shapes_version)     # "v0.1"
-print(config.codelists_version)  # "v1"
+print(config.codelists_version)  # "v0.1"
 
 # Get versioned paths
 ontology_path = config.get_ontology_path("digitalWastePassport.ttl")
@@ -57,9 +68,9 @@ shapes_path = config.get_shapes_path("digitalWastePassportShapes.ttl")
 url = config.get_github_raw_url("ontology", "digitalWastePassport.ttl")
 # Returns: "https://raw.githubusercontent.com/.../main/ontology/v0.1/digitalWastePassport.ttl"
 
-# Access component configurations
+# Access configured generation artifacts (IDs)
 for artifact in config.get_generation_artifacts():
-    print(artifact['name'], artifact['shape_file'])
+  print(artifact["name"])
 ```
 
 ### NPM Scripts
@@ -87,9 +98,9 @@ Edit `config.yml`:
 
 ```yaml
 # Change versions
-ontology_version: "v0.2"  # was "v0.1"
-shapes_version: "v0.2"    # was "v0.1"
-build_version: "v0.2"     # was "v0.1"
+ontology_version: "v0.2" # was "v0.1"
+shapes_version: "v0.2" # was "v0.1"
+build_version: "v0.2" # was "v0.1"
 ```
 
 All scripts will automatically use the new versions on next run.
@@ -116,14 +127,13 @@ npm run generate:types
 
 ### Component Versions
 
-| Key | Description | Example | Notes |
-|-----|-------------|---------|-------|
-| `ontology_version` | Ontologies version | `v0.1` | With "v" prefix |
-| `shapes_version` | SHACL shapes version | `v0.1` | With "v" prefix |
-| `examples_version` | Examples version | `v0.1` | With "v" prefix |
-| `codelists_version` | Codelists version | `v1` | Major version only |
-| `contexts_version` | JSON-LD contexts version | `0.1` | **Without** "v" prefix |
-| `build_version` | Build output version | `v0.1` | With "v" prefix |
+| Key                 | Description          | Example | Notes           |
+| ------------------- | -------------------- | ------- | --------------- |
+| `ontology_version`  | Ontologies version   | `v0.1`  | With "v" prefix |
+| `shapes_version`    | SHACL shapes version | `v0.1`  | With "v" prefix |
+| `examples_version`  | Examples version     | `v0.1`  | With "v" prefix |
+| `codelists_version` | Codelists version    | `v0.1`  | With "v" prefix |
+| `build_version`     | Build output version | `v0.1`  | With "v" prefix |
 
 ### Path Helpers
 
@@ -132,7 +142,6 @@ config.get_ontology_path(filename)   # ontology/{version}/{filename}
 config.get_shapes_path(filename)     # shapes/{version}/{filename}
 config.get_examples_path(filename)   # examples/{version}/{filename}
 config.get_codelists_path(filename)  # codelists/{version}/{filename}
-config.get_contexts_path(filename)   # contexts/{version}/{filename}
 config.get_build_path(filename)      # build/{version}/{filename}
 ```
 
@@ -186,10 +195,20 @@ ontologies:
 
 generation:
   artifacts:
-    - name: "myNewOntology"
-      shape_file: "myNewOntologyShapes.ttl"
-      json_schema: "myNewOntology.schema.json"
-      typescript: "myNewOntology.ts"
+    - myNewOntology
+
+conversion:
+  shacl_to_json:
+    myNewOntology:
+      name: "My New Ontology"
+      input: "shapes/v0.1/myNewOntologyShapes.ttl"
+      output: "build/v0.1/myNewOntology.schema.json"
+  json_to_ts:
+    myNewOntology:
+      name: "My New Ontology"
+      input: "build/v0.1/myNewOntology.schema.json"
+      output: "build/v0.1/myNewOntology.ts"
+      source: "shapes/v0.1/myNewOntologyShapes.ttl"
 ```
 
 Scripts will automatically include the new component in processing.
@@ -211,6 +230,7 @@ ImportError: cannot import name 'load_config'
 ```
 
 **Solution**: Install dependencies:
+
 ```bash
 pip install -r scripts/requirements.txt
 ```

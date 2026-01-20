@@ -33,7 +33,6 @@ class Config:
         self.shapes_version: str = config_data.get("shapes_version", "v0.1")
         self.examples_version: str = config_data.get("examples_version", "v0.1")
         self.codelists_version: str = config_data.get("codelists_version", "v0.1")
-        self.contexts_version: str = config_data.get("contexts_version", "v0.1")
         self.build_version: str = config_data.get("build_version", "v0.1")
         
         # Paths
@@ -45,7 +44,29 @@ class Config:
         # Component configurations
         self.ontologies: List[Dict[str, str]] = config_data.get("ontologies", [])
         self.shapes: List[Dict[str, str]] = config_data.get("shapes", [])
-        self.generation_artifacts: List[Dict[str, str]] = config_data.get("generation", {}).get("artifacts", [])
+        # Generation artifacts: list of string IDs only.
+        # Each ID must exist in conversion.shacl_to_json.<id> and conversion.json_to_ts.<id>
+        raw_artifacts = (config_data.get("generation", {}) or {}).get("artifacts", [])
+        if raw_artifacts is None:
+            raw_artifacts = []
+        if not isinstance(raw_artifacts, list):
+            raise ValueError(
+                "generation.artifacts must be a list of strings (artifact ids). "
+                f"Got: {type(raw_artifacts).__name__}"
+            )
+
+        normalized: List[Dict[str, Any]] = []
+        for item in raw_artifacts:
+            if not isinstance(item, str):
+                raise ValueError(
+                    "generation.artifacts must contain only strings (artifact ids). "
+                    f"Found: {type(item).__name__}"
+                )
+            if item.strip() == "":
+                raise ValueError("generation.artifacts contains an empty string")
+            normalized.append({"name": item})
+
+        self.generation_artifacts = normalized
         
         # Validation config
         self.validation: Dict[str, Any] = config_data.get("validation", {})
@@ -127,8 +148,11 @@ class Config:
         return f"{self.paths['codelists']}/{self.codelists_version}/{filename}"
     
     def get_contexts_path(self, filename: str) -> str:
-        """Get versioned path to contexts file (no 'v' prefix)."""
-        return f"{self.paths['contexts']}/{self.contexts_version}/{filename}"
+        """Get versioned path to a JSON-LD context file.
+
+        Contexts are treated as build artifacts and live under build/<build_version>/.
+        """
+        return self.get_build_path(filename)
     
     def get_build_path(self, filename: str) -> str:
         """Get versioned path to build output file."""
@@ -157,6 +181,7 @@ class Config:
         elif component == "codelists":
             path = self.get_codelists_path(filename)
         elif component == "contexts":
+            # Contexts are published under build/<build_version>/
             path = self.get_contexts_path(filename)
         else:
             raise ValueError(f"Unknown component: {component}")
@@ -178,6 +203,27 @@ class Config:
     def get_validation_examples(self) -> List[Dict[str, str]]:
         """Get list of SHACL validation examples."""
         return self.validation.get("shacl_examples", [])
+
+    def get_validation_shacl_config(self) -> Dict[str, Any]:
+        """Get SHACL validation configuration block."""
+        return (self.validation.get("shacl", {}) or {})
+
+    def get_validation_shacl_scenarios(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured SHACL validation scenarios (validation.shacl.scenarios)."""
+        shacl_cfg = self.get_validation_shacl_config()
+        return (shacl_cfg.get("scenarios", {}) or {})
+
+    def get_conversion_json_to_ts(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured JSON Schema → TypeScript conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("json_to_ts", {}) or {}
+
+    def get_conversion_shacl_to_json(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured SHACL → JSON Schema conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("shacl_to_json", {}) or {}
+
+    def get_conversion_shacl_to_context(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured SHACL → JSON-LD Context conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("shacl_to_context", {}) or {}
     
     def get_owl_validation_config(self) -> Dict[str, Any]:
         """Get OWL validation configuration."""

@@ -90,10 +90,38 @@ def format_multilang(d: Dict[str, List[str]]) -> str:
 def extract_entities(g: rdflib.Graph, rdf_type) -> List[rdflib.term.Identifier]:
     return sorted(set(g.subjects(RDF.type, rdf_type)), key=lambda u: str(u))
 
-def build_index_row(name: str, classes: int, obj_props: int, data_props: int, shapes: Optional[int] = None) -> str:
+def _normalize_artifact_key(stem: str) -> str:
+    """Normaliza nombres de ficheros a una clave de ontología.
+
+    Soporta convenciones como:
+    - <OntologyName>Shapes.ttl
+    - <ontology>.shacl.ttl
+    - <ontology>.context.jsonld
+    """
+    key = stem
+    # Strip common suffixes (order matters)
+    for suffix in (".shacl", "-shacl", "_shacl", ".context", "-context", "_context"):
+        if key.endswith(suffix):
+            key = key[: -len(suffix)]
+    if key.endswith("Shapes"):
+        key = key[: -len("Shapes")]
+    return key
+
+
+def build_index_row(
+    name: str,
+    classes: int,
+    obj_props: int,
+    data_props: int,
+    shapes: Optional[int] = None,
+    contexts: Optional[int] = None,
+) -> str:
+    cols: List[str] = [name, str(classes), str(obj_props), str(data_props)]
     if shapes is not None:
-        return f"| {name} | {classes} | {obj_props} | {data_props} | {shapes} |"
-    return f"| {name} | {classes} | {obj_props} | {data_props} |"
+        cols.append(str(shapes))
+    if contexts is not None:
+        cols.append(str(contexts))
+    return "| " + " | ".join(cols) + " |"
 
 def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
     """Extrae metadatos simples del grafo (title, description, creator, contributor, version, date, imports).
@@ -453,6 +481,7 @@ def main():
     parser.add_argument('--diagram-max-classes', type=int, default=150, help='Umbral máximo de clases para intentar generar diagrama')
     parser.add_argument('--include-shapes', action='store_true', help='Procesar shapes SHACL y generar documentación')
     parser.add_argument('--shapes-dir', default='shapes', help='Directorio con archivos de shapes .ttl')
+    parser.add_argument('--contexts-dir', default=None, help='Directorio con contextos JSON-LD (para contador #Contexts)')
     parser.add_argument('--verbose', action='store_true', help='Activar logging detallado')
     args = parser.parse_args()
 
@@ -483,7 +512,7 @@ def main():
                 try:
                     sg = rdflib.Graph()
                     sg.parse(str(f), format='turtle')
-                    key = f.stem.replace('Shapes', '')  # Convención: <OntologyName>Shapes.ttl
+                    key = _normalize_artifact_key(f.stem)
                     shapes_graphs[key] = sg
                     LOGGER.debug(f"Shapes cargados: {f.name} -> clave {key}")
                 except Exception as e:
@@ -491,10 +520,34 @@ def main():
         else:
             LOGGER.warning(f"Directorio de shapes no existe: {shapes_dir}")
 
+    contexts_by_ontology: Dict[str, int] = {}
+    include_contexts = bool(args.contexts_dir)
+    if include_contexts:
+        contexts_dir = Path(args.contexts_dir)
+        if contexts_dir.exists():
+            for f in contexts_dir.glob('*.context.jsonld'):
+                key = _normalize_artifact_key(f.stem)
+                contexts_by_ontology[key] = contexts_by_ontology.get(key, 0) + 1
+                LOGGER.debug(f"Context detectado: {f.name} -> clave {key}")
+        else:
+            LOGGER.warning(f"Directorio de contexts no existe: {contexts_dir}")
+
+    # Construcción de cabecera dinámica
+    header_cols = ["Ontología", "#Clases", "#ObjProps", "#DataProps"]
+    sep_cols = ["-----------", "---------", "-----------", "-----------"]
     if args.include_shapes:
-        index_lines = ["# Índice de Ontologías", "", "| Ontología | #Clases | #ObjProps | #DataProps | #Shapes |", "|-----------|---------|-----------|-----------|---------|"]
-    else:
-        index_lines = ["# Índice de Ontologías", "", "| Ontología | #Clases | #ObjProps | #DataProps |", "|-----------|---------|-----------|-----------|"]
+        header_cols.append("#Shapes")
+        sep_cols.append("---------")
+    if include_contexts:
+        header_cols.append("#Contexts")
+        sep_cols.append("-----------")
+
+    index_lines = [
+        "# Índice de Ontologías",
+        "",
+        "| " + " | ".join(header_cols) + " |",
+        "| " + " | ".join(sep_cols) + " |",
+    ]
 
     for ttl in ttl_files:
         g = rdflib.Graph()
@@ -513,8 +566,21 @@ def main():
         # When include_shapes is True, always pass a shapes count (0 if missing/failed)
         if args.include_shapes:
             shapes_count = shapes_count if shapes_count is not None else 0
+
+        contexts_count: Optional[int] = None
+        if include_contexts:
+            contexts_count = contexts_by_ontology.get(name, 0)
         
-        index_lines.append(build_index_row(name, len(classes), len(obj_props), len(data_props), shapes_count))
+        index_lines.append(
+            build_index_row(
+                name,
+                len(classes),
+                len(obj_props),
+                len(data_props),
+                shapes_count,
+                contexts_count,
+            )
+        )
 
         ont_out_dir = out_dir / name
         ont_out_dir.mkdir(parents=True, exist_ok=True)
