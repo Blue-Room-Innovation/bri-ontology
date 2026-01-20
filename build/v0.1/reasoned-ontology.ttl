@@ -341,6 +341,11 @@
 #    Classes
 #################################################################
 
+###  http://schema.org/Organization
+<http://schema.org/Organization> rdf:type owl:Class ;
+                                 rdfs:subClassOf owl:Thing .
+
+
 ###  http://www.w3.org/2004/02/skos/core#Concept
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class ;
                                               rdfs:subClassOf owl:Thing .
@@ -445,6 +450,13 @@
 <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassport> rdf:type owl:Class ;
                                                                                                                                 rdfs:subClassOf <https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport> ;
                                                                                                                                 rdfs:comment "The WastePassport class encapsulates comprehensive information about a specific waste entity, including its identification details, classification, and traceability attributes. It provides a structured framework to document the waste’s origin, composition, performance, and associated materials, enabling consistent tracking and reporting throughout its lifecycle" .
+
+
+###  https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#Recycler
+<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#Recycler> rdf:type owl:Class ;
+                                                                                                                rdfs:subClassOf <http://schema.org/Organization> ;
+                                                                                                                rdfs:comment "An organization that processes waste materials for recycling"@en ;
+                                                                                                                rdfs:label "Recycler"@en .
 
 
 ###  https://test.uncefact.org/vocabulary/untp/core/0/Product

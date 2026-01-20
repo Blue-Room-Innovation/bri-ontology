@@ -14,5 +14,5 @@
 | RecyclingOrganisationShape | Recycler | url |  |  |  | 1 |  |  |
 | RecyclingOrganisationShape | Recycler | latitude | double |  |  | 1 |  |  |
 | RecyclingOrganisationShape | Recycler | longitude | double |  |  | 1 |  |  |
-| RecyclingOrganisationShape | Recycler | adaptedToRD1102015 |  |  |  | 1 |  |  |
+| RecyclingOrganisationShape | Recycler | adaptedToRD1102015 | boolean |  |  | 1 |  |  |
 | RecyclingOrganisationShape | Recycler | wasteTreatmentActivity | string |  | 1 |  |  |  |
