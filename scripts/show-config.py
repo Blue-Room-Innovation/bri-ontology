@@ -49,15 +49,21 @@ def main():
             shacl_s = (conv_shacl_to_json or {}).get(name) or {}
             ctx_s = (conv_shacl_to_context or {}).get(name) or {}
             ts_s = (conv_json_to_ts or {}).get(name) or {}
+
+            # Show everything that is expected to be generated for this artifact
+            # (faithful to config.yml): schema output, TS output, and optional context output.
             if shacl_s:
-                print(f"     source: {shacl_s.get('input', 'N/A')}")
+                print(f"     shacl:  {shacl_s.get('input', 'N/A')}")
                 print(f"     schema: {shacl_s.get('output', 'N/A')}")
                 if shacl_s.get("naming"):
                     print(f"     naming: {shacl_s.get('naming')}")
+                # When naming=context, this is the context file used during schema generation
                 if shacl_s.get("context"):
-                    print(f"     context: {shacl_s.get('context')}")
+                    print(f"     schema-context: {shacl_s.get('context')}")
+
             if ctx_s:
-                print(f"     context-output: {ctx_s.get('output', 'N/A')}")
+                print(f"     context: {ctx_s.get('output', 'N/A')}")
+
             if ts_s:
                 print(f"     ts:     {ts_s.get('output', 'N/A')}")
                 if ts_s.get("source"):
@@ -109,6 +115,39 @@ def main():
                 print(f"     name:   {scenario.get('name', 'N/A')}")
                 print(f"     input:  {scenario.get('input', 'N/A')}")
                 print(f"     output: {scenario.get('output', 'N/A')}")
+
+        print("\n🧪 Validation")
+        print("=" * 50)
+
+        owl_cfg = config.get_owl_validation_config() or {}
+        print("\n  OWL")
+        ontology_glob = f"{config.paths.get('ontology', 'ontology')}/{config.ontology_version}/*.ttl"
+        codelists_glob = f"{config.paths.get('codelists', 'codelists')}/{config.codelists_version}/**/*.ttl"
+        include_codelists = owl_cfg.get("include_codelists", "N/A")
+
+        print(f"     inputs:            auto ({ontology_glob})")
+        if include_codelists is True:
+            print(f"     inputs+codelists:  auto ({codelists_glob})")
+        print(f"     reasoner:          {owl_cfg.get('reasoner', 'N/A')}")
+        print(f"     profile:           {owl_cfg.get('profile', 'N/A')}")
+        print(f"     include_codelists: {include_codelists}")
+
+        shacl_scenarios = config.get_validation_shacl_scenarios() or {}
+        print("\n  SHACL Scenarios")
+        if not shacl_scenarios:
+            print("     (none)")
+        else:
+            for key in sorted(shacl_scenarios.keys()):
+                scenario = shacl_scenarios.get(key) or {}
+                print(f"\n     • {key}")
+                print(f"        name:        {scenario.get('name', 'N/A')}")
+                print(f"        description: {scenario.get('description', 'N/A')}")
+                print(f"        data:        {scenario.get('data', 'N/A')}")
+                print(f"        shapes:      {scenario.get('shapes', 'N/A')}")
+                print(f"        format:      {scenario.get('format', 'N/A')}")
+                # Keep faithful to config.yml: print extras even if empty string
+                if "extras" in scenario:
+                    print(f"        extras:      {scenario.get('extras')}")
         print()
     except FileNotFoundError as e:
         print(f"❌ Error: {e}", file=sys.stderr)
