@@ -1,20 +1,23 @@
 {
   "@context": "../../build/v0.1/recycling.context.jsonld",
   "@type": "Recycler",
-  "managerCode": "eiusmod Duis quis incididunt",
-  "nimaCode": "officia",
-  "name": "est eu elit dolore",
-  "streetAddress": "dolor est sint",
-  "addressLocality": "nulla consequat",
-  "postalCode": "in consectetur sed",
-  "telephone": "qui ut in eu",
-  "faxNumber": "cupidatat",
-  "email": "laboris pariatur",
+  "managerCode": "laborum",
+  "nimaCode": "sit proident est sed cupidatat",
+  "name": "dolor reprehenderit eu laborum aute",
+  "streetAddress": "sed sunt incididunt nulla",
+  "addressLocality": "enim tempor fugiat et",
+  "postalCode": "cillum dolor laborum id",
+  "correspondeceAddress": "anim",
+  "correspondeceAddressLocality": "enim",
+  "correspondecePostalCode": "laboris est officia",
+  "telephone": "exercitation velit ipsum in cupidatat",
+  "faxNumber": "aliquip labore nostrud",
+  "email": "adipisicing",
   "url": {
-    "@id": "http://example.cat"
+    "@id": "https://XHsIOMRfRocDfku.oryI8,rmWEOuGqtChnRDeRD9vp5nh6XJOF0c90v2YSw"
   },
-  "lat": -85.77639435600175,
-  "long": 16.9527833017753,
+  "latitude": -22.272395068749418,
+  "longitude": -157.81622160552345,
   "adaptedToRD1102015": true,
-  "wasteTreatmentActivity": "culpa deserunt"
+  "wasteTreatmentActivity": "sit"
 }

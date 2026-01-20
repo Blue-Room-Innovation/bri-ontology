@@ -27,6 +27,15 @@
         "postalCode": {
           "type": "string"
         },
+        "correspondeceAddress": {
+          "type": "string"
+        },
+        "correspondeceAddressLocality": {
+          "type": "string"
+        },
+        "correspondecePostalCode": {
+          "type": "string"
+        },
         "telephone": {
           "type": "string"
         },
@@ -81,8 +90,19 @@
         "streetAddress",
         "addressLocality",
         "postalCode",
+        "correspondeceAddress",
+        "correspondeceAddressLocality",
+        "correspondecePostalCode",
+        "telephone",
+        "faxNumber",
+        "email",
+        "url",
+        "latitude",
+        "longitude",
+        "adaptedToRD1102015",
         "wasteTreatmentActivity"
-      ]
+      ],
+      "additionalProperties": false
     }
   },
   "type": "object",
@@ -103,6 +123,15 @@
       "type": "string"
     },
     "postalCode": {
+      "type": "string"
+    },
+    "correspondeceAddress": {
+      "type": "string"
+    },
+    "correspondeceAddressLocality": {
+      "type": "string"
+    },
+    "correspondecePostalCode": {
       "type": "string"
     },
     "telephone": {
@@ -159,6 +188,17 @@
     "streetAddress",
     "addressLocality",
     "postalCode",
+    "correspondeceAddress",
+    "correspondeceAddressLocality",
+    "correspondecePostalCode",
+    "telephone",
+    "faxNumber",
+    "email",
+    "url",
+    "latitude",
+    "longitude",
+    "adaptedToRD1102015",
     "wasteTreatmentActivity"
-  ]
+  ],
+  "additionalProperties": false
 }
