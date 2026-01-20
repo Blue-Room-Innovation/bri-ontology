@@ -7,6 +7,7 @@
     "schema": "https://schema.org/",
     "sh": "http://www.w3.org/ns/shacl#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Recycler": "bri-recycling:Recycler",
     "adaptedToRD1102015": "bri-recycling:adaptedToRD1102015",
     "addressLocality": "schema:addressLocality",
     "email": "schema:email",

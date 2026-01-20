@@ -79,6 +79,13 @@ def _iter_property_paths(graph: Graph) -> Iterable[URIRef]:
                 yield path
 
 
+def _iter_target_classes(graph: Graph) -> Iterable[URIRef]:
+    for shape in graph.subjects(RDF.type, SH.NodeShape):
+        for target_class in graph.objects(shape, SH.targetClass):
+            if isinstance(target_class, URIRef):
+                yield target_class
+
+
 @dataclass
 class TermChoice:
     term: str
@@ -92,14 +99,22 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     local_to_iri: Dict[str, str] = {}
     collisions: Dict[str, Set[str]] = {}
 
-    for path in _iter_property_paths(graph):
-        iri = str(path)
+    def add_candidate(uri: URIRef) -> None:
+        iri = str(uri)
         local = _local_name(iri)
         prev = local_to_iri.get(local)
         if prev is None:
             local_to_iri[local] = iri
         elif prev != iri:
             collisions.setdefault(local, set()).update({prev, iri})
+
+    # Properties
+    for path in _iter_property_paths(graph):
+        add_candidate(path)
+
+    # Classes (so JSON-LD can use "@type": "LocalName")
+    for target_class in _iter_target_classes(graph):
+        add_candidate(target_class)
 
     # Build final terms, resolving collisions
     terms: Dict[str, str] = {}
