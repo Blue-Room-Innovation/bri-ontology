@@ -24,6 +24,7 @@
     "convert:shacl": "node docker/docker.js run convert:shacl",
     "convert:context": "node docker/docker.js run convert:context",
     "convert:ts": "node docker/docker.js run convert:ts",
+    "convert:ts:list": "node docker/docker.js run cli convert ts --list",
     "build": "npm run generate:types",
     "build:all": "npm run validate:owl:with-codelists && npm run generate:all",
     "release:version": "node docker/docker.js run release:version",

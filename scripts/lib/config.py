@@ -181,6 +181,14 @@ class Config:
     def get_validation_examples(self) -> List[Dict[str, str]]:
         """Get list of SHACL validation examples."""
         return self.validation.get("shacl_examples", [])
+
+    def get_conversion_json_to_ts(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured JSON Schema → TypeScript conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("json_to_ts", {}) or {}
+
+    def get_conversion_shacl_to_json(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured SHACL → JSON Schema conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("shacl_to_json", {}) or {}
     
     def get_owl_validation_config(self) -> Dict[str, Any]:
         """Get OWL validation configuration."""

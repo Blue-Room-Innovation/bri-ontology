@@ -81,6 +81,12 @@ generation:
       json_schema: "digitalMarpolWastePassport.schema.json"
       typescript: "digitalMarpolWastePassport.ts"
 
+    - name: "recycling"
+      shape_file: "recycling.shacl.ttl"
+      json_schema: "recycling.schema.json"
+      typescript: "recycling.ts"
+      naming: "local"
+
 # Validation Configuration
 # ------------------------
 # Define all your validation scenarios here. You can run them by name:
@@ -147,7 +153,7 @@ conversion:
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
     recycling:
-      name: "Recycling (generated context)"
+      name: "Recycling"
       input: "shapes/v0.1/recycling.shacl.ttl"
       output: "build/v0.1/recycling.context.jsonld"
 
@@ -170,6 +176,8 @@ conversion:
       input: "build/v0.1/recycling.schema.json"
       output: "build/v0.1/recycling.ts"
       source: "shapes/v0.1/recycling.shacl.ttl"
+
+
 
 # Wiki Documentation Configuration
 # --------------------------------

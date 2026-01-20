@@ -116,6 +116,17 @@ class TypeScriptGenerator:
             "--input", str(shape_file),
             "--output", str(json_schema_file)
         ]
+
+        naming = config.get("naming")
+        if naming:
+            cmd.extend(["--naming", str(naming)])
+
+        context = config.get("context")
+        if context:
+            context_path = Path(str(context))
+            if not context_path.is_absolute():
+                context_path = self.workspace_root / context_path
+            cmd.extend(["--context", str(context_path)])
         
         if self.verbose:
             cmd.append("--verbose")

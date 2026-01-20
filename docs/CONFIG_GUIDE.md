@@ -6,9 +6,10 @@
 
 1. [Overview](#overview)
 2. [Validation Configuration](#validation-configuration)
-3. [Conversion Configuration](#conversion-configuration)
-4. [Adding New Scenarios](#adding-new-scenarios)
-5. [Examples](#examples)
+3. [Generation Configuration](#generation-configuration)
+4. [Conversion Configuration](#conversion-configuration)
+5. [Adding New Scenarios](#adding-new-scenarios)
+6. [Examples](#examples)
 
 ---
 
@@ -60,6 +61,27 @@ When you run `npm run validate:shacl` without a name, the CLI validates **all** 
 
 ---
 
+## Generation Configuration
+
+When you run `npm run generate:types` (full pipeline **SHACL → JSON Schema → TypeScript**), the tool reads **only** this section:
+
+```yaml
+generation:
+  artifacts:
+    - name: "recycling"
+      shape_file: "recycling.shacl.ttl"
+      json_schema: "recycling.schema.json"
+      typescript: "recycling.ts"
+      # Optional: how properties are named in generated JSON Schema
+      naming: "local" # curie|local|context
+      # Optional (when naming=context): JSON-LD context file
+      # context: "build/v0.1/recycling.context.jsonld"
+```
+
+This is the canonical list of artifacts you want under `build/<build_version>/`.
+
+---
+
 ## Conversion Configuration
 
 ### SHACL to JSON Schema
@@ -87,6 +109,12 @@ conversion:
       input: "build/v0.1/input.schema.json"
       output: "build/v0.1/output.ts"
       source: "shapes/v0.1/original-shapes.ttl" # For documentation banner
+```
+
+You can also run it with explicit overrides:
+
+```bash
+node docker/docker.js run cli convert ts -- -i build/v0.1/my.schema.json -o build/v0.1/my.ts
 ```
 
 ---
