@@ -464,12 +464,14 @@ def main(argv: Optional[List[str]] = None) -> int:
             wiki_script = workspace_root / "scripts" / "lib" / "generate_wiki.py"
             # Construir path de shapes amb la versió del config
             shapes_dir = f"{config_obj.paths['shapes']}/{config_obj.shapes_version}"
+            contexts_dir = f"{config_obj.paths['build']}/{config_obj.build_version}"
             cmd = [
                 sys.executable,
                 str(wiki_script),
                 "--ontology-dir", ns.ontology_dir,
                 "--output-dir", ns.output_dir,
                 "--shapes-dir", shapes_dir,
+                "--contexts-dir", contexts_dir,
             ]
             if ns.include_codelists:
                 cmd.append("--include-codelists")
