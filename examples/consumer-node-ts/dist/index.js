@@ -1,14 +1,17 @@
-import { createValidator } from "@blueroominnovation/ontology-contracts";
+import { createValidator, } from "@blueroominnovation/ontology-contracts";
 const validator = createValidator();
-const schemaKey = "digitalWastePassport";
+const schemaKey = "recycling";
 const payload = {
-    "dct:issued": "2026-01-16T00:00:00Z",
-    "dct:publisher": "example-publisher",
-    "dwp:credentialSubject": {
-        "dwp:waste": {
-            "unece:name": "Example waste",
-            "unece:productName": "Example product"
-        }
+    "adaptedToRD1102015": true,
+    "addressLocality": "asdf",
+    managerCode: "123",
+    name: "2134",
+    nimaCode: "1",
+    postalCode: "123",
+    streetAddress: "asdf",
+    wasteTreatmentActivity: "34",
+    url: {
+        "@id": "http://example.cat"
     }
 };
 const result = validator.validate(payload, schemaKey);
@@ -16,5 +19,4 @@ if (!result.ok) {
     console.error("Validation failed", result.errors);
     process.exit(1);
 }
-const typed = result.value;
-console.log("Validation OK, issued:", typed["dct:issued"]);
+console.log("Validation OK :", result.value);
