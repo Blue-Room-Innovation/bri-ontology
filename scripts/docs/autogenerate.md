@@ -17,12 +17,14 @@ shacl-to-jsonschema.py → jsonschema-to-typescript.py
 ```
 
 **Avantatges:**
+
 - ✅ Execució automàtica de tots els passos
 - ✅ Gestió centralitzada de múltiples fitxers
 - ✅ Configuració predefinida per als passaports digitals del projecte
 - ✅ Un sol comandament per generar tot
 
 **Scripts subjacents:**
+
 1. **[shacl-to-jsonschema.py](./shacl-to-jsonschema.md)**: Converteix SHACL → JSON Schema
 2. **[jsonschema-to-typescript.py](./jsonschema-to-typescript.md)**: Converteix JSON Schema → TypeScript
 
@@ -47,23 +49,28 @@ Els tipus TypeScript generats:
 ## 🔧 Requisits
 
 ### Python
+
 ```bash
 pip install -r requirements.txt
 ```
 
 Dependències Python:
+
 - `rdflib>=7.0.0`
 - `pyshacl>=0.25.0`
 
 ### Node.js
+
 ```bash
 npm install
 ```
 
 Dependències Node.js (s'instal·len automàticament):
+
 - `json-schema-to-typescript>=14.1.0`
 
 **Versions recomanades:**
+
 - Python 3.8+
 - Node.js 18+
 
@@ -84,16 +91,19 @@ npm run autogenerate
 ```
 
 Aquest comandament:
+
 1. Executa `shacl-to-jsonschema.py` per cada shape configurat
 2. Executa `jsonschema-to-typescript.py` per cada JSON Schema generat
 
 **Genera automàticament:**
 
 **JSON Schemas:**
+
 - `build/digitalWastePassport.schema.json`
 - `build/digitalMarpolWastePassport.schema.json`
 
 **TypeScript:**
+
 - `build/digitalWastePassport.ts`
 - `build/digitalMarpolWastePassport.ts`
 
@@ -141,6 +151,7 @@ python scripts/jsonschema-to-typescript.py \
 ```
 
 **Vegeu:**
+
 - [shacl-to-jsonschema.md](./shacl-to-jsonschema.md) - Documentació del pas 1
 - [jsonschema-to-typescript.md](./jsonschema-to-typescript.md) - Documentació del pas 2
 
@@ -153,6 +164,7 @@ python scripts/jsonschema-to-typescript.py \
 Per cada shape SHACL, es generen:
 
 **Interfícies TypeScript** amb:
+
 - Tipus primitius (string, number, boolean, etc.)
 - Propietats opcionals i requerides
 - Arrays (basats en sh:minCount/sh:maxCount)
@@ -174,17 +186,17 @@ export interface DigitalWastePassport {
    * Identificador únic del passaport
    */
   passportId: string;
-  
+
   /**
    * Data de creació del passaport
    */
   createdAt: string;
-  
+
   /**
    * Tipus de residu
    */
   wasteType?: "HAZARDOUS" | "NON_HAZARDOUS" | "RECYCLABLE";
-  
+
   /**
    * Materials del residu
    */
@@ -220,7 +232,7 @@ import { DigitalWastePassport } from './build/digitalWastePassport';
     pip install -r requirements.txt
     npm install
     python scripts/generate-typescript.py
-    
+
 - name: Verify types
   run: |
     npx tsc --noEmit build/*.ts
@@ -241,7 +253,7 @@ npm run generate:typescript
 ### 1. Desenvolupament Frontend/Backend TypeScript
 
 ```typescript
-import { DigitalWastePassport } from './build/digitalWastePassport';
+import { DigitalWastePassport } from "./build/digitalWastePassport";
 
 function processPassport(passport: DigitalWastePassport) {
   // TypeScript valida els tipus automàticament
@@ -253,9 +265,9 @@ function processPassport(passport: DigitalWastePassport) {
 ### 2. Validació JSON amb tipus
 
 ```typescript
-import Ajv from 'ajv';
-import schema from './build/digitalWastePassport.schema.json';
-import { DigitalWastePassport } from './build/digitalWastePassport';
+import Ajv from "ajv";
+import schema from "./build/digitalWastePassport.schema.json";
+import { DigitalWastePassport } from "./build/digitalWastePassport";
 
 const ajv = new Ajv();
 const validate = ajv.compile<DigitalWastePassport>(schema);
@@ -269,7 +281,7 @@ if (validate(data)) {
 ### 3. Generació de formularis
 
 ```typescript
-import { DigitalWastePassport } from './build/digitalWastePassport';
+import { DigitalWastePassport } from "./build/digitalWastePassport";
 
 // Els tipus ajuden a generar formularis type-safe
 const formSchema = generateForm<DigitalWastePassport>({
@@ -284,6 +296,7 @@ const formSchema = generateForm<DigitalWastePassport>({
 ### Error: "Node.js is not installed"
 
 **Solució:**
+
 ```bash
 # Instal·la Node.js des de https://nodejs.org/
 # Verifica la instal·lació:
@@ -293,6 +306,7 @@ node --version
 ### Error: "json-schema-to-typescript not found"
 
 **Solució:**
+
 ```bash
 npm install
 ```
@@ -301,6 +315,7 @@ npm install
 
 **Solució:**
 Verifica que els fitxers SHACL són vàlids Turtle:
+
 ```bash
 bash scripts/validate-shacl.sh
 ```
@@ -308,6 +323,7 @@ bash scripts/validate-shacl.sh
 ### Warnings durant la generació
 
 Els warnings són normals i indiquen:
+
 - Constraints SHACL no convertibles a JSON Schema (ex: sh:sparql)
 - sh:or, sh:xone, sh:and que tenen conversió parcial
 - sh:class sense shape corresponent
@@ -356,26 +372,24 @@ Ontologia/
 
 ### Configuració dels fitxers a processar
 
-Els fitxers que es processen estan configurats dins de `autogenerate.py`:
+Els artefactes que es processen es configuren a `config.yml`.
 
-```python
-self.shape_configs = [
-    {
-        "name": "digitalWastePassport",
-        "shape_file": "digitalWastePassportShapes.ttl",
-        "json_schema": "digitalWastePassport.schema.json",
-        "typescript": "digitalWastePassport.ts"
-    },
-    {
-        "name": "digitalMarpolWastePassport",
-        "shape_file": "digitalMarpolWastePassportShapes.ttl",
-        "json_schema": "digitalMarpolWastePassport.schema.json",
-        "typescript": "digitalMarpolWastePassport.ts"
-    }
-]
+La llista “què genero” és:
+
+```yaml
+generation:
+  artifacts:
+    - dwp
+    - dmwp
+    - recycling
 ```
 
-Per afegir nous shapes, afegeix una nova entrada a aquesta llista i reinicia el script.
+I els paths concrets (input/output) estan explícits als conversions:
+
+- `conversion.shacl_to_json.<id>` (SHACL → JSON Schema)
+- `conversion.json_to_ts.<id>` (JSON Schema → TypeScript)
+
+Per afegir un nou contracte, afegeix l’ID a `generation.artifacts` i defineix els dos scenarios de conversió corresponents.
 
 ### Limitacions conegudes
 

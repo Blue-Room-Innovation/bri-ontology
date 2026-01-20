@@ -25,10 +25,14 @@ Exemple: afegeixes una nova shape que vols publicar com a schema validable.
 
 Manualment has de fer:
 
-Afegir l’entrada nova a generation.artifacts a config.yml amb:
-name (això serà el schemaKey tipat que veurà el consumidor)
-json_schema (nom del fitxer .schema.json dins build/<version>/)
-typescript (nom del fitxer .ts dins build/<version>/)
+Afegir l’entrada nova a generation.artifacts a config.yml amb només l’ID (schemaKey) que veurà el consumidor (ex: dwp, dmwp, recycling).
+
+I definir els paths concrets als conversions:
+
+- conversion.shacl_to_json.<id> (input/output + opcions com naming)
+- conversion.json_to_ts.<id> (input/output + source)
+
+Els noms de fitxer (.schema.json i .ts) es deriven dels `output` d’aquestes conversions.
 Assegurar que el pipeline realment genera aquests fitxers a build/<build_version>/
 npm run generate:types (o equivalent)
 npm run contracts:build
@@ -58,7 +62,7 @@ npm run contracts:test
 I ja està: els consumidors que importin:
 
 @blueroominnovation/ontology-contracts/current
-@blueroominnovation/ontology-contracts/schemas/current/*
+@blueroominnovation/ontology-contracts/schemas/current/\*
 passen a veure el nou “current” automàticament.
 3B) Vull tenir imports versionats explícits (ex: /v0.2) com a API estable
 Això encara NO és 100% automàtic: avui mantenim /v0.1 fix i current dinàmic.
@@ -67,7 +71,7 @@ Manualment, a més del 3A, hauries de:
 
 Afegir un entrypoint de versió nou (ex: ./v0.2) a package.json dins exports
 Crear el fitxer packages/ontology-contracts/src/v0.2/index.ts (barrel de tipus) i exportar-lo des de l’entrypoint principal si vols
-(Opcional) Afegir ./schemas/v0.2/* a exports si vols accés directe als fitxers versionats
+(Opcional) Afegir ./schemas/v0.2/\* a exports si vols accés directe als fitxers versionats
 Si no necessites imports versionats, recomano quedar-te amb current i evitar aquest cost.
 
 Cas 4) Publicar una nova release del paquet

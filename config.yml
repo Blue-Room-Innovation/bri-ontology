@@ -71,21 +71,9 @@ shapes:
 generation:
   # Artifacts to generate (SHACL → JSON Schema → TypeScript)
   artifacts:
-    - name: "digitalWastePassport"
-      shape_file: "digitalWastePassportShapes.ttl"
-      json_schema: "digitalWastePassport.schema.json"
-      typescript: "digitalWastePassport.ts"
-
-    - name: "digitalMarpolWastePassport"
-      shape_file: "digitalMarpolWastePassportShapes.ttl"
-      json_schema: "digitalMarpolWastePassport.schema.json"
-      typescript: "digitalMarpolWastePassport.ts"
-
-    - name: "recycling"
-      shape_file: "recycling.shacl.ttl"
-      json_schema: "recycling.schema.json"
-      typescript: "recycling.ts"
-      naming: "local"
+    - dwp
+    - dmwp
+    - recycling
 
 # Validation Configuration
 # ------------------------
@@ -176,8 +164,6 @@ conversion:
       input: "build/v0.1/recycling.schema.json"
       output: "build/v0.1/recycling.ts"
       source: "shapes/v0.1/recycling.shacl.ttl"
-
-
 
 # Wiki Documentation Configuration
 # --------------------------------

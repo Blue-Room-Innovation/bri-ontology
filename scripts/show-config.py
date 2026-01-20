@@ -36,25 +36,34 @@ def main():
         artifacts = config.get_generation_artifacts()
         if not artifacts:
             print("  (none)")
+
+        conv_shacl_to_json = config.get_conversion_shacl_to_json()
+        conv_shacl_to_context = config.get_conversion_shacl_to_context()
+        conv_json_to_ts = config.get_conversion_json_to_ts()
+
         for artifact in artifacts:
             name = (artifact or {}).get("name", "(unnamed)")
-            shape_file = (artifact or {}).get("shape_file")
-            json_schema = (artifact or {}).get("json_schema")
-            typescript = (artifact or {}).get("typescript")
-            naming = (artifact or {}).get("naming")
-            context = (artifact or {}).get("context")
-
             print(f"\n  • {name}")
-            if shape_file:
-                print(f"     source: {config.get_shapes_path(str(shape_file))}")
-            if json_schema:
-                print(f"     input:  {config.get_build_path(str(json_schema))}")
-            if typescript:
-                print(f"     output: {config.get_build_path(str(typescript))}")
-            if naming:
-                print(f"     naming: {naming}")
-            if context:
-                print(f"     context: {context}")
+
+            # Resolve via conversion configs
+            shacl_s = (conv_shacl_to_json or {}).get(name) or {}
+            ctx_s = (conv_shacl_to_context or {}).get(name) or {}
+            ts_s = (conv_json_to_ts or {}).get(name) or {}
+            if shacl_s:
+                print(f"     source: {shacl_s.get('input', 'N/A')}")
+                print(f"     schema: {shacl_s.get('output', 'N/A')}")
+                if shacl_s.get("naming"):
+                    print(f"     naming: {shacl_s.get('naming')}")
+                if shacl_s.get("context"):
+                    print(f"     context: {shacl_s.get('context')}")
+            if ctx_s:
+                print(f"     context-output: {ctx_s.get('output', 'N/A')}")
+            if ts_s:
+                print(f"     ts:     {ts_s.get('output', 'N/A')}")
+                if ts_s.get("source"):
+                    print(f"     banner-source: {ts_s.get('source')}")
+            if not shacl_s and not ts_s and not ctx_s:
+                print("     (no matching conversion scenario found)")
 
         conversions = config.get_conversion_json_to_ts()
         print("\n🔁 Conversion: JSON Schema → TypeScript")
@@ -87,6 +96,19 @@ def main():
                     print(f"     naming: {scenario.get('naming')}")
                 if scenario.get("context"):
                     print(f"     context: {scenario.get('context')}")
+
+        shacl_to_context = config.get_conversion_shacl_to_context()
+        print("\n🔁 Conversion: SHACL → JSON-LD Context")
+        print("=" * 50)
+        if not shacl_to_context:
+            print("  (none)")
+        else:
+            for key in sorted(shacl_to_context.keys()):
+                scenario = shacl_to_context.get(key) or {}
+                print(f"\n  • {key}")
+                print(f"     name:   {scenario.get('name', 'N/A')}")
+                print(f"     input:  {scenario.get('input', 'N/A')}")
+                print(f"     output: {scenario.get('output', 'N/A')}")
         print()
     except FileNotFoundError as e:
         print(f"❌ Error: {e}", file=sys.stderr)

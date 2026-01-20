@@ -40,24 +40,46 @@ const buildVersion = config?.build_version;
 const artifactsCfg = config?.generation?.artifacts;
 
 if (typeof buildVersion !== "string" || buildVersion.length === 0) {
-  throw new Error(`config.yml must define build_version (string). Got: ${String(buildVersion)}`);
+  throw new Error(
+    `config.yml must define build_version (string). Got: ${String(buildVersion)}`,
+  );
 }
 
 if (!Array.isArray(artifactsCfg) || artifactsCfg.length === 0) {
-  throw new Error("config.yml must define generation.artifacts as a non-empty list");
+  throw new Error(
+    "config.yml must define generation.artifacts as a non-empty list",
+  );
+}
+
+if (!artifactsCfg.every((a) => typeof a === "string" && a.length > 0)) {
+  throw new Error(
+    "config.yml generation.artifacts must be a list of non-empty strings (artifact ids)",
+  );
 }
 
 const buildDir = path.join(repoRoot, "build", buildVersion);
 if (!(await exists(buildDir))) {
-  throw new Error(`Missing build output directory: ${buildDir}. Generate artifacts first (e.g. npm run generate:types).`);
+  throw new Error(
+    `Missing build output directory: ${buildDir}. Generate artifacts first (e.g. npm run generate:types).`,
+  );
 }
 
 const schemasDestDirCurrent = path.join(packageDir, "schemas", "current");
-const generatedDestDirCurrent = path.join(packageDir, "src", "generated", "current");
+const generatedDestDirCurrent = path.join(
+  packageDir,
+  "src",
+  "generated",
+  "current",
+);
 const currentIndexDir = path.join(packageDir, "src", "current");
 
 const schemasDestDirVersioned = path.join(packageDir, "schemas", buildVersion);
-const generatedDestDirVersioned = path.join(packageDir, "src", "generated", buildVersion);
+const generatedDestDirVersioned = path.join(
+  packageDir,
+  "src",
+  "generated",
+  buildVersion,
+);
 
 await fs.mkdir(schemasDestDirCurrent, { recursive: true });
 await fs.mkdir(generatedDestDirCurrent, { recursive: true });
@@ -65,16 +87,40 @@ await fs.mkdir(currentIndexDir, { recursive: true });
 await fs.mkdir(schemasDestDirVersioned, { recursive: true });
 await fs.mkdir(generatedDestDirVersioned, { recursive: true });
 
+function baseName(p) {
+  if (typeof p !== "string") return null;
+  return path.basename(p);
+}
+
+function resolveArtifactItem(a) {
+  const name = a;
+  if (typeof name !== "string" || name.length === 0) return null;
+
+  // Minimal form: derive from conversion config
+  const shaclScenario = config?.conversion?.shacl_to_json?.[name];
+  const tsScenario = config?.conversion?.json_to_ts?.[name];
+
+  const schemaOut = baseName(shaclScenario?.output);
+  const tsOut = baseName(tsScenario?.output);
+
+  if (!schemaOut || !tsOut) return null;
+  return { name, json_schema: schemaOut, typescript: tsOut };
+}
+
 const items = artifactsCfg
-  .map((a) => ({
-    name: a?.name,
-    json_schema: a?.json_schema,
-    typescript: a?.typescript
-  }))
-  .filter((a) => typeof a.name === "string" && typeof a.json_schema === "string" && typeof a.typescript === "string");
+  .map(resolveArtifactItem)
+  .filter(
+    (a) =>
+      a &&
+      typeof a.name === "string" &&
+      typeof a.json_schema === "string" &&
+      typeof a.typescript === "string",
+  );
 
 if (items.length === 0) {
-  throw new Error("generation.artifacts in config.yml has no valid items (needs name/json_schema/typescript)");
+  throw new Error(
+    "generation.artifacts in config.yml has no valid items. Ensure each id exists in conversion.shacl_to_json and conversion.json_to_ts and that both specify an output filename.",
+  );
 }
 
 const schemaEntries = [];
@@ -96,7 +142,10 @@ for (const item of items) {
   const schemaDestCurrent = path.join(schemasDestDirCurrent, item.json_schema);
   const tsDestCurrent = path.join(generatedDestDirCurrent, item.typescript);
 
-  const schemaDestVersioned = path.join(schemasDestDirVersioned, item.json_schema);
+  const schemaDestVersioned = path.join(
+    schemasDestDirVersioned,
+    item.json_schema,
+  );
   const tsDestVersioned = path.join(generatedDestDirVersioned, item.typescript);
 
   await fs.copyFile(schemaSrc, schemaDestCurrent);
@@ -120,17 +169,19 @@ for (const item of items) {
 const currentIndexPath = path.join(currentIndexDir, "index.ts");
 
 const exportTypes = typeEntries
-  .map((t) => `export type { ${t.rootInterface} } from "../generated/current/${t.typescript.replace(/\.ts$/, ".js")}";`)
+  .map(
+    (t) =>
+      `export type { ${t.rootInterface} } from "../generated/current/${t.typescript.replace(/\.ts$/, ".js")}";`,
+  )
   .join("\n");
 
-const schemaKeyUnion = schemaEntries
-  .map((s) => JSON.stringify(s.schemaKey))
-  .join(" | ") || "never";
+const schemaKeyUnion =
+  schemaEntries.map((s) => JSON.stringify(s.schemaKey)).join(" | ") || "never";
 
 const typeMapLines = typeEntries
   .map(
     (t) =>
-      `  ${JSON.stringify(t.schemaKey)}: import("../generated/current/${t.typescript.replace(/\.ts$/, ".js")}").${t.rootInterface};`
+      `  ${JSON.stringify(t.schemaKey)}: import("../generated/current/${t.typescript.replace(/\.ts$/, ".js")}").${t.rootInterface};`,
   )
   .join("\n");
 
@@ -154,7 +205,7 @@ const registryPath = path.join(packageDir, "src", "schema-registry.ts");
 const registryEntries = schemaEntries
   .map(
     (s) =>
-      `  ${JSON.stringify(s.schemaKey)}: new URL("../schemas/current/${s.json_schema}", import.meta.url),`
+      `  ${JSON.stringify(s.schemaKey)}: new URL("../schemas/current/${s.json_schema}", import.meta.url),`,
   )
   .join("\n");
 
@@ -167,4 +218,6 @@ ${registryEntries}
 
 await fs.writeFile(registryPath, registrySource, "utf8");
 
-console.log(`ontology-contracts: synced artifacts from build/${buildVersion} (config-driven) and generated current typings`);
+console.log(
+  `ontology-contracts: synced artifacts from build/${buildVersion} (config-driven) and generated current typings`,
+);

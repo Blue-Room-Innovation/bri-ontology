@@ -7,7 +7,7 @@ Aquest directori conté els mòduls per a la validació, generació i conversió
 ```
 scripts/
 ├── ontology_cli.py          # Punt d'entrada principal del CLI
-├── autogenerate.py          # Pipeline de generació TypeScript (manté compatibilitat)
+├── autogenerate.py          # Pipeline de generació TypeScript
 ├── generate-wiki.py         # Generació de wiki (manté compatibilitat)
 ├── shacl-to-jsonschema.py   # Conversió SHACL→JSON Schema (manté compatibilitat)
 ├── jsonschema-to-typescript.py  # Conversió JSON Schema→TypeScript (manté compatibilitat)
@@ -23,7 +23,9 @@ scripts/
 ### Validació
 
 #### `validate owl`
+
 Valida ontologies OWL amb ROBOT o Apache Jena RIOT:
+
 ```bash
 npm run validate:owl                    # Valida ontologies OWL
 npm run validate:owl:quiet              # Mode silenciós
@@ -31,7 +33,9 @@ npm run validate:owl:with-codelists     # Inclou codelists
 ```
 
 #### `validate shacl`
+
 Valida dades RDF contra shapes SHACL:
+
 ```bash
 npm run validate:dwp                    # Valida Digital Waste Passport
 npm run validate:marpol                 # Valida Marpol Waste Passport
@@ -40,7 +44,9 @@ npm run validate:marpol                 # Valida Marpol Waste Passport
 ### Generació
 
 #### `generate types`
+
 Genera TypeScript des de shapes SHACL (pipeline complet):
+
 ```bash
 npm run generate:types                  # Genera TypeScript types
 npm run generate:types:verbose          # Mode verbose
@@ -48,7 +54,9 @@ npm run autogenerate                    # Alias (compatibilitat)
 ```
 
 #### `generate wiki`
+
 Genera documentació wiki des d'ontologies:
+
 ```bash
 npm run generate:wiki                   # Genera wiki
 npm run generate:wiki:with-codelists    # Inclou codelists
@@ -58,14 +66,18 @@ npm run generate:wiki:verbose           # Mode verbose
 ### Conversió
 
 #### `convert shacl`
+
 Converteix SHACL shapes a JSON Schema:
+
 ```bash
 npm run convert:shacl:dwp               # Digital Waste Passport
 npm run convert:shacl:marpol            # Marpol Waste Passport
 ```
 
 #### `convert ts`
+
 Converteix JSON Schema a TypeScript:
+
 ```bash
 npm run convert:ts:dwp                  # Digital Waste Passport
 npm run convert:ts:marpol               # Marpol Waste Passport
@@ -120,7 +132,9 @@ python scripts/ontology_cli.py convert shacl --help
 ## Mòduls
 
 ### `utils.py`
+
 Funcions auxiliars reutilitzables:
+
 - `which(cmd)`: Comprova si una eina està disponible al PATH
 - `split_csv(value)`: Divideix strings CSV
 - `print_err(msg)`: Imprimeix a stderr
@@ -129,19 +143,25 @@ Funcions auxiliars reutilitzables:
 - `iter_ontology_files()`: Itera sobre fitxers TTL d'ontologies
 
 ### `validate_owl.py`
+
 Validació d'ontologies OWL:
+
 - Classe `OwlConfig`: Configuració de validació
 - Funció `validate_owl()`: Valida ontologies amb ROBOT o Apache Jena RIOT
 - Suporta merge, validació de perfils i raonament
 
 ### `validate_shacl.py`
+
 Validació SHACL:
+
 - Classe `ShaclConfig`: Configuració de validació
 - Funció `validate_shacl()`: Valida dades RDF contra shapes SHACL
 - Suporta múltiples formats de sortida (human, turtle, json-ld)
 
 ### `ontology_cli.py`
+
 CLI principal que:
+
 - Defineix l'interfície de comandes (argparse)
 - Delega l'execució als mòduls específics o scripts originals
 - Gestiona el flux principal del programa

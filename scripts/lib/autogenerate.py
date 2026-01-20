@@ -37,7 +37,7 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional, Any
 
 # Import config and utils with proper error handling
 try:
@@ -77,8 +77,17 @@ class TypeScriptGenerator:
         
         success = True
         
-        # Process each shape configuration
-        for config in self.shape_configs:
+        # Resolve each artifact configuration into concrete paths
+        resolved_items: List[Dict[str, Any]] = []
+        for item in self.shape_configs:
+            resolved = self._resolve_artifact(item)
+            if not resolved:
+                success = False
+                continue
+            resolved_items.append(resolved)
+
+        # Process each resolved item
+        for config in resolved_items:
             logger.info(f"\n📦 Processing {config['name']}...")
             
             # Step 1: SHACL → JSON Schema
@@ -93,36 +102,95 @@ class TypeScriptGenerator:
                 success = False
                 continue
             
-            logger.info(f"✅ Generated {config['typescript']}")
+            logger.info(f"✅ Generated {Path(config['ts_output']).name}")
         
         if success:
             logger.info("\n🎉 All TypeScript definitions generated successfully!")
-            self._print_output_summary()
+            self._print_output_summary(resolved_items)
         else:
             logger.error("\n❌ Some generations failed. Check the logs above.")
         
         return success
     
-    def _run_shacl_to_jsonschema(self, config: Dict[str, str]) -> bool:
+    def _resolve_artifact(self, item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Resolve a generation artifact into concrete file paths.
+
+        Expected format: {name: <id>} where <id> maps to:
+        - conversion.shacl_to_json.<id>
+        - conversion.json_to_ts.<id>
+        """
+        name = (item or {}).get("name")
+        if not name:
+            logger.error("Generation artifact is missing 'name'")
+            return None
+
+        shacl_to_json = self.config.get_conversion_shacl_to_json()
+        json_to_ts = self.config.get_conversion_json_to_ts()
+
+        shacl_scenario = (shacl_to_json or {}).get(name)
+        ts_scenario = (json_to_ts or {}).get(name)
+
+        if not shacl_scenario:
+            logger.error(f"No conversion.shacl_to_json scenario found for '{name}'")
+            return None
+        if not ts_scenario:
+            logger.error(f"No conversion.json_to_ts scenario found for '{name}'")
+            return None
+
+        shacl_input = shacl_scenario.get("input")
+        shacl_output = shacl_scenario.get("output")
+        ts_input = ts_scenario.get("input")
+        ts_output = ts_scenario.get("output")
+
+        if not shacl_input or not shacl_output:
+            logger.error(f"conversion.shacl_to_json.{name} missing input/output")
+            return None
+        if not ts_input or not ts_output:
+            logger.error(f"conversion.json_to_ts.{name} missing input/output")
+            return None
+
+        resolved = {
+            "name": name,
+            "shacl_input": str(self.workspace_root / Path(str(shacl_input))),
+            "shacl_output": str(self.workspace_root / Path(str(shacl_output))),
+            "ts_input": str(self.workspace_root / Path(str(ts_input))),
+            "ts_output": str(self.workspace_root / Path(str(ts_output))),
+            "source": ts_scenario.get("source") or shacl_input,
+        }
+
+        naming = shacl_scenario.get("naming")
+        context = shacl_scenario.get("context")
+        if naming:
+            resolved["naming"] = naming
+        if context:
+            resolved["context"] = context
+
+        return resolved
+
+    def _run_shacl_to_jsonschema(self, config: Dict[str, Any]) -> bool:
         """Run shacl-to-jsonschema.py script."""
-        shape_file = self.shapes_dir / config["shape_file"]
-        json_schema_file = self.build_dir / config["json_schema"]
+        shape_file = Path(str(config["shacl_input"]))
+        json_schema_file = Path(str(config["shacl_output"]))
         
         logger.info(f"  Step 1/2: SHACL → JSON Schema")
         
+        json_schema_file.parent.mkdir(parents=True, exist_ok=True)
+
         cmd = [
             sys.executable,
             str(self.scripts_dir / "lib" / "shacl_to_jsonschema.py"),
-            "--input", str(shape_file),
-            "--output", str(json_schema_file)
+            "--input",
+            str(shape_file),
+            "--output",
+            str(json_schema_file),
         ]
 
-        naming = config.get("naming")
+        naming = config.get("naming") or "curie"
         if naming:
             cmd.extend(["--naming", str(naming)])
 
         context = config.get("context")
-        if context:
+        if naming == "context" and context:
             context_path = Path(str(context))
             if not context_path.is_absolute():
                 context_path = self.workspace_root / context_path
@@ -133,10 +201,10 @@ class TypeScriptGenerator:
         
         return self._run_command(cmd)
     
-    def _run_jsonschema_to_typescript(self, config: Dict[str, str]) -> bool:
+    def _run_jsonschema_to_typescript(self, config: Dict[str, Any]) -> bool:
         """Run jsonschema-to-typescript.py script."""
-        json_schema_file = self.build_dir / config["json_schema"]
-        typescript_file = self.build_dir / config["typescript"]
+        json_schema_file = Path(str(config["ts_input"]))
+        typescript_file = Path(str(config["ts_output"]))
         
         logger.info(f"  Step 2/2: JSON Schema → TypeScript")
         
@@ -145,8 +213,12 @@ class TypeScriptGenerator:
             str(self.scripts_dir / "lib" / "jsonschema_to_typescript.py"),
             "--input", str(json_schema_file),
             "--output", str(typescript_file),
-            "--source", self.config.get_shapes_path(config['shape_file'])
+            "--source",
+            str(config.get("source") or ""),
         ]
+
+        # Ensure output dir exists
+        typescript_file.parent.mkdir(parents=True, exist_ok=True)
         
         if self.verbose:
             cmd.append("--verbose")
@@ -178,12 +250,12 @@ class TypeScriptGenerator:
             logger.error(f"Failed to run command: {e}")
             return False
     
-    def _print_output_summary(self):
+    def _print_output_summary(self, resolved_items: List[Dict[str, Any]]):
         """Print summary of generated files."""
         logger.info("\n📄 Generated files:")
-        for config in self.shape_configs:
-            json_file = self.build_dir / config["json_schema"]
-            ts_file = self.build_dir / config["typescript"]
+        for config in resolved_items:
+            json_file = Path(str(config["shacl_output"]))
+            ts_file = Path(str(config["ts_output"]))
             
             if json_file.exists():
                 logger.info(f"  - {json_file.relative_to(self.workspace_root)}")

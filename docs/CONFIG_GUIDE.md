@@ -63,22 +63,24 @@ When you run `npm run validate:shacl` without a name, the CLI validates **all** 
 
 ## Generation Configuration
 
-When you run `npm run generate:types` (full pipeline **SHACL → JSON Schema → TypeScript**), the tool reads **only** this section:
+When you run `npm run generate:types` (full pipeline **SHACL → JSON Schema → TypeScript**), the tool uses this list to decide **which artifacts** to generate.
+
+To keep the list minimal and stable, each entry is just an **artifact id** (scenario key) that must exist in:
+
+- `conversion.shacl_to_json.<id>`
+- `conversion.json_to_ts.<id>`
 
 ```yaml
 generation:
   artifacts:
-    - name: "recycling"
-      shape_file: "recycling.shacl.ttl"
-      json_schema: "recycling.schema.json"
-      typescript: "recycling.ts"
-      # Optional: how properties are named in generated JSON Schema
-      naming: "local" # curie|local|context
-      # Optional (when naming=context): JSON-LD context file
-      # context: "build/v0.1/recycling.context.jsonld"
+    - dwp
+    - dmwp
+    - recycling
 ```
 
 This is the canonical list of artifacts you want under `build/<build_version>/`.
+
+If you want to generate everything (types + wiki), use `npm run generate:all`.
 
 ---
 

@@ -25,9 +25,21 @@ ontologies:
 # Generation pipeline
 generation:
   artifacts:
-    - name: "digitalWastePassport"
-      shape_file: "digitalWastePassportShapes.ttl"
-      ...
+    - dwp
+    - dmwp
+    - recycling
+
+# Conversions (explicit inputs/outputs)
+conversion:
+  shacl_to_json:
+    dwp:
+      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      output: "build/v0.1/digitalWastePassport.schema.json"
+  json_to_ts:
+    dwp:
+      input: "build/v0.1/digitalWastePassport.schema.json"
+      output: "build/v0.1/digitalWastePassport.ts"
+      source: "shapes/v0.1/digitalWastePassportShapes.ttl"
 ```
 
 ## 🔧 Using Configuration in Scripts
@@ -56,9 +68,9 @@ shapes_path = config.get_shapes_path("digitalWastePassportShapes.ttl")
 url = config.get_github_raw_url("ontology", "digitalWastePassport.ttl")
 # Returns: "https://raw.githubusercontent.com/.../main/ontology/v0.1/digitalWastePassport.ttl"
 
-# Access component configurations
+# Access configured generation artifacts (IDs)
 for artifact in config.get_generation_artifacts():
-    print(artifact['name'], artifact['shape_file'])
+  print(artifact["name"])
 ```
 
 ### NPM Scripts
@@ -183,10 +195,20 @@ ontologies:
 
 generation:
   artifacts:
-    - name: "myNewOntology"
-      shape_file: "myNewOntologyShapes.ttl"
-      json_schema: "myNewOntology.schema.json"
-      typescript: "myNewOntology.ts"
+    - myNewOntology
+
+conversion:
+  shacl_to_json:
+    myNewOntology:
+      name: "My New Ontology"
+      input: "shapes/v0.1/myNewOntologyShapes.ttl"
+      output: "build/v0.1/myNewOntology.schema.json"
+  json_to_ts:
+    myNewOntology:
+      name: "My New Ontology"
+      input: "build/v0.1/myNewOntology.schema.json"
+      output: "build/v0.1/myNewOntology.ts"
+      source: "shapes/v0.1/myNewOntologyShapes.ttl"
 ```
 
 Scripts will automatically include the new component in processing.

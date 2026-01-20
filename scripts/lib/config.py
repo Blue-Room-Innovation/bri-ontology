@@ -44,7 +44,29 @@ class Config:
         # Component configurations
         self.ontologies: List[Dict[str, str]] = config_data.get("ontologies", [])
         self.shapes: List[Dict[str, str]] = config_data.get("shapes", [])
-        self.generation_artifacts: List[Dict[str, str]] = config_data.get("generation", {}).get("artifacts", [])
+        # Generation artifacts: list of string IDs only.
+        # Each ID must exist in conversion.shacl_to_json.<id> and conversion.json_to_ts.<id>
+        raw_artifacts = (config_data.get("generation", {}) or {}).get("artifacts", [])
+        if raw_artifacts is None:
+            raw_artifacts = []
+        if not isinstance(raw_artifacts, list):
+            raise ValueError(
+                "generation.artifacts must be a list of strings (artifact ids). "
+                f"Got: {type(raw_artifacts).__name__}"
+            )
+
+        normalized: List[Dict[str, Any]] = []
+        for item in raw_artifacts:
+            if not isinstance(item, str):
+                raise ValueError(
+                    "generation.artifacts must contain only strings (artifact ids). "
+                    f"Found: {type(item).__name__}"
+                )
+            if item.strip() == "":
+                raise ValueError("generation.artifacts contains an empty string")
+            normalized.append({"name": item})
+
+        self.generation_artifacts = normalized
         
         # Validation config
         self.validation: Dict[str, Any] = config_data.get("validation", {})
@@ -189,6 +211,10 @@ class Config:
     def get_conversion_shacl_to_json(self) -> Dict[str, Dict[str, Any]]:
         """Get configured SHACL → JSON Schema conversion scenarios."""
         return (self._data.get("conversion", {}) or {}).get("shacl_to_json", {}) or {}
+
+    def get_conversion_shacl_to_context(self) -> Dict[str, Dict[str, Any]]:
+        """Get configured SHACL → JSON-LD Context conversion scenarios."""
+        return (self._data.get("conversion", {}) or {}).get("shacl_to_context", {}) or {}
     
     def get_owl_validation_config(self) -> Dict[str, Any]:
         """Get OWL validation configuration."""
