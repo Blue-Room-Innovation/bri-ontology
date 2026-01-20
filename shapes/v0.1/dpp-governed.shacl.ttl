@@ -1,0 +1,70 @@
+#######################################################################
+# Digital Product Passport – GOVERNED SHACL PROFILE (Hello World)
+#
+# PURPOSE
+# -------
+# This file defines GOVERNED constraints on top of the UNECE-derived
+# bootstrap SHACL shapes.
+#
+# This profile demonstrates:
+#   - How to EXTEND bootstrap shapes without modifying them
+#   - How to APPLY CLOSURE (sh:closed true)
+#   - How to add a minimal "Hello World" business rule
+#
+# SCOPE
+# -----
+# - This is intentionally MINIMAL
+# - It is meant as a proof of concept and test profile
+#
+# GOVERNANCE RULE
+# ---------------
+# - Bootstrap shapes are treated as IMMUTABLE
+# - All domain, regulatory and business constraints live here
+#
+#######################################################################
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+
+@prefix vc:      <https://www.w3.org/2018/credentials#> .
+@prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+@prefix dpp:     <https://example.org/dpp/governed#> .
+
+#######################################################################
+# GOVERNED Digital Product Passport
+#
+# HELLO WORLD RULES:
+# 1. The passport MUST have validFrom
+# 2. The passport MUST have validUntil
+# 3. No unexpected properties are allowed (closed shape)
+#
+#######################################################################
+
+dpp:DigitalProductPassportGovernedShape
+  a sh:NodeShape ;
+  sh:targetClass unece-dpp:DigitalProductPassport ;
+
+  # Apply closure at the governed layer
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
+
+  # Hello World rule: validFrom is mandatory
+  sh:property [
+    sh:path vc:validFrom ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Governed rule: Digital Product Passport must declare validFrom."@en
+  ] ;
+
+  # Hello World rule: validUntil is mandatory
+  sh:property [
+    sh:path vc:validUntil ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Governed rule: Digital Product Passport must declare validUntil."@en
+  ] .

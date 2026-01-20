@@ -1,0 +1,194 @@
+# ADR-001: SHACL com a font de veritat semàntica i pipeline de validació per capes
+
+**Estat:** A confirmar
+**Data:** 2026-01-08
+**Àmbit:** Digital Product Passport (DPP) – Model de dades i validació
+**Decisors:** Arquitectura / Data / Plataforma
+
+---
+
+## 1. Context
+
+El Digital Product Passport (DPP) requereix un model de dades que compleixi simultàniament els requisits següents:
+
+* **Interoperabilitat semàntica** dins d’un ecosistema de dataspace.
+* **Validació estructural** de payloads JSON utilitzats en APIs, processos d’ingestió i persistència.
+* **Seguretat i coherència en desenvolupament**, tant en front-end com en back-end.
+* **Governança i evolució controlada** del model a llarg termini.
+
+Cap tecnologia individual permet satisfer tots aquests requisits de manera completa:
+
+* Les **ontologies OWL/SHACL** expressen semàntica rica, però no són adequades com a contractes d’API.
+* **JSON Schema** valida documents JSON, però no pot expressar relacions semàntiques complexes.
+* **TypeScript** millora l’experiència de desenvolupament, però no valida dades en runtime.
+
+Històricament, projectes similars fallen quan:
+
+* es fa servir JSON Schema com a model conceptual,
+* es confon validació estructural amb validació semàntica,
+* o es permet l’edició manual d’artefactes derivats, generant divergències.
+
+Aquest ADR defineix una arquitectura explícita per evitar aquests problemes.
+
+---
+
+## 2. Decisió
+
+S’adopta un **model de validació per capes**, amb un **source of truth estratificat**, definit de la manera següent:
+
+### 2.1 Font de veritat
+
+* **SHACL** és declarat **font de veritat semàntica** del DPP.
+* Totes les regles de domini, cardinalitats reals i relacions conceptuals es defineixen en SHACL.
+* Cap altra representació té autoritat conceptual.
+
+### 2.2 Artefactes derivats
+
+A partir de SHACL es generen automàticament:
+
+1. **JSON Schema**
+
+   * Projecció estructural del model.
+   * Utilitzat com a contracte de validació de documents JSON.
+   * No expressa semàntica completa.
+
+2. **Tipus TypeScript**
+
+   * Derivats de JSON Schema.
+   * Utilitzats exclusivament com a contractes de desenvolupament.
+   * No tenen valor normatiu ni semàntic.
+
+### 2.3 Regles clau
+
+* JSON Schema i TypeScript **no es modifiquen manualment**.
+* Qualsevol canvi semàntic s’ha de fer en SHACL.
+* Els artefactes derivats s’han de regenerar automàticament.
+* La conversió SHACL → JSON Schema és **parcial i conscientment limitada**.
+
+---
+
+## 3. Motivació
+
+### 3.1 Separació clara de responsabilitats
+
+Aquesta decisió permet separar explícitament:
+
+| Capa        | Responsabilitat                                     |
+| ----------- | --------------------------------------------------- |
+| SHACL       | Significat, coherència semàntica, interoperabilitat |
+| JSON Schema | Forma del document, validació d’APIs                |
+| TypeScript  | Ús correcte en codi, experiència de desenvolupament |
+
+Aquesta separació evita falses equivalències i redueix ambigüitats.
+
+---
+
+### 3.2 JSON-LD i validació
+
+Tot i que SHACL pot validar dades serialitzades en JSON-LD, ho fa **únicament després de convertir-les a RDF**.
+Això implica que:
+
+* SHACL no valida la forma del JSON.
+* Diferents estructures JSON poden produir el mateix graf RDF.
+* SHACL no és adequat per garantir contractes d’API.
+
+Aquesta limitació justifica l’ús de JSON Schema com a capa estructural independent.
+
+---
+
+### 3.3 Evitar falsa seguretat
+
+Un objectiu explícit d’aquesta decisió és evitar la idea errònia que:
+
+> “Si passa JSON Schema, compleix l’ontologia.”
+
+Aquesta afirmació és falsa.
+JSON Schema valida documents; SHACL valida significat.
+
+---
+
+## 4. Pipeline adoptat
+
+### 4.1 Pipeline de generació
+
+```
+OWL / RDFS
+     ↓
+   SHACL        ← source of truth semàntic
+     ↓
+JSON Schema     ← contracte estructural
+     ↓
+TypeScript      ← contracte de desenvolupament
+```
+
+### 4.2 Pipeline de validació
+
+* **En desenvolupament:** TypeScript
+* **En runtime (APIs, ingest):** JSON Schema
+* **En governança i interoperabilitat:** SHACL
+
+La validació SHACL no és necessàriament contínua en runtime, però ha d’estar disponible i ser executable en processos de control i integració.
+
+---
+
+## 5. Alternatives considerades
+
+### 5.1 JSON Schema com a source of truth
+
+**Descartada** perquè:
+
+* no pot expressar semàntica rica,
+* no escala en entorns RDF/dataspace,
+* converteix el model en un “data model disfressat”.
+
+---
+
+### 5.2 Un únic model compartit (JSON/TS/OWL)
+
+**Descartada** perquè:
+
+* cap format pot cobrir tots els casos d’ús,
+* porta a models pobres o excessivament complexos,
+* genera acoblaments forts entre equips.
+
+---
+
+### 5.3 Validació només amb SHACL
+
+**Descartada** perquè:
+
+* no cobreix contractes d’API,
+* no protegeix errors de serialització,
+* no és usable directament per equips de desenvolupament.
+
+---
+
+## 6. Conseqüències
+
+### 6.1 Positives
+
+* Coherència semàntica a llarg termini.
+* Interoperabilitat real en ecosistemes RDF.
+* Millor experiència de desenvolupament.
+* Governança clara del model.
+* Reducció de divergències entre dades i codi.
+
+### 6.2 Costos i limitacions
+
+* Major complexitat inicial.
+* Necessitat d’un pipeline de generació i validació.
+* Conversió SHACL → JSON Schema parcial i no reversible.
+* Requereix disciplina d’equip i automatització.
+
+Aquests costos són considerats **acceptables i necessaris** donat l’abast i la naturalesa del DPP.
+
+---
+
+## 7. Estat final
+
+Aquesta decisió s’adopta com a **arquitectura base** del DPP.
+Qualsevol canvi futur haurà de:
+
+* referenciar explícitament aquest ADR,
+* justificar per què deixa de ser vàlid,
+* o proposar un ADR que el substitueixi.

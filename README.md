@@ -45,19 +45,143 @@ Ver `docs/01-overview-estructura.md`
 ### 6. Flujo de Uso en una Aplicación
 Ver `docs/02-como-se-usa-la-ontologia-y-para-que.md`
 
-### 7. Crear o Editar una Ontología
+### 7. Quick Start
+
+#### Option A: Using Docker (Recommended)
+
+Docker provides a consistent environment with all dependencies pre-installed:
+
+```bash
+# 1. Build the Docker image
+npm run docker:build
+
+# 2. Run any command
+npm run docker:run config:show                    # Show configuration
+npm run docker:run generate:types                 # Generate TypeScript
+npm run docker:run validate:owl:with-codelists   # Validate ontologies
+npm run docker:run build:all                      # Full pipeline
+
+# 3. Interactive shell (optional)
+npm run docker:shell
+```
+
+See [docker/README.md](docker/README.md) for complete Docker documentation.
+
+#### Option B: Local Setup
+
+Install dependencies locally:
+
+```bash
+# Python dependencies
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+source .venv/bin/activate   # Linux/Mac
+pip install -r scripts/requirements.txt
+
+# Node.js dependencies
+npm install
+
+# Run commands
+npm run config:show
+npm run generate:types
+npm run validate:owl:with-codelists
+```
+
+### 8. Crear o Editar una Ontología
 Ver: `docs/03-como-crear-o-editar-ontologia.md`
 
 ### 8. Validación Detallada
 Ver `docs/04-como-validar-ontologias.md`
 
-### 9. Licencia y Reutilización
+### 9. Generación de JSON Schema desde SHACL
+SHACL es la fuente de verdad semántica, pero para validación estructural de documentos JSON y generación de contratos de API, se puede derivar automáticamente JSON Schema:
+
+```bash
+# Generar JSON Schema para Digital Waste Passport
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalWastePassportShapes.ttl \
+  --output build/digitalWastePassport.schema.json
+
+# Generar JSON Schema para Digital MARPOL Waste Passport  
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalMarpolWastePassportShapes.ttl \
+  --output build/digitalMarpolWastePassport.schema.json
+```
+
+**⚠️ Importante:** JSON Schema generado **NO** es una conversión semántica completa:
+- ✅ Valida estructura de documentos JSON/JSON-LD
+- ✅ Sirve como contrato de API y para generación de tipos TypeScript
+- ❌ NO captura toda la semántica de SHACL (sh:sparql, lógica compleja, etc.)
+- ❌ NO reemplaza la validación SHACL para contextos RDF
+
+Ver documentación completa en:
+- **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
+- **Script:** `scripts/shacl-to-jsonschema.md`
+
+### 10. Generació de TypeScript desde SHACL
+Para proyectos TypeScript, se puede generar automáticamente definiciones de tipos a partir de los shapes SHACL mediante un pipeline de 2 pasos (SHACL → JSON Schema → TypeScript):
+
+```bash
+# Generar JSON Schema Y TypeScript para todos los pasaportes (recomendado)
+python scripts/autogenerate.py
+
+# O con salida detallada
+python scripts/autogenerate.py --verbose
+
+# También puedes usar npm (requiere que Python tenga las dependencias instaladas globalmente)
+npm run autogenerate
+
+# Si necesitas más control, puedes ejecutar cada paso independientemente:
+
+# Paso 1: SHACL → JSON Schema
+python scripts/shacl-to-jsonschema.py \
+  --input shapes/digitalWastePassportShapes.ttl \
+  --output build/digitalWastePassport.schema.json
+
+# Paso 2: JSON Schema → TypeScript
+python scripts/jsonschema-to-typescript.py \
+  --input build/digitalWastePassport.schema.json \
+  --output build/digitalWastePassport.ts
+```
+
+**Scripts disponibles:**
+- **`autogenerate.py`** - Orquestrador que ejecuta todo el pipeline automáticamente (recomendado)
+- **`shacl-to-jsonschema.py`** - Convierte SHACL → JSON Schema (paso 1)
+- **`jsonschema-to-typescript.py`** - Convierte JSON Schema → TypeScript (paso 2)
+
+Este script genera:
+- `build/digitalWastePassport.schema.json` + `build/digitalWastePassport.ts`
+- `build/digitalMarpolWastePassport.schema.json` + `build/digitalMarpolWastePassport.ts`
+
+**Ventajas:**
+- ✅ Validación estática en tiempo de compilación
+- ✅ Autocompletado y detección de errores en IDEs
+- ✅ Contracto de tipos type-safe para desarrollo frontend/backend
+- ✅ Integración con validadores JSON Schema + TypeScript
+- ✅ Scripts modulares - cada uno con una responsabilidad única
+
+**Requisitos:**
+```bash
+# Python
+pip install -r scripts/requirements.txt
+
+# Node.js
+npm install
+```
+
+Ver documentación completa en:
+- **Script orquestrador:** `scripts/autogenerate.md`
+- **Conversión SHACL→JSON:** `scripts/shacl-to-jsonschema.md`
+- **Conversión JSON→TypeScript:** `scripts/jsonschema-to-typescript.md`
+- **ADR:** `docs/01-adr/01.ADR-005 Derivació automàtica de JSON Schema des de SHACL.md`
+
+### 11. Licencia y Reutilización
 Licencia: pendiente de confirmación. Al reutilizar:
 - Mantener prefijos y referencias a catálogo.
 - Citar origen y versión (`owl:versionInfo` + commit).
 - Para cambios mayores proponer issue y debatir gobernanza.
 
-### 10. Próximos Pasos Sugeridos
+### 12. Próximos Pasos Sugeridos
 1. Revisar catálogos (`docs/00-domains/00-catalogo-ontologias.md`, `docs/00-domains/00-catalogo-taxonomias.md`).
 2. Leer visión general (`docs/01-overview-estructura.md`).
 3. Entender casos de uso (`docs/02-como-se-usa-la-ontologia-y-para-que.md`).

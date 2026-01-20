@@ -1,0 +1,157 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix schema: <https://schema.org/> .
+@prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
+@prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
+
+############################
+# Node Shape principal
+############################
+
+bri-recycling:RecyclingOrganisationShape
+  a sh:NodeShape ;
+  sh:targetClass bri-recycling:Recycler ;
+
+  # Codi gestor
+  sh:property [
+    sh:path bri-recycling:managerCode ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Codi NIMA
+  sh:property [
+    sh:path bri-recycling:nimaCode ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Nom gestor
+  sh:property [
+    sh:path schema:name ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Adreça física
+  sh:property [
+    sh:path schema:streetAddress ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Municipi
+  sh:property [
+    sh:path schema:addressLocality ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  #Codi postal
+  sh:property [
+    sh:path schema:postalCode ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  #Adreça de correspondència
+  sh:property [
+    sh:path bri-recycling:correspondeceAddress ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  #Municipi de correspondència
+  sh:property [
+    sh:path bri-recycling:correspondeceAddressLocality ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  #Codi postal correspondència
+  sh:property [
+    sh:path bri-recycling:correspondecePostalCode ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Telèfon
+  sh:property [
+    sh:path schema:telephone ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Fax
+  sh:property [
+    sh:path schema:faxNumber ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Email
+  sh:property [
+    sh:path schema:email ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Web
+  sh:property [
+    sh:path schema:url ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Localització
+  sh:property [
+    sh:path schema:latitude;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:minInclusive -90 ;
+    sh:maxInclusive 90 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path schema:longitude ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:minInclusive -180 ;
+    sh:maxInclusive 180 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Adaptat al RD 110/2015 de RAEE
+  sh:property [
+    sh:path bri-recycling:adaptedToRD1102015 ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  # Activitat
+  sh:property [
+    sh:path bri-recycling:wasteTreatmentActivity ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .

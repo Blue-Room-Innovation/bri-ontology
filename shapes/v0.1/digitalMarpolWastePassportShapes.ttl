@@ -1,0 +1,102 @@
+## Waste / MARPOL SHACL Shapes (sin legado DPP)
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix schema:  <http://schema.org/> .
+@prefix dmwp:    <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
+@prefix untp:    <https://ontology.untp.io/core/> .
+
+# Refinado: shapes cerrados, enumeraciones alineadas a ejemplo y codelists locales.
+# Se añaden mensajes, maxCount y validaciones de patrones.
+
+
+dmwp:DigitalMarpolWastePassportShape a sh:NodeShape ;
+  sh:targetClass dmwp:DigitalMarpolWastePassport ;
+  sh:name "Digital MARPOL Waste Passport"@es ;
+  sh:description "Shape principal del Digital MARPOL Waste Passport (cerrado)."@es ;
+  sh:property [ sh:path dmwp:credentialSubject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dmwp:MarpolWastePassport ; sh:message "Debe tener un credentialSubject (MarpolWastePassport)."@es ] ;
+  sh:property [ sh:path dct:issued ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Falta fecha de emisión (dct:issued)."@es ] ;
+  sh:property [ sh:path dct:publisher ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Falta publisher (dct:publisher)."@es ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:MarpolWastePassportShape a sh:NodeShape ;
+  sh:targetClass dmwp:MarpolWastePassport ;
+  sh:name "MARPOL Waste Passport"@es ;
+  sh:description "Shape del MarpolWastePassport (cerrado)."@es ;
+  sh:property [ sh:path dmwp:waste ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dmwp:MarpolWaste ; sh:message "Debe enlazar un MarpolWaste."@es ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:MarpolWasteShape a sh:NodeShape ;
+  sh:targetClass dmwp:MarpolWaste ;
+  sh:name "MARPOL Waste"@es ;
+  sh:description "Shape de residuo MARPOL (cerrado)."@es ;
+  sh:property [ sh:path dmwp:ship ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dmwp:Ship ; sh:message "Debe especificar el buque (ship)."@es ] ;
+  sh:property [ sh:path dmwp:residue ; sh:minCount 1 ; sh:class dmwp:ResidueInformation ; sh:message "Debe existir al menos un ResidueInformation."@es ] ;
+  sh:property [ sh:path dmwp:lastDeliveryDate ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+  # Puertos UN/LOCODE (mayúsculas país+3) + ejemplo validación adicional enumeración parcial
+  sh:property [ sh:path dmwp:arrivalPort ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ; sh:message "arrivalPort debe cumplir patrón UN/LOCODE (e.g. ESPMI)."@es ] ;
+  sh:property [ sh:path dmwp:nextPlannedDeliveryPort ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ] ;
+  sh:property [ sh:path dmwp:lastWasteDeliveryPort ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ] ;
+  sh:property [ sh:path dmwp:deliveryType ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:in ( "ZTO" "REC" "DIS" ) ; sh:message "deliveryType fuera de lista permitida (ZTO, REC, DIS)."@es ] ;
+  # Propiedades adicionales del ejemplo (permitidas ahora)
+  sh:property [ sh:path dmwp:shipScale ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:marpolEdition ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:wasteAgent ; sh:minCount 0 ; sh:maxCount 1 ; sh:class dmwp:AuthorizedParty ] ;
+  sh:property [ sh:path dmwp:message ; sh:minCount 0 ; sh:maxCount 1 ] ;
+  sh:property [ sh:path dmwp:involvedParty ; sh:minCount 0 ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:ResidueInformationShape a sh:NodeShape ;
+  sh:targetClass dmwp:ResidueInformation ;
+  sh:name "Residue Information"@es ;
+  sh:description "Información de cada lote de residuo (cerrado)."@es ;
+  # Enumeraciones refinadas (placeholder real: OIL + SLU vs codelists internas)
+  sh:property [ sh:path dmwp:typeCode ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:in ( "OIL" ) ; sh:message "typeCode debe ser OIL (placeholder)."@es ] ;
+  sh:property [ sh:path dmwp:subtypeCode ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:in ( "SLU" ) ; sh:message "subtypeCode debe ser SLU (placeholder)."@es ] ;
+  sh:property [ sh:path dmwp:substance ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:dischargeMeans ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:in ( "ZTE" "ZTD" "ZTC" "ZTB" ) ] ;
+  sh:property [ sh:path dmwp:nextCollectionPort ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}[A-Z0-9]{3}$" ] ;
+  # Al menos una medida de cantidades (OR lógico)
+  sh:or (
+    [ sh:property [ sh:path dmwp:quantityToDeliver ; sh:minCount 1 ; sh:class untp:Measure ] ]
+    [ sh:property [ sh:path dmwp:quantityRemainingOnBoard ; sh:minCount 1 ; sh:class untp:Measure ] ]
+    [ sh:property [ sh:path dmwp:estimatedGenerated ; sh:minCount 1 ; sh:class untp:Measure ] ]
+  ) ;
+  sh:property [ sh:path dmwp:quantityToDeliver ; sh:minCount 0 ; sh:maxCount 1 ; sh:class untp:Measure ] ;
+  sh:property [ sh:path dmwp:quantityRemainingOnBoard ; sh:minCount 0 ; sh:maxCount 1 ; sh:class untp:Measure ] ;
+  sh:property [ sh:path dmwp:estimatedGenerated ; sh:minCount 0 ; sh:maxCount 1 ; sh:class untp:Measure ] ;
+  sh:property [ sh:path dmwp:maxCapacity ; sh:minCount 0 ; sh:maxCount 1 ; sh:class untp:Measure ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:ShipShape a sh:NodeShape ;
+  sh:targetClass dmwp:Ship ;
+  sh:name "Ship"@es ;
+  sh:description "Datos del buque (cerrado)."@es ;
+  sh:property [ sh:path dmwp:imoNumber ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^\\d{7}$" ; sh:message "IMO debe ser 7 dígitos."@es ] ;
+  sh:property [ sh:path dmwp:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:flag ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:pattern "^[A-Z]{2}$" ; sh:message "flag debe ser ISO 3166-1 alpha-2."@es ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:AuthorizedPartyShape a sh:NodeShape ;
+  sh:targetClass dmwp:AuthorizedParty ;
+  sh:name "Authorized Party"@es ;
+  sh:description "Entidad autorizada (cerrado)."@es ;
+  sh:property [ sh:path dmwp:identifier ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path dmwp:contactPoint ; sh:minCount 0 ; sh:maxCount 1 ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
+
+dmwp:InvolvedPartyShape a sh:NodeShape ;
+  sh:targetClass dmwp:InvolvedParty ;
+  sh:name "Involved Party"@es ;
+  sh:description "Parte involucrada (cerrado)."@es ;
+  sh:property [ sh:path dmwp:role ; sh:minCount 0 ; sh:maxCount 1 ] ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:closed true .
