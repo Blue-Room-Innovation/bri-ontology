@@ -1,6 +1,6 @@
 {
   "@context": "../../build/v0.1/recycling.context.jsonld",
-  "@type": "schema:Organization",
+  "@type": "Recycler",
   "managerCode": "eiusmod Duis quis incididunt",
   "nimaCode": "officia",
   "name": "est eu elit dolore",
@@ -10,11 +10,11 @@
   "telephone": "qui ut in eu",
   "faxNumber": "cupidatat",
   "email": "laboris pariatur",
-  "url": "https://dVinejiGzAUUEwJ.dntU0HPdlI0Eyu5,e",
+  "url": {
+    "@id": "http://example.cat"
+  },
   "lat": -85.77639435600175,
   "long": 16.9527833017753,
-  "adaptedToRD1102015": {
-    "$comment": "No explicit sh:datatype or sh:class found"
-  },
+  "adaptedToRD1102015": true,
   "wasteTreatmentActivity": "culpa deserunt"
 }

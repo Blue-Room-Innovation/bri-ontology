@@ -36,15 +36,14 @@
           "type": "string"
         },
         "url": {
-          "type": "string",
-          "format": "uri"
+          "$comment": "No explicit sh:datatype or sh:class found"
         },
-        "lat": {
+        "latitude": {
           "type": "number",
           "minimum": -90.0,
           "maximum": 90.0
         },
-        "long": {
+        "longitude": {
           "type": "number",
           "minimum": -180.0,
           "maximum": 180.0
@@ -97,15 +96,14 @@
       "type": "string"
     },
     "url": {
-      "type": "string",
-      "format": "uri"
+      "$comment": "No explicit sh:datatype or sh:class found"
     },
-    "lat": {
+    "latitude": {
       "type": "number",
       "minimum": -90.0,
       "maximum": 90.0
     },
-    "long": {
+    "longitude": {
       "type": "number",
       "minimum": -180.0,
       "maximum": 180.0

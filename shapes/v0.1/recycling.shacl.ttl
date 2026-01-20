@@ -2,7 +2,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 @prefix schema: <https://schema.org/> .
-@prefix wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 
@@ -12,7 +11,7 @@
 
 bri-recycling:RecyclingOrganisationShape
   a sh:NodeShape ;
-  sh:targetClass schema:Organization ;
+  sh:targetClass bri-recycling:Recycler ;
 
   ##########################
   # Identificació
@@ -85,7 +84,7 @@ bri-recycling:RecyclingOrganisationShape
 
   sh:property [
     sh:path schema:url ;
-    sh:datatype xsd:anyURI ;
+    sh:nodeKind sh:IRI;
     sh:maxCount 1 ;
   ] ;
 
@@ -94,16 +93,16 @@ bri-recycling:RecyclingOrganisationShape
   ##########################
 
   sh:property [
-    sh:path wgs84:lat ;
-    sh:datatype xsd:decimal ;
+    sh:path schema:latitude;
+    sh:datatype xsd:double ;
     sh:minInclusive -90 ;
     sh:maxInclusive 90 ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path wgs84:long ;
-    sh:datatype xsd:decimal ;
+    sh:path schema:longitude ;
+    sh:datatype xsd:double ;
     sh:minInclusive -180 ;
     sh:maxInclusive 180 ;
     sh:maxCount 1 ;
@@ -115,9 +114,13 @@ bri-recycling:RecyclingOrganisationShape
 
   sh:property [
     sh:path bri-recycling:adaptedToRD1102015 ;
-    sh:nodeKind sh:IRI ;
+    sh:or (
+      [ sh:datatype xsd:boolean ]
+      [ sh:nodeKind sh:IRI ]
+    ) ;
     sh:maxCount 1 ;
   ] ;
+
 
   ##########################
   # Activitat

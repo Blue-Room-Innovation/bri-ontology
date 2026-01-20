@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-19 14:44:10
+ * Generated: 2026-01-20 08:35:58
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 
@@ -18,9 +18,11 @@ export interface GeneratedJSONSchemaFromSHACL {
   telephone?: string;
   faxNumber?: string;
   email?: string;
-  url?: string;
-  lat?: number;
-  long?: number;
+  url?: {
+    [k: string]: unknown;
+  };
+  latitude?: number;
+  longitude?: number;
   adaptedToRD1102015?: {
     [k: string]: unknown;
   };

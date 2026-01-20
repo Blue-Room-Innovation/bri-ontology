@@ -1,5 +1,7 @@
 @prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix schema: <http://schema.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
@@ -12,6 +14,17 @@ bri-recycling:RecyclingOntology
   a owl:Ontology ;
   rdfs:label "BRI Recycling Ontology"@en ;
   rdfs:comment "Minimal extensions for recycling and waste management registries"@en .
+
+############################
+# Objectes
+############################
+
+bri-recycling:Recycler rdf:type owl:Class ;
+  rdfs:subClassOf schema:Organization ;
+  rdfs:label "Recycler"@en ;
+  rdfs:comment "An organization that processes waste materials for recycling"@en .
+
+
 
 ############################
 # Identificadors
