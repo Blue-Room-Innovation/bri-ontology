@@ -106,13 +106,14 @@ def _merge_extras_into_data(data_graph, extras: List[Path]):
             data_graph.add(triple)
 
 
-def _serialize_report(report_graph, output_format: str) -> int:
+def _serialize_report(report_graph, report_text: str, output_format: str) -> int:
     """Serialize validation report to specified format.
-    
+
     Args:
-        report_graph: Validation report graph or text
+        report_graph: Validation report graph
+        report_text: Human-readable validation report text
         output_format: Output format (human, text, turtle, json-ld)
-        
+
     Returns:
         Exit code (0 for success, 2 for error)
     """
@@ -121,7 +122,7 @@ def _serialize_report(report_graph, output_format: str) -> int:
     fmt = output_format.lower()
     
     if fmt in {"human", "text"}:
-        print(report_graph)
+        print(report_text)
         return 0
     
     if fmt == "turtle":
@@ -202,7 +203,9 @@ def validate_shacl(config: ShaclConfig) -> int:
         )
         
         # Serialize output
-        status = _serialize_report(report_graph, config.output_format)
+        print(f"[SHACL] Conforms: {'true' if conforms else 'false'}")
+
+        status = _serialize_report(report_graph, report_text, config.output_format)
         if status != 0:
             return status
         

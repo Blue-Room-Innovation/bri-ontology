@@ -114,6 +114,14 @@ validation:
         format: "human"
         extras: ""
 
+      recycling:
+        name: "Recycling"
+        description: ""
+        data: "examples/v0.1/recycling.sample.jsonld"
+        shapes: "shapes/v0.1/recycling.shacl.ttl"
+        format: "human"
+        extras: ""
+
 # Conversion Configuration
 # ------------------------
 # Define conversion scenarios for SHACL → JSON Schema → TypeScript

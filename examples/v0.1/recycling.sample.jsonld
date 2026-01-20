@@ -1,19 +1,20 @@
 {
-  "@context": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/build/v0.1/recycling.context.jsonld",
-  "@id": "https://example.org/recycler/12345",
+  "@context": "../../build/v0.1/recycling.context.jsonld",
   "@type": "schema:Organization",
-  "managerCode": "REC-12345",
-  "nimaCode": "08-123456",
-  "name": "Gestió Ambiental del Vallès, S.A.",
-  "streetAddress": "Carrer de la Indústria, 15",
-  "addressLocality": "Sabadell",
-  "postalCode": "08205",
-  "telephone": "+34-937-123-456",
-  "faxNumber": "+34-937-123-457",
-  "email": "info@gavalles.cat",
-  "url": "https://www.gavalles.cat",
-  "lat": 41.548,
-  "long": 2.109,
-  "adaptedToRD1102015": "https://boe.es/...",
-  "wasteTreatmentActivity": "WEEE recycling and treatment"
+  "managerCode": "eiusmod Duis quis incididunt",
+  "nimaCode": "officia",
+  "name": "est eu elit dolore",
+  "streetAddress": "dolor est sint",
+  "addressLocality": "nulla consequat",
+  "postalCode": "in consectetur sed",
+  "telephone": "qui ut in eu",
+  "faxNumber": "cupidatat",
+  "email": "laboris pariatur",
+  "url": "https://dVinejiGzAUUEwJ.dntU0HPdlI0Eyu5,e",
+  "lat": -85.77639435600175,
+  "long": 16.9527833017753,
+  "adaptedToRD1102015": {
+    "$comment": "No explicit sh:datatype or sh:class found"
+  },
+  "wasteTreatmentActivity": "culpa deserunt"
 }
