@@ -1,15 +1,15 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-20 10:21:18
+ * Generated: 2026-01-20 10:43:48
  * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
  */
 
 /**
  * Shape principal del Digital MARPOL Waste Passport (cerrado).
  */
-export interface DigitalMARPOLWastePassport {
-  "dmwp:credentialSubject": MARPOLWastePassport;
+export interface DigitalMarpolWastePassportShape {
+  "dmwp:credentialSubject": MarpolWastePassportShape;
   /**
    * Falta fecha de emisión (dct:issued).
    */
@@ -24,15 +24,15 @@ export interface DigitalMARPOLWastePassport {
 /**
  * Debe tener un credentialSubject (MarpolWastePassport).
  */
-export interface MARPOLWastePassport {
-  "dmwp:waste": MARPOLWaste;
+export interface MarpolWastePassportShape {
+  "dmwp:waste": MarpolWasteShape;
 }
 /**
  * Debe enlazar un MarpolWaste.
  */
-export interface MARPOLWaste {
-  "dmwp:ship": Ship;
-  "dmwp:residue": ResidueInformation;
+export interface MarpolWasteShape {
+  "dmwp:ship": ShipShape;
+  "dmwp:residue": ResidueInformationShape;
   "dmwp:lastDeliveryDate"?: string;
   /**
    * arrivalPort debe cumplir patrón UN/LOCODE (e.g. ESPMI).
@@ -46,7 +46,7 @@ export interface MARPOLWaste {
   "dmwp:deliveryType"?: "ZTO" | "REC" | "DIS";
   "dmwp:shipScale"?: string;
   "dmwp:marpolEdition"?: string;
-  "dmwp:wasteAgent"?: AuthorizedParty;
+  "dmwp:wasteAgent"?: AuthorizedPartyShape;
   "dmwp:message"?: {
     [k: string]: unknown;
   };
@@ -57,7 +57,7 @@ export interface MARPOLWaste {
 /**
  * Debe especificar el buque (ship).
  */
-export interface Ship {
+export interface ShipShape {
   /**
    * IMO debe ser 7 dígitos.
    */
@@ -71,7 +71,7 @@ export interface Ship {
 /**
  * Debe existir al menos un ResidueInformation.
  */
-export interface ResidueInformation {
+export interface ResidueInformationShape {
   /**
    * typeCode debe ser OIL (placeholder).
    */
@@ -99,7 +99,7 @@ export interface ResidueInformation {
 /**
  * Entidad autorizada (cerrado).
  */
-export interface AuthorizedParty {
+export interface AuthorizedPartyShape {
   "dmwp:identifier": string;
   "dmwp:contactPoint"?: {
     [k: string]: unknown;
