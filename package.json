@@ -18,7 +18,6 @@
     "generate:types": "node docker/docker.js run generate:types",
     "generate:types:verbose": "node docker/docker.js run generate:types:verbose",
     "generate:wiki": "node docker/docker.js run generate:wiki",
-    "generate:wiki:with-codelists": "node docker/docker.js run generate:wiki:with-codelists",
     "generate:wiki:verbose": "node docker/docker.js run generate:wiki:verbose",
     "generate:all": "npm run generate:types && npm run generate:wiki",
     "convert:shacl": "node docker/docker.js run convert:shacl",
