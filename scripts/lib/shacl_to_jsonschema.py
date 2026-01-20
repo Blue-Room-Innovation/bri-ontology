@@ -239,19 +239,47 @@ class SHACLToJSONSchemaConverter:
         elif message:
             prop_def["description"] = message
         
-        # Determine type from sh:datatype or sh:class
+        # Determine type from sh:datatype, sh:class, sh:node, sh:nodeKind, or sh:or
         datatype = self.graph.value(prop_shape, SH.datatype)
         class_ref = self.graph.value(prop_shape, SH["class"])
+        node_kind = self.graph.value(prop_shape, SH.nodeKind)
+        or_list = self.graph.value(prop_shape, SH["or"])
         
-        if datatype:
+        if or_list:
+            # sh:or is an RDF list of alternative constraint shapes.
+            # Map it to JSON Schema anyOf.
+            any_of: List[Dict[str, Any]] = []
+            for alt_node in self._extract_list_nodes(or_list):
+                alt_schema = self._convert_inline_constraint_to_schema(alt_node)
+                if alt_schema:
+                    # Avoid nested anyOf (common when an alternative is sh:nodeKind sh:IRI)
+                    if (
+                        isinstance(alt_schema, dict)
+                        and set(alt_schema.keys()) == {"anyOf"}
+                        and isinstance(alt_schema.get("anyOf"), list)
+                    ):
+                        any_of.extend(alt_schema["anyOf"])
+                    else:
+                        any_of.append(alt_schema)
+
+            if any_of:
+                prop_def["anyOf"] = any_of
+            else:
+                self.warnings.append(f"sh:or found in {prop_name} but no convertible alternatives were found")
+                prop_def["$comment"] = "sh:or present but could not be converted"
+
+        elif datatype:
             json_type = self.xsd_to_json_type.get(datatype, "string")
             prop_def["type"] = json_type
-            
+
             # Add format if applicable
             json_format = self.xsd_to_json_format.get(datatype)
             if json_format:
                 prop_def["format"] = json_format
-        
+
+        elif node_kind:
+            prop_def.update(self._nodekind_to_schema(node_kind))
+
         elif class_ref:
             # sh:class points to an ontology class. Find the Shape that targets this class.
             class_uri = str(class_ref)
@@ -349,10 +377,7 @@ class SHACLToJSONSchemaConverter:
         if pattern:
             target_def["pattern"] = str(pattern)
         
-        # Handle sh:or (anyOf)
-        or_constraints = list(self.graph.objects(prop_shape, SH["or"]))
-        if or_constraints:
-            self.warnings.append(f"sh:or found in {prop_name} - partial conversion to anyOf")
+        # NOTE: sh:or is handled above and mapped to anyOf when possible.
         
         # Handle sh:xone (oneOf)
         xone_constraints = list(self.graph.objects(prop_shape, SH.xone))
@@ -392,6 +417,107 @@ class SHACLToJSONSchemaConverter:
                 break
         
         return values
+
+    def _extract_list_nodes(self, list_node: URIRef) -> List[URIRef]:
+        """Extract nodes (URIRefs or BNodes) from an RDF list."""
+        nodes: List[URIRef] = []
+        current = list_node
+
+        while current != RDF.nil:
+            first = self.graph.value(current, RDF.first)
+            if first:
+                nodes.append(first)
+
+            rest = self.graph.value(current, RDF.rest)
+            if rest:
+                current = rest
+            else:
+                break
+
+        return nodes
+
+    def _nodekind_to_schema(self, node_kind: URIRef) -> Dict[str, Any]:
+        """Map sh:nodeKind to a JSON Schema snippet (best-effort structural mapping)."""
+        # SHACL node kinds: sh:IRI, sh:Literal, sh:BlankNode,
+        # and the *Or* variants.
+        if node_kind == SH.IRI:
+            # JSON-LD often represents IRIs either as a string or as an object with @id.
+            return {
+                "anyOf": [
+                    {"type": "string", "format": "uri"},
+                    self._jsonld_id_object_schema(),
+                ]
+            }
+        if node_kind == SH.Literal:
+            # Without datatype, assume string (structural best-effort)
+            return {"type": "string"}
+        if node_kind == SH.BlankNode:
+            return {"type": "object"}
+        if node_kind == SH.BlankNodeOrIRI:
+            return {
+                "anyOf": [
+                    {"type": "object"},
+                    {"type": "string", "format": "uri"},
+                    self._jsonld_id_object_schema(),
+                ]
+            }
+        if node_kind == SH.IRIOrLiteral:
+            return {
+                "anyOf": [
+                    {"type": "string", "format": "uri"},
+                    self._jsonld_id_object_schema(),
+                    {"type": "string"},
+                ]
+            }
+        if node_kind == SH.BlankNodeOrLiteral:
+            return {"anyOf": [{"type": "object"}, {"type": "string"}]}
+
+        # Unknown / uncommon nodeKind
+        return {"$comment": f"Unsupported sh:nodeKind {node_kind}"}
+
+    def _jsonld_id_object_schema(self) -> Dict[str, Any]:
+        """Schema for a JSON-LD IRI object like {"@id": "https://..."}."""
+        return {
+            "type": "object",
+            "properties": {
+                "@id": {"type": "string", "format": "uri"},
+            },
+            "required": ["@id"],
+            # JSON-LD objects may contain other keys like @type, @context, etc.
+            "additionalProperties": True,
+        }
+
+    def _convert_inline_constraint_to_schema(self, constraint_node: URIRef) -> Dict[str, Any]:
+        """Convert an inline constraint node (e.g., inside sh:or) to JSON Schema."""
+        datatype = self.graph.value(constraint_node, SH.datatype)
+        class_ref = self.graph.value(constraint_node, SH["class"])
+        node_kind = self.graph.value(constraint_node, SH.nodeKind)
+        node_shape = self.graph.value(constraint_node, SH.node)
+
+        if datatype:
+            schema: Dict[str, Any] = {
+                "type": self.xsd_to_json_type.get(datatype, "string")
+            }
+            json_format = self.xsd_to_json_format.get(datatype)
+            if json_format:
+                schema["format"] = json_format
+            return schema
+
+        if node_kind:
+            return self._nodekind_to_schema(node_kind)
+
+        if class_ref:
+            class_uri = str(class_ref)
+            shape_name = self.class_to_shape_map.get(class_uri)
+            if shape_name:
+                return {"$ref": f"#/$defs/{shape_name}"}
+            return {"$comment": f"sh:class {class_ref} - no corresponding shape found"}
+
+        if node_shape:
+            shape_name = self._get_local_name(node_shape)
+            return {"$ref": f"#/$defs/{shape_name}"}
+
+        return {}
     
     def _get_property_name(self, path: URIRef) -> str:
         """Get a JSON-friendly property name from a path URI."""

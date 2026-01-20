@@ -130,7 +130,25 @@
       "description": "Material Constituent",
       "properties": {
         "unece:materialType": {
-          "$comment": "No explicit sh:datatype or sh:class found"
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "@id"
+              ],
+              "additionalProperties": true
+            }
+          ]
         },
         "unece:massFraction": {
           "type": "number",

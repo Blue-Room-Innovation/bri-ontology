@@ -114,10 +114,7 @@ bri-recycling:RecyclingOrganisationShape
 
   sh:property [
     sh:path bri-recycling:adaptedToRD1102015 ;
-    sh:or (
-      [ sh:datatype xsd:boolean ]
-      [ sh:nodeKind sh:IRI ]
-    ) ;
+    sh:datatype xsd:boolean ;
     sh:maxCount 1 ;
   ] ;
 
