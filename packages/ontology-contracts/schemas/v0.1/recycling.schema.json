@@ -10,40 +10,52 @@
       "title": "RecyclingOrganisationShape",
       "properties": {
         "managerCode": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "nimaCode": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "streetAddress": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "addressLocality": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "postalCode": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "correspondeceAddress": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "correspondeceAddressLocality": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "correspondecePostalCode": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "telephone": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[0-9 +()]{6,}$"
         },
         "faxNumber": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[0-9 +()]{6,}$"
         },
         "email": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
         },
         "url": {
           "anyOf": [
@@ -66,18 +78,11 @@
             }
           ]
         },
-        "latitude": {
-          "type": "number",
-          "minimum": -90.0,
-          "maximum": 90.0
-        },
-        "longitude": {
-          "type": "number",
-          "minimum": -180.0,
-          "maximum": 180.0
-        },
         "adaptedToRD1102015": {
-          "type": "boolean"
+          "type": "boolean",
+          "enum": [
+            "true"
+          ]
         },
         "wasteTreatmentActivity": {
           "type": "string"
@@ -92,15 +97,7 @@
         "postalCode",
         "correspondeceAddress",
         "correspondeceAddressLocality",
-        "correspondecePostalCode",
-        "telephone",
-        "faxNumber",
-        "email",
-        "url",
-        "latitude",
-        "longitude",
-        "adaptedToRD1102015",
-        "wasteTreatmentActivity"
+        "correspondecePostalCode"
       ],
       "additionalProperties": false
     }
@@ -108,40 +105,52 @@
   "type": "object",
   "properties": {
     "managerCode": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "nimaCode": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "streetAddress": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "addressLocality": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "postalCode": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "correspondeceAddress": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "correspondeceAddressLocality": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "correspondecePostalCode": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
     },
     "telephone": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[0-9 +()]{6,}$"
     },
     "faxNumber": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[0-9 +()]{6,}$"
     },
     "email": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
     },
     "url": {
       "anyOf": [
@@ -164,18 +173,11 @@
         }
       ]
     },
-    "latitude": {
-      "type": "number",
-      "minimum": -90.0,
-      "maximum": 90.0
-    },
-    "longitude": {
-      "type": "number",
-      "minimum": -180.0,
-      "maximum": 180.0
-    },
     "adaptedToRD1102015": {
-      "type": "boolean"
+      "type": "boolean",
+      "enum": [
+        "true"
+      ]
     },
     "wasteTreatmentActivity": {
       "type": "string"
@@ -190,15 +192,7 @@
     "postalCode",
     "correspondeceAddress",
     "correspondeceAddressLocality",
-    "correspondecePostalCode",
-    "telephone",
-    "faxNumber",
-    "email",
-    "url",
-    "latitude",
-    "longitude",
-    "adaptedToRD1102015",
-    "wasteTreatmentActivity"
+    "correspondecePostalCode"
   ],
   "additionalProperties": false
 }

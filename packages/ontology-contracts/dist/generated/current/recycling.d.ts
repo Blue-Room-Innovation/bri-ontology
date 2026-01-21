@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-20 13:39:15
+ * Generated: 2026-01-21 12:53:03
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 /**
@@ -17,16 +17,14 @@ export interface RecyclingOrganisationShape {
     correspondeceAddress: string;
     correspondeceAddressLocality: string;
     correspondecePostalCode: string;
-    telephone: string;
-    faxNumber: string;
-    email: string;
-    url: string | {
+    telephone?: string;
+    faxNumber?: string;
+    email?: string;
+    url?: string | {
         "@id": string;
         [k: string]: unknown;
     };
-    latitude: number;
-    longitude: number;
-    adaptedToRD1102015: boolean;
-    wasteTreatmentActivity: string;
+    adaptedToRD1102015?: "true";
+    wasteTreatmentActivity?: string;
 }
 //# sourceMappingURL=recycling.d.ts.map
