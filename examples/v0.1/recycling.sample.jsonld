@@ -1,6 +1,7 @@
 {
   "@context": "../../build/v0.1/recycling.context.jsonld",
   "@type": "Recycler",
+  "@id": "test",
   "managerCode": "laborum",
   "nimaCode": "sit proident est sed cupidatat",
   "name": "dolor reprehenderit eu laborum aute",
