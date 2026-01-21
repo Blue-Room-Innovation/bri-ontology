@@ -6,152 +6,195 @@
 @prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 
-############################
-# Node Shape principal
-############################
 
 bri-recycling:RecyclingOrganisationShape
   a sh:NodeShape ;
   sh:targetClass bri-recycling:Recycler ;
 
   # Codi gestor
+  # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:managerCode ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   # Codi NIMA
+  # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:nimaCode ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   # Nom gestor
+  # Mandatory, non-empty string
   sh:property [
     sh:path schema:name ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   # Adreça física
+  # Mandatory, non-empty string
   sh:property [
     sh:path schema:streetAddress ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   # Municipi
+  # Mandatory, non-empty string
   sh:property [
     sh:path schema:addressLocality ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   #Codi postal
+  # Mandatory, non-empty string
   sh:property [
     sh:path schema:postalCode ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   #Adreça de correspondència
+  # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondeceAddress ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   #Municipi de correspondència
+  # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondeceAddressLocality ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   #Codi postal correspondència
+  # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondecePostalCode ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
   ] ;
 
   # Telèfon
+  # Optional, phone-like string pattern
   sh:property [
     sh:path schema:telephone ;
     sh:datatype xsd:string ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:pattern "^[0-9 +()]{6,}$" ;
   ] ;
 
   # Fax
+  # Optional, phone-like string pattern
   sh:property [
     sh:path schema:faxNumber ;
     sh:datatype xsd:string ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:pattern "^[0-9 +()]{6,}$" ;
   ] ;
 
   # Email
+  # Optional, email format
   sh:property [
     sh:path schema:email ;
     sh:datatype xsd:string ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ;
   ] ;
 
   # Web
+  # Optional, must be an IRI (website)
   sh:property [
     sh:path schema:url ;
     sh:nodeKind sh:IRI ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
 
   # Localització
-  sh:property [
-    sh:path schema:latitude;
-    sh:datatype xsd:double ;
-    sh:minCount 1 ;
-    sh:minInclusive -90 ;
-    sh:maxInclusive 90 ;
-    sh:maxCount 1 ;
-  ] ;
-
-  sh:property [
-    sh:path schema:longitude ;
-    sh:datatype xsd:double ;
-    sh:minCount 1 ;
-    sh:minInclusive -180 ;
-    sh:maxInclusive 180 ;
-    sh:maxCount 1 ;
-  ] ;
+  # Latitude and longitude: both present or both absent
+  sh:or (
+    # No latitude and no longitude
+    [
+      sh:not [
+        sh:property [
+          sh:path schema:latitude ;
+          sh:minCount 1 ;
+        ] ;
+      ] ;
+      sh:not [
+        sh:property [
+          sh:path schema:longitude ;
+          sh:minCount 1 ;
+        ] ;
+      ] ;
+    ]
+    [
+      # Latitude present and valid
+      sh:property [
+        sh:path schema:latitude ;
+        sh:datatype xsd:double ;
+        sh:minInclusive -90 ;
+        sh:maxInclusive 90 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+      ] ;
+      # Longitude present and valid
+      sh:property [
+        sh:path schema:longitude ;
+        sh:datatype xsd:double ;
+        sh:minInclusive -180 ;
+        sh:maxInclusive 180 ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+      ] ;
+    ]
+  ) ;
 
   # Adaptat al RD 110/2015 de RAEE
+  # Optional, boolean only (true/false)
   sh:property [
     sh:path bri-recycling:adaptedToRD1102015 ;
     sh:datatype xsd:boolean ;
-    sh:minCount 1 ;
+    sh:in ( true false ) ;
     sh:maxCount 1 ;
   ] ;
 
   # Activitat
+  # Optional, free-text description
   sh:property [
     sh:path bri-recycling:wasteTreatmentActivity ;
     sh:datatype xsd:string ;
-    sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
 
+  # Ignore rdf:type when checking closed shape
   sh:ignoredProperties ( rdf:type ) ;
+
+  # No properties outside this shape are allowed
   sh:closed true .
