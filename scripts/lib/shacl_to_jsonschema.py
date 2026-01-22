@@ -15,7 +15,6 @@ Usage:
 
 Author: Blue Room Innovation
 Date: 2026-01-08
-Related: ADR-005
 """
 
 import argparse

@@ -29,7 +29,6 @@ See also:
 
 Author: Blue Room Innovation
 Date: 2026-01-13
-Related: ADR-005
 """
 
 import argparse
