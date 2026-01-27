@@ -6,8 +6,8 @@
 @prefix dmwp: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
 @prefix ex: <https://example.org/invalid/> .
 
-# Ejemplos INVALIDOS para pruebas SHACL sobre waste-shapes.ttl
-# Cada bloque documenta la(s) violaciones esperadas.
+# INVALID examples for SHACL testing on waste-shapes.ttl
+# Each block documents the expected violation(s).
 
 #################################################################
 # 1. DigitalWastePassport sin issued (sh:minCount 1 violado)
@@ -28,7 +28,7 @@ ex:badWastePassport a dwp:WastePassport ;
 # 3. Waste sin nombre (schema:name minCount 1)
 #################################################################
 ex:badWaste a dwp:Waste ;
-  dct:description "Residuo sin nombre" .
+  dct:description "Waste without name" .
 
 #################################################################
 # 4. DigitalMarpolWastePassport sin credentialSubject
@@ -43,36 +43,36 @@ ex:badDigitalMarpolWastePassport a dmwp:DigitalMarpolWastePassport ;
 ex:badMarpolWastePassport a dmwp:MarpolWastePassport .
 
 #################################################################
-# 6. MarpolWaste con arrivalPort formato incorrecto (UN/LOCODE patrón)
+# 6. MarpolWaste with incorrect arrivalPort format (UN/LOCODE pattern)
 #################################################################
 ex:badMarpolWaste a dmwp:MarpolWaste ;
   dmwp:ship ex:badShip ;
   dmwp:residue ex:badResidue ;
-  dmwp:arrivalPort "ES-BCN" ; # debería ser ESBCN
+  dmwp:arrivalPort "ES-BCN" ; # should be ESBCN
   dmwp:nextPlannedDeliveryPort "12345" .
 
 #################################################################
-# 7. Ship con IMO number inválido (no 7 dígitos) y flag inválida
+# 7. Ship with invalid IMO number (not 7 digits) and invalid flag
 #################################################################
 ex:badShip a dmwp:Ship ;
-  dmwp:imoNumber "1234" ; # debería tener 7 dígitos
+  dmwp:imoNumber "1234" ; # should have 7 digits
   dmwp:name "Vessel X" ;
-  dmwp:flag "ESPA" . # debería ser código ISO3166-1 Alpha-2
+  dmwp:flag "ESPA" . # should be ISO3166-1 Alpha-2 code
 
 #################################################################
 # 8. ResidueInformation sin typeCode y con dischargeMeans fuera de lista
 #################################################################
 ex:badResidue a dmwp:ResidueInformation ;
   dmwp:subtypeCode "ZTH01" ;
-  dmwp:dischargeMeans "ZZZ" ; # no en (ZTE,ZTD,ZTC,ZTB)
+  dmwp:dischargeMeans "ZZZ" ; # not in (ZTE,ZTD,ZTC,ZTB)
   dmwp:quantityToDeliver ex:badMeasure .
 
-# Medida correcta pero la shape requiere typeCode
+# Correct measure but the shape requires typeCode
 ex:badMeasure a dmwp:Measure ;
   dmwp:value "100"^^xsd:decimal .
 
 #################################################################
-# 9. ResidueInformation con múltiples cantidades (violación OR exclusiva)
+# 9. ResidueInformation with multiple quantities (exclusive OR violation)
 #################################################################
 ex:badResidueMultiple a dmwp:ResidueInformation ;
   dmwp:typeCode "ZTH" ;
@@ -90,9 +90,9 @@ ex:measure3 a dmwp:Measure ; dmwp:value "3"^^xsd:decimal .
 ex:badAuthorizedParty a dmwp:AuthorizedParty .
 
 #################################################################
-# 11. InvolvedParty con rol vacío (string esperado, permitiría test adicional si se añade datatype)
+# 11. InvolvedParty with empty role (string expected, would allow additional test if datatype is added)
 #################################################################
 ex:badInvolvedParty a dmwp:InvolvedParty ;
   dmwp:role "" .
 
-# Nota: Algunos casos dependen de futura validación más estricta (flag contra lista ISO, puertos contra UN/LOCODE completa).
+# Note: Some cases depend on future stricter validation (flag against ISO list, ports against complete UN/LOCODE).

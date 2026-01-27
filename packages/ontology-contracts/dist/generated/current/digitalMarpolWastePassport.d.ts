@@ -1,46 +1,46 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-21 12:53:01
+ * Generated: 2026-01-27 13:47:27
  * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
  */
 /**
- * Shape principal del Digital MARPOL Waste Passport (cerrado).
+ * Main shape of the Digital MARPOL Waste Passport (closed).
  */
 export interface DigitalMarpolWastePassportShape {
     "dmwp:credentialSubject": MarpolWastePassportShape;
     /**
-     * Falta fecha de emisión (dct:issued).
+     * Missing issued date (dct:issued).
      */
     "dct:issued": string;
     /**
-     * Falta publisher (dct:publisher).
+     * Missing publisher (dct:publisher).
      */
     "dct:publisher": {
         [k: string]: unknown;
     };
 }
 /**
- * Debe tener un credentialSubject (MarpolWastePassport).
+ * Must have a credentialSubject (MarpolWastePassport).
  */
 export interface MarpolWastePassportShape {
     "dmwp:waste": MarpolWasteShape;
 }
 /**
- * Debe enlazar un MarpolWaste.
+ * Must link a MarpolWaste.
  */
 export interface MarpolWasteShape {
     "dmwp:ship": ShipShape;
     "dmwp:residue": ResidueInformationShape;
     "dmwp:lastDeliveryDate"?: string;
     /**
-     * arrivalPort debe cumplir patrón UN/LOCODE (e.g. ESPMI).
+     * arrivalPort must match UN/LOCODE pattern (e.g. ESPMI).
      */
     "dmwp:arrivalPort"?: string;
     "dmwp:nextPlannedDeliveryPort"?: string;
     "dmwp:lastWasteDeliveryPort"?: string;
     /**
-     * deliveryType fuera de lista permitida (ZTO, REC, DIS).
+     * deliveryType outside allowed list (ZTO, REC, DIS).
      */
     "dmwp:deliveryType"?: "ZTO" | "REC" | "DIS";
     "dmwp:shipScale"?: string;
@@ -54,29 +54,29 @@ export interface MarpolWasteShape {
     };
 }
 /**
- * Debe especificar el buque (ship).
+ * Must specify the ship (ship).
  */
 export interface ShipShape {
     /**
-     * IMO debe ser 7 dígitos.
+     * IMO must be 7 digits.
      */
     "dmwp:imoNumber": string;
     "dmwp:name": string;
     /**
-     * flag debe ser ISO 3166-1 alpha-2.
+     * flag must be ISO 3166-1 alpha-2.
      */
     "dmwp:flag": string;
 }
 /**
- * Debe existir al menos un ResidueInformation.
+ * Must have at least one ResidueInformation.
  */
 export interface ResidueInformationShape {
     /**
-     * typeCode debe ser OIL (placeholder).
+     * typeCode must be OIL (placeholder).
      */
     "dmwp:typeCode": "OIL";
     /**
-     * subtypeCode debe ser SLU (placeholder).
+     * subtypeCode must be SLU (placeholder).
      */
     "dmwp:subtypeCode": "SLU";
     "dmwp:substance"?: string;
@@ -96,7 +96,7 @@ export interface ResidueInformationShape {
     };
 }
 /**
- * Entidad autorizada (cerrado).
+ * Authorized entity (closed).
  */
 export interface AuthorizedPartyShape {
     "dmwp:identifier": string;

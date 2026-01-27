@@ -1,6 +1,6 @@
-# Índice de Ontologías
+# Ontology Index
 
-| Ontología | #Clases | #ObjProps | #DataProps | #Shapes | #Contexts |
+| Ontology | #Classes | #ObjProps | #DataProps | #Shapes | #Contexts |
 | ----------- | --------- | ----------- | ----------- | --------- | ----------- |
 | digitalMarpolWastePassport | 14 | 13 | 20 | 7 | 0 |
 | digitalWastePassport | 6 | 2 | 0 | 5 | 0 |

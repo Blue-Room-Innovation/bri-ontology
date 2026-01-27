@@ -1,4 +1,4 @@
-## Waste / MARPOL SHACL Shapes (sin legado DPP)
+## Waste / MARPOL SHACL Shapes (without legacy DPP)
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -11,20 +11,20 @@
 
 dwp:DigitalWastePassportShape a sh:NodeShape ;
   sh:targetClass dwp:DigitalWastePassport ;
-  sh:name "Digital Waste Passport"@es ;
-  sh:description "Shape principal del DigitalWastePassport; cerrado para detectar propiedades inesperadas."@es ;
-  sh:property [ sh:path dct:issued ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Debe tener una fecha de emisión (dct:issued)."@es ] ;
-  sh:property [ sh:path dct:publisher ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Debe indicar publisher (dct:publisher)."@es ] ;
-  sh:property [ sh:path dwp:credentialSubject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:WastePassport ; sh:message "Debe enlazar exactamente un WastePassport."@es ] ;
+  sh:name "Digital Waste Passport"@en ;
+  sh:description "Main DigitalWastePassport shape; closed to detect unexpected properties."@en ;
+  sh:property [ sh:path dct:issued ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Must have an issued date (dct:issued)."@en ] ;
+  sh:property [ sh:path dct:publisher ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "Must specify publisher (dct:publisher)."@en ] ;
+  sh:property [ sh:path dwp:credentialSubject ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:WastePassport ; sh:message "Must link exactly one WastePassport."@en ] ;
   sh:property [ sh:path dct:valid ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:closed true .
 
 dwp:WastePassportShape a sh:NodeShape ;
   sh:targetClass dwp:WastePassport ;
-  sh:name "Waste Passport"@es ;
-  sh:description "Shape del WastePassport cerrado; sólo permite propiedades definidas."@es ;
-  sh:property [ sh:path dwp:waste ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:Waste ; sh:message "Debe referenciar un Waste."@es ] ;
+  sh:name "Waste Passport"@en ;
+  sh:description "WastePassport shape closed; only allows defined properties."@en ;
+  sh:property [ sh:path dwp:waste ; sh:minCount 1 ; sh:maxCount 1 ; sh:class dwp:Waste ; sh:message "Must reference a Waste."@en ] ;
   sh:property [ sh:path dct:identifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:reportingStandard ; sh:minCount 0 ; sh:class unece:Standard ] ;
   sh:ignoredProperties ( rdf:type ) ;
@@ -32,15 +32,15 @@ dwp:WastePassportShape a sh:NodeShape ;
 
 dwp:WasteShape a sh:NodeShape ;
   sh:targetClass dwp:Waste ;
-  sh:name "Waste"@es ;
-  sh:description "Shape de Waste cerrado con propiedades UNECE permitidas."@es ;
-  sh:property [ sh:path unece:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:message "Debe tener nombre (unece:name)."@es ] ;
+  sh:name "Waste"@en ;
+  sh:description "Waste shape closed with allowed UNECE properties."@en ;
+  sh:property [ sh:path unece:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ; sh:message "Must have a name (unece:name)."@en ] ;
   sh:property [ sh:path unece:productName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:productDescription ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path unece:hasBatchIdentifier ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
-  # País de origen restringido a un conjunto permitido (ejemplo de enumeración inicial)
-  # País de origen restringido a un conjunto ampliado (sample ISO 3166 Alpha-2)
-  # Nota: ampliar dinámicamente leyendo codelist futuro -> script build
+  # Country of origin restricted to an allowed set (initial enumeration example)
+  # Country of origin restricted to an extended set (sample ISO 3166 Alpha-2)
+  # Note: expand dynamically by reading future codelist -> build script
   sh:property [ sh:path unece:originCountry ; sh:minCount 0 ; sh:maxCount 1 ;
                 sh:in (
                   <https://vocabulary.uncefact.org/CountryId#DE>
@@ -57,10 +57,10 @@ dwp:WasteShape a sh:NodeShape ;
                   <https://vocabulary.uncefact.org/CountryId#GB>
                   <https://vocabulary.uncefact.org/CountryId#IE>
                 ) ;
-                sh:message "originCountry debe estar en el listado permitido (subset EU+GB)."@es ] ;
+                sh:message "originCountry must be in the allowed list (subset EU+GB)."@en ] ;
   sh:property [ sh:path unece:productionDate ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
   sh:property [ sh:path unece:weightQuantity ; sh:minCount 0 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minExclusive 0 ] ;
-  # Unidad declarada restringida (subset de UnitMeasureCode)
+  # Declared unit restricted (subset of UnitMeasureCode)
   sh:property [ sh:path unece:declaredUnit ; sh:minCount 0 ; sh:maxCount 1 ;
                 sh:in (
                   <https://vocabulary.uncefact.org/UnitMeasureCode#KGM>
@@ -69,11 +69,11 @@ dwp:WasteShape a sh:NodeShape ;
                   <https://vocabulary.uncefact.org/UnitMeasureCode#MTR>
                   <https://vocabulary.uncefact.org/UnitMeasureCode#CMQ>
                 ) ;
-                sh:message "declaredUnit debe ser una de: KGM, TNE, LTR, MTR, CMQ."@es ] ;
+                sh:message "declaredUnit must be one of: KGM, TNE, LTR, MTR, CMQ."@en ] ;
   sh:property [ sh:path unece:hasConstituent ; sh:minCount 0 ; sh:class unece:MaterialConstituent ] ;
-  # Restricción agregada: suma de massFraction <= 1
+  # Aggregate constraint: sum of massFraction <= 1
   sh:sparql [
-    sh:message "La suma de massFraction de los constituyentes no debe exceder 1."@es ;
+    sh:message "The sum of massFraction of constituents must not exceed 1."@en ;
     sh:select """
       SELECT $this
       WHERE {
@@ -89,19 +89,19 @@ dwp:WasteShape a sh:NodeShape ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:closed true .
 
-# Constituyentes de materiales
+# Material constituents
 unece:MaterialConstituentShape a sh:NodeShape ;
   sh:targetClass unece:MaterialConstituent ;
-  sh:name "Material Constituent"@es ;
+  sh:name "Material Constituent"@en ;
   sh:property [ sh:path unece:materialType ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
   sh:property [ sh:path unece:massFraction ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:closed true .
 
-# Estándar de reporte
+# Reporting standard
 unece:StandardShape a sh:NodeShape ;
   sh:targetClass unece:Standard ;
-  sh:name "Reporting Standard"@es ;
+  sh:name "Reporting Standard"@en ;
   sh:property [ sh:path unece:standardName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:closed true .

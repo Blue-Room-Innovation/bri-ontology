@@ -1,28 +1,28 @@
-# Catálogo de Ontologías
+# Ontologies Catalog
 
 > [!IMPORTANT]
-Inventario de modelos semánticos disponibles en este repositorio. Todas las ontologías están basadas en estándares **UNECE (United Nations Economic Commission for Europe)** para asegurar interoperabilidad internacional.
+> Inventory of semantic models available in this repository. All ontologies are based on **UNECE (United Nations Economic Commission for Europe)** standards to ensure international interoperability.
 
-## Estados de Madurez
-- **Experimental**: En desarrollo activo, puede cambiar significativamente
-- **Beta**: Estructura estable, refinando detalles
-- **Stable**: Producción, cambios requieren versionado mayor
+## Maturity States
 
-## Ontologías Disponibles
+- **Experimental**: Under active development, may change significantly
+- **Beta**: Stable structure, refining details
+- **Stable**: Production, changes require major versioning
 
-| Ontología | Archivo | URL | Namespace | Base UNECE | Propósito | Versión | Estado |
-|-----------|---------|-----|-----------|------------|-----------|---------|--------|
-| **Digital Waste Passport** | `digitalWastePassport.ttl` | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl) | `dwp:` | `unece:VerifiableCredential`<br/>`unece-dpp:ProductPassport` | Pasaporte digital genérico para trazabilidad de residuos | 0.1 | Beta |
-| **Digital MARPOL Waste Passport** | `digitalMarpolWastePassport.ttl` | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl) | `marpol:` | Extiende Digital Waste Passport | Pasaporte específico para residuos marítimos bajo regulación MARPOL | 0.1 | Beta |
+## Available Ontologies
 
-## Shapes SHACL Asociados
+| Ontology                          | File                             | URL                                                                                                                        | Namespace | UNECE Base                                                   | Purpose                                                      | Version | State |
+| --------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------- | ----- |
+| **Digital Waste Passport**        | `digitalWastePassport.ttl`       | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl)       | `dwp:`    | `unece:VerifiableCredential`<br/>`unece-dpp:ProductPassport` | Generic digital passport for waste traceability              | 0.1     | Beta  |
+| **Digital MARPOL Waste Passport** | `digitalMarpolWastePassport.ttl` | [📄 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl) | `marpol:` | Extends Digital Waste Passport                               | Specific passport for maritime waste under MARPOL regulation | 0.1     | Beta  |
 
-| Ontología | Archivo Shape | URL |
-|-----------|---------------|-----|
-| **Digital Waste Passport** | `digitalWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl) |
+## Associated SHACL Shapes
+
+| Ontology                          | Shape File                             | URL                                                                                                                            |
+| --------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Digital Waste Passport**        | `digitalWastePassportShapes.ttl`       | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl)       |
 | **Digital MARPOL Waste Passport** | `digitalMarpolWastePassportShapes.ttl` | [🔍 v0.1](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl) |
 
-## Recursos de Diseño
+## Design Resources
 
-- **Diagramas conceptuales**: [Perfil sysadmin en Jargon.sh](https://jargon.sh/user/sysadmin)
-
+- **Conceptual diagrams**: [Sysadmin profile on Jargon.sh](https://jargon.sh/user/sysadmin)

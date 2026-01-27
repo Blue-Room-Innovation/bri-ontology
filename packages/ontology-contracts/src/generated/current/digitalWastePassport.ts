@@ -1,20 +1,20 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-21 12:52:54
+ * Generated: 2026-01-27 13:47:23
  * Source: shapes/v0.1/digitalWastePassportShapes.ttl
  */
 
 /**
- * Shape principal del DigitalWastePassport; cerrado para detectar propiedades inesperadas.
+ * Main DigitalWastePassport shape; closed to detect unexpected properties.
  */
 export interface DigitalWastePassportShape {
   /**
-   * Debe tener una fecha de emisión (dct:issued).
+   * Must have an issued date (dct:issued).
    */
   "dct:issued": string;
   /**
-   * Debe indicar publisher (dct:publisher).
+   * Must specify publisher (dct:publisher).
    */
   "dct:publisher": {
     [k: string]: unknown;
@@ -23,7 +23,7 @@ export interface DigitalWastePassportShape {
   "dct:valid"?: string;
 }
 /**
- * Debe enlazar exactamente un WastePassport.
+ * Must link exactly one WastePassport.
  */
 export interface WastePassportShape {
   "dwp:waste": WasteShape;
@@ -31,18 +31,18 @@ export interface WastePassportShape {
   "unece:reportingStandard"?: StandardShape;
 }
 /**
- * Debe referenciar un Waste.
+ * Must reference a Waste.
  */
 export interface WasteShape {
   /**
-   * Debe tener nombre (unece:name).
+   * Must have a name (unece:name).
    */
   "unece:name": string;
   "unece:productName": string;
   "unece:productDescription"?: string;
   "unece:hasBatchIdentifier"?: string;
   /**
-   * originCountry debe estar en el listado permitido (subset EU+GB).
+   * originCountry must be in the allowed list (subset EU+GB).
    */
   "unece:originCountry"?:
     | "https://vocabulary.uncefact.org/CountryId#DE"
@@ -61,7 +61,7 @@ export interface WasteShape {
   "unece:productionDate"?: string;
   "unece:weightQuantity"?: number;
   /**
-   * declaredUnit debe ser una de: KGM, TNE, LTR, MTR, CMQ.
+   * declaredUnit must be one of: KGM, TNE, LTR, MTR, CMQ.
    */
   "unece:declaredUnit"?:
     | "https://vocabulary.uncefact.org/UnitMeasureCode#KGM"

@@ -17,7 +17,7 @@ Quick validation guide to verify all components work correctly.
 npm run docker:build
 ```
 
-**Resultat esperat**: Image `bri-ontology-tooling:latest` creada (~5-10 min primera vegada) a Docker
+**Expected result**: Image `bri-ontology-tooling:latest` created (~5-10 min first time) in Docker
 
 ### Docker Shell
 
@@ -25,7 +25,7 @@ npm run docker:build
 npm run docker:shell
 ```
 
-**Resultat esperat**: Accés interactiu al contenidor Docker
+**Expected result**: Interactive access to the Docker container
 
 ### Configuration
 
@@ -33,7 +33,7 @@ npm run docker:shell
 npm run config:show
 ```
 
-**Resultat esperat**: Mostra versions (ontology_version: v0.1, shapes_version: v0.1, codelists_version: v0.1, build_version: v0.1) a la consola
+**Expected result**: Shows versions (ontology_version: v0.1, shapes_version: v0.1, codelists_version: v0.1, build_version: v0.1) in the console
 
 ### CLI Help
 
@@ -41,7 +41,7 @@ npm run config:show
 npm run help
 ```
 
-**Resultat esperat**: Mostra usage del ontology-cli amb subcomandes validate/generate/convert a la consola
+**Expected result**: Shows ontology-cli usage with validate/generate/convert subcommands in the console
 
 ### CLI Direct
 
@@ -53,8 +53,8 @@ node docker/docker.js run cli validate shacl -d examples/v0.1/digital-waste-pass
 npm run cli -- validate shacl examples/v0.1/digital-waste-passport-sample.ttl shapes/v0.1/digitalWastePassportShapes.ttl
 ```
 
-**Resultat esperat**: Executa comanda CLI personalitzada dins del contenidor
-**Nota**: A Windows PowerShell, utilitzar `node docker/docker.js run cli` directament per comandes amb flags (`-d`, `-s`, etc.)
+**Expected result**: Runs custom CLI command inside the container
+**Note**: On Windows PowerShell, use `node docker/docker.js run cli` directly for commands with flags (`-d`, `-s`, etc.)
 
 ### OWL Validation
 
@@ -62,19 +62,19 @@ npm run cli -- validate shacl examples/v0.1/digital-waste-passport-sample.ttl sh
 npm run validate:owl
 ```
 
-**Resultat esperat**: Valida ontologies TTL amb ROBOT, report a la consola
+**Expected result**: Validates TTL ontologies with ROBOT, report in the console
 
 ```bash
 npm run validate:owl:quiet
 ```
 
-**Resultat esperat**: Valida ontologies sense output verbós, només errors a la consola
+**Expected result**: Validates ontologies without verbose output, only errors in the console
 
 ```bash
 npm run validate:owl:with-codelists
 ```
 
-**Resultat esperat**: Valida 9 fitxers (ontology/v0.1/ + codelists/v0.1/), possibles warnings de merge a la consola
+**Expected result**: Validates 9 files (ontology/v0.1/ + codelists/v0.1/), possible merge warnings in the console
 
 ### SHACL Validation
 
@@ -99,7 +99,7 @@ node docker/docker.js run cli validate shacl \
   -f human
 ```
 
-**Resultat esperat**: Report de validació (conforms: true/false) a la consola
+**Expected result**: Validation report (conforms: true/false) in the console
 
 **Configuration**: All scenarios are defined in `config.yml` under `validation.shacl.scenarios`. Add new scenarios there without modifying code.
 
@@ -109,13 +109,13 @@ node docker/docker.js run cli validate shacl \
 npm run generate:types
 ```
 
-**Resultat esperat**: Crea `digitalWastePassport.ts` i `digitalMarpolWastePassport.ts` a `build/v0.1/`
+**Expected result**: Creates `digitalWastePassport.ts` and `digitalMarpolWastePassport.ts` in `build/v0.1/`
 
 ```bash
 npm run generate:types:verbose
 ```
 
-**Resultat esperat**: Igual però amb output detallat a la consola
+**Expected result**: Same but with detailed output in the console
 
 ### Generate Wiki
 
@@ -123,19 +123,19 @@ npm run generate:types:verbose
 npm run generate:wiki
 ```
 
-**Resultat esperat**: Crea documentació markdown a `docs/wiki/` (classes, propietats, diagrames)
+**Expected result**: Creates markdown documentation in `docs/wiki/` (classes, properties, diagrams)
 
 ```bash
 npm run generate:wiki:with-codelists
 ```
 
-**Resultat esperat**: Wiki amb documentació de codelists a `docs/wiki/`
+**Expected result**: Wiki with codelists documentation in `docs/wiki/`
 
 ```bash
 npm run generate:wiki:verbose
 ```
 
-**Resultat esperat**: Wiki amb output detallat a la consola
+**Expected result**: Wiki with detailed output in the console
 
 ### Generate All
 
@@ -143,27 +143,27 @@ npm run generate:wiki:verbose
 npm run generate:all
 ```
 
-**Resultat esperat**: Executa generate:types + generate:wiki, outputs a `build/v0.1/` i `docs/wiki/`
+**Expected result**: Runs generate:types + generate:wiki, outputs to `build/v0.1/` and `docs/wiki/`
 
 ### Convert SHACL to JSON Schema
 
 ```bash
 npm run convert:shacl -- <shapes.ttl> <output.schema.json>
-# Exemple:
+# Example:
 npm run convert:shacl -- shapes/v0.1/digitalWastePassportShapes.ttl build/v0.1/digitalWastePassport.schema.json
 ```
 
-**Resultat esperat**: Crea JSON Schema a la ruta especificada
+**Expected result**: Creates JSON Schema at the specified path
 
 ### Convert JSON Schema to TypeScript
 
 ```bash
 npm run convert:ts -- <input.schema.json> <output.ts>
-# Exemple:
+# Example:
 npm run convert:ts -- build/v0.1/digitalWastePassport.schema.json build/v0.1/digitalWastePassport.ts
 ```
 
-**Resultat esperat**: Crea TypeScript definitions a la ruta especificada
+**Expected result**: Creates TypeScript definitions at the specified path
 
 ### Build
 
@@ -171,7 +171,7 @@ npm run convert:ts -- build/v0.1/digitalWastePassport.schema.json build/v0.1/dig
 npm run build
 ```
 
-**Resultat esperat**: Executa generate:types, outputs a `build/v0.1/`
+**Expected result**: Runs generate:types, outputs to `build/v0.1/`
 
 ### Build All
 
@@ -179,18 +179,18 @@ npm run build
 npm run build:all
 ```
 
-**Resultat esperat**: Valida OWL + genera tots els artifacts, outputs a `build/v0.1/` i `docs/wiki/`
+**Expected result**: Validates OWL + generates all artifacts, outputs to `build/v0.1/` and `docs/wiki/`
 
 ### Release Version
 
 ```bash
 npm run release:version -- <args>
-# Exemple:
+# Example:
 npm run release:version -- --help
 npm run release:version -- --version v0.2
 ```
 
-**Resultat esperat**: Executa script de release amb arguments especificats
+**Expected result**: Runs release script with specified arguments
 
 ### Release All
 
@@ -198,24 +198,24 @@ npm run release:version -- --version v0.2
 npm run release:all
 ```
 
-**Resultat esperat**: Executa pipeline complet de release
+**Expected result**: Executes full release pipeline
 
 ---
 
 ## Features
 
-- **Docker Build**: Construeix imatge Docker amb totes les dependencies
-- **Docker Shell**: Accés interactiu al contenidor per debugging
-- **Configuration Management**: Mostra i gestiona versions de tots els components
-- **CLI Access**: Accés directe a la CLI Python dins del contenidor
-- **OWL Validation**: Valida ontologies amb ROBOT (quiet mode, amb codelists)
-- **SHACL Validation**: Valida dades contra shapes SHACL
-- **TypeScript Generation**: Genera TypeScript types des de SHACL shapes
-- **Wiki Generation**: Genera documentació markdown (amb/sense codelists, verbose)
-- **SHACL to JSON Schema**: Converteix SHACL shapes a JSON Schema
-- **JSON Schema to TypeScript**: Converteix JSON Schema a TypeScript
-- **Build Pipeline**: Genera artifacts (shortcut i pipeline completa)
-- **Release Management**: Gestiona versions i releases
+- **Docker Build**: Builds Docker image with all dependencies
+- **Docker Shell**: Interactive access to the container for debugging
+- **Configuration Management**: Shows and manages versions of all components
+- **CLI Access**: Direct access to the Python CLI inside the container
+- **OWL Validation**: Validates ontologies with ROBOT (quiet mode, with codelists)
+- **SHACL Validation**: Validates data against SHACL shapes
+- **TypeScript Generation**: Generates TypeScript types from SHACL shapes
+- **Wiki Generation**: Generates markdown documentation (with/without codelists, verbose)
+- **SHACL to JSON Schema**: Converts SHACL shapes to JSON Schema
+- **JSON Schema to TypeScript**: Converts JSON Schema to TypeScript
+- **Build Pipeline**: Generates artifacts (shortcut and full pipeline)
+- **Release Management**: Manages versions and releases
 
 ---
 

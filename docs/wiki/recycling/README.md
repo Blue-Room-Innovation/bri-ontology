@@ -33,13 +33,13 @@ classDiagram
 |<span id="managerCode">managerCode</span>|Regional waste manager registration code|[Recycler](#Recycler)|string||
 |<span id="nimaCode">nimaCode</span>|Spanish environmental registration number (NIMA)|[Recycler](#Recycler)|string||
 |<span id="wasteTreatmentActivity">wasteTreatmentActivity</span>|Free-text description of waste treatment activities|[Recycler](#Recycler)|string||
-## Propiedades de Datos
+## Data Properties
 
 ### adaptedToRD1102015
 
 **Labels:**
 - (en) Adapted to RD 110/2015 (WEEE)
-**Comentarios:**
+**Comments:**
 - (en) Indicates whether the recycler complies with Spanish Royal Decree 110/2015 on WEEE
 **Domain:** Recycler
 **Range:** boolean
@@ -48,7 +48,7 @@ classDiagram
 
 **Labels:**
 - (en) Correspondence street address
-**Comentarios:**
+**Comments:**
 - (en) Street address used for postal correspondence when different from the physical address
 **Domain:** Recycler
 **Range:** string
@@ -57,7 +57,7 @@ classDiagram
 
 **Labels:**
 - (en) Correspondence locality
-**Comentarios:**
+**Comments:**
 - (en) City or locality of the correspondence postal address
 **Domain:** Recycler
 **Range:** string
@@ -66,7 +66,7 @@ classDiagram
 
 **Labels:**
 - (en) Correspondence postal code
-**Comentarios:**
+**Comments:**
 - (en) Postal code of the correspondence address
 **Domain:** Recycler
 **Range:** string
@@ -75,7 +75,7 @@ classDiagram
 
 **Labels:**
 - (en) Waste manager code
-**Comentarios:**
+**Comments:**
 - (en) Regional waste manager registration code
 **Domain:** Recycler
 **Range:** string
@@ -84,7 +84,7 @@ classDiagram
 
 **Labels:**
 - (en) NIMA code
-**Comentarios:**
+**Comments:**
 - (en) Spanish environmental registration number (NIMA)
 **Domain:** Recycler
 **Range:** string
@@ -93,7 +93,7 @@ classDiagram
 
 **Labels:**
 - (en) Waste treatment activity description
-**Comentarios:**
+**Comments:**
 - (en) Free-text description of waste treatment activities
 **Domain:** Recycler
 **Range:** string
