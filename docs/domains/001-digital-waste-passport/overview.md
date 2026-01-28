@@ -97,4 +97,4 @@ Waste representation as a product.
 
 ## References and Resources
 
-- **Model design**: [Digital Product Passport on Jargon.sh](https://jargon.sh/user/sysadmin/DigitalProductPassport)
+- **Model design**: [Digital Product Passport on Jargon.sh](https://jargon.sh/user/blueroominnovationontology/DigitalProductPassport)

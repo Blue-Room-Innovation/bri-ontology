@@ -151,4 +151,4 @@ scripts/validate-shacl.sh -d examples/digital-marpol-waste-passport-sample.ttl
 
 ## Design Resources
 
-- **Model design**: [MARPOL Waste Passport on Jargon.sh](https://jargon.sh/user/sysadmin/MarpolWastePassport)
+- **Model design**: [MARPOL Waste Passport on Jargon.sh](https://jargon.sh/user/blueroominnovationontology/MarpolWastePassport)

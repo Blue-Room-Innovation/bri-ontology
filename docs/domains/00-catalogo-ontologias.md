@@ -25,4 +25,4 @@
 
 ## Design Resources
 
-- **Conceptual diagrams**: [Sysadmin profile on Jargon.sh](https://jargon.sh/user/sysadmin)
+- **Conceptual diagrams**: [Blue Room Innovation profile on Jargon.sh](https://jargon.sh/user/blueroominnovationontology)
