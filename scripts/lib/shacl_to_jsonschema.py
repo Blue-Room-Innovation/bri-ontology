@@ -22,7 +22,9 @@ import json
 import sys
 import logging
 from dataclasses import dataclass
-from typing import Dict, List, Any, Optional, Set
+from typing import Dict, List, Any, Optional, Set, Tuple
+from datetime import date, datetime, time
+from decimal import Decimal
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD
 from rdflib.namespace import SH
 from pathlib import Path
@@ -206,6 +208,33 @@ class SHACLToJSONSchemaConverter:
                 properties[prop_name] = prop_def
                 if is_required:
                     required.append(prop_name)
+
+        # Handle node-level sh:or (e.g. constraints like "latitude and longitude both present or both absent")
+        shape_or_list = self.graph.value(shape, SH["or"])
+        if shape_or_list:
+            any_of: List[Dict[str, Any]] = []
+            discovered_props: Dict[str, Any] = {}
+
+            for alt_node in self._extract_list_nodes(shape_or_list):
+                alt_schema, alt_props = self._convert_node_constraint_node_to_schema(alt_node)
+                if alt_schema:
+                    any_of.append(alt_schema)
+                for name, schema in alt_props.items():
+                    # Prefer the most informative schema definition for the property.
+                    existing = discovered_props.get(name)
+                    if existing is None or (not self._is_informative_property_schema(existing) and self._is_informative_property_schema(schema)):
+                        discovered_props[name] = schema
+
+            # Merge discovered properties into the main properties map.
+            for name, schema in discovered_props.items():
+                existing = properties.get(name)
+                if existing is None or (not self._is_informative_property_schema(existing) and self._is_informative_property_schema(schema)):
+                    properties[name] = schema
+
+            if any_of:
+                definition["anyOf"] = any_of
+            else:
+                self.warnings.append(f"sh:or found in NodeShape {shape_name} but no convertible alternatives were found")
         
         if properties:
             definition["properties"] = properties
@@ -219,6 +248,76 @@ class SHACLToJSONSchemaConverter:
             definition["additionalProperties"] = False
         
         self.definitions[shape_name] = definition
+
+    def _is_informative_property_schema(self, schema: Any) -> bool:
+        """Heuristic: decide whether a property schema carries useful typing/constraints."""
+        if not isinstance(schema, dict):
+            return False
+        informative_keys = {
+            "type",
+            "$ref",
+            "anyOf",
+            "oneOf",
+            "allOf",
+            "enum",
+            "format",
+            "minimum",
+            "maximum",
+            "exclusiveMinimum",
+            "exclusiveMaximum",
+            "pattern",
+            "minLength",
+            "maxLength",
+        }
+        return any(k in schema for k in informative_keys)
+
+    def _convert_node_constraint_node_to_schema(self, constraint_node: URIRef) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        """Convert an inline node constraint (e.g. inside NodeShape sh:or) to JSON Schema.
+
+        Supports a subset needed for structural constraints:
+        - sh:property blocks
+        - sh:not blocks (recursively)
+
+        Returns (schema, discovered_properties)
+        """
+        subschemas: List[Dict[str, Any]] = []
+        discovered_props: Dict[str, Any] = {}
+
+        # Inline sh:property constraints
+        props: Dict[str, Any] = {}
+        req: List[str] = []
+        for prop_shape in self.graph.objects(constraint_node, SH.property):
+            prop_name, prop_def, is_required = self._convert_property_shape(prop_shape)
+            if prop_name:
+                props[prop_name] = prop_def
+                discovered_props[prop_name] = prop_def
+                if is_required:
+                    req.append(prop_name)
+
+        if props or req:
+            obj_schema: Dict[str, Any] = {"type": "object"}
+            if props:
+                obj_schema["properties"] = props
+            if req:
+                obj_schema["required"] = req
+            subschemas.append(obj_schema)
+
+        # Inline sh:not constraints
+        for not_node in self.graph.objects(constraint_node, SH["not"]):
+            nested_schema, nested_props = self._convert_node_constraint_node_to_schema(not_node)
+            for k, v in nested_props.items():
+                # Keep the best schema we can infer.
+                existing = discovered_props.get(k)
+                if existing is None or (not self._is_informative_property_schema(existing) and self._is_informative_property_schema(v)):
+                    discovered_props[k] = v
+            if nested_schema:
+                subschemas.append({"not": nested_schema})
+
+        if not subschemas:
+            return {}, discovered_props
+        if len(subschemas) == 1:
+            return subschemas[0], discovered_props
+        return {"allOf": subschemas}, discovered_props
     
     def _convert_property_shape(self, prop_shape: URIRef) -> tuple[Optional[str], Dict[str, Any], bool]:
         """Convert a property shape to JSON Schema property definition."""
@@ -340,10 +439,14 @@ class SHACLToJSONSchemaConverter:
             enum_values = self._extract_list_values(in_values[0])
             if enum_values:
                 # If it's an array, add enum to items
-                if prop_def.get("type") == "array" and "items" in prop_def:
-                    prop_def["items"]["enum"] = enum_values
+                enum_target = prop_def["items"] if prop_def.get("type") == "array" and "items" in prop_def else prop_def
+
+                # Special case: sh:in (true false) on xsd:boolean is redundant.
+                # Keeping it can produce noisy TypeScript unions; drop it.
+                if enum_target.get("type") == "boolean" and set(enum_values) == {True, False}:
+                    pass
                 else:
-                    prop_def["enum"] = enum_values
+                    enum_target["enum"] = enum_values
         
         # Handle numeric constraints
         min_inclusive = self._get_literal_value(prop_shape, SH.minInclusive)
@@ -396,18 +499,32 @@ class SHACLToJSONSchemaConverter:
         
         return prop_name, prop_def, is_required
     
-    def _extract_list_values(self, list_node: URIRef) -> List[str]:
-        """Extract values from an RDF list."""
+    def _extract_list_values(self, list_node: URIRef) -> List[Any]:
+        """Extract values from an RDF list.
+
+        Preserves JSON-compatible native types when possible (e.g., booleans for xsd:boolean)
+        to avoid generating incorrect enums like ["true"].
+        """
         values = []
         current = list_node
         
         while current != RDF.nil:
             first = self.graph.value(current, RDF.first)
-            if first:
+            if first is not None:
                 if isinstance(first, URIRef):
                     values.append(str(first))
                 elif isinstance(first, Literal):
-                    values.append(str(first))
+                    py_value = first.toPython()
+
+                    # Ensure JSON-serializable primitives.
+                    if isinstance(py_value, (bool, int, float, str)):
+                        values.append(py_value)
+                    elif isinstance(py_value, Decimal):
+                        values.append(float(py_value))
+                    elif isinstance(py_value, (datetime, date, time)):
+                        values.append(py_value.isoformat())
+                    else:
+                        values.append(str(first))
             
             rest = self.graph.value(current, RDF.rest)
             if rest:
@@ -424,7 +541,7 @@ class SHACLToJSONSchemaConverter:
 
         while current != RDF.nil:
             first = self.graph.value(current, RDF.first)
-            if first:
+            if first is not None:
                 nodes.append(first)
 
             rest = self.graph.value(current, RDF.rest)
