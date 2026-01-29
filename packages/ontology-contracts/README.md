@@ -1,10 +1,10 @@
 # @blueroominnovation/ontology-contracts
 
-Paquet Node.js/TypeScript (ESM) consumible que publica:
+Consumable Node.js/TypeScript (ESM) package that publishes:
 
-- **JSON Schemas** generats (a partir de SHACL)
-- **Tipatges TypeScript** generats
-- **Validador AJV** integrat amb `schemaKey` tipat (l'usuari només importa el validador i valida)
+- **JSON Schemas** generated (from SHACL)
+- **TypeScript typings** generated
+- **AJV Validator** integrated with typed `schemaKey` (the user only imports the validator and validates)
 
 Requisits:
 
@@ -13,21 +13,21 @@ Requisits:
 
 ## Usage
 
-### Instal·lació
+### Installation
 
 ```bash
 npm i @blueroominnovation/ontology-contracts
 ```
 
-### Validació (API recomanada)
+### Validation (recommended API)
 
-L'API principal és genèrica i tipada: `validate(data, schemaKey)`.
+The main API is generic and typed: `validate(data, schemaKey)`.
 
 ```ts
 import {
   createValidator,
   type SchemaKeyV01,
-  type DigitalWastePassport
+  type DigitalWastePassport,
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
@@ -40,15 +40,15 @@ const payload: unknown = {
   "dwp:credentialSubject": {
     "dwp:waste": {
       "unece:name": "Example waste",
-      "unece:productName": "Example product"
-    }
-  }
+      "unece:productName": "Example product",
+    },
+  },
 };
 
 const result = validator.validate(payload, schemaKey);
 
 if (!result.ok) {
-  // Errors normalitzats d'AJV
+  // Normalized AJV errors
   console.error(result.errors);
   process.exit(1);
 }
@@ -58,9 +58,9 @@ const typed: DigitalWastePassport = result.value;
 console.log("Issued:", typed["dct:issued"]);
 ```
 
-### Mode “assert” (excepció si no valida)
+### "assert" mode (exception if invalid)
 
-Si prefereixes fallar ràpid i obtenir narrowing via TypeScript:
+If you prefer to fail fast and get narrowing via TypeScript:
 
 ```ts
 import { createValidator, type SchemaKeyV01 } from "@blueroominnovation/ontology-contracts";
@@ -71,13 +71,13 @@ const schemaKey: SchemaKeyV01 = "digitalWastePassport";
 const payload: unknown = /* ... */;
 validator.assertValid(payload, schemaKey);
 
-// A partir d'aquí, payload està tipat segons schemaKey
+// From here on, payload is typed according to schemaKey
 payload["dct:issued"]; // OK
 ```
 
-### Injecció d'Ajv (opcional)
+### Ajv injection (optional)
 
-Per compartir una mateixa instància Ajv a tota l'app (plugins, opcions, etc.):
+To share the same Ajv instance across the entire app (plugins, options, etc.):
 
 ```ts
 import Ajv from "ajv";
@@ -90,29 +90,32 @@ addFormats(ajv);
 const validator = createValidator({ ajv });
 ```
 
-> Nota: `createValidator()` ja crea un Ajv intern amb `ajv-formats`. La injecció és només si vols controlar configuració o compartir Ajv.
+> Note: `createValidator()` already creates an internal Ajv with `ajv-formats`. Injection is only if you want to control configuration or share Ajv.
 
 ### Schemas disponibles (v0.1)
 
-Els `schemaKey` suportats actualment són:
+The currently supported `schemaKey` are:
 
 - `"digitalWastePassport"`
 - `"digitalMarpolWastePassport"`
 
-Els tipus root que exportem són:
+The root types we export are:
 
 - `DigitalWastePassport`
 - `DigitalMARPOLWastePassport`
 
-També pots importar només el “contracte” de versió:
+You can also import only the version "contract":
 
 ```ts
-import type { SchemaKeyV01, DigitalWastePassport } from "@blueroominnovation/ontology-contracts/v0.1";
+import type {
+  SchemaKeyV01,
+  DigitalWastePassport,
+} from "@blueroominnovation/ontology-contracts/v0.1";
 ```
 
 ### Recomanat: entrypoint `current`
 
-Per no haver de tocar imports quan canvies `build_version` a `config.yml`, tens un entrypoint estable:
+To avoid having to touch imports when you change `build_version` in `config.yml`, you have a stable entrypoint:
 
 ```ts
 import type { SchemaKeyCurrent } from "@blueroominnovation/ontology-contracts/current";
@@ -126,28 +129,28 @@ I schemas a:
 
 El paquet publica els fitxers a `./schemas/v0.1/*.schema.json`.
 
-Si el teu runtime suporta JSON modules, els pots importar directament; sinó, fes servir `fs` i `import.meta.url`.
+If your runtime supports JSON modules, you can import them directly; otherwise, use `fs` and `import.meta.url`.
 
-Exemple (Node ESM, lectura via fs):
+Example (Node ESM, reading via fs):
 
 ```ts
 import fs from "node:fs";
 
 const url = new URL(
   "../node_modules/@blueroominnovation/ontology-contracts/schemas/v0.1/digitalWastePassport.schema.json",
-  import.meta.url
+  import.meta.url,
 );
 const schema = JSON.parse(fs.readFileSync(url, "utf8"));
 ```
 
 ## Development
 
-Des de l'arrel del repo:
+From the repo root:
 
-- `npm run contracts:build` (sincronitza `build/v0.1/` → paquet i compila TS)
-- `npm run contracts:test` (executa l'exemple-consumer com a test d'integració)
+- `npm run contracts:build` (synchronizes `build/v0.1/` → package and compiles TS)
+- `npm run contracts:test` (executes the consumer-example as an integration test)
 
-L'exemple-consumer és a `examples/consumer-node-ts/`.
+The consumer-example is in `examples/consumer-node-ts/`.
 
 ### Com s'actualitza quan canvies versions / shapes
 
@@ -158,9 +161,9 @@ La part “packages” **llegeix `config.yml`** i sincronitza automàticament el
 Concretament fa servir `generation.artifacts` per saber quins schemas i quins `.ts` de tipus ha de copiar.
 Quan fas `npm run contracts:build`, el script:
 
-1) Copia schemas cap a `schemas/current/` i `schemas/<build_version>/`
-2) Copia tipus cap a `src/generated/current/` i `src/generated/<build_version>/`
-3) Genera `src/current/index.ts` (schema keys + map de tipus) i `src/schema-registry.ts` (runtime urls)
+1. Copia schemas cap a `schemas/current/` i `schemas/<build_version>/`
+2. Copia tipus cap a `src/generated/current/` i `src/generated/<build_version>/`
+3. Genera `src/current/index.ts` (schema keys + map de tipus) i `src/schema-registry.ts` (runtime urls)
 
 ---
 

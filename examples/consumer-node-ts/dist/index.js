@@ -2,25 +2,22 @@ import { createValidator, } from "@blueroominnovation/ontology-contracts";
 const validator = createValidator();
 const schemaKey = "recycling";
 const payload = {
-    "managerCode": "laborum",
-    "nimaCode": "sit proident est sed cupidatat",
-    "name": "dolor reprehenderit eu laborum aute",
-    "streetAddress": "sed sunt incididunt nulla",
-    "addressLocality": "enim tempor fugiat et",
-    "postalCode": "cillum dolor laborum id",
-    "correspondeceAddress": "anim",
-    "correspondeceAddressLocality": "enim",
-    "correspondecePostalCode": "laboris est officia",
-    "telephone": "exercitation velit ipsum in cupidatat",
-    "faxNumber": "aliquip labore nostrud",
-    "email": "adipisicing",
-    "url": {
-        "@id": "https://XHsIOMRfRocDfku.oryI8,rmWEOuGqtChnRDeRD9vp5nh6XJOF0c90v2YSw"
+    managerCode: "laborum",
+    nimaCode: "sit proident est sed cupidatat",
+    name: "dolor reprehenderit eu laborum aute",
+    streetAddress: "sed sunt incididunt nulla",
+    addressLocality: "enim tempor fugiat et",
+    postalCode: "28001",
+    correspondeceAddress: "anim",
+    correspondeceAddressLocality: "enim",
+    correspondecePostalCode: "28002",
+    telephone: "+34 987 567 564",
+    faxNumber: "+34 912 345 678",
+    email: "contacto@empresa.com",
+    url: {
+        "@id": "https://example.com",
     },
-    "latitude": -22.272395068749418,
-    "longitude": -157.81622160552345,
-    "adaptedToRD1102015": true,
-    "wasteTreatmentActivity": "sit"
+    wasteTreatmentActivity: "sit",
 };
 const result = validator.validate(payload, schemaKey);
 if (!result.ok) {

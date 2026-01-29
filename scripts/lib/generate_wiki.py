@@ -1,27 +1,27 @@
 #!/usr/bin/env python
 """
-Generador de wiki Markdown para ontologías Turtle en el directorio `ontology/v*/`.
+Markdown wiki generator for Turtle ontologies in the `ontology/v*/` directory.
 
-Requisitos:
+Requirements:
     pip install -r requirements.txt
 
-Uso:
+Usage:
     python scripts/generate-wiki.py [--ontology-dir ontology] [--output-dir wiki] [--include-codelists]
 
-Produce:
-    - wiki/index.md resumen global
-    - wiki/<ontology-name>/README.md detalles (Clases, Propiedades de objeto, Propiedades de datos)
+Produces:
+    - wiki/index.md global summary
+    - wiki/<ontology-name>/README.md details (Classes, Object properties, Data properties)
 
-Características:
-    - Extrae rdfs:label (multi-idioma) y rdfs:comment
-    - Fallback al localName cuando falta label
-    - Dominios y rangos de propiedades
-    - Subclases
-    - Manejo de duplicados y orden estable
+Features:
+    - Extracts rdfs:label (multi-language) and rdfs:comment
+    - Fallback to localName when label is missing
+    - Domains and ranges of properties
+    - Subclasses
+    - Handling of duplicates and stable ordering
 
-Limitaciones:
-    - No procesa axiomas complejos (restricciones OWL) todavía.
-    - Las codelists se incluyen solo si se pasa --include-codelists.
+Limitations:
+    - Does not process complex axioms (OWL restrictions) yet.
+    - Codelists are included only if --include-codelists is passed.
 """
 import argparse
 import os
@@ -44,7 +44,7 @@ LOGGER = logging.getLogger("generate-wiki")
 def setup_logging(verbose: bool = False):
     level = logging.DEBUG if verbose else logging.INFO
     logging.basicConfig(level=level, format='[%(levelname)s] %(message)s')
-    LOGGER.debug("Logging inicializado en modo DEBUG")
+    LOGGER.debug("Logging initialized in DEBUG mode")
 
 def slug(uri: rdflib.term.Identifier) -> str:
     s = str(uri)
@@ -91,9 +91,9 @@ def extract_entities(g: rdflib.Graph, rdf_type) -> List[rdflib.term.Identifier]:
     return sorted(set(g.subjects(RDF.type, rdf_type)), key=lambda u: str(u))
 
 def _normalize_artifact_key(stem: str) -> str:
-    """Normaliza nombres de ficheros a una clave de ontología.
+    """Normalizes file names to an ontology key.
 
-    Soporta convenciones como:
+    Supports conventions such as:
     - <OntologyName>Shapes.ttl
     - <ontology>.shacl.ttl
     - <ontology>.context.jsonld
@@ -124,8 +124,8 @@ def build_index_row(
     return "| " + " | ".join(cols) + " |"
 
 def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
-    """Extrae metadatos simples del grafo (title, description, creator, contributor, version, date, imports).
-    Intenta múltiples propiedades estándar (DC, DCTERMS, OWL) para cada campo.
+    """Extracts simple metadata from the graph (title, description, creator, contributor, version, date, imports).
+    Tries multiple standard properties (DC, DCTERMS, OWL) for each field.
     """
     DC = rdflib.Namespace('http://purl.org/dc/elements/1.1/')
     DCT = rdflib.Namespace('http://purl.org/dc/terms/')
@@ -138,7 +138,7 @@ def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
         'version': [OWL.versionInfo],
         'imports': [OWL.imports],
     }
-    # Buscar el nodo de la ontología
+    # Find the ontology node
     ontology_nodes = list(g.subjects(RDF.type, OWL.Ontology))
     meta: Dict[str, List[str]] = {}
     for ont in ontology_nodes:
@@ -156,15 +156,15 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
 
     lines: List[str] = []
     if not rich:
-        lines.append(f"# Ontología: {ontology_file.name}")
+        lines.append(f"# Ontology: {ontology_file.name}")
         lines.append("")
-        lines.append(f"Fuente: `{ontology_file}`")
+        lines.append(f"Source: `{ontology_file}`")
         lines.append("")
-        lines.append("## Resumen")
+        lines.append("## Summary")
         lines.append("")
-        lines.append(f"- Clases: {len(classes)}")
-        lines.append(f"- Propiedades de Objeto: {len(obj_props)}")
-        lines.append(f"- Propiedades de Datos: {len(data_props)}")
+        lines.append(f"- Classes: {len(classes)}")
+        lines.append(f"- Object Properties: {len(obj_props)}")
+        lines.append(f"- Data Properties: {len(data_props)}")
         lines.append("")
     else:
         meta = extract_metadata(g)
@@ -256,7 +256,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 subclass_of = []
                 for sc in g.objects(c, RDFS.subClassOf):
                     subclass_of.append(local_name(sc))
-                # Tabla de clases (línea única)
+                # Single-line classes table
                 lines.append(f"|<span id=\"{cname}\">{cname}</span>|{desc_txt}|{', '.join(dt_props)}|{', '.join(op_props)}|{', '.join(subclass_of)}|")
         if data_props:
             lines.append("\n## Data Properties\n")
@@ -286,7 +286,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 lines.append(f"|<span id=\"{pname}\">{pname}</span>|{desc_txt}|{', '.join(domains)}|{', '.join(ranges)}|{', '.join(subprops)}|")
     else:
         if classes:
-            lines.append("## Clases")
+            lines.append("## Classes")
             lines.append("")
             for c in classes:
                 cname = local_name(c)
@@ -299,14 +299,14 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                     lines.append("**Labels:**")
                     lines.append(format_multilang(labels))
                 if comments:
-                    lines.append("**Comentarios:**")
+                    lines.append("**Comments:**")
                     lines.append(format_multilang(comments))
                 if subclasses:
                     lines.append("**SubClassOf:** " + ", ".join(subclasses))
                 lines.append("")
 
     if obj_props:
-        lines.append("## Propiedades de Objeto")
+        lines.append("## Object Properties")
         lines.append("")
         for p in obj_props:
             pname = local_name(p)
@@ -320,7 +320,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 lines.append("**Labels:**")
                 lines.append(format_multilang(labels))
             if comments:
-                lines.append("**Comentarios:**")
+                lines.append("**Comments:**")
                 lines.append(format_multilang(comments))
             if domains:
                 lines.append("**Domain:** " + ", ".join(domains))
@@ -329,7 +329,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
             lines.append("")
 
     if data_props:
-        lines.append("## Propiedades de Datos")
+        lines.append("## Data Properties")
         lines.append("")
         for p in data_props:
             pname = local_name(p)
@@ -343,7 +343,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 lines.append("**Labels:**")
                 lines.append(format_multilang(labels))
             if comments:
-                lines.append("**Comentarios:**")
+                lines.append("**Comments:**")
                 lines.append(format_multilang(comments))
             if domains:
                 lines.append("**Domain:** " + ", ".join(domains))
@@ -363,7 +363,7 @@ def node_shape_targets(g: rdflib.Graph, node_shape: rdflib.term.Identifier) -> L
     targets = []
     for t in g.objects(node_shape, SH.targetClass):
         targets.append(local_name(t))
-    # Otros posibles target (targetNode, targetSubjectsOf, etc.) se podrían añadir aquí
+    # Other possible targets (targetNode, targetSubjectsOf, etc.) could be added here
     return targets
 
 def format_constraint(g: rdflib.Graph, ps: rdflib.term.Identifier) -> Dict[str, str]:
@@ -401,18 +401,18 @@ def format_constraint(g: rdflib.Graph, ps: rdflib.term.Identifier) -> Dict[str, 
 def generate_shapes_md(g: rdflib.Graph, ontology_name: str) -> str:
     node_shapes = extract_node_shapes(g)
     if not node_shapes:
-        return "# Shapes\n\n_No se han encontrado NodeShape en el archivo de shapes._\n"
+        return "# Shapes\n\n_No NodeShape found in the shapes file._\n"
     lines: List[str] = []
-    lines.append(f"# Shapes para {ontology_name}")
+    lines.append(f"# Shapes for {ontology_name}")
     lines.append("")
-    lines.append("| Shape | Target Class(es) | Propiedad | Datatype | Class | Min | Max | In | Descripción |")
+    lines.append("| Shape | Target Class(es) | Property | Datatype | Class | Min | Max | In | Description |")
     lines.append("| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |")
     for ns in node_shapes:
         shape_name = local_name(ns)
         targets = node_shape_targets(g, ns)
         prop_shapes = extract_property_shapes(g, ns)
         if not prop_shapes:
-            # Fila vacía (sin property shapes)
+            # Empty row (no property shapes)
             lines.append(f"| {shape_name} | {', '.join(targets)} |  |  |  |  |  |  |  |")
             continue
         for ps in prop_shapes:
@@ -423,12 +423,12 @@ def generate_shapes_md(g: rdflib.Graph, ontology_name: str) -> str:
     return '\n'.join(lines) + '\n'
 
 def generate_diagram(g: rdflib.Graph, ontology_file: Path, out_dir: Path, fmt: str = 'png', max_classes: int = 150) -> Optional[Path]:
-    """Genera un diagrama simple de clases y propiedades de objeto.
+    """Generate a simple diagram of classes and object properties.
 
-    Reglas:
-      - Nodo por clase OWL
-      - Arista (domain -> range) para cada ObjectProperty con domain y range definidos
-      - Si hay más de max_classes clases, se aborta para evitar diagramas ilegibles
+    Rules:
+       - One node per OWL class
+       - One edge (domain -> range) for each ObjectProperty with defined domain and range
+       - If there are more than max_classes classes, abort to avoid unreadable diagrams
     """
     if Digraph is None:
         return None
@@ -439,7 +439,7 @@ def generate_diagram(g: rdflib.Graph, ontology_file: Path, out_dir: Path, fmt: s
     dot = Digraph(comment=f"Diagrama {ontology_file.stem}")
     dot.attr(rankdir='LR', fontsize='10')
     class_set = set(classes)
-    # Añadir nodos con etiqueta (label principal o localName)
+    # Add nodes with label (main label or localName)
     for c in classes:
         labels = get_labels(g, c)
         label_txt = labels.get('es') or labels.get('en') or []
@@ -470,23 +470,23 @@ def generate_diagram(g: rdflib.Graph, ontology_file: Path, out_dir: Path, fmt: s
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Genera wiki Markdown desde ontologías Turtle.")
-    parser.add_argument('--ontology-dir', default='ontology', help='Directorio con archivos .ttl')
-    parser.add_argument('--output-dir', default='docs/wiki', help='Directorio de salida para Markdown (por defecto docs/wiki)')
-    parser.add_argument('--include-codelists', action='store_true', help='Incluir ontologías dentro de codelists')
-    parser.add_argument('--generate-diagrams', action='store_true', help='Generar diagramas Graphviz de clases y propiedades de objeto')
-    parser.add_argument('--diagram-format', default='png', choices=['png','svg'], help='Formato de salida del diagrama (png|svg)')
-    parser.add_argument('--format', choices=['basic','rich'], default='rich', help='Formato de salida de README por ontología')
-    parser.add_argument('--mermaid', action='store_true', default=True, help='Incluir diagrama Mermaid en modo rich')
-    parser.add_argument('--diagram-max-classes', type=int, default=150, help='Umbral máximo de clases para intentar generar diagrama')
-    parser.add_argument('--include-shapes', action='store_true', help='Procesar shapes SHACL y generar documentación')
-    parser.add_argument('--shapes-dir', default='shapes', help='Directorio con archivos de shapes .ttl')
-    parser.add_argument('--contexts-dir', default=None, help='Directorio con contextos JSON-LD (para contador #Contexts)')
-    parser.add_argument('--verbose', action='store_true', help='Activar logging detallado')
+    parser = argparse.ArgumentParser(description="Generate Markdown wiki from Turtle ontologies.")
+    parser.add_argument('--ontology-dir', default='ontology', help='Directory with .ttl files')
+    parser.add_argument('--output-dir', default='docs/wiki', help='Output directory for Markdown (default docs/wiki)')
+    parser.add_argument('--include-codelists', action='store_true', help='Include ontologies inside codelists')
+    parser.add_argument('--generate-diagrams', action='store_true', help='Generate Graphviz diagrams of classes and object properties')
+    parser.add_argument('--diagram-format', default='png', choices=['png','svg'], help='Diagram output format (png|svg)')
+    parser.add_argument('--format', choices=['basic','rich'], default='rich', help='README output format per ontology')
+    parser.add_argument('--mermaid', action='store_true', default=True, help='Include Mermaid diagram in rich mode')
+    parser.add_argument('--diagram-max-classes', type=int, default=150, help='Maximum number of classes to attempt diagram generation')
+    parser.add_argument('--include-shapes', action='store_true', help='Process SHACL shapes and generate documentation')
+    parser.add_argument('--shapes-dir', default='shapes', help='Directory with shapes .ttl files')
+    parser.add_argument('--contexts-dir', default=None, help='Directory with JSON-LD contexts (for #Contexts counter)')
+    parser.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     args = parser.parse_args()
 
     setup_logging(args.verbose)
-    LOGGER.info("Iniciando generación de wiki")
+    LOGGER.info("Starting wiki generation")
 
     ontology_dir = Path(args.ontology_dir)
     out_dir = Path(args.output_dir)
@@ -514,11 +514,11 @@ def main():
                     sg.parse(str(f), format='turtle')
                     key = _normalize_artifact_key(f.stem)
                     shapes_graphs[key] = sg
-                    LOGGER.debug(f"Shapes cargados: {f.name} -> clave {key}")
+                    LOGGER.debug(f"Shapes loaded: {f.name} -> key {key}")
                 except Exception as e:
-                    LOGGER.warning(f"No se pudo parsear shapes {f}: {e}")
+                    LOGGER.warning(f"Could not parse shapes {f}: {e}")
         else:
-            LOGGER.warning(f"Directorio de shapes no existe: {shapes_dir}")
+            LOGGER.warning(f"Shapes directory does not exist: {shapes_dir}")
 
     contexts_by_ontology: Dict[str, int] = {}
     include_contexts = bool(args.contexts_dir)
@@ -528,12 +528,12 @@ def main():
             for f in contexts_dir.glob('*.context.jsonld'):
                 key = _normalize_artifact_key(f.stem)
                 contexts_by_ontology[key] = contexts_by_ontology.get(key, 0) + 1
-                LOGGER.debug(f"Context detectado: {f.name} -> clave {key}")
+                LOGGER.debug(f"Context detected: {f.name} -> key {key}")
         else:
-            LOGGER.warning(f"Directorio de contexts no existe: {contexts_dir}")
+            LOGGER.warning(f"Contexts directory does not exist: {contexts_dir}")
 
-    # Construcción de cabecera dinámica
-    header_cols = ["Ontología", "#Clases", "#ObjProps", "#DataProps"]
+    # Dynamic header construction
+    header_cols = ["Ontology", "#Classes", "#ObjProps", "#DataProps"]
     sep_cols = ["-----------", "---------", "-----------", "-----------"]
     if args.include_shapes:
         header_cols.append("#Shapes")
@@ -543,7 +543,7 @@ def main():
         sep_cols.append("-----------")
 
     index_lines = [
-        "# Índice de Ontologías",
+        "# Ontology Index",
         "",
         "| " + " | ".join(header_cols) + " |",
         "| " + " | ".join(sep_cols) + " |",
@@ -585,7 +585,7 @@ def main():
         ont_out_dir = out_dir / name
         ont_out_dir.mkdir(parents=True, exist_ok=True)
         readme_content = generate_readme(g, ttl, rich=(args.format=='rich'), mermaid=args.mermaid)
-        # Diagrama opcional
+        # Optional diagram
         if args.generate_diagrams:
             diagram_path = generate_diagram(
                 g,
@@ -595,18 +595,18 @@ def main():
                 max_classes=args.diagram_max_classes
             )
             if diagram_path and args.format != 'rich':
-                # Insertar referencia al inicio del README solo en modo básico
-                readme_content = readme_content.replace('# Ontología:', f"# Ontología:\n\n![Diagrama]({diagram_path.name})\n\nOntología:")
+                # Insert diagram reference at the top of the README only in basic mode
+                readme_content = readme_content.replace('# Ontology:', f"# Ontology:\n\n![Diagram]({diagram_path.name})\n\nOntology:")
         (ont_out_dir / 'README.md').write_text(readme_content, encoding='utf-8')
 
         # Shapes opcionales
         if shape_graph is not None:
             shapes_md = generate_shapes_md(shape_graph, name)
             (ont_out_dir / 'SHAPES.md').write_text(shapes_md, encoding='utf-8')
-            LOGGER.debug(f"Shapes documentados para {name}")
+            LOGGER.debug(f"Shapes documented for {name}")
 
     (out_dir / 'index.md').write_text('\n'.join(index_lines) + '\n', encoding='utf-8')
-    LOGGER.info(f"Generado wiki para {len(ttl_files)} ontologías en {out_dir}")
+    LOGGER.info(f"Generated wiki for {len(ttl_files)} ontologies in {out_dir}")
 
 if __name__ == '__main__':
     main()

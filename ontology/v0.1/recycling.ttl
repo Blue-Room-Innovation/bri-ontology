@@ -26,7 +26,7 @@ bri-recycling:Recycler
   rdfs:comment "An organization that processes waste materials for recycling"@en .
 
 ############################
-# Propietats
+# Properties
 ############################
 
 bri-recycling:managerCode

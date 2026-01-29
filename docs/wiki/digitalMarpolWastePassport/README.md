@@ -133,237 +133,237 @@ classDiagram
 |<span id="ship">ship</span>|Details about the ship responsible for the waste, including the IMO number, name, and flag.|[MarpolWaste](#MarpolWaste)|[Ship](#Ship)||
 |<span id="waste">waste</span>|Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework.|[MarpolWastePassport](#MarpolWastePassport)|[MarpolWaste](#MarpolWaste)||
 |<span id="wasteAgent">wasteAgent</span>|The authorized waste collection company handling the waste.|[MarpolWaste](#MarpolWaste)|[AuthorizedParty](#AuthorizedParty)||
-## Propiedades de Objeto
+## Object Properties
 
 ### contactPoint
 
-**Comentarios:**
+**Comments:**
 - (und) Contact information for the authorized party, represented as a link.
 **Domain:** AuthorizedParty
 **Range:** Link
 
 ### credentialSubject
 
-**Comentarios:**
+**Comments:**
 - (und) References the MARPOL-specific waste passport subject (`MarpolWastePassport`).
 **Domain:** DigitalMarpolWastePassport
 **Range:** MarpolWastePassport
 
 ### estimatedGenerated
 
-**Comentarios:**
+**Comments:**
 - (und) The estimated quantity of residue generated, represented as a measure.
 **Domain:** ResidueInformation
 **Range:** Measure
 
 ### involvedParty
 
-**Comentarios:**
+**Comments:**
 - (und) The party involved in the waste management process, such as the ship operator or company.
 **Domain:** MarpolWaste
 **Range:** InvolvedParty
 
 ### maxCapacity
 
-**Comentarios:**
+**Comments:**
 - (und) The maximum capacity for residue storage, represented as a measure.
 **Domain:** ResidueInformation
 **Range:** Measure
 
 ### message
 
-**Comentarios:**
+**Comments:**
 - (und) Metadata related to the WASDIS system, including the sender, message ID, and submission details.
 **Domain:** MarpolWaste
 **Range:** WasdisMetadata
 
 ### quantityRemainingOnBoard
 
-**Comentarios:**
+**Comments:**
 - (und) The quantity of residue still remaining onboard, represented as a measure.
 **Domain:** ResidueInformation
 **Range:** Measure
 
 ### quantityToDeliver
 
-**Comentarios:**
+**Comments:**
 - (und) The quantity of residue to be delivered, represented as a measure.
 **Domain:** ResidueInformation
 **Range:** Measure
 
 ### residue
 
-**Comentarios:**
+**Comments:**
 - (und) Detailed information about the waste residue, including type, quantity, and discharge method.
 **Domain:** MarpolWaste
 **Range:** ResidueInformation
 
 ### role
 
-**Comentarios:**
+**Comments:**
 - (und) The role of the involved party, as defined by the regulatory framework.
 **Domain:** InvolvedParty
 **Range:** Party
 
 ### ship
 
-**Comentarios:**
+**Comments:**
 - (und) Details about the ship responsible for the waste, including the IMO number, name, and flag.
 **Domain:** MarpolWaste
 **Range:** Ship
 
 ### waste
 
-**Comentarios:**
+**Comments:**
 - (und) Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework.
 **Domain:** MarpolWastePassport
 **Range:** MarpolWaste
 
 ### wasteAgent
 
-**Comentarios:**
+**Comments:**
 - (und) The authorized waste collection company handling the waste.
 **Domain:** MarpolWaste
 **Range:** AuthorizedParty
 
-## Propiedades de Datos
+## Data Properties
 
 ### arrivalPort
 
-**Comentarios:**
+**Comments:**
 - (und) The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`).
 **Domain:** MarpolWaste
 **Range:** string
 
 ### deliveryType
 
-**Comentarios:**
+**Comments:**
 - (und) Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`).
 **Domain:** MarpolWaste
 **Range:** string
 
 ### dischargeMeans
 
-**Comentarios:**
+**Comments:**
 - (und) The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`).
 **Domain:** ResidueInformation
 **Range:** string
 
 ### flag
 
-**Comentarios:**
+**Comments:**
 - (und) The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus).
 **Domain:** Ship
 **Range:** string
 
 ### identifier
 
-**Comentarios:**
+**Comments:**
 - (und) A unique identifier for the authorized party.
 **Domain:** AuthorizedParty
 **Range:** string
 
 ### imoNumber
 
-**Comentarios:**
+**Comments:**
 - (und) The International Maritime Organization (IMO) number, a 7-digit identifier for ships.
 **Domain:** Ship
 **Range:** string
 
 ### lastDeliveryDate
 
-**Comentarios:**
+**Comments:**
 - (und) The date and time of the last waste delivery, in ISO-8601 format with timezone.
 **Domain:** MarpolWaste
 **Range:** dateTime
 
 ### lastWasteDeliveryPort
 
-**Comentarios:**
+**Comments:**
 - (und) The last port where waste was delivered, using UN/LOCODE format.
 **Domain:** MarpolWaste
 **Range:** string
 
 ### marpolEdition
 
-**Comentarios:**
+**Comments:**
 - (und) The edition of MARPOL applicable to the waste being documented (if relevant).
 **Domain:** MarpolWaste
 **Range:** string
 
 ### messageId
 
-**Comentarios:**
+**Comments:**
 - (und) A unique identifier for the message.
 **Domain:** WasdisMetadata
 **Range:** string
 
 ### name
 
-**Comentarios:**
+**Comments:**
 - (und) The name of the ship.
 **Domain:** Ship
 **Range:** string
 
 ### nextCollectionPort
 
-**Comentarios:**
+**Comments:**
 - (und) The next port where the residue will be collected, identified by the UN/LOCODE
 **Domain:** ResidueInformation
 **Range:** string
 
 ### nextPlannedDeliveryPort
 
-**Comentarios:**
+**Comments:**
 - (und) The next planned port for waste delivery, identified with UN/LOCODE.
 **Domain:** MarpolWaste
 **Range:** string
 
 ### remarks
 
-**Comentarios:**
+**Comments:**
 - (und) Any additional remarks or notes regarding the waste delivery or process.
 **Domain:** WasdisMetadata
 **Range:** string
 
 ### sender
 
-**Comentarios:**
+**Comments:**
 - (und) The entity that sent the waste notification.
 **Domain:** WasdisMetadata
 **Range:** string
 
 ### shipScale
 
-**Comentarios:**
+**Comments:**
 - (und) An identifier for the ship scale or port call, useful for traceability.
 **Domain:** MarpolWaste
 **Range:** string
 
 ### submissionDate
 
-**Comentarios:**
+**Comments:**
 - (und) The date and time when the waste notification was submitted.
 **Domain:** WasdisMetadata
 **Range:** dateTime
 
 ### substance
 
-**Comentarios:**
+**Comments:**
 - (und) The substance of the residue, e.g., oil, sewage, or waste sludge.
 **Domain:** ResidueInformation
 **Range:** string
 
 ### subtypeCode
 
-**Comentarios:**
+**Comments:**
 - (und) Code representing the subtype of residue, providing more detailed categorization.
 **Domain:** ResidueInformation
 **Range:** string
 
 ### typeCode
 
-**Comentarios:**
+**Comments:**
 - (und) Code representing the type of residue, based on a local codelist or MARPOL standard.
 **Domain:** ResidueInformation
 **Range:** string

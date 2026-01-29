@@ -1,6 +1,6 @@
-# Shapes para digitalMarpolWastePassport
+# Shapes for digitalMarpolWastePassport
 
-| Shape | Target Class(es) | Propiedad | Datatype | Class | Min | Max | In | Descripción |
+| Shape | Target Class(es) | Property | Datatype | Class | Min | Max | In | Description |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | AuthorizedPartyShape | AuthorizedParty | identifier | string |  | 1 | 1 |  |  |
 | AuthorizedPartyShape | AuthorizedParty | contactPoint |  |  | 0 | 1 |  |  |

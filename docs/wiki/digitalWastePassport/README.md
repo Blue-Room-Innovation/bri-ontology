@@ -40,18 +40,18 @@ classDiagram
 | :--- | :--- | :--- | :--- | :--- |
 |<span id="credentialSubject">credentialSubject</span>|The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified.|[DigitalWastePassport](#DigitalWastePassport)|[WastePassport](#WastePassport)||
 |<span id="waste">waste</span>|The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented.|[WastePassport](#WastePassport)|[Waste](#Waste)||
-## Propiedades de Objeto
+## Object Properties
 
 ### credentialSubject
 
-**Comentarios:**
+**Comments:**
 - (und) The credentialSubject references the associated WastePassport, which contains the detailed waste-specific information and attributes being verified.
 **Domain:** DigitalWastePassport
 **Range:** WastePassport
 
 ### waste
 
-**Comentarios:**
+**Comments:**
 - (und) The waste property references the associated Waste instance, encapsulating detailed characteristics and classification data of the waste being documented.
 **Domain:** WastePassport
 **Range:** Waste

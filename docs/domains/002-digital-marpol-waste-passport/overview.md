@@ -1,87 +1,96 @@
 # Digital MARPOL Waste Passport
 
-> Extensión especializada del Digital Waste Passport para residuos marítimos bajo la regulación MARPOL (International Convention for the Prevention of Pollution from Ships).
+> Specialized extension of the Digital Waste Passport for maritime waste under MARPOL regulation (International Convention for the Prevention of Pollution from Ships).
 
-## URLs Directas
+## Direct URLs
 
-- **Ontología**: [digitalMarpolWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl)
-- **Shapes SHACL**: [digitalMarpolWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl)
-- **Ejemplo Turtle**: [digital-marpol-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.ttl)
-- **Ejemplo JSON-LD**: [digital-marpol-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.jsonld)
-- **Codelists**: Ver `ontology/codelists/*.ttl` (6 listas controladas)
+- **Ontology**: [digitalMarpolWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalMarpolWastePassport.ttl)
+- **SHACL Shapes**: [digitalMarpolWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalMarpolWastePassportShapes.ttl)
+- **Turtle Example**: [digital-marpol-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.ttl)
+- **JSON-LD Example**: [digital-marpol-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-marpol-waste-passport-sample.jsonld)
+- **Codelists**: See `ontology/codelists/*.ttl` (6 controlled lists)
 
-## Propósito
+## Purpose
 
-Modelar información específica de residuos generados y gestionados en el contexto marítimo, cumpliendo con:
+Model specific information for waste generated and managed in the maritime context, complying with:
 
-- **MARPOL Anexo V**: Prevención de contaminación por basuras de buques
-- **Directiva (UE) 2019/883**: Instalaciones receptoras portuarias
-- **Sistema WASDIS**: Waste Discharge Information System para puertos europeos
+- **MARPOL Annex V**: Prevention of pollution by garbage from ships
+- **Directive (EU) 2019/883**: Port reception facilities
+- **WASDIS System**: Waste Discharge Information System for European ports
 
-## Base Conceptual
+## Conceptual Base
 
-Extiende `digitalWastePassport.ttl` añadiendo:
-- Información de buques (IMO, bandera, nombre)
-- Puertos de origen/destino (UN/LOCODE)
-- Tipos específicos de residuos marítimos
-- Métodos de descarga y entrega
-- Partes involucradas (operador, agente de residuos)
-- Metadata WASDIS para reporting
+Extends `digitalWastePassport.ttl` adding:
 
-## Clases Principales
+- Ship information (IMO, flag, name)
+- Origin/destination ports (UN/LOCODE)
+- Specific types of maritime waste
+- Discharge and delivery methods
+- Involved parties (operator, waste agent)
+- WASDIS metadata for reporting
+
+## Main Classes
 
 ### `marpol:DigitalMarpolWastePassport`
-Credencial verificable específica para residuos MARPOL.
 
-**Hereda de:** `dwp:DigitalWastePassport`
+Verifiable credential specific for MARPOL waste.
+
+**Inherits from:** `dwp:DigitalWastePassport`
 
 ### `marpol:MarpolWastePassport`
-Pasaporte con datos regulatorios marítimos.
 
-**Hereda de:** `dwp:WastePassport`
+Passport with maritime regulatory data.
+
+**Inherits from:** `dwp:WastePassport`
 
 ### `marpol:MarpolWaste`
-Residuo con contexto marítimo completo.
 
-**Propiedades clave:**
-- `marpol:ship` - Información del buque generador
-- `marpol:residue` - Array de tipos de residuos con cantidades
-- `marpol:arrivalPort` - Puerto de llegada (UN/LOCODE)
-- `marpol:deliveryType` - Tipo de entrega (codelist)
-- `marpol:involvedParty` - Operador del buque
-- `marpol:wasteAgent` - Empresa autorizada de recolección
-- `marpol:message` - Metadata WASDIS
+Waste with complete maritime context.
+
+**Key properties:**
+
+- `marpol:ship` - Information of the generating ship
+- `marpol:residue` - Array of waste types with quantities
+- `marpol:arrivalPort` - Arrival port (UN/LOCODE)
+- `marpol:deliveryType` - Delivery type (codelist)
+- `marpol:involvedParty` - Ship operator
+- `marpol:wasteAgent` - Authorized collection company
+- `marpol:message` - WASDIS metadata
 
 ### `marpol:Ship`
-Información del buque.
 
-**Propiedades:**
-- `marpol:imoNumber` - Número IMO único del buque
-- `marpol:vesselName` - Nombre del buque
-- `marpol:flagState` - Bandera/país de registro (ISO 3166-1 Alpha-2)
+Ship information.
+
+**Properties:**
+
+- `marpol:imoNumber` - Unique IMO number of the ship
+- `marpol:vesselName` - Ship name
+- `marpol:flagState` - Flag/country of registry (ISO 3166-1 Alpha-2)
 
 ### `marpol:ResidueInformation`
-Detalle de un tipo de residuo específico con cantidades.
 
-**Propiedades:**
-- `marpol:typeCode` - Tipo (codelist: `residue-type-code`)
-- `marpol:subtypeCode` - Subtipo (codelist: `residue-subtype-code`)
-- `marpol:quantityToDeliver` - Cantidad a entregar (Measure)
-- `marpol:quantityRemainingOnBoard` - Cantidad restante a bordo (Measure)
-- `marpol:estimatedGenerated` - Estimación de generación (Measure)
-- `marpol:maxCapacity` - Capacidad máxima de almacenamiento (Measure)
-- `marpol:dischargeMeans` - Método de descarga (codelist: `discharge-means-code`)
+Detail of a specific waste type with quantities.
 
-## Codelists Específicas
+**Properties:**
 
-- `residue-type-code.ttl` - Tipos de residuo MARPOL
-- `residue-subtype-code.ttl` - Subtipos específicos
-- `discharge-means-code.ttl` - Métodos de descarga
-- `delivery-type-code.ttl` - Tipos de entrega en puerto
-- `iso3166-iAlpha2.ttl` - Códigos de países (banderas)
-- `unlocode.ttl` - Códigos de puertos UN/LOCODE
+- `marpol:typeCode` - Type (codelist: `residue-type-code`)
+- `marpol:subtypeCode` - Subtype (codelist: `residue-subtype-code`)
+- `marpol:quantityToDeliver` - Quantity to deliver (Measure)
+- `marpol:quantityRemainingOnBoard` - Quantity remaining on board (Measure)
+- `marpol:estimatedGenerated` - Generation estimate (Measure)
+- `marpol:maxCapacity` - Maximum storage capacity (Measure)
+- `marpol:dischargeMeans` - Discharge method (codelist: `discharge-means-code`)
 
-## Ejemplo JSON-LD Simplificado
+## Specific Codelists
+
+- `residue-type-code.ttl` - MARPOL waste types
+- `residue-subtype-code.ttl` - Specific subtypes
+- `discharge-means-code.ttl` - Discharge methods
+- `delivery-type-code.ttl` - Port delivery types
+- `iso3166-iAlpha2.ttl` - Country codes (flags)
+- `unlocode.ttl` - UN/LOCODE port codes
+
+## Simplified JSON-LD Example
 
 ```json
 {
@@ -109,7 +118,7 @@ Detalle de un tipo de residuo específico con cantidades.
           "marpol:typeCode": "01",
           "marpol:quantityToDeliver": {
             "@type": "unece:Measure",
-            "unece:value": {"@value": "120", "@type": "xsd:decimal"},
+            "unece:value": { "@value": "120", "@type": "xsd:decimal" },
             "unece:unitCode": "KGM"
           }
         }
@@ -119,28 +128,27 @@ Detalle de un tipo de residuo específico con cantidades.
 }
 ```
 
-## Archivos Relacionados
+## Related Files
 
-- **Ontología**: `ontology/digitalMarpolWastePassport.ttl`
+- **Ontology**: `ontology/digitalMarpolWastePassport.ttl`
 - **Shapes**: `shapes/digitalMarpolWastePassportShapes.ttl`
-- **Ejemplos**:
+- **Examples**:
   - `examples/digital-marpol-waste-passport-sample.ttl`
   - `examples/digital-marpol-waste-passport-sample.jsonld`
-- **Codelists**: `ontology/codelists/*.ttl` (6 listas controladas)
+- **Codelists**: `ontology/codelists/*.ttl` (6 controlled lists)
 
+### Validate example against SHACL shapes
 
-### Validar ejemplo contra shapes SHACL
 ```powershell
 scripts/validate-shacl.sh -d examples/digital-marpol-waste-passport-sample.ttl
 ```
 
-## Referencias Normativas
+## Regulatory References
 
-- **MARPOL Anexo V**: [IMO MARPOL](https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Prevention-of-Pollution-from-Ships-(MARPOL).aspx)
-- **Directiva (UE) 2019/883**: Instalaciones receptoras portuarias
+- **MARPOL Annex V**: [IMO MARPOL](<https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Prevention-of-Pollution-from-Ships-(MARPOL).aspx>)
+- **Directive (EU) 2019/883**: Port reception facilities
 - **UN/LOCODE**: [United Nations Code for Trade and Transport Locations](https://unece.org/trade/cefact/unlocode-code-list-country-and-territory)
 
-## Recursos de Diseño
+## Design Resources
 
-- **Diseño del modelo**: [MARPOL Waste Passport en Jargon.sh](https://jargon.sh/user/sysadmin/MarpolWastePassport)
-
+- **Model design**: [MARPOL Waste Passport on Jargon.sh](https://jargon.sh/user/blueroominnovationontology/MarpolWastePassport)

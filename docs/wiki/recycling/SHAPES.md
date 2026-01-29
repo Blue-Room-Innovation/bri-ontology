@@ -1,6 +1,6 @@
-# Shapes para recycling
+# Shapes for recycling
 
-| Shape | Target Class(es) | Propiedad | Datatype | Class | Min | Max | In | Descripción |
+| Shape | Target Class(es) | Property | Datatype | Class | Min | Max | In | Description |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | RecyclingOrganisationShape | Recycler | managerCode | string |  | 1 | 1 |  |  |
 | RecyclingOrganisationShape | Recycler | nimaCode | string |  | 1 | 1 |  |  |

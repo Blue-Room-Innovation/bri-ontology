@@ -4,8 +4,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <https://example.org/resource/> .
 
-# Ejemplo válido de DigitalWastePassport y WastePassport
-# Representa un pasaporte de residuo electrónico de placas PCB para reciclaje.
+# Valid example of DigitalWastePassport and WastePassport
+# Represents a passport for electronic waste from PCB boards for recycling.
 
 ex:dwPassport1 a dwp:DigitalWastePassport ;
   dwp:credentialSubject ex:wastePassport1 .
@@ -13,7 +13,7 @@ ex:dwPassport1 a dwp:DigitalWastePassport ;
 ex:wastePassport1 a dwp:WastePassport ;
   dwp:waste ex:waste1 .
 
-# Waste (residuo concreto)
+# Waste (concrete residue)
 ex:waste1 a dwp:Waste ;
   unece:name "waste1" ;
   unece:productName "PCB Scrap Lot 2024-11" ;
@@ -24,7 +24,7 @@ ex:waste1 a dwp:Waste ;
   unece:weightQuantity "1250"^^xsd:decimal ;
   unece:declaredUnit <https://vocabulary.uncefact.org/UnitMeasureCode#KGM> .
 
-# Información adicional hipotética de composición (materiales)
+# Additional hypothetical composition information (materials)
 ex:waste1 unece:hasConstituent [
     a unece:MaterialConstituent ;
     unece:materialType <https://vocabulary.uncefact.org/MaterialType#Copper> ;
@@ -35,6 +35,6 @@ ex:waste1 unece:hasConstituent [
     unece:massFraction "0.35"^^xsd:decimal
   ] .
 
-# (Opcional) Referencia a un estándar de reporte ambiental
+# (Optional) Reference to an environmental reporting standard
 ex:wastePassport1 unece:reportingStandard ex:stdEnv1 .
 ex:stdEnv1 a unece:Standard ; unece:standardName "WEEE Reuse/Recycling Directive" .

@@ -1,6 +1,6 @@
-# Shapes para digitalWastePassport
+# Shapes for digitalWastePassport
 
-| Shape | Target Class(es) | Propiedad | Datatype | Class | Min | Max | In | Descripción |
+| Shape | Target Class(es) | Property | Datatype | Class | Min | Max | In | Description |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | DigitalWastePassportShape | DigitalWastePassport | issued | dateTime |  | 1 | 1 |  |  |
 | DigitalWastePassportShape | DigitalWastePassport | publisher |  |  | 1 | 1 |  |  |

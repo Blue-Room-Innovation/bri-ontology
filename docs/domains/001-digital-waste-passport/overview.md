@@ -1,56 +1,63 @@
 # Digital Waste Passport
 
-> Ontología base para pasaportes digitales de residuos, basada en el modelo UNECE UN Transparency Protocol (UNTP) para Product Passports.
+> Base ontology for digital waste passports, based on the UNECE UN Transparency Protocol (UNTP) model for Product Passports.
 
-## URLs Directas
+## Direct URLs
 
-- **Ontología**: [digitalWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl)
-- **Shapes SHACL**: [digitalWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl)
-- **Ejemplo Turtle**: [digital-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.ttl)
-- **Ejemplo JSON-LD**: [digital-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.jsonld)
+- **Ontology**: [digitalWastePassport.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/ontology/digitalWastePassport.ttl)
+- **SHACL Shapes**: [digitalWastePassportShapes.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/shapes/digitalWastePassportShapes.ttl)
+- **Turtle Example**: [digital-waste-passport-sample.ttl](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.ttl)
+- **JSON-LD Example**: [digital-waste-passport-sample.jsonld](https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/0.1/examples/digital-waste-passport-sample.jsonld)
 
-## Propósito
+## Purpose
 
-Proporcionar un vocabulario semántico estándar para representar información verificable sobre residuos a lo largo de su ciclo de vida, desde generación hasta disposición final, facilitando:
+Provide a standard semantic vocabulary to represent verifiable information about waste throughout its lifecycle, from generation to final disposition, facilitating:
 
-- **Trazabilidad**: Seguimiento del origen, composición y movimiento del residuo
-- **Interoperabilidad**: Intercambio de datos entre sistemas heterogéneos
-- **Verificabilidad**: Validación criptográfica mediante credenciales verificables
-- **Cumplimiento**: Documentación para regulaciones ambientales
+- **Traceability**: Tracking the origin, composition and movement of waste
+- **Interoperability**: Data exchange between heterogeneous systems
+- **Verifiability**: Cryptographic validation through verifiable credentials
+- **Compliance**: Documentation for environmental regulations
 
-## Base UNECE
+## UNECE Base
 
-Esta ontología extiende:
-- `unece:VerifiableCredential` - Modelo de credenciales del W3C adaptado por UNECE
-- `unece-dpp:ProductPassport` - Pasaporte de producto digital (DPP)
-- `unece:Product` - Modelo de producto con atributos estándar
+This ontology extends:
 
-**Referencias UNECE:**
+- `unece:VerifiableCredential` - W3C credentials model adapted by UNECE
+- `unece-dpp:ProductPassport` - Digital Product Passport (DPP)
+- `unece:Product` - Product model with standard attributes
+
+**UNECE References:**
+
 - Namespace core: `https://test.uncefact.org/vocabulary/untp/core/0/`
 - Namespace DPP: `https://test.uncefact.org/vocabulary/untp/dpp/0/`
 
-## Clases Principales
+## Main Classes
 
 ### `dwp:DigitalWastePassport`
-Credencial verificable que encapsula el pasaporte de residuo.
 
-**Hereda de:** `unece:VerifiableCredential`
-**Propiedades clave:**
-- `dwp:credentialSubject` → Referencia al `WastePassport`
+Verifiable credential that encapsulates the waste passport.
+
+**Inherits from:** `unece:VerifiableCredential`
+**Key properties:**
+
+- `dwp:credentialSubject` → Reference to `WastePassport`
 
 ### `dwp:WastePassport`
-Documento de pasaporte con metadatos del residuo.
 
-**Hereda de:** `unece-dpp:ProductPassport`
-**Propiedades clave:**
-- `dwp:waste` → Referencia al objeto `Waste`
+Passport document with waste metadata.
+
+**Inherits from:** `unece-dpp:ProductPassport`
+**Key properties:**
+
+- `dwp:waste` → Reference to `Waste` object
 
 ### `dwp:Waste`
-Representación del residuo como producto.
 
-**Hereda de:** `unece:Product`
+Waste representation as a product.
 
-## Ejemplo JSON-LD Mínimo
+**Inherits from:** `unece:Product`
+
+## Minimal JSON-LD Example
 
 ```json
 {
@@ -68,23 +75,26 @@ Representación del residuo como producto.
       "@id": "ex:waste001",
       "@type": "dwp:Waste",
       "unece:productName": "Electronic Waste Batch 2024-Q4",
-      "unece:weightQuantity": {"@value": "850", "@type": "xsd:decimal"},
-      "unece:declaredUnit": {"@id": "https://vocabulary.uncefact.org/UnitMeasureCode#KGM"},
-      "unece:originCountry": {"@id": "https://vocabulary.uncefact.org/CountryId#ES"}
+      "unece:weightQuantity": { "@value": "850", "@type": "xsd:decimal" },
+      "unece:declaredUnit": {
+        "@id": "https://vocabulary.uncefact.org/UnitMeasureCode#KGM"
+      },
+      "unece:originCountry": {
+        "@id": "https://vocabulary.uncefact.org/CountryId#ES"
+      }
     }
   }
 }
 ```
 
-## Archivos Relacionados
+## Related Files
 
-- **Ontología**: `ontology/digitalWastePassport.ttl`
+- **Ontology**: `ontology/digitalWastePassport.ttl`
 - **Shapes**: `shapes/digitalWastePassportShapes.ttl`
-- **Ejemplos**: 
+- **Examples**:
   - `examples/digital-waste-passport-sample.ttl`
   - `examples/digital-waste-passport-sample.jsonld`
 
+## References and Resources
 
-## Referencias y Recursos
-
-- **Diseño del modelo**: [Digital Product Passport en Jargon.sh](https://jargon.sh/user/sysadmin/DigitalProductPassport)
+- **Model design**: [Digital Product Passport on Jargon.sh](https://jargon.sh/user/blueroominnovationontology/DigitalProductPassport)

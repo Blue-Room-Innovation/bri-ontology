@@ -11,7 +11,7 @@ bri-recycling:RecyclingOrganisationShape
   a sh:NodeShape ;
   sh:targetClass bri-recycling:Recycler ;
 
-  # Codi gestor
+  # Manager code
   # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:managerCode ;
@@ -21,7 +21,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  # Codi NIMA
+  # NIMA code
   # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:nimaCode ;
@@ -31,7 +31,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  # Nom gestor
+  # Manager name
   # Mandatory, non-empty string
   sh:property [
     sh:path schema:name ;
@@ -41,7 +41,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  # Adreça física
+  # Physical address
   # Mandatory, non-empty string
   sh:property [
     sh:path schema:streetAddress ;
@@ -51,7 +51,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  # Municipi
+  # Municipality
   # Mandatory, non-empty string
   sh:property [
     sh:path schema:addressLocality ;
@@ -61,7 +61,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  #Codi postal
+  # Postal code
   # Mandatory, non-empty string
   sh:property [
     sh:path schema:postalCode ;
@@ -71,7 +71,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  #Adreça de correspondència
+  # Correspondence address
   # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondeceAddress ;
@@ -81,7 +81,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  #Municipi de correspondència
+  # Correspondence municipality
   # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondeceAddressLocality ;
@@ -91,7 +91,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  #Codi postal correspondència
+  # Correspondence postal code
   # Mandatory, non-empty string
   sh:property [
     sh:path bri-recycling:correspondecePostalCode ;
@@ -101,7 +101,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:minLength 1 ;
   ] ;
 
-  # Telèfon
+  # Telephone
   # Optional, phone-like string pattern
   sh:property [
     sh:path schema:telephone ;
@@ -136,7 +136,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:maxCount 1 ;
   ] ;
 
-  # Localització
+  # Location
   # Latitude and longitude: both present or both absent
   sh:or (
     # No latitude and no longitude
@@ -176,7 +176,7 @@ bri-recycling:RecyclingOrganisationShape
     ]
   ) ;
 
-  # Adaptat al RD 110/2015 de RAEE
+  # Adapted to RD 110/2015 on WEEE
   # Optional, boolean only (true/false)
   sh:property [
     sh:path bri-recycling:adaptedToRD1102015 ;
@@ -185,7 +185,7 @@ bri-recycling:RecyclingOrganisationShape
     sh:maxCount 1 ;
   ] ;
 
-  # Activitat
+  # Activity
   # Optional, free-text description
   sh:property [
     sh:path bri-recycling:wasteTreatmentActivity ;
