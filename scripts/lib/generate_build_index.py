@@ -318,29 +318,8 @@ def generate_build_indexes(workspace_root: Path | None = None) -> int:
     for vd in version_dirs:
         generate_version_index(vd, pages_base_url, cfg)
 
-    # Also generate version indexes for ontology/ and shapes/ folders so the
-    # GitHub Pages directory links resolve instead of 404.
-    ontology_dir = workspace_root / cfg.paths.get("ontology", "ontology") / cfg.ontology_version
-    if ontology_dir.exists():
-        generate_version_folder_index(
-            ontology_dir,
-            f"Ontology {cfg.ontology_version}",
-            pages_base_url,
-            ["ontology", cfg.ontology_version],
-        )
-
-    shapes_dir = workspace_root / cfg.paths.get("shapes", "shapes") / cfg.shapes_version
-    if shapes_dir.exists():
-        generate_version_folder_index(
-            shapes_dir,
-            f"SHACL shapes {cfg.shapes_version}",
-            pages_base_url,
-            ["shapes", cfg.shapes_version],
-        )
-
     print(
-        f"[generate-build-index] Wrote build/index.md and {len(version_dirs)} build version index(es) "
-        f"(+ optional ontology/shapes index files)."
+        f"[generate-build-index] Wrote build/index.md and {len(version_dirs)} build version index(es)."
     )
     return 0
 
