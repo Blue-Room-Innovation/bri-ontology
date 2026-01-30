@@ -27,11 +27,22 @@
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix dct:     <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
 
 @prefix vc:      <https://www.w3.org/2018/credentials#> .
 @prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 @prefix dpp:     <https://example.org/dpp/governed#> .
+
+#######################################################################
+# Imports
+#
+# The converter and validators load owl:imports so this file can extend
+# bootstrap shapes without copying them.
+#######################################################################
+
+<> a owl:Ontology ;
+  owl:imports <dpp-unece.shacl.ttl> .
 
 #######################################################################
 # GOVERNED Digital Product Passport
@@ -46,6 +57,10 @@
 dpp:DigitalProductPassportGovernedShape
   a sh:NodeShape ;
   sh:targetClass unece-dpp:DigitalProductPassport ;
+
+  # Compose (extend) the UNECE bootstrap wrapper shape
+  # so the governed shape includes all base structural constraints.
+  sh:and ( unece-dpp:DigitalProductPassportShape ) ;
 
   # Apply closure at the governed layer
   sh:closed true ;

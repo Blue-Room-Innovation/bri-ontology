@@ -123,6 +123,18 @@ validation:
 conversion:
   # SHACL to JSON Schema conversions
   shacl_to_json:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "shapes/v0.1/dpp-unece.shacl.ttl"
+      output: "build/v0.1/dppUnece.schema.json"
+      naming: "local"
+
+    dpp-unece-extended:
+      name: "UNECE DPP Extended (Governed Hello World)"
+      input: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
+      output: "build/v0.1/dppUneceExtended.schema.json"
+      naming: "local"
+
     dwp:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
@@ -160,6 +172,18 @@ conversion:
 
   # JSON Schema to TypeScript conversions
   json_to_ts:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "build/v0.1/dppUnece.schema.json"
+      output: "build/v0.1/dppUnece.ts"
+      source: "shapes/v0.1/dpp-unece.shacl.ttl"
+
+    dpp-unece-extended:
+      name: "UNECE DPP Extended (Governed Hello World)"
+      input: "build/v0.1/dppUneceExtended.schema.json"
+      output: "build/v0.1/dppUneceExtended.ts"
+      source: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
+
     dwp:
       name: "Digital Waste Passport"
       input: "build/v0.1/digitalWastePassport.schema.json"

@@ -26,8 +26,9 @@ from typing import Dict, List, Any, Optional, Set, Tuple
 from datetime import date, datetime, time
 from decimal import Decimal
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD
-from rdflib.namespace import SH
+from rdflib.namespace import SH, OWL
 from pathlib import Path
+from urllib.parse import urlparse, unquote
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -157,6 +158,11 @@ class SHACLToJSONSchemaConverter:
             })
             if "additionalProperties" in first_shape:
                 schema["additionalProperties"] = first_shape["additionalProperties"]
+            # Preserve composition keywords so downstream tooling (json-schema-to-typescript)
+            # can reflect sh:and/sh:or mappings correctly.
+            for key in ("allOf", "anyOf", "oneOf", "not"):
+                if key in first_shape:
+                    schema[key] = first_shape[key]
             if "title" in first_shape:
                 schema["title"] = first_shape["title"]
             if "description" in first_shape:
@@ -233,6 +239,39 @@ class SHACLToJSONSchemaConverter:
         
         if required:
             definition["required"] = required
+
+        # Handle NodeShape-level sh:and (shape composition) -> JSON Schema allOf
+        and_list = self.graph.value(shape, SH["and"])
+        if and_list:
+            all_of: List[Dict[str, Any]] = []
+
+            for and_node in self._extract_list_nodes(and_list):
+                if isinstance(and_node, URIRef):
+                    # If this points at another NodeShape, model it as a $ref.
+                    ref_name = self._get_local_name(and_node)
+                    if ref_name == shape_name:
+                        # Avoid self-reference
+                        continue
+                    all_of.append({"$ref": f"#/$defs/{ref_name}"})
+                else:
+                    # Inline constraint node (BNode) - best-effort conversion.
+                    and_schema, and_props = self._convert_node_constraint_node_to_schema(and_node)
+                    for name, schema in and_props.items():
+                        existing = properties.get(name)
+                        if existing is None or (
+                            not self._is_informative_property_schema(existing)
+                            and self._is_informative_property_schema(schema)
+                        ):
+                            properties[name] = schema
+                    if and_schema:
+                        all_of.append(and_schema)
+
+            if all_of:
+                definition["allOf"] = all_of
+            else:
+                self.warnings.append(
+                    f"sh:and found in NodeShape {shape_name} but no convertible members were found"
+                )
         
         # Handle sh:closed
         closed = self._get_literal_value(shape, SH.closed)
@@ -766,12 +805,73 @@ Examples:
         logger.error(f"Input file not found: {args.input}")
         sys.exit(1)
     
-    # Load SHACL graph
+    # Load SHACL graph (and any owl:imports)
     logger.info(f"Loading SHACL file: {args.input}")
     graph = Graph()
     try:
         graph.parse(args.input, format="turtle")
         logger.info(f"Loaded {len(graph)} triples")
+
+        # Follow owl:imports recursively for local Turtle files.
+        input_path_abs = input_path.resolve()
+
+        def resolve_import_path(import_iri: str, base_dir: Path) -> Optional[Path]:
+            try:
+                parsed = urlparse(import_iri)
+                if parsed.scheme in ("http", "https"):
+                    return None
+                if parsed.scheme == "file":
+                    # file:///C:/path or file:/C:/path
+                    p = unquote(parsed.path)
+                    if p.startswith("/") and len(p) >= 3 and p[2] == ":":
+                        p = p[1:]  # strip leading '/' for Windows drive paths
+                    return Path(p)
+            except Exception:
+                pass
+
+            # Treat as a filesystem path (absolute or relative)
+            candidate = Path(import_iri)
+            if not candidate.is_absolute():
+                candidate = base_dir / candidate
+            return candidate
+
+        def load_imports_recursive(base_file: Path, visited: Set[Path]):
+            base_dir = base_file.parent
+            for imported in list(graph.objects(None, OWL.imports)):
+                if not isinstance(imported, URIRef):
+                    continue
+                import_iri = str(imported)
+                import_path = resolve_import_path(import_iri, base_dir)
+                if not import_path:
+                    logger.debug(f"Skipping non-local owl:imports: {import_iri}")
+                    continue
+
+                try:
+                    import_path_abs = import_path.resolve()
+                except Exception:
+                    import_path_abs = import_path
+
+                if import_path_abs in visited:
+                    continue
+                if not import_path_abs.exists():
+                    logger.warning(f"owl:imports target not found (skipped): {import_path_abs}")
+                    visited.add(import_path_abs)
+                    continue
+
+                logger.info(f"Loading owl:imports: {import_path_abs}")
+                try:
+                    graph.parse(str(import_path_abs), format="turtle")
+                    visited.add(import_path_abs)
+                except Exception as e:
+                    logger.warning(f"Failed to parse owl:imports '{import_path_abs}': {e}")
+                    visited.add(import_path_abs)
+                    continue
+
+                # Recurse: imported files may themselves declare owl:imports
+                load_imports_recursive(import_path_abs, visited)
+
+        load_imports_recursive(input_path_abs, visited={input_path_abs})
+        logger.info(f"Graph size after owl:imports: {len(graph)} triples")
     except Exception as e:
         logger.error(f"Failed to parse SHACL file: {e}")
         sys.exit(1)
