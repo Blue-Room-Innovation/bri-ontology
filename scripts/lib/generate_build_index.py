@@ -242,47 +242,8 @@ def generate_version_index(version_dir: Path, pages_base_url: str, cfg: Config) 
 
 
 def generate_build_root_index(build_dir: Path, versions: List[str], pages_base_url: str, cfg: Config) -> None:
-    md: List[str] = []
-    md.append("# Build artifacts\n")
-    md.append(f"Generated: {iso_now()}\n")
-
-    # Wiki (current build version)
-    md.append("## Wiki\n")
-    wiki_href = f"{cfg.build_version}/wiki/"
-    if pages_base_url:
-        wiki_href = pages_join(pages_base_url, "build", cfg.build_version, "wiki", trailing_slash=True)
-    md.append(f"- {md_link(f'Wiki ({cfg.build_version})', wiki_href)}")
-    md.append("")
-
-    # Related sources (per-file links)
-    workspace_root = build_dir.parent
-    ontology_dir = workspace_root / cfg.paths.get("ontology", "ontology") / cfg.ontology_version
-    shapes_dir = workspace_root / cfg.paths.get("shapes", "shapes") / cfg.shapes_version
-
-    ontology_files = list_files(ontology_dir, (".ttl", ".xml"))
-    shapes_files = list_files(shapes_dir, (".ttl",))
-
-    md.append(f"## Ontologies ({cfg.ontology_version})\n")
-    if not ontology_files:
-        md.append("No ontology files found.\n")
-    else:
-        for file_name in ontology_files:
-            href = f"../ontology/{cfg.ontology_version}/{file_name}"
-            if pages_base_url:
-                href = pages_join(pages_base_url, "ontology", cfg.ontology_version, file_name)
-            md.append(f"- {md_link(file_name, href)}")
-        md.append("")
-
-    md.append(f"## SHACL shapes ({cfg.shapes_version})\n")
-    if not shapes_files:
-        md.append("No SHACL shape files found.\n")
-    else:
-        for file_name in shapes_files:
-            href = f"../shapes/{cfg.shapes_version}/{file_name}"
-            if pages_base_url:
-                href = pages_join(pages_base_url, "shapes", cfg.shapes_version, file_name)
-            md.append(f"- {md_link(file_name, href)}")
-        md.append("")
+    # Root build index is intentionally minimal: only version links.
+    md: List[str] = ["# Build artifacts\n"]
 
     if not versions:
         md.append("No versioned build folders found under `build/`.\n")

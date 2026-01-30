@@ -28,6 +28,7 @@ import os
 import logging
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
+from urllib.parse import quote
 import rdflib
 from rdflib import RDF, RDFS, OWL
 try:
@@ -149,7 +150,27 @@ def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
     return meta
 
 
-def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, mermaid: bool = False) -> str:
+def md_table_cell(text: Optional[str]) -> str:
+    """Escape text for safe inclusion inside a Markdown table cell.
+
+    - Escapes pipe characters so they don't split columns.
+    - Converts newlines to <br> so multiline comments don't break the table.
+    """
+    if not text:
+        return ""
+    value = str(text).replace("\r\n", "\n").replace("\r", "\n")
+    value = value.replace("|", "\\|")
+    value = "<br>".join(line.strip() for line in value.split("\n"))
+    return value.strip()
+
+
+def generate_readme(
+    g: rdflib.Graph,
+    ontology_file: Path,
+    rich: bool = False,
+    mermaid: bool = False,
+    source_href: Optional[str] = None,
+) -> str:
     classes = extract_entities(g, OWL.Class)
     obj_props = extract_entities(g, OWL.ObjectProperty)
     data_props = extract_entities(g, OWL.DatatypeProperty)
@@ -158,7 +179,11 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
     if not rich:
         lines.append(f"# Ontology: {ontology_file.name}")
         lines.append("")
-        lines.append(f"Source: `{ontology_file}`")
+        if source_href:
+            display_path = str(ontology_file).replace("\\", "/")
+            lines.append(f"Source: [{display_path}]({source_href})")
+        else:
+            lines.append(f"Source: `{ontology_file}`")
         lines.append("")
         lines.append("## Summary")
         lines.append("")
@@ -171,23 +196,28 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
         pretty_name = ontology_file.stem
         lines.append(f"# {pretty_name} Ontology")
         lines.append("")
+        # Use a bullet list to guarantee line breaks across Markdown renderers.
         if 'title' in meta:
-            lines.append(f"**Title:**  {meta['title'][0]}")
+            lines.append(f"- **Title:** {meta['title'][0]}")
         if 'description' in meta:
-            lines.append(f"**Description:**  {meta['description'][0]}")
+            lines.append(f"- **Description:** {meta['description'][0]}")
         if 'creator' in meta:
             creators = ', '.join(meta['creator'])
-            lines.append(f"**Creator:**  {creators}")
+            lines.append(f"- **Creator:** {creators}")
         if 'contributor' in meta:
             contributors = ', '.join(meta['contributor'])
-            lines.append(f"**Contributor:**  {contributors}")
+            lines.append(f"- **Contributor:** {contributors}")
         if 'date' in meta:
-            lines.append(f"**Date:**  {meta['date'][0]}")
+            lines.append(f"- **Date:** {meta['date'][0]}")
         if 'version' in meta:
-            lines.append(f"**Version:**  {meta['version'][0]}")
+            lines.append(f"- **Version:** {meta['version'][0]}")
         if 'imports' in meta:
-            lines.append(f"**Imports:**  {' , '.join(meta['imports'])}")
-        lines.append("**Link to ontology:**  " + str(ontology_file))
+            lines.append(f"- **Imports:** {', '.join(meta['imports'])}")
+        if source_href:
+            display_path = str(ontology_file).replace("\\", "/")
+            lines.append(f"- **Link to ontology:** [{display_path}]({source_href})")
+        else:
+            lines.append("- **Link to ontology:** " + str(ontology_file))
         lines.append("")
         # Mermaid class diagram
         if mermaid:
@@ -239,7 +269,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 cname = local_name(c)
                 comments = get_comments(g, c)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = desc[0]
+                desc_txt = md_table_cell(desc[0])
                 # Datatype props for this class
                 dt_props = []
                 for dp in data_props:
@@ -266,7 +296,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 pname = local_name(dp)
                 comments = get_comments(g, dp)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = desc[0]
+                desc_txt = md_table_cell(desc[0])
                 domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(dp, RDFS.domain)]
                 ranges = [local_name(r) for r in g.objects(dp, RDFS.range)]
                 subprops = [local_name(sp) for sp in g.objects(dp, RDFS.subPropertyOf)]
@@ -279,7 +309,7 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                 pname = local_name(op)
                 comments = get_comments(g, op)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = ' '.join(desc)
+                desc_txt = md_table_cell(' '.join(desc))
                 domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(op, RDFS.domain)]
                 ranges = [f"[{local_name(r)}](#{local_name(r)})" for r in g.objects(op, RDFS.range)]
                 subprops = [local_name(sp) for sp in g.objects(op, RDFS.subPropertyOf)]
@@ -305,51 +335,53 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
                     lines.append("**SubClassOf:** " + ", ".join(subclasses))
                 lines.append("")
 
-    if obj_props:
-        lines.append("## Object Properties")
-        lines.append("")
-        for p in obj_props:
-            pname = local_name(p)
-            labels = get_labels(g, p)
-            comments = get_comments(g, p)
-            domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
-            ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
-            lines.append(f"### {pname}")
+    # In rich mode we already render tables for properties; avoid duplicating the basic sections.
+    if not rich:
+        if obj_props:
+            lines.append("## Object Properties")
             lines.append("")
-            if labels:
-                lines.append("**Labels:**")
-                lines.append(format_multilang(labels))
-            if comments:
-                lines.append("**Comments:**")
-                lines.append(format_multilang(comments))
-            if domains:
-                lines.append("**Domain:** " + ", ".join(domains))
-            if ranges:
-                lines.append("**Range:** " + ", ".join(ranges))
-            lines.append("")
+            for p in obj_props:
+                pname = local_name(p)
+                labels = get_labels(g, p)
+                comments = get_comments(g, p)
+                domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
+                ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
+                lines.append(f"### {pname}")
+                lines.append("")
+                if labels:
+                    lines.append("**Labels:**")
+                    lines.append(format_multilang(labels))
+                if comments:
+                    lines.append("**Comments:**")
+                    lines.append(format_multilang(comments))
+                if domains:
+                    lines.append("**Domain:** " + ", ".join(domains))
+                if ranges:
+                    lines.append("**Range:** " + ", ".join(ranges))
+                lines.append("")
 
-    if data_props:
-        lines.append("## Data Properties")
-        lines.append("")
-        for p in data_props:
-            pname = local_name(p)
-            labels = get_labels(g, p)
-            comments = get_comments(g, p)
-            domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
-            ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
-            lines.append(f"### {pname}")
+        if data_props:
+            lines.append("## Data Properties")
             lines.append("")
-            if labels:
-                lines.append("**Labels:**")
-                lines.append(format_multilang(labels))
-            if comments:
-                lines.append("**Comments:**")
-                lines.append(format_multilang(comments))
-            if domains:
-                lines.append("**Domain:** " + ", ".join(domains))
-            if ranges:
-                lines.append("**Range:** " + ", ".join(ranges))
-            lines.append("")
+            for p in data_props:
+                pname = local_name(p)
+                labels = get_labels(g, p)
+                comments = get_comments(g, p)
+                domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
+                ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
+                lines.append(f"### {pname}")
+                lines.append("")
+                if labels:
+                    lines.append("**Labels:**")
+                    lines.append(format_multilang(labels))
+                if comments:
+                    lines.append("**Comments:**")
+                    lines.append(format_multilang(comments))
+                if domains:
+                    lines.append("**Domain:** " + ", ".join(domains))
+                if ranges:
+                    lines.append("**Range:** " + ", ".join(ranges))
+                lines.append("")
 
     return '\n'.join(lines) + '\n'
 
@@ -482,6 +514,8 @@ def main():
     parser.add_argument('--include-shapes', action='store_true', help='Process SHACL shapes and generate documentation')
     parser.add_argument('--shapes-dir', default='shapes', help='Directory with shapes .ttl files')
     parser.add_argument('--contexts-dir', default=None, help='Directory with JSON-LD contexts (for #Contexts counter)')
+    parser.add_argument('--pages-url', default='', help='Base GitHub Pages URL (used to build navigation links in wiki index)')
+    parser.add_argument('--build-version', default='', help='Build version (used to build navigation links in wiki index)')
     parser.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     args = parser.parse_args()
 
@@ -542,12 +576,31 @@ def main():
         header_cols.append("#Contexts")
         sep_cols.append("-----------")
 
+    # Navigation for users browsing the published wiki on GitHub Pages.
+    pages_url = (args.pages_url or '').rstrip('/')
+    build_version = (args.build_version or '').strip()
+
+    build_root_href = "../../"
+    build_version_href = "../"
+    if pages_url and build_version:
+        build_root_href = f"{pages_url}/build/"
+        build_version_href = f"{pages_url}/build/{build_version}/"
+    elif pages_url:
+        build_root_href = f"{pages_url}/build/"
+
     index_lines = [
         "# Ontology Index",
+        "",
+        "## Navigation",
+        f"- [Build artifacts (this version)]({build_version_href})",
+        f"- [All build versions]({build_root_href})",
         "",
         "| " + " | ".join(header_cols) + " |",
         "| " + " | ".join(sep_cols) + " |",
     ]
+
+    # Collect per-ontology navigation links (built during generation)
+    ontology_nav: List[str] = []
 
     for ttl in ttl_files:
         g = rdflib.Graph()
@@ -584,7 +637,18 @@ def main():
 
         ont_out_dir = out_dir / name
         ont_out_dir.mkdir(parents=True, exist_ok=True)
-        readme_content = generate_readme(g, ttl, rich=(args.format=='rich'), mermaid=args.mermaid)
+        source_href: Optional[str] = None
+        if pages_url:
+            rel_path = str(ttl).replace("\\", "/").lstrip("./").lstrip("/")
+            source_href = f"{pages_url}/{quote(rel_path, safe='/')}"
+
+        readme_content = generate_readme(
+            g,
+            ttl,
+            rich=(args.format=='rich'),
+            mermaid=args.mermaid,
+            source_href=source_href,
+        )
         # Optional diagram
         if args.generate_diagrams:
             diagram_path = generate_diagram(
@@ -597,13 +661,34 @@ def main():
             if diagram_path and args.format != 'rich':
                 # Insert diagram reference at the top of the README only in basic mode
                 readme_content = readme_content.replace('# Ontology:', f"# Ontology:\n\n![Diagram]({diagram_path.name})\n\nOntology:")
-        (ont_out_dir / 'README.md').write_text(readme_content, encoding='utf-8')
+        readme_path = ont_out_dir / 'README.md'
+        readme_path.write_text(readme_content, encoding='utf-8')
+
+        # Create per-ontology index.md so folder URLs work on GitHub Pages.
+        # The wiki index will link to "<ontology>/".
+        (ont_out_dir / 'index.md').write_text(readme_content, encoding='utf-8')
 
         # Shapes opcionales
         if shape_graph is not None:
             shapes_md = generate_shapes_md(shape_graph, name)
             (ont_out_dir / 'SHAPES.md').write_text(shapes_md, encoding='utf-8')
             LOGGER.debug(f"Shapes documented for {name}")
+
+        # Navigation entry (prefer folder link)
+        folder_href = f"{name}/"
+        if pages_url and build_version:
+            folder_href = f"{pages_url}/build/{build_version}/wiki/{name}/"
+        ontology_nav.append(f"- [{name}]({folder_href})")
+
+    if ontology_nav:
+        index_lines.extend(
+            [
+                "",
+                "## Ontologies",
+                "",
+                *ontology_nav,
+            ]
+        )
 
     (out_dir / 'index.md').write_text('\n'.join(index_lines) + '\n', encoding='utf-8')
     LOGGER.info(f"Generated wiki for {len(ttl_files)} ontologies in {out_dir}")

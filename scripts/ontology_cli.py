@@ -491,6 +491,8 @@ def main(argv: Optional[List[str]] = None) -> int:
                 "--output-dir", output_dir,
                 "--shapes-dir", shapes_dir,
                 "--contexts-dir", contexts_dir,
+                "--pages-url", str((config_obj.repository or {}).get("pages_url", "")),
+                "--build-version", str(config_obj.build_version),
             ]
             if include_codelists:
                 cmd.append("--include-codelists")
