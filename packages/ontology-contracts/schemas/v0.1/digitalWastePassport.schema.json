@@ -6,77 +6,77 @@
   "$defs": {
     "DigitalWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassportShape",
       "title": "DigitalWastePassportShape",
       "description": "Main DigitalWastePassport shape; closed to detect unexpected properties.",
       "properties": {
-        "dct:issued": {
+        "issued": {
           "description": "Must have an issued date (dct:issued).",
           "type": "string",
           "format": "date-time"
         },
-        "dct:publisher": {
+        "publisher": {
           "description": "Must specify publisher (dct:publisher).",
           "$comment": "No explicit sh:datatype or sh:class found"
         },
-        "dwp:credentialSubject": {
+        "credentialSubject": {
           "description": "Must link exactly one WastePassport.",
           "$ref": "#/$defs/WastePassportShape"
         },
-        "dct:valid": {
+        "valid": {
           "type": "string",
           "format": "date-time"
         }
       },
       "required": [
-        "dct:issued",
-        "dct:publisher",
-        "dwp:credentialSubject"
+        "issued",
+        "publisher",
+        "credentialSubject"
       ],
       "additionalProperties": false
     },
     "WastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#WastePassportShape",
       "title": "WastePassportShape",
       "description": "WastePassport shape closed; only allows defined properties.",
       "properties": {
-        "dwp:waste": {
+        "waste": {
           "description": "Must reference a Waste.",
           "$ref": "#/$defs/WasteShape"
         },
-        "dct:identifier": {
+        "identifier": {
           "type": "string"
         },
-        "unece:reportingStandard": {
+        "reportingStandard": {
           "$ref": "#/$defs/StandardShape"
         }
       },
       "required": [
-        "dwp:waste"
+        "waste"
       ],
       "additionalProperties": false
     },
     "WasteShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WasteShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#WasteShape",
       "title": "WasteShape",
       "description": "Waste shape closed with allowed UNECE properties.",
       "properties": {
-        "unece:name": {
+        "name": {
           "description": "Must have a name (unece:name).",
           "type": "string"
         },
-        "unece:productName": {
+        "productName": {
           "type": "string"
         },
-        "unece:productDescription": {
+        "productDescription": {
           "type": "string"
         },
-        "unece:hasBatchIdentifier": {
+        "hasBatchIdentifier": {
           "type": "string"
         },
-        "unece:originCountry": {
+        "originCountry": {
           "description": "originCountry must be in the allowed list (subset EU+GB).",
           "$comment": "No explicit sh:datatype or sh:class found",
           "enum": [
@@ -95,14 +95,14 @@
             "https://vocabulary.uncefact.org/CountryId#IE"
           ]
         },
-        "unece:productionDate": {
+        "productionDate": {
           "type": "string",
           "format": "date"
         },
-        "unece:weightQuantity": {
+        "weightQuantity": {
           "type": "number"
         },
-        "unece:declaredUnit": {
+        "declaredUnit": {
           "description": "declaredUnit must be one of: KGM, TNE, LTR, MTR, CMQ.",
           "$comment": "No explicit sh:datatype or sh:class found",
           "enum": [
@@ -113,13 +113,13 @@
             "https://vocabulary.uncefact.org/UnitMeasureCode#CMQ"
           ]
         },
-        "unece:hasConstituent": {
+        "hasConstituent": {
           "$ref": "#/$defs/MaterialConstituentShape"
         }
       },
       "required": [
-        "unece:name",
-        "unece:productName"
+        "name",
+        "productName"
       ],
       "additionalProperties": false
     },
@@ -129,7 +129,7 @@
       "title": "MaterialConstituentShape",
       "description": "Material Constituent",
       "properties": {
-        "unece:materialType": {
+        "materialType": {
           "anyOf": [
             {
               "type": "string",
@@ -150,14 +150,14 @@
             }
           ]
         },
-        "unece:massFraction": {
+        "massFraction": {
           "type": "number",
           "maximum": 1.0
         }
       },
       "required": [
-        "unece:materialType",
-        "unece:massFraction"
+        "materialType",
+        "massFraction"
       ],
       "additionalProperties": false
     },
@@ -167,40 +167,40 @@
       "title": "StandardShape",
       "description": "Reporting Standard",
       "properties": {
-        "unece:standardName": {
+        "standardName": {
           "type": "string"
         }
       },
       "required": [
-        "unece:standardName"
+        "standardName"
       ],
       "additionalProperties": false
     }
   },
   "type": "object",
   "properties": {
-    "dct:issued": {
+    "issued": {
       "description": "Must have an issued date (dct:issued).",
       "type": "string",
       "format": "date-time"
     },
-    "dct:publisher": {
+    "publisher": {
       "description": "Must specify publisher (dct:publisher).",
       "$comment": "No explicit sh:datatype or sh:class found"
     },
-    "dwp:credentialSubject": {
+    "credentialSubject": {
       "description": "Must link exactly one WastePassport.",
       "$ref": "#/$defs/WastePassportShape"
     },
-    "dct:valid": {
+    "valid": {
       "type": "string",
       "format": "date-time"
     }
   },
   "required": [
-    "dct:issued",
-    "dct:publisher",
-    "dwp:credentialSubject"
+    "issued",
+    "publisher",
+    "credentialSubject"
   ],
   "additionalProperties": false
 }

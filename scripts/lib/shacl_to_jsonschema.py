@@ -33,14 +33,6 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger(__name__)
 
-# Define namespaces
-SHACL = Namespace("http://www.w3.org/ns/shacl#")
-DCT = Namespace("http://purl.org/dc/terms/")
-SCHEMA = Namespace("http://schema.org/")
-DWP = Namespace("https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#")
-UNECE = Namespace("https://test.uncefact.org/vocabulary/untp/core/0/")
-UNECE_DPP = Namespace("https://test.uncefact.org/vocabulary/untp/dpp/0/")
-
 
 class SHACLToJSONSchemaConverter:
     """Converts SHACL shapes to JSON Schema."""

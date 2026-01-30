@@ -6,79 +6,79 @@
   "$defs": {
     "DigitalMarpolWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassportShape",
       "title": "DigitalMarpolWastePassportShape",
       "description": "Main shape of the Digital MARPOL Waste Passport (closed).",
       "properties": {
-        "dmwp:credentialSubject": {
+        "credentialSubject": {
           "description": "Must have a credentialSubject (MarpolWastePassport).",
           "$ref": "#/$defs/MarpolWastePassportShape"
         },
-        "dct:issued": {
+        "issued": {
           "description": "Missing issued date (dct:issued).",
           "type": "string",
           "format": "date-time"
         },
-        "dct:publisher": {
+        "publisher": {
           "description": "Missing publisher (dct:publisher).",
           "$comment": "No explicit sh:datatype or sh:class found"
         }
       },
       "required": [
-        "dmwp:credentialSubject",
-        "dct:issued",
-        "dct:publisher"
+        "credentialSubject",
+        "issued",
+        "publisher"
       ],
       "additionalProperties": false
     },
     "MarpolWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassportShape",
       "title": "MarpolWastePassportShape",
       "description": "MarpolWastePassport shape (closed).",
       "properties": {
-        "dmwp:waste": {
+        "waste": {
           "description": "Must link a MarpolWaste.",
           "$ref": "#/$defs/MarpolWasteShape"
         }
       },
       "required": [
-        "dmwp:waste"
+        "waste"
       ],
       "additionalProperties": false
     },
     "MarpolWasteShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWasteShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWasteShape",
       "title": "MarpolWasteShape",
       "description": "MARPOL waste shape (closed).",
       "properties": {
-        "dmwp:ship": {
+        "ship": {
           "description": "Must specify the ship (ship).",
           "$ref": "#/$defs/ShipShape"
         },
-        "dmwp:residue": {
+        "residue": {
           "description": "Must have at least one ResidueInformation.",
           "$ref": "#/$defs/ResidueInformationShape"
         },
-        "dmwp:lastDeliveryDate": {
+        "lastDeliveryDate": {
           "type": "string",
           "format": "date-time"
         },
-        "dmwp:arrivalPort": {
+        "arrivalPort": {
           "description": "arrivalPort must match UN/LOCODE pattern (e.g. ESPMI).",
           "type": "string",
           "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
         },
-        "dmwp:nextPlannedDeliveryPort": {
+        "nextPlannedDeliveryPort": {
           "type": "string",
           "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
         },
-        "dmwp:lastWasteDeliveryPort": {
+        "lastWasteDeliveryPort": {
           "type": "string",
           "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
         },
-        "dmwp:deliveryType": {
+        "deliveryType": {
           "description": "deliveryType outside allowed list (ZTO, REC, DIS).",
           "type": "string",
           "enum": [
@@ -87,87 +87,87 @@
             "DIS"
           ]
         },
-        "dmwp:shipScale": {
+        "shipScale": {
           "type": "string"
         },
-        "dmwp:marpolEdition": {
+        "marpolEdition": {
           "type": "string"
         },
-        "dmwp:wasteAgent": {
+        "wasteAgent": {
           "$ref": "#/$defs/AuthorizedPartyShape"
         },
-        "dmwp:message": {
+        "message": {
           "$comment": "No explicit sh:datatype or sh:class found"
         },
-        "dmwp:involvedParty": {
+        "involvedParty": {
           "$comment": "No explicit sh:datatype or sh:class found"
         }
       },
       "required": [
-        "dmwp:ship",
-        "dmwp:residue"
+        "ship",
+        "residue"
       ],
       "additionalProperties": false
     },
     "ResidueInformationShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformationShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformationShape",
       "title": "ResidueInformationShape",
       "description": "Information for each waste batch (closed).",
       "anyOf": [
         {
           "type": "object",
           "properties": {
-            "dmwp:quantityToDeliver": {
+            "quantityToDeliver": {
               "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
             }
           },
           "required": [
-            "dmwp:quantityToDeliver"
+            "quantityToDeliver"
           ]
         },
         {
           "type": "object",
           "properties": {
-            "dmwp:quantityRemainingOnBoard": {
+            "quantityRemainingOnBoard": {
               "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
             }
           },
           "required": [
-            "dmwp:quantityRemainingOnBoard"
+            "quantityRemainingOnBoard"
           ]
         },
         {
           "type": "object",
           "properties": {
-            "dmwp:estimatedGenerated": {
+            "estimatedGenerated": {
               "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
             }
           },
           "required": [
-            "dmwp:estimatedGenerated"
+            "estimatedGenerated"
           ]
         }
       ],
       "properties": {
-        "dmwp:typeCode": {
+        "typeCode": {
           "description": "typeCode must be OIL (placeholder).",
           "type": "string",
           "enum": [
             "OIL"
           ]
         },
-        "dmwp:subtypeCode": {
+        "subtypeCode": {
           "description": "subtypeCode must be SLU (placeholder).",
           "type": "string",
           "enum": [
             "SLU"
           ]
         },
-        "dmwp:substance": {
+        "substance": {
           "type": "string"
         },
-        "dmwp:dischargeMeans": {
+        "dischargeMeans": {
           "type": "string",
           "enum": [
             "ZTE",
@@ -176,81 +176,81 @@
             "ZTB"
           ]
         },
-        "dmwp:nextCollectionPort": {
+        "nextCollectionPort": {
           "type": "string",
           "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
         },
-        "dmwp:quantityToDeliver": {
+        "quantityToDeliver": {
           "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
         },
-        "dmwp:quantityRemainingOnBoard": {
+        "quantityRemainingOnBoard": {
           "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
         },
-        "dmwp:estimatedGenerated": {
+        "estimatedGenerated": {
           "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
         },
-        "dmwp:maxCapacity": {
+        "maxCapacity": {
           "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
         }
       },
       "required": [
-        "dmwp:typeCode",
-        "dmwp:subtypeCode"
+        "typeCode",
+        "subtypeCode"
       ],
       "additionalProperties": false
     },
     "ShipShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ShipShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ShipShape",
       "title": "ShipShape",
       "description": "Ship data (closed).",
       "properties": {
-        "dmwp:imoNumber": {
+        "imoNumber": {
           "description": "IMO must be 7 digits.",
           "type": "string",
           "pattern": "^\\d{7}$"
         },
-        "dmwp:name": {
+        "name": {
           "type": "string"
         },
-        "dmwp:flag": {
+        "flag": {
           "description": "flag must be ISO 3166-1 alpha-2.",
           "type": "string",
           "pattern": "^[A-Z]{2}$"
         }
       },
       "required": [
-        "dmwp:imoNumber",
-        "dmwp:name",
-        "dmwp:flag"
+        "imoNumber",
+        "name",
+        "flag"
       ],
       "additionalProperties": false
     },
     "AuthorizedPartyShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedPartyShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedPartyShape",
       "title": "AuthorizedPartyShape",
       "description": "Authorized entity (closed).",
       "properties": {
-        "dmwp:identifier": {
+        "identifier": {
           "type": "string"
         },
-        "dmwp:contactPoint": {
+        "contactPoint": {
           "$comment": "No explicit sh:datatype or sh:class found"
         }
       },
       "required": [
-        "dmwp:identifier"
+        "identifier"
       ],
       "additionalProperties": false
     },
     "InvolvedPartyShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedPartyShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedPartyShape",
       "title": "InvolvedPartyShape",
       "description": "Involved party (closed).",
       "properties": {
-        "dmwp:role": {
+        "role": {
           "$comment": "No explicit sh:datatype or sh:class found"
         }
       },
@@ -259,24 +259,24 @@
   },
   "type": "object",
   "properties": {
-    "dmwp:credentialSubject": {
+    "credentialSubject": {
       "description": "Must have a credentialSubject (MarpolWastePassport).",
       "$ref": "#/$defs/MarpolWastePassportShape"
     },
-    "dct:issued": {
+    "issued": {
       "description": "Missing issued date (dct:issued).",
       "type": "string",
       "format": "date-time"
     },
-    "dct:publisher": {
+    "publisher": {
       "description": "Missing publisher (dct:publisher).",
       "$comment": "No explicit sh:datatype or sh:class found"
     }
   },
   "required": [
-    "dmwp:credentialSubject",
-    "dct:issued",
-    "dct:publisher"
+    "credentialSubject",
+    "issued",
+    "publisher"
   ],
   "additionalProperties": false
 }

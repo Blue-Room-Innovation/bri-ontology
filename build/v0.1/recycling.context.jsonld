@@ -2,7 +2,7 @@
   "@version": 1.1,
   "@protected": true,
   "@context": {
-    "bri-recycling": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#",
+    "bri-recycling": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "schema": "https://schema.org/",
     "sh": "http://www.w3.org/ns/shacl#",
@@ -15,8 +15,6 @@
     "correspondecePostalCode": "bri-recycling:correspondecePostalCode",
     "email": "schema:email",
     "faxNumber": "schema:faxNumber",
-    "latitude": "schema:latitude",
-    "longitude": "schema:longitude",
     "managerCode": "bri-recycling:managerCode",
     "name": "schema:name",
     "nimaCode": "bri-recycling:nimaCode",

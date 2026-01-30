@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 @prefix schema: <https://schema.org/> .
-@prefix bri-recycling: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#> .
+@prefix bri-recycling: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#> .
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 
 

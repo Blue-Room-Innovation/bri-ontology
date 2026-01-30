@@ -6,7 +6,7 @@
   "$defs": {
     "RecyclingOrganisationShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/recycling.ttl#RecyclingOrganisationShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#RecyclingOrganisationShape",
       "title": "RecyclingOrganisationShape",
       "anyOf": [
         {

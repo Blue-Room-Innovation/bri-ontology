@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-01-30T09:56:16Z
+Generated: 2026-01-30T13:50:46Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -41,6 +41,8 @@ Generated: 2026-01-30T09:56:16Z
 
 ## JSON-LD
 
+- [digitalMarpolWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.context.jsonld)
+- [digitalWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.context.jsonld)
 - [recycling.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.context.jsonld)
 
 ## JSON Schema / JSON

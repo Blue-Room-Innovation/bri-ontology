@@ -31,7 +31,7 @@ repository:
   owner: "Blue-Room-Innovation"
   name: "bri-ontology"
   branch: "main"
-  base_url: "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology"
+  base_url: "https://blue-room-innovation.github.io/bri-ontology"
   pages_url: "https://blue-room-innovation.github.io/bri-ontology"
 
 # Ontology Files Configuration
@@ -127,11 +127,13 @@ conversion:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digitalWastePassportShapes.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
+      naming: "local"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
+      naming: "local"
 
     recycling:
       name: "Recycling"
@@ -141,6 +143,16 @@ conversion:
 
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
+    dwp:
+      name: "Digital Waste Passport"
+      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      output: "build/v0.1/digitalWastePassport.context.jsonld"
+
+    dmwp:
+      name: "Digital MARPOL Waste Passport"
+      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      output: "build/v0.1/digitalMarpolWastePassport.context.jsonld"
+
     recycling:
       name: "Recycling"
       input: "shapes/v0.1/recycling.shacl.ttl"
