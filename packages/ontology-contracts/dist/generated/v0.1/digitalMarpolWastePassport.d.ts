@@ -1,9 +1,28 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-27 13:47:27
+ * Generated: 2026-01-29 14:21:54
  * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
  */
+/**
+ * Must have at least one ResidueInformation.
+ */
+export type ResidueInformationShape = {
+    "dmwp:quantityToDeliver": {
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+} | {
+    "dmwp:quantityRemainingOnBoard": {
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+} | {
+    "dmwp:estimatedGenerated": {
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
 /**
  * Main shape of the Digital MARPOL Waste Passport (closed).
  */
@@ -66,34 +85,6 @@ export interface ShipShape {
      * flag must be ISO 3166-1 alpha-2.
      */
     "dmwp:flag": string;
-}
-/**
- * Must have at least one ResidueInformation.
- */
-export interface ResidueInformationShape {
-    /**
-     * typeCode must be OIL (placeholder).
-     */
-    "dmwp:typeCode": "OIL";
-    /**
-     * subtypeCode must be SLU (placeholder).
-     */
-    "dmwp:subtypeCode": "SLU";
-    "dmwp:substance"?: string;
-    "dmwp:dischargeMeans"?: "ZTE" | "ZTD" | "ZTC" | "ZTB";
-    "dmwp:nextCollectionPort"?: string;
-    "dmwp:quantityToDeliver"?: {
-        [k: string]: unknown;
-    };
-    "dmwp:quantityRemainingOnBoard"?: {
-        [k: string]: unknown;
-    };
-    "dmwp:estimatedGenerated"?: {
-        [k: string]: unknown;
-    };
-    "dmwp:maxCapacity"?: {
-        [k: string]: unknown;
-    };
 }
 /**
  * Authorized entity (closed).

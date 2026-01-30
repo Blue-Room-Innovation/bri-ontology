@@ -114,6 +114,41 @@
       "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformationShape",
       "title": "ResidueInformationShape",
       "description": "Information for each waste batch (closed).",
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "dmwp:quantityToDeliver": {
+              "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
+            }
+          },
+          "required": [
+            "dmwp:quantityToDeliver"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "dmwp:quantityRemainingOnBoard": {
+              "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
+            }
+          },
+          "required": [
+            "dmwp:quantityRemainingOnBoard"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "dmwp:estimatedGenerated": {
+              "$comment": "sh:class https://ontology.untp.io/core/Measure - no corresponding shape found"
+            }
+          },
+          "required": [
+            "dmwp:estimatedGenerated"
+          ]
+        }
+      ],
       "properties": {
         "dmwp:typeCode": {
           "description": "typeCode must be OIL (placeholder).",

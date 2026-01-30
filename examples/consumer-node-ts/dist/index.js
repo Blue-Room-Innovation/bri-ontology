@@ -18,6 +18,9 @@ const payload = {
         "@id": "https://example.com",
     },
     wasteTreatmentActivity: "sit",
+    adaptedToRD1102015: true,
+    latitude: 22,
+    longitude: 22
 };
 const result = validator.validate(payload, schemaKey);
 if (!result.ok) {
