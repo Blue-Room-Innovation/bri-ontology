@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Dict, List
 from urllib.parse import quote
 
-from .config import load_config
+from .config import Config, load_config
 from .utils import get_workspace_root
 
 _VERSION_DIR_RE = re.compile(r"^v\d+(?:\.\d+)*$")
@@ -81,7 +81,82 @@ def write_text(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def generate_version_index(version_dir: Path, pages_base_url: str) -> None:
+def list_files(folder_dir: Path, allowed_suffixes: tuple[str, ...]) -> List[str]:
+    if not folder_dir.exists():
+        return []
+    return sorted(
+        [
+            p.name
+            for p in folder_dir.iterdir()
+            if p.is_file()
+            and p.name.lower() != "index.md"
+            and not p.name.lower().startswith("catalog")
+            and p.suffix.lower() in allowed_suffixes
+        ],
+        key=lambda s: s.lower(),
+    )
+
+
+def pages_join(base: str, *parts: str, trailing_slash: bool = False) -> str:
+    """Join URL parts onto the GitHub Pages base url, quoting each segment."""
+    if not base:
+        # Caller may still want relative paths.
+        joined = "/".join(parts)
+        return joined + ("/" if trailing_slash and not joined.endswith("/") else "")
+
+    clean_parts: List[str] = []
+    for p in parts:
+        if p == "":
+            continue
+        clean_parts.append(quote(p.strip("/")))
+
+    url = f"{base}/" + "/".join(clean_parts)
+    if trailing_slash and not url.endswith("/"):
+        url += "/"
+    return url
+
+
+def generate_version_folder_index(
+    folder_dir: Path,
+    title: str,
+    pages_base_url: str,
+    pages_prefix: List[str],
+) -> None:
+    files = sorted(
+        [p.name for p in folder_dir.iterdir() if p.is_file() and p.name.lower() != "index.md"],
+        key=lambda s: s.lower(),
+    )
+
+    grouped: Dict[str, List[str]] = {}
+    for name in files:
+        grouped.setdefault(group_for_file(name), []).append(name)
+
+    md: List[str] = []
+    md.append(f"# {title}\n")
+    md.append(f"Generated: {iso_now()}\n")
+
+    if not files:
+        md.append("No files found in this folder.\n")
+        write_text(folder_dir / "index.md", "\n".join(md).rstrip() + "\n")
+        return
+
+    ordered_group_names = [g.title for g in GROUPS if g.title in grouped]
+    if "Other" in grouped:
+        ordered_group_names.append("Other")
+
+    for group_name in ordered_group_names:
+        md.append(f"## {group_name}\n")
+        for file_name in grouped[group_name]:
+            href = file_name
+            if pages_base_url:
+                href = pages_join(pages_base_url, *pages_prefix, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
+
+    write_text(folder_dir / "index.md", "\n".join(md).rstrip() + "\n")
+
+
+def generate_version_index(version_dir: Path, pages_base_url: str, cfg: Config) -> None:
     files = sorted(
         [p.name for p in version_dir.iterdir() if p.is_file() and p.name.lower() != "index.md"],
         key=lambda s: s.lower(),
@@ -99,6 +174,43 @@ def generate_version_index(version_dir: Path, pages_base_url: str) -> None:
     if pages_base_url:
         back_href = f"{pages_base_url}/build/"
     md.append(f"- {md_link('Back to build index', back_href)}\n")
+
+    # Related sources (per-file links)
+    ontology_dir = (
+        version_dir.parent.parent
+        / cfg.paths.get("ontology", "ontology")
+        / cfg.ontology_version
+    )
+    shapes_dir = (
+        version_dir.parent.parent
+        / cfg.paths.get("shapes", "shapes")
+        / cfg.shapes_version
+    )
+
+    ontology_files = list_files(ontology_dir, (".ttl", ".xml"))
+    shapes_files = list_files(shapes_dir, (".ttl",))
+
+    md.append(f"## Ontologies ({cfg.ontology_version})\n")
+    if not ontology_files:
+        md.append("No ontology files found.\n")
+    else:
+        for file_name in ontology_files:
+            href = f"../../ontology/{cfg.ontology_version}/{file_name}"
+            if pages_base_url:
+                href = pages_join(pages_base_url, "ontology", cfg.ontology_version, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
+
+    md.append(f"## SHACL shapes ({cfg.shapes_version})\n")
+    if not shapes_files:
+        md.append("No SHACL shape files found.\n")
+    else:
+        for file_name in shapes_files:
+            href = f"../../shapes/{cfg.shapes_version}/{file_name}"
+            if pages_base_url:
+                href = pages_join(pages_base_url, "shapes", cfg.shapes_version, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
 
     if not files:
         md.append("No artifacts found in this folder.\n")
@@ -121,10 +233,40 @@ def generate_version_index(version_dir: Path, pages_base_url: str) -> None:
     write_text(version_dir / "index.md", "\n".join(md).rstrip() + "\n")
 
 
-def generate_build_root_index(build_dir: Path, versions: List[str], pages_base_url: str) -> None:
+def generate_build_root_index(build_dir: Path, versions: List[str], pages_base_url: str, cfg: Config) -> None:
     md: List[str] = []
     md.append("# Build artifacts\n")
     md.append(f"Generated: {iso_now()}\n")
+
+    # Related sources (per-file links)
+    workspace_root = build_dir.parent
+    ontology_dir = workspace_root / cfg.paths.get("ontology", "ontology") / cfg.ontology_version
+    shapes_dir = workspace_root / cfg.paths.get("shapes", "shapes") / cfg.shapes_version
+
+    ontology_files = list_files(ontology_dir, (".ttl", ".xml"))
+    shapes_files = list_files(shapes_dir, (".ttl",))
+
+    md.append(f"## Ontologies ({cfg.ontology_version})\n")
+    if not ontology_files:
+        md.append("No ontology files found.\n")
+    else:
+        for file_name in ontology_files:
+            href = f"../ontology/{cfg.ontology_version}/{file_name}"
+            if pages_base_url:
+                href = pages_join(pages_base_url, "ontology", cfg.ontology_version, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
+
+    md.append(f"## SHACL shapes ({cfg.shapes_version})\n")
+    if not shapes_files:
+        md.append("No SHACL shape files found.\n")
+    else:
+        for file_name in shapes_files:
+            href = f"../shapes/{cfg.shapes_version}/{file_name}"
+            if pages_base_url:
+                href = pages_join(pages_base_url, "shapes", cfg.shapes_version, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
 
     if not versions:
         md.append("No versioned build folders found under `build/`.\n")
@@ -137,15 +279,14 @@ def generate_build_root_index(build_dir: Path, versions: List[str], pages_base_u
             md.append(f"- {md_link(v, href)}")
         md.append("")
 
-    md.append("## Notes\n")
-    md.append("This index is auto-generated as part of `npm run build`.\n")
-
     write_text(build_dir / "index.md", "\n".join(md).rstrip() + "\n")
 
 
 def generate_build_indexes(workspace_root: Path | None = None) -> int:
     if workspace_root is None:
         workspace_root = get_workspace_root()
+
+    cfg = load_config()
 
     build_dir = workspace_root / "build"
     if not build_dir.exists():
@@ -157,11 +298,34 @@ def generate_build_indexes(workspace_root: Path | None = None) -> int:
     version_dirs = sorted([p for p in build_dir.iterdir() if is_version_dir(p)], key=lambda p: p.name)
     versions = [p.name for p in version_dirs]
 
-    generate_build_root_index(build_dir, versions, pages_base_url)
+    generate_build_root_index(build_dir, versions, pages_base_url, cfg)
     for vd in version_dirs:
-        generate_version_index(vd, pages_base_url)
+        generate_version_index(vd, pages_base_url, cfg)
 
-    print(f"[generate-build-index] Wrote build/index.md and {len(version_dirs)} version index(es).")
+    # Also generate version indexes for ontology/ and shapes/ folders so the
+    # GitHub Pages directory links resolve instead of 404.
+    ontology_dir = workspace_root / cfg.paths.get("ontology", "ontology") / cfg.ontology_version
+    if ontology_dir.exists():
+        generate_version_folder_index(
+            ontology_dir,
+            f"Ontology {cfg.ontology_version}",
+            pages_base_url,
+            ["ontology", cfg.ontology_version],
+        )
+
+    shapes_dir = workspace_root / cfg.paths.get("shapes", "shapes") / cfg.shapes_version
+    if shapes_dir.exists():
+        generate_version_folder_index(
+            shapes_dir,
+            f"SHACL shapes {cfg.shapes_version}",
+            pages_base_url,
+            ["shapes", cfg.shapes_version],
+        )
+
+    print(
+        f"[generate-build-index] Wrote build/index.md and {len(version_dirs)} build version index(es) "
+        f"(+ optional ontology/shapes index files)."
+    )
     return 0
 
 
