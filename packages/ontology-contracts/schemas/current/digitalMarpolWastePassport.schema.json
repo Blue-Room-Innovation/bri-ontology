@@ -6,7 +6,7 @@
   "$defs": {
     "DigitalMarpolWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassportShape",
       "title": "DigitalMarpolWastePassportShape",
       "description": "Main shape of the Digital MARPOL Waste Passport (closed).",
       "properties": {
@@ -33,7 +33,7 @@
     },
     "MarpolWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassportShape",
       "title": "MarpolWastePassportShape",
       "description": "MarpolWastePassport shape (closed).",
       "properties": {
@@ -49,7 +49,7 @@
     },
     "MarpolWasteShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWasteShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWasteShape",
       "title": "MarpolWasteShape",
       "description": "MARPOL waste shape (closed).",
       "properties": {
@@ -111,7 +111,7 @@
     },
     "ResidueInformationShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformationShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformationShape",
       "title": "ResidueInformationShape",
       "description": "Information for each waste batch (closed).",
       "anyOf": [
@@ -201,7 +201,7 @@
     },
     "ShipShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#ShipShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ShipShape",
       "title": "ShipShape",
       "description": "Ship data (closed).",
       "properties": {
@@ -228,7 +228,7 @@
     },
     "AuthorizedPartyShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedPartyShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedPartyShape",
       "title": "AuthorizedPartyShape",
       "description": "Authorized entity (closed).",
       "properties": {
@@ -246,7 +246,7 @@
     },
     "InvolvedPartyShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedPartyShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedPartyShape",
       "title": "InvolvedPartyShape",
       "description": "Involved party (closed).",
       "properties": {

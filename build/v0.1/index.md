@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-01-30T09:56:16Z
+Generated: 2026-01-30T12:58:31Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -38,10 +38,6 @@ Generated: 2026-01-30T09:56:16Z
 
 - [merged-ontology.ttl](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/merged-ontology.ttl)
 - [reasoned-ontology.ttl](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/reasoned-ontology.ttl)
-
-## JSON-LD
-
-- [recycling.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.context.jsonld)
 
 ## JSON Schema / JSON
 

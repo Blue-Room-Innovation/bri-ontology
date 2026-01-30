@@ -6,7 +6,7 @@
   "$defs": {
     "DigitalWastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassportShape",
       "title": "DigitalWastePassportShape",
       "description": "Main DigitalWastePassport shape; closed to detect unexpected properties.",
       "properties": {
@@ -37,7 +37,7 @@
     },
     "WastePassportShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WastePassportShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#WastePassportShape",
       "title": "WastePassportShape",
       "description": "WastePassport shape closed; only allows defined properties.",
       "properties": {
@@ -59,7 +59,7 @@
     },
     "WasteShape": {
       "type": "object",
-      "$comment": "Generated from SHACL shape https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#WasteShape",
+      "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#WasteShape",
       "title": "WasteShape",
       "description": "Waste shape closed with allowed UNECE properties.",
       "properties": {

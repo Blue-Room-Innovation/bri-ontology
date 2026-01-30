@@ -31,7 +31,7 @@ repository:
   owner: "Blue-Room-Innovation"
   name: "bri-ontology"
   branch: "main"
-  base_url: "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology"
+  base_url: "https://blue-room-innovation.github.io/bri-ontology"
   pages_url: "https://blue-room-innovation.github.io/bri-ontology"
 
 # Ontology Files Configuration
