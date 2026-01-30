@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-01-30T13:50:46Z
+Generated: 2026-01-30T14:22:37Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -16,13 +16,10 @@ Generated: 2026-01-30T13:50:46Z
 
 ## SHACL shapes (v0.1)
 
-- [digitalMarpolWastePassportShapes.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digitalMarpolWastePassportShapes.ttl)
-- [digitalWastePassportShapes.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digitalWastePassportShapes.ttl)
-- [dpp-bootstrap.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-bootstrap.shacl.ttl)
-- [dpp-governed.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-governed.shacl.ttl)
-- [dwp-bootstrap.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-bootstrap.shacl.ttl)
-- [dwp-governed.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-governed.shacl.ttl)
-- [dwp-marpol.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-marpol.shacl.ttl)
+- [digital-marpol-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-marpol-waste-passport.shacl.ttl)
+- [digital-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-waste-passport.shacl.ttl)
+- [dpp-unece-extended.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece-extended.shacl.ttl)
+- [dpp-unece.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl)
 - [recycling.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/recycling.shacl.ttl)
 
 ## Codelists (v0.1)
