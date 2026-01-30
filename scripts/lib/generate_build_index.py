@@ -195,8 +195,15 @@ def generate_version_index(version_dir: Path, pages_base_url: str, cfg: Config) 
         / cfg.shapes_version
     )
 
+    codelists_dir = (
+        version_dir.parent.parent
+        / cfg.paths.get("codelists", "codelists")
+        / cfg.codelists_version
+    )
+
     ontology_files = list_files(ontology_dir, (".ttl", ".xml"))
     shapes_files = list_files(shapes_dir, (".ttl",))
+    codelists_files = list_files(codelists_dir, (".ttl",))
 
     md.append(f"## Ontologies ({cfg.ontology_version})\n")
     if not ontology_files:
@@ -217,6 +224,17 @@ def generate_version_index(version_dir: Path, pages_base_url: str, cfg: Config) 
             href = f"../../shapes/{cfg.shapes_version}/{file_name}"
             if pages_base_url:
                 href = pages_join(pages_base_url, "shapes", cfg.shapes_version, file_name)
+            md.append(f"- {md_link(file_name, href)}")
+        md.append("")
+
+    md.append(f"## Codelists ({cfg.codelists_version})\n")
+    if not codelists_files:
+        md.append("No codelist files found.\n")
+    else:
+        for file_name in codelists_files:
+            href = f"../../codelists/{cfg.codelists_version}/{file_name}"
+            if pages_base_url:
+                href = pages_join(pages_base_url, "codelists", cfg.codelists_version, file_name)
             md.append(f"- {md_link(file_name, href)}")
         md.append("")
 

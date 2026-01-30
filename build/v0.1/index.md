@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-01-30T09:42:43Z
+Generated: 2026-01-30T09:56:16Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -24,6 +24,15 @@ Generated: 2026-01-30T09:42:43Z
 - [dwp-governed.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-governed.shacl.ttl)
 - [dwp-marpol.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-marpol.shacl.ttl)
 - [recycling.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/recycling.shacl.ttl)
+
+## Codelists (v0.1)
+
+- [delivery-type-code.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl)
+- [discharge-means-code.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/discharge-means-code.ttl)
+- [iso3166-iAlpha2.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/iso3166-iAlpha2.ttl)
+- [residue-subtype-code.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-subtype-code.ttl)
+- [residue-type-code.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-type-code.ttl)
+- [unlocode.ttl](https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl)
 
 ## Turtle (TTL)
 
