@@ -25,6 +25,7 @@ const SCRIPT_COMMANDS = {
     "python scripts/ontology_cli.py generate wiki --include-codelists",
   "generate:wiki:verbose":
     "python scripts/ontology_cli.py generate wiki --verbose",
+  "generate:build-index": "python scripts/ontology_cli.py generate build-index",
   "convert:shacl": "python scripts/ontology_cli.py convert shacl",
   "convert:context": "python scripts/ontology_cli.py convert context",
   "convert:ts": "python scripts/ontology_cli.py convert ts",
