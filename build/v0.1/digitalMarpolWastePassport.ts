@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-30 13:16:17
+ * Generated: 2026-01-30 13:50:34
  * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
  */
 
@@ -10,19 +10,19 @@
  */
 export type ResidueInformationShape =
   | {
-      "dmwp:quantityToDeliver": {
+      quantityToDeliver: {
         [k: string]: unknown;
       };
       [k: string]: unknown;
     }
   | {
-      "dmwp:quantityRemainingOnBoard": {
+      quantityRemainingOnBoard: {
         [k: string]: unknown;
       };
       [k: string]: unknown;
     }
   | {
-      "dmwp:estimatedGenerated": {
+      estimatedGenerated: {
         [k: string]: unknown;
       };
       [k: string]: unknown;
@@ -32,15 +32,15 @@ export type ResidueInformationShape =
  * Main shape of the Digital MARPOL Waste Passport (closed).
  */
 export interface DigitalMarpolWastePassportShape {
-  "dmwp:credentialSubject": MarpolWastePassportShape;
+  credentialSubject: MarpolWastePassportShape;
   /**
    * Missing issued date (dct:issued).
    */
-  "dct:issued": string;
+  issued: string;
   /**
    * Missing publisher (dct:publisher).
    */
-  "dct:publisher": {
+  publisher: {
     [k: string]: unknown;
   };
 }
@@ -48,32 +48,32 @@ export interface DigitalMarpolWastePassportShape {
  * Must have a credentialSubject (MarpolWastePassport).
  */
 export interface MarpolWastePassportShape {
-  "dmwp:waste": MarpolWasteShape;
+  waste: MarpolWasteShape;
 }
 /**
  * Must link a MarpolWaste.
  */
 export interface MarpolWasteShape {
-  "dmwp:ship": ShipShape;
-  "dmwp:residue": ResidueInformationShape;
-  "dmwp:lastDeliveryDate"?: string;
+  ship: ShipShape;
+  residue: ResidueInformationShape;
+  lastDeliveryDate?: string;
   /**
    * arrivalPort must match UN/LOCODE pattern (e.g. ESPMI).
    */
-  "dmwp:arrivalPort"?: string;
-  "dmwp:nextPlannedDeliveryPort"?: string;
-  "dmwp:lastWasteDeliveryPort"?: string;
+  arrivalPort?: string;
+  nextPlannedDeliveryPort?: string;
+  lastWasteDeliveryPort?: string;
   /**
    * deliveryType outside allowed list (ZTO, REC, DIS).
    */
-  "dmwp:deliveryType"?: "ZTO" | "REC" | "DIS";
-  "dmwp:shipScale"?: string;
-  "dmwp:marpolEdition"?: string;
-  "dmwp:wasteAgent"?: AuthorizedPartyShape;
-  "dmwp:message"?: {
+  deliveryType?: "ZTO" | "REC" | "DIS";
+  shipScale?: string;
+  marpolEdition?: string;
+  wasteAgent?: AuthorizedPartyShape;
+  message?: {
     [k: string]: unknown;
   };
-  "dmwp:involvedParty"?: {
+  involvedParty?: {
     [k: string]: unknown;
   };
 }
@@ -84,19 +84,19 @@ export interface ShipShape {
   /**
    * IMO must be 7 digits.
    */
-  "dmwp:imoNumber": string;
-  "dmwp:name": string;
+  imoNumber: string;
+  name: string;
   /**
    * flag must be ISO 3166-1 alpha-2.
    */
-  "dmwp:flag": string;
+  flag: string;
 }
 /**
  * Authorized entity (closed).
  */
 export interface AuthorizedPartyShape {
-  "dmwp:identifier": string;
-  "dmwp:contactPoint"?: {
+  identifier: string;
+  contactPoint?: {
     [k: string]: unknown;
   };
 }
