@@ -150,6 +150,20 @@ def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
     return meta
 
 
+def md_table_cell(text: Optional[str]) -> str:
+    """Escape text for safe inclusion inside a Markdown table cell.
+
+    - Escapes pipe characters so they don't split columns.
+    - Converts newlines to <br> so multiline comments don't break the table.
+    """
+    if not text:
+        return ""
+    value = str(text).replace("\r\n", "\n").replace("\r", "\n")
+    value = value.replace("|", "\\|")
+    value = "<br>".join(line.strip() for line in value.split("\n"))
+    return value.strip()
+
+
 def generate_readme(
     g: rdflib.Graph,
     ontology_file: Path,
@@ -182,27 +196,28 @@ def generate_readme(
         pretty_name = ontology_file.stem
         lines.append(f"# {pretty_name} Ontology")
         lines.append("")
+        # Use a bullet list to guarantee line breaks across Markdown renderers.
         if 'title' in meta:
-            lines.append(f"**Title:**  {meta['title'][0]}")
+            lines.append(f"- **Title:** {meta['title'][0]}")
         if 'description' in meta:
-            lines.append(f"**Description:**  {meta['description'][0]}")
+            lines.append(f"- **Description:** {meta['description'][0]}")
         if 'creator' in meta:
             creators = ', '.join(meta['creator'])
-            lines.append(f"**Creator:**  {creators}")
+            lines.append(f"- **Creator:** {creators}")
         if 'contributor' in meta:
             contributors = ', '.join(meta['contributor'])
-            lines.append(f"**Contributor:**  {contributors}")
+            lines.append(f"- **Contributor:** {contributors}")
         if 'date' in meta:
-            lines.append(f"**Date:**  {meta['date'][0]}")
+            lines.append(f"- **Date:** {meta['date'][0]}")
         if 'version' in meta:
-            lines.append(f"**Version:**  {meta['version'][0]}")
+            lines.append(f"- **Version:** {meta['version'][0]}")
         if 'imports' in meta:
-            lines.append(f"**Imports:**  {' , '.join(meta['imports'])}")
+            lines.append(f"- **Imports:** {', '.join(meta['imports'])}")
         if source_href:
             display_path = str(ontology_file).replace("\\", "/")
-            lines.append(f"**Link to ontology:**  [{display_path}]({source_href})")
+            lines.append(f"- **Link to ontology:** [{display_path}]({source_href})")
         else:
-            lines.append("**Link to ontology:**  " + str(ontology_file))
+            lines.append("- **Link to ontology:** " + str(ontology_file))
         lines.append("")
         # Mermaid class diagram
         if mermaid:
@@ -254,7 +269,7 @@ def generate_readme(
                 cname = local_name(c)
                 comments = get_comments(g, c)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = desc[0]
+                desc_txt = md_table_cell(desc[0])
                 # Datatype props for this class
                 dt_props = []
                 for dp in data_props:
@@ -281,7 +296,7 @@ def generate_readme(
                 pname = local_name(dp)
                 comments = get_comments(g, dp)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = desc[0]
+                desc_txt = md_table_cell(desc[0])
                 domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(dp, RDFS.domain)]
                 ranges = [local_name(r) for r in g.objects(dp, RDFS.range)]
                 subprops = [local_name(sp) for sp in g.objects(dp, RDFS.subPropertyOf)]
@@ -294,7 +309,7 @@ def generate_readme(
                 pname = local_name(op)
                 comments = get_comments(g, op)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
-                desc_txt = ' '.join(desc)
+                desc_txt = md_table_cell(' '.join(desc))
                 domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(op, RDFS.domain)]
                 ranges = [f"[{local_name(r)}](#{local_name(r)})" for r in g.objects(op, RDFS.range)]
                 subprops = [local_name(sp) for sp in g.objects(op, RDFS.subPropertyOf)]
@@ -320,51 +335,53 @@ def generate_readme(
                     lines.append("**SubClassOf:** " + ", ".join(subclasses))
                 lines.append("")
 
-    if obj_props:
-        lines.append("## Object Properties")
-        lines.append("")
-        for p in obj_props:
-            pname = local_name(p)
-            labels = get_labels(g, p)
-            comments = get_comments(g, p)
-            domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
-            ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
-            lines.append(f"### {pname}")
+    # In rich mode we already render tables for properties; avoid duplicating the basic sections.
+    if not rich:
+        if obj_props:
+            lines.append("## Object Properties")
             lines.append("")
-            if labels:
-                lines.append("**Labels:**")
-                lines.append(format_multilang(labels))
-            if comments:
-                lines.append("**Comments:**")
-                lines.append(format_multilang(comments))
-            if domains:
-                lines.append("**Domain:** " + ", ".join(domains))
-            if ranges:
-                lines.append("**Range:** " + ", ".join(ranges))
-            lines.append("")
+            for p in obj_props:
+                pname = local_name(p)
+                labels = get_labels(g, p)
+                comments = get_comments(g, p)
+                domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
+                ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
+                lines.append(f"### {pname}")
+                lines.append("")
+                if labels:
+                    lines.append("**Labels:**")
+                    lines.append(format_multilang(labels))
+                if comments:
+                    lines.append("**Comments:**")
+                    lines.append(format_multilang(comments))
+                if domains:
+                    lines.append("**Domain:** " + ", ".join(domains))
+                if ranges:
+                    lines.append("**Range:** " + ", ".join(ranges))
+                lines.append("")
 
-    if data_props:
-        lines.append("## Data Properties")
-        lines.append("")
-        for p in data_props:
-            pname = local_name(p)
-            labels = get_labels(g, p)
-            comments = get_comments(g, p)
-            domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
-            ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
-            lines.append(f"### {pname}")
+        if data_props:
+            lines.append("## Data Properties")
             lines.append("")
-            if labels:
-                lines.append("**Labels:**")
-                lines.append(format_multilang(labels))
-            if comments:
-                lines.append("**Comments:**")
-                lines.append(format_multilang(comments))
-            if domains:
-                lines.append("**Domain:** " + ", ".join(domains))
-            if ranges:
-                lines.append("**Range:** " + ", ".join(ranges))
-            lines.append("")
+            for p in data_props:
+                pname = local_name(p)
+                labels = get_labels(g, p)
+                comments = get_comments(g, p)
+                domains = [local_name(o) for o in g.objects(p, RDFS.domain)]
+                ranges = [local_name(o) for o in g.objects(p, RDFS.range)]
+                lines.append(f"### {pname}")
+                lines.append("")
+                if labels:
+                    lines.append("**Labels:**")
+                    lines.append(format_multilang(labels))
+                if comments:
+                    lines.append("**Comments:**")
+                    lines.append(format_multilang(comments))
+                if domains:
+                    lines.append("**Domain:** " + ", ".join(domains))
+                if ranges:
+                    lines.append("**Range:** " + ", ".join(ranges))
+                lines.append("")
 
     return '\n'.join(lines) + '\n'
 
