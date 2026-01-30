@@ -35,10 +35,29 @@ function toSchemaKey(artifactName) {
   return artifactName;
 }
 
-function parseRootInterfaceName(tsSource) {
-  const match = /export\s+interface\s+([A-Za-z0-9_]+)/.exec(tsSource);
-  if (!match) return null;
-  return match[1];
+function parseRootNameFromJsonSchema(schemaSource) {
+  try {
+    const parsed = JSON.parse(schemaSource);
+    if (parsed && typeof parsed.title === "string" && parsed.title.length > 0) {
+      return parsed.title;
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+function parseRootExportName(tsSource) {
+  // json-schema-to-typescript may emit either:
+  // - export interface RootName { ... }
+  // - export type RootName = A & B (common when schema has allOf)
+  const typeMatch = /export\s+type\s+([A-Za-z0-9_]+)\s*=/.exec(tsSource);
+  if (typeMatch) return typeMatch[1];
+
+  const ifaceMatch = /export\s+interface\s+([A-Za-z0-9_]+)/.exec(tsSource);
+  if (ifaceMatch) return ifaceMatch[1];
+
+  return null;
 }
 
 function parseBuildVersionTag(buildVersion) {
@@ -208,16 +227,27 @@ for (const item of items) {
   log("  copy schema (versioned) ->", schemaDestVersioned);
   log("  copy types  (versioned) ->", tsDestVersioned);
 
+  const schemaSource = await fs.readFile(schemaSrc, "utf8");
   const tsSource = await fs.readFile(tsSrc, "utf8");
-  const rootInterface = parseRootInterfaceName(tsSource);
-  if (!rootInterface) {
-    throw new Error(`Could not detect root exported interface in ${tsSrc}`);
+
+  // Prefer JSON Schema root title (deterministic). Fallback to parsing TS exports.
+  const rootExport =
+    parseRootNameFromJsonSchema(schemaSource) ?? parseRootExportName(tsSource);
+
+  if (!rootExport) {
+    throw new Error(
+      `Could not detect root exported type/interface in ${tsSrc} (and no schema title in ${schemaSrc})`,
+    );
   }
 
-  log("  rootInterface:", rootInterface);
+  log("  rootExport:", rootExport);
 
   schemaEntries.push({ schemaKey, json_schema: item.json_schema });
-  typeEntries.push({ schemaKey, typescript: item.typescript, rootInterface });
+  typeEntries.push({
+    schemaKey,
+    typescript: item.typescript,
+    rootInterface: rootExport,
+  });
 }
 
 // Generate src/current/index.ts (typed schema keys + type map)

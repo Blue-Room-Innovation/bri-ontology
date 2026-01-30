@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-01-30T14:22:37Z
+Generated: 2026-01-30T14:48:13Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -40,16 +40,22 @@ Generated: 2026-01-30T14:22:37Z
 
 - [digitalMarpolWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.context.jsonld)
 - [digitalWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.context.jsonld)
+- [dppUnece.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.context.jsonld)
+- [dppUneceExtended.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUneceExtended.context.jsonld)
 - [recycling.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.context.jsonld)
 
 ## JSON Schema / JSON
 
 - [digitalMarpolWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.schema.json)
 - [digitalWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.schema.json)
+- [dppUnece.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.schema.json)
+- [dppUneceExtended.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUneceExtended.schema.json)
 - [recycling.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.schema.json)
 
 ## TypeScript
 
 - [digitalMarpolWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.ts)
 - [digitalWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.ts)
+- [dppUnece.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.ts)
+- [dppUneceExtended.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUneceExtended.ts)
 - [recycling.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.ts)

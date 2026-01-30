@@ -1,0 +1,37 @@
+{
+  "@context": "../../build/v0.1/dppUneceExtended.context.jsonld",
+  "@id": "https://example.org/resource/dpp1",
+  "@type": "unece-dpp:DigitalProductPassport",
+  "identifier": {
+    "@value": "https://example.org/dpp/1",
+    "@type": "xsd:anyURI"
+  },
+  "issuer": {
+    "@id": "https://example.org/resource/issuer1",
+    "identifier": {
+      "@value": "https://example.org/org/issuer-1",
+      "@type": "xsd:anyURI"
+    },
+    "name": "Demo Issuer"
+  },
+  "validFrom": {
+    "@value": "2026-01-01T00:00:00Z",
+    "@type": "xsd:dateTime"
+  },
+  "validUntil": {
+    "@value": "2026-12-31T23:59:59Z",
+    "@type": "xsd:dateTime"
+  },
+  "credentialSubject": {
+    "@id": "https://example.org/resource/pps1",
+    "product": {
+      "@id": "https://example.org/resource/product1",
+      "identifier": {
+        "@value": "https://example.org/product/sku-123",
+        "@type": "xsd:anyURI"
+      },
+      "name": "Demo Product"
+    },
+    "granularityLevel": "item"
+  }
+}
