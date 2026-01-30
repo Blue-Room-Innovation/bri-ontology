@@ -2,13 +2,16 @@
 @prefix unece: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct: <http://purl.org/dc/terms/> .
 @prefix ex: <https://example.org/resource/> .
 
 # Valid example of DigitalWastePassport and WastePassport
 # Represents a passport for electronic waste from PCB boards for recycling.
 
 ex:dwPassport1 a dwp:DigitalWastePassport ;
-  dwp:credentialSubject ex:wastePassport1 .
+  dwp:credentialSubject ex:wastePassport1 ;
+  dct:issued "2025-11-01T09:00:00Z"^^xsd:dateTime ;
+  dct:publisher ex:BlueRoomInnovation .
 
 ex:wastePassport1 a dwp:WastePassport ;
   dwp:waste ex:waste1 .
