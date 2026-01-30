@@ -23,3 +23,19 @@ This repository contains the ontology source, shapes, codelists, and the generat
 - SHACL shapes: [shapes/](shapes/)
 - Codelists: [codelists/](codelists/)
 - TypeScript contracts package: [packages/ontology-contracts/](packages/ontology-contracts/)
+
+## Published artifacts (GitHub Pages)
+
+Base URL: https://blue-room-innovation.github.io/bri-ontology/
+
+### Ontology (v0.1)
+
+- Folder (v0.1): https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/
+- Folder (as requested): https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/ontologies/
+- Digital Waste Passport (TTL): https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl
+- Digital MARPOL Waste Passport (TTL): https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl
+- Recycling (TTL): https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl
+
+### Build outputs
+
+- Build artifacts index: https://blue-room-innovation.github.io/bri-ontology/build/

@@ -179,6 +179,12 @@ def build_parser() -> argparse.ArgumentParser:
         "-v", "--verbose", action="store_true", help="Enable verbose output"
     )
 
+    # Build index generation
+    generate_sub.add_parser(
+        "build-index",
+        help="Generate build/ index.md files for GitHub Pages",
+    )
+
     # ===== CONVERT COMMANDS =====
     convert = sub.add_parser("convert", help="Conversion commands")
     convert_sub = convert.add_subparsers(dest="convert_cmd", required=True)
@@ -481,6 +487,11 @@ def main(argv: Optional[List[str]] = None) -> int:
                 cmd.append("--verbose")
             result = subprocess.run(cmd)
             return result.returncode
+
+        elif ns.generate_cmd == "build-index":
+            from lib.generate_build_index import generate_build_indexes
+
+            return generate_build_indexes(workspace_root)
 
     # ===== CONVERT COMMANDS =====
     elif ns.command == "convert":
