@@ -82,6 +82,64 @@ def _load_graph(path: Path):
     return graph
 
 
+def _load_local_owl_imports_into_graph(graph, base_file: Path) -> None:
+    """Load local owl:imports recursively into an existing rdflib Graph.
+
+    This keeps SHACL profiles extensible (bootstrap + governed layers)
+    without requiring copy/paste of shapes.
+    """
+    from rdflib import URIRef
+    from rdflib.namespace import OWL
+    from urllib.parse import urlparse, unquote
+
+    visited: set[Path] = set()
+
+    def resolve_import_path(import_iri: str, base_dir: Path) -> Path | None:
+        try:
+            parsed = urlparse(import_iri)
+            if parsed.scheme in {"http", "https"}:
+                return None
+            if parsed.scheme == "file":
+                p = unquote(parsed.path)
+                # Windows file URI: /C:/path
+                if p.startswith("/") and len(p) >= 3 and p[2] == ":":
+                    p = p[1:]
+                return Path(p)
+        except Exception:
+            pass
+
+        candidate = Path(import_iri)
+        if not candidate.is_absolute():
+            candidate = base_dir / candidate
+        return candidate
+
+    def recurse(current_file: Path):
+        base_dir = current_file.parent
+        for imported in list(graph.objects(None, OWL.imports)):
+            if not isinstance(imported, URIRef):
+                continue
+            import_path = resolve_import_path(str(imported), base_dir)
+            if not import_path:
+                continue
+
+            try:
+                import_path = import_path.resolve()
+            except Exception:
+                pass
+
+            if import_path in visited:
+                continue
+            visited.add(import_path)
+
+            if not import_path.exists():
+                continue
+
+            graph.parse(str(import_path))
+            recurse(import_path)
+
+    recurse(base_file.resolve())
+
+
 def _get_extra_files(config: ShaclConfig) -> List[Path]:
     """Get list of extra files to merge into data graph.
     
@@ -226,6 +284,9 @@ def validate_shacl(config: ShaclConfig) -> int:
         data_graph = _load_graph(config.data_file)
         _merge_extras_into_data(data_graph, extras)
         shacl_graph = _load_graph(config.shapes_file)
+
+        # Load local owl:imports so governed profiles can extend bootstrap shapes.
+        _load_local_owl_imports_into_graph(shacl_graph, config.shapes_file)
         
         # Validate
         conforms, report_graph, report_text = validate(

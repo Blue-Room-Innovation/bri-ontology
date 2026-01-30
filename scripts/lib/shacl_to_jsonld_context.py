@@ -27,7 +27,8 @@ from pathlib import Path
 from typing import Dict, Iterable, Optional, Set, Tuple
 
 from rdflib import Graph, RDF, URIRef
-from rdflib.namespace import SH
+from rdflib.namespace import SH, OWL
+from urllib.parse import urlparse, unquote
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -178,6 +179,49 @@ def main() -> int:
     graph = Graph()
     try:
         graph.parse(str(input_path), format="turtle")
+        # Follow local owl:imports so extended profiles produce complete contexts.
+        visited: Set[str] = {str(input_path.resolve())}
+
+        def resolve_import_path(import_iri: str, base_dir: Path) -> Optional[Path]:
+            try:
+                parsed = urlparse(import_iri)
+                if parsed.scheme in ("http", "https"):
+                    return None
+                if parsed.scheme == "file":
+                    p = unquote(parsed.path)
+                    if p.startswith("/") and len(p) >= 3 and p[2] == ":":
+                        p = p[1:]
+                    return Path(p)
+            except Exception:
+                pass
+
+            candidate = Path(import_iri)
+            if not candidate.is_absolute():
+                candidate = base_dir / candidate
+            return candidate
+
+        def load_imports_recursive(base_file: Path):
+            base_dir = base_file.parent
+            for imported in list(graph.objects(None, OWL.imports)):
+                if not isinstance(imported, URIRef):
+                    continue
+                import_path = resolve_import_path(str(imported), base_dir)
+                if not import_path:
+                    continue
+                try:
+                    import_path_abs = import_path.resolve()
+                except Exception:
+                    import_path_abs = import_path
+                key = str(import_path_abs)
+                if key in visited:
+                    continue
+                visited.add(key)
+                if not import_path_abs.exists():
+                    continue
+                graph.parse(str(import_path_abs), format="turtle")
+                load_imports_recursive(import_path_abs)
+
+        load_imports_recursive(input_path.resolve())
     except Exception as e:
         logger.error("Failed to parse SHACL file: %s", e)
         return 1

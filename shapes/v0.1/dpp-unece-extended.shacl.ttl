@@ -66,6 +66,31 @@ dpp:DigitalProductPassportGovernedShape
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
 
+  # Allow the bootstrap wrapper properties (required by the base shape).
+  # NOTE: Closure (sh:closed true) requires that every allowed property is
+  # explicitly declared on THIS shape, even if the actual constraints live
+  # in the composed bootstrap shape via sh:and.
+  sh:property [
+    sh:path dct:identifier ;
+    sh:datatype xsd:anyURI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path vc:issuer ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node unece-dpp:CredentialIssuerShape ;
+  ] ;
+
+  sh:property [
+    sh:path vc:credentialSubject ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node unece-dpp:ProductPassportShape ;
+  ] ;
+
   # Hello World rule: validFrom is mandatory
   sh:property [
     sh:path vc:validFrom ;

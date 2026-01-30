@@ -72,6 +72,8 @@ shapes:
 generation:
   # Artifacts to generate (SHACL → JSON Schema → TypeScript)
   artifacts:
+    - dpp-unece
+    - dpp-unece-extended
     - dwp
     - dmwp
     - recycling
@@ -93,6 +95,14 @@ validation:
   shacl:
     # Available validation scenarios
     scenarios:
+      dpp-unece-extended:
+        name: "UNECE DPP Extended (Governed Hello World)"
+        description: "Validates a DPP sample against the UNECE bootstrap + governed hello-world constraints"
+        data: "examples/v0.1/dpp-unece-extended-sample.ttl"
+        shapes: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
+        format: "human"
+        extras: ""
+
       dwp:
         name: "Digital Waste Passport"
         description: "Validates DWP sample data against DWP shapes"
@@ -155,6 +165,16 @@ conversion:
 
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "shapes/v0.1/dpp-unece.shacl.ttl"
+      output: "build/v0.1/dppUnece.context.jsonld"
+
+    dpp-unece-extended:
+      name: "UNECE DPP Extended (Governed Hello World)"
+      input: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
+      output: "build/v0.1/dppUneceExtended.context.jsonld"
+
     dwp:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
