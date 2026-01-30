@@ -1,0 +1,47 @@
+# Build artifacts v0.1
+
+Generated: 2026-01-30T08:41:43Z
+
+- [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
+
+## Wiki
+
+- [Wiki index](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/wiki/)
+
+## Ontologies (v0.1)
+
+- [digitalMarpolWastePassport.ttl](https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl)
+- [digitalWastePassport.ttl](https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl)
+- [recycling.ttl](https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl)
+
+## SHACL shapes (v0.1)
+
+- [digitalMarpolWastePassportShapes.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digitalMarpolWastePassportShapes.ttl)
+- [digitalWastePassportShapes.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digitalWastePassportShapes.ttl)
+- [dpp-bootstrap.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-bootstrap.shacl.ttl)
+- [dpp-governed.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-governed.shacl.ttl)
+- [dwp-bootstrap.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-bootstrap.shacl.ttl)
+- [dwp-governed.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-governed.shacl.ttl)
+- [dwp-marpol.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dwp-marpol.shacl.ttl)
+- [recycling.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/recycling.shacl.ttl)
+
+## Turtle (TTL)
+
+- [merged-ontology.ttl](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/merged-ontology.ttl)
+- [reasoned-ontology.ttl](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/reasoned-ontology.ttl)
+
+## JSON-LD
+
+- [recycling.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.context.jsonld)
+
+## JSON Schema / JSON
+
+- [digitalMarpolWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.schema.json)
+- [digitalWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.schema.json)
+- [recycling.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.schema.json)
+
+## TypeScript
+
+- [digitalMarpolWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.ts)
+- [digitalWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.ts)
+- [recycling.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.ts)

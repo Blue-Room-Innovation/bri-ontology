@@ -32,6 +32,7 @@ repository:
   name: "bri-ontology"
   branch: "main"
   base_url: "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology"
+  pages_url: "https://blue-room-innovation.github.io/bri-ontology"
 
 # Ontology Files Configuration
 # ----------------------------
@@ -168,7 +169,7 @@ conversion:
 # Wiki Documentation Configuration
 # --------------------------------
 wiki:
-  output_dir: "docs/wiki"
+  output_dir: "build/{build_version}/wiki"
   include_codelists: true
   formats:
     - markdown

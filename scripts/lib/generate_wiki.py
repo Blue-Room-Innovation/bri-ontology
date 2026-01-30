@@ -472,7 +472,7 @@ def generate_diagram(g: rdflib.Graph, ontology_file: Path, out_dir: Path, fmt: s
 def main():
     parser = argparse.ArgumentParser(description="Generate Markdown wiki from Turtle ontologies.")
     parser.add_argument('--ontology-dir', default='ontology', help='Directory with .ttl files')
-    parser.add_argument('--output-dir', default='docs/wiki', help='Output directory for Markdown (default docs/wiki)')
+    parser.add_argument('--output-dir', default='docs/wiki', help='Output directory for Markdown (typically configured via config.yml wiki.output_dir)')
     parser.add_argument('--include-codelists', action='store_true', help='Include ontologies inside codelists')
     parser.add_argument('--generate-diagrams', action='store_true', help='Generate Graphviz diagrams of classes and object properties')
     parser.add_argument('--diagram-format', default='png', choices=['png','svg'], help='Diagram output format (png|svg)')
