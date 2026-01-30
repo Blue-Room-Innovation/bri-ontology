@@ -56,11 +56,11 @@ ontologies:
 # --------------------------
 shapes:
   - name: "digitalWastePassport"
-    file: "digitalWastePassportShapes.ttl"
+    file: "digital-waste-passport.shacl.ttl"
     ontology: "digitalWastePassport"
 
   - name: "digitalMarpolWastePassport"
-    file: "digitalMarpolWastePassportShapes.ttl"
+    file: "digital-marpol-waste-passport.shacl.ttl"
     ontology: "digitalMarpolWastePassport"
 
   - name: "wasteActors"
@@ -97,7 +97,7 @@ validation:
         name: "Digital Waste Passport"
         description: "Validates DWP sample data against DWP shapes"
         data: "examples/v0.1/digital-waste-passport-sample.ttl"
-        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        shapes: "shapes/v0.1/digital-waste-passport.shacl.ttl"
         format: "human"
         extras: ""
 
@@ -105,7 +105,7 @@ validation:
         name: "Digital MARPOL Waste Passport"
         description: "Validates MARPOL sample data against MARPOL shapes"
         data: "examples/v0.1/digital-marpol-waste-passport-sample.ttl"
-        shapes: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+        shapes: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
         format: "human"
         extras: ""
 
@@ -125,13 +125,13 @@ conversion:
   shacl_to_json:
     dwp:
       name: "Digital Waste Passport"
-      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
       naming: "local"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
-      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
       naming: "local"
 
@@ -145,12 +145,12 @@ conversion:
   shacl_to_context:
     dwp:
       name: "Digital Waste Passport"
-      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalWastePassport.context.jsonld"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
-      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.context.jsonld"
 
     recycling:
@@ -164,13 +164,13 @@ conversion:
       name: "Digital Waste Passport"
       input: "build/v0.1/digitalWastePassport.schema.json"
       output: "build/v0.1/digitalWastePassport.ts"
-      source: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      source: "shapes/v0.1/digital-waste-passport.shacl.ttl"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
       output: "build/v0.1/digitalMarpolWastePassport.ts"
-      source: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      source: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
 
     recycling:
       name: "Recycling"

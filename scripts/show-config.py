@@ -24,7 +24,7 @@ def main():
         print("\n📁 Example Paths")
         print("=" * 50)
         print(f"Ontology: {config.get_ontology_path('digitalWastePassport.ttl')}")
-        print(f"Shapes:   {config.get_shapes_path('digitalWastePassportShapes.ttl')}")
+        print(f"Shapes:   {config.get_shapes_path('digital-waste-passport.shacl.ttl')}")
         print(f"Build:    {config.get_build_path('digitalWastePassport.schema.json')}")
         print("\n🔗 GitHub Repository")
         print("=" * 50)

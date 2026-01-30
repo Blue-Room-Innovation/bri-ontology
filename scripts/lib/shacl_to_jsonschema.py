@@ -10,8 +10,8 @@ constraints that can be expressed in JSON Schema. SHACL remains the source
 of truth for semantic validation.
 
 Usage:
-    python shacl-to-jsonschema.py --input shapes/v0.1/digitalWastePassportShapes.ttl --output build/v0.1/digitalWastePassport.schema.json
-    python shacl-to-jsonschema.py --input shapes/v0.1/digitalMarpolWastePassportShapes.ttl --output build/v0.1/digitalMarpolWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digital-waste-passport.shacl.ttl --output build/v0.1/digitalWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digital-marpol-waste-passport.shacl.ttl --output build/v0.1/digitalMarpolWastePassport.schema.json
 
 Author: Blue Room Innovation
 Date: 2026-01-08
@@ -719,8 +719,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python shacl-to-jsonschema.py -i shapes/v0.1/digitalWastePassportShapes.ttl -o build/v0.1/digitalWastePassport.schema.json
-  python shacl-to-jsonschema.py --input shapes/digitalMarpolWastePassportShapes.ttl --output build/digitalMarpolWastePassport.schema.json
+  python shacl-to-jsonschema.py -i shapes/v0.1/digital-waste-passport.shacl.ttl -o build/v0.1/digitalWastePassport.schema.json
+  python shacl-to-jsonschema.py --input shapes/digital-marpol-waste-passport.shacl.ttl --output build/digitalMarpolWastePassport.schema.json
         """
     )
     
