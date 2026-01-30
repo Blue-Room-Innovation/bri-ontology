@@ -28,6 +28,7 @@ import os
 import logging
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
+from urllib.parse import quote
 import rdflib
 from rdflib import RDF, RDFS, OWL
 try:
@@ -149,7 +150,13 @@ def extract_metadata(g: rdflib.Graph) -> Dict[str, List[str]]:
     return meta
 
 
-def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, mermaid: bool = False) -> str:
+def generate_readme(
+    g: rdflib.Graph,
+    ontology_file: Path,
+    rich: bool = False,
+    mermaid: bool = False,
+    source_href: Optional[str] = None,
+) -> str:
     classes = extract_entities(g, OWL.Class)
     obj_props = extract_entities(g, OWL.ObjectProperty)
     data_props = extract_entities(g, OWL.DatatypeProperty)
@@ -158,7 +165,11 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
     if not rich:
         lines.append(f"# Ontology: {ontology_file.name}")
         lines.append("")
-        lines.append(f"Source: `{ontology_file}`")
+        if source_href:
+            display_path = str(ontology_file).replace("\\", "/")
+            lines.append(f"Source: [{display_path}]({source_href})")
+        else:
+            lines.append(f"Source: `{ontology_file}`")
         lines.append("")
         lines.append("## Summary")
         lines.append("")
@@ -187,7 +198,11 @@ def generate_readme(g: rdflib.Graph, ontology_file: Path, rich: bool = False, me
             lines.append(f"**Version:**  {meta['version'][0]}")
         if 'imports' in meta:
             lines.append(f"**Imports:**  {' , '.join(meta['imports'])}")
-        lines.append("**Link to ontology:**  " + str(ontology_file))
+        if source_href:
+            display_path = str(ontology_file).replace("\\", "/")
+            lines.append(f"**Link to ontology:**  [{display_path}]({source_href})")
+        else:
+            lines.append("**Link to ontology:**  " + str(ontology_file))
         lines.append("")
         # Mermaid class diagram
         if mermaid:
@@ -482,6 +497,8 @@ def main():
     parser.add_argument('--include-shapes', action='store_true', help='Process SHACL shapes and generate documentation')
     parser.add_argument('--shapes-dir', default='shapes', help='Directory with shapes .ttl files')
     parser.add_argument('--contexts-dir', default=None, help='Directory with JSON-LD contexts (for #Contexts counter)')
+    parser.add_argument('--pages-url', default='', help='Base GitHub Pages URL (used to build navigation links in wiki index)')
+    parser.add_argument('--build-version', default='', help='Build version (used to build navigation links in wiki index)')
     parser.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     args = parser.parse_args()
 
@@ -542,12 +559,31 @@ def main():
         header_cols.append("#Contexts")
         sep_cols.append("-----------")
 
+    # Navigation for users browsing the published wiki on GitHub Pages.
+    pages_url = (args.pages_url or '').rstrip('/')
+    build_version = (args.build_version or '').strip()
+
+    build_root_href = "../../"
+    build_version_href = "../"
+    if pages_url and build_version:
+        build_root_href = f"{pages_url}/build/"
+        build_version_href = f"{pages_url}/build/{build_version}/"
+    elif pages_url:
+        build_root_href = f"{pages_url}/build/"
+
     index_lines = [
         "# Ontology Index",
+        "",
+        "## Navigation",
+        f"- [Build artifacts (this version)]({build_version_href})",
+        f"- [All build versions]({build_root_href})",
         "",
         "| " + " | ".join(header_cols) + " |",
         "| " + " | ".join(sep_cols) + " |",
     ]
+
+    # Collect per-ontology navigation links (built during generation)
+    ontology_nav: List[str] = []
 
     for ttl in ttl_files:
         g = rdflib.Graph()
@@ -584,7 +620,18 @@ def main():
 
         ont_out_dir = out_dir / name
         ont_out_dir.mkdir(parents=True, exist_ok=True)
-        readme_content = generate_readme(g, ttl, rich=(args.format=='rich'), mermaid=args.mermaid)
+        source_href: Optional[str] = None
+        if pages_url:
+            rel_path = str(ttl).replace("\\", "/").lstrip("./").lstrip("/")
+            source_href = f"{pages_url}/{quote(rel_path, safe='/')}"
+
+        readme_content = generate_readme(
+            g,
+            ttl,
+            rich=(args.format=='rich'),
+            mermaid=args.mermaid,
+            source_href=source_href,
+        )
         # Optional diagram
         if args.generate_diagrams:
             diagram_path = generate_diagram(
@@ -597,13 +644,34 @@ def main():
             if diagram_path and args.format != 'rich':
                 # Insert diagram reference at the top of the README only in basic mode
                 readme_content = readme_content.replace('# Ontology:', f"# Ontology:\n\n![Diagram]({diagram_path.name})\n\nOntology:")
-        (ont_out_dir / 'README.md').write_text(readme_content, encoding='utf-8')
+        readme_path = ont_out_dir / 'README.md'
+        readme_path.write_text(readme_content, encoding='utf-8')
+
+        # Create per-ontology index.md so folder URLs work on GitHub Pages.
+        # The wiki index will link to "<ontology>/".
+        (ont_out_dir / 'index.md').write_text(readme_content, encoding='utf-8')
 
         # Shapes opcionales
         if shape_graph is not None:
             shapes_md = generate_shapes_md(shape_graph, name)
             (ont_out_dir / 'SHAPES.md').write_text(shapes_md, encoding='utf-8')
             LOGGER.debug(f"Shapes documented for {name}")
+
+        # Navigation entry (prefer folder link)
+        folder_href = f"{name}/"
+        if pages_url and build_version:
+            folder_href = f"{pages_url}/build/{build_version}/wiki/{name}/"
+        ontology_nav.append(f"- [{name}]({folder_href})")
+
+    if ontology_nav:
+        index_lines.extend(
+            [
+                "",
+                "## Ontologies",
+                "",
+                *ontology_nav,
+            ]
+        )
 
     (out_dir / 'index.md').write_text('\n'.join(index_lines) + '\n', encoding='utf-8')
     LOGGER.info(f"Generated wiki for {len(ttl_files)} ontologies in {out_dir}")
