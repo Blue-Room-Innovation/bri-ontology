@@ -1,6 +1,6 @@
 {
   "@context": {
-    "dmw": "https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#",
+    "dmw": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#",
     "core": "https://ontology.untp.io/core/",
     "ex": "https://example.org/resource/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
@@ -10,30 +10,49 @@
     {
       "@id": "ex:marpolDWP1",
       "@type": "dmw:DigitalMarpolWastePassport",
-      "dmw:credentialSubject": {"@id": "ex:marpolWastePassport1"}
+      "dmw:credentialSubject": {
+        "@id": "ex:marpolWastePassport1"
+      }
     },
     {
       "@id": "ex:marpolWastePassport1",
       "@type": "dmw:MarpolWastePassport",
-      "dmw:waste": {"@id": "ex:marpolWaste1"}
+      "dmw:waste": {
+        "@id": "ex:marpolWaste1"
+      }
     },
     {
       "@id": "ex:marpolWaste1",
       "@type": "dmw:MarpolWaste",
-      "dmw:ship": {"@id": "ex:shipA"},
+      "dmw:ship": {
+        "@id": "ex:shipA"
+      },
       "dmw:arrivalPort": "ESPMI",
       "dmw:lastWasteDeliveryPort": "ESALG",
       "dmw:nextPlannedDeliveryPort": "ESVLC",
-      "dmw:lastDeliveryDate": {"@value": "2025-10-30T06:15:00Z", "@type": "xsd:dateTime"},
+      "dmw:lastDeliveryDate": {
+        "@value": "2025-10-30T06:15:00Z",
+        "@type": "xsd:dateTime"
+      },
       "dmw:deliveryType": "ZTO",
       "dmw:shipScale": "PORTCALL-2025-10-30-001",
       "dmw:marpolEdition": "Annex I 2025",
-      "dmw:wasteAgent": {"@id": "ex:authorizedCollector1"},
-      "dmw:message": {"@id": "ex:wasdisMsg1"},
-      "dmw:involvedParty": {"@id": "ex:involvedPartyShipOp"},
+      "dmw:wasteAgent": {
+        "@id": "ex:authorizedCollector1"
+      },
+      "dmw:message": {
+        "@id": "ex:wasdisMsg1"
+      },
+      "dmw:involvedParty": {
+        "@id": "ex:involvedPartyShipOp"
+      },
       "dmw:residue": [
-        {"@id": "ex:residueLot1"},
-        {"@id": "ex:residueLot2"}
+        {
+          "@id": "ex:residueLot1"
+        },
+        {
+          "@id": "ex:residueLot2"
+        }
       ]
     },
     {
@@ -47,7 +66,9 @@
       "@id": "ex:authorizedCollector1",
       "@type": "dmw:AuthorizedParty",
       "dmw:identifier": "AUTH-COLL-9981",
-      "dmw:contactPoint": {"@id": "ex:collectorContactLink"}
+      "dmw:contactPoint": {
+        "@id": "ex:collectorContactLink"
+      }
     },
     {
       "@id": "ex:collectorContactLink",
@@ -59,13 +80,18 @@
       "@type": "dmw:WasdisMetadata",
       "dmw:sender": "EcoSeaOps",
       "dmw:messageId": "WASDIS-MSG-2025-1030-77",
-      "dmw:submissionDate": {"@value": "2025-10-30T05:55:00Z", "@type": "xsd:dateTime"},
+      "dmw:submissionDate": {
+        "@value": "2025-10-30T05:55:00Z",
+        "@type": "xsd:dateTime"
+      },
       "dmw:remarks": "Entrega programada en menos de 2 horas tras atraque."
     },
     {
       "@id": "ex:involvedPartyShipOp",
       "@type": "dmw:InvolvedParty",
-      "dmw:role": {"@id": "ex:shipOpParty"}
+      "dmw:role": {
+        "@id": "ex:shipOpParty"
+      }
     },
     {
       "@id": "ex:shipOpParty",
@@ -80,10 +106,18 @@
       "dmw:substance": "Oily engine room sludge",
       "dmw:dischargeMeans": "ZTE",
       "dmw:nextCollectionPort": "ESBCN",
-      "dmw:quantityToDeliver": {"@id": "ex:qtyDeliver1"},
-      "dmw:quantityRemainingOnBoard": {"@id": "ex:qtyRemain1"},
-      "dmw:estimatedGenerated": {"@id": "ex:qtyGenerated1"},
-      "dmw:maxCapacity": {"@id": "ex:qtyCapacity1"}
+      "dmw:quantityToDeliver": {
+        "@id": "ex:qtyDeliver1"
+      },
+      "dmw:quantityRemainingOnBoard": {
+        "@id": "ex:qtyRemain1"
+      },
+      "dmw:estimatedGenerated": {
+        "@id": "ex:qtyGenerated1"
+      },
+      "dmw:maxCapacity": {
+        "@id": "ex:qtyCapacity1"
+      }
     },
     {
       "@id": "ex:residueLot2",
@@ -93,50 +127,82 @@
       "dmw:substance": "Bilge water mixture",
       "dmw:dischargeMeans": "ZTE",
       "dmw:nextCollectionPort": "ESBCN",
-      "dmw:quantityToDeliver": {"@id": "ex:qtyDeliver2"},
-      "dmw:quantityRemainingOnBoard": {"@id": "ex:qtyRemain2"},
-      "dmw:estimatedGenerated": {"@id": "ex:qtyGenerated2"},
-      "dmw:maxCapacity": {"@id": "ex:qtyCapacity2"}
+      "dmw:quantityToDeliver": {
+        "@id": "ex:qtyDeliver2"
+      },
+      "dmw:quantityRemainingOnBoard": {
+        "@id": "ex:qtyRemain2"
+      },
+      "dmw:estimatedGenerated": {
+        "@id": "ex:qtyGenerated2"
+      },
+      "dmw:maxCapacity": {
+        "@id": "ex:qtyCapacity2"
+      }
     },
     {
       "@id": "ex:qtyDeliver1",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "12.5", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "12.5",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyRemain1",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "3.2", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "3.2",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyGenerated1",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "15.7", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "15.7",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyCapacity1",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "20.0", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "20.0",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyDeliver2",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "8.0", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "8.0",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyRemain2",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "1.1", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "1.1",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyGenerated2",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "9.3", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "9.3",
+        "@type": "xsd:decimal"
+      }
     },
     {
       "@id": "ex:qtyCapacity2",
       "@type": "core:Measure",
-      "rdf:value": {"@value": "12.0", "@type": "xsd:decimal"}
+      "rdf:value": {
+        "@value": "12.0",
+        "@type": "xsd:decimal"
+      }
     }
   ]
 }

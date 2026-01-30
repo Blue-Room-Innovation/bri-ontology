@@ -46,7 +46,7 @@
 @prefix dct:     <http://purl.org/dc/terms/> .
 
 @prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
-@prefix dwp:     <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#> .
+@prefix dwp:     <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#> .
 
 #######################################################################
 # Digital Waste Passport (top-level wrapper)

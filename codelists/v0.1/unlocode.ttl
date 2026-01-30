@@ -1,13 +1,13 @@
-@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl#> .
+@prefix : <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl> .
+@base <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl> .
 
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/unlocode.ttl> a owl:Ontology ;
+<https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl> a owl:Ontology ;
     rdfs:label "UN/LOCODE Reference Vocabulary"@en ;
     owl:versionInfo "0.1" ;
     rdfs:comment "A SKOS reference vocabulary representing the UN/LOCODE (United Nations Code for Trade and Transport Locations) standard maintained by UNECE. It provides a global reference for ports, airports, railway stations, and other trade-related geographical locations."@en ;

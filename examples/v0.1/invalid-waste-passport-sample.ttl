@@ -2,8 +2,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix schema: <http://schema.org/> .
-@prefix dwp: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#> .
-@prefix dmwp: <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
+@prefix dwp: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#> .
+@prefix dmwp: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
 @prefix ex: <https://example.org/invalid/> .
 
 # INVALID examples for SHACL testing on waste-shapes.ttl

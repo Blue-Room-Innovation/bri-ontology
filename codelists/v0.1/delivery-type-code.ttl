@@ -1,12 +1,13 @@
-@prefix : <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl#> .
+@prefix : <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl#> .
+
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-@base <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl> .
+@base <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl> .
 
-<https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/v0.1/delivery-type-code.ttl> a owl:Ontology ;
+<https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl> a owl:Ontology ;
     rdfs:label "Delivery Type Code List"@en ;
     owl:versionInfo "0.1" ;
     rdfs:comment "A SKOS vocabulary that specifies the type of delivery for ship-generated waste, as defined by a local codelist. The delivery type represents the manner in which the waste is delivered, collected, or processed at the port or reception facility."@en .

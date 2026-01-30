@@ -5,7 +5,7 @@
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix dct:     <http://purl.org/dc/terms/> .
 @prefix schema:  <http://schema.org/> .
-@prefix dwp:     <https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/v0.1/digitalWastePassport.ttl#> .
+@prefix dwp:     <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#> .
 @prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 
