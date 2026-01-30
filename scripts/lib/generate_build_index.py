@@ -175,6 +175,14 @@ def generate_version_index(version_dir: Path, pages_base_url: str, cfg: Config) 
         back_href = f"{pages_base_url}/build/"
     md.append(f"- {md_link('Back to build index', back_href)}\n")
 
+    # Wiki
+    md.append("## Wiki\n")
+    wiki_href = "wiki/"
+    if pages_base_url:
+        wiki_href = pages_join(pages_base_url, "build", version_dir.name, "wiki", trailing_slash=True)
+    md.append(f"- {md_link('Wiki index', wiki_href)}")
+    md.append("")
+
     # Related sources (per-file links)
     ontology_dir = (
         version_dir.parent.parent
@@ -237,6 +245,14 @@ def generate_build_root_index(build_dir: Path, versions: List[str], pages_base_u
     md: List[str] = []
     md.append("# Build artifacts\n")
     md.append(f"Generated: {iso_now()}\n")
+
+    # Wiki (current build version)
+    md.append("## Wiki\n")
+    wiki_href = f"{cfg.build_version}/wiki/"
+    if pages_base_url:
+        wiki_href = pages_join(pages_base_url, "build", cfg.build_version, "wiki", trailing_slash=True)
+    md.append(f"- {md_link(f'Wiki ({cfg.build_version})', wiki_href)}")
+    md.append("")
 
     # Related sources (per-file links)
     workspace_root = build_dir.parent

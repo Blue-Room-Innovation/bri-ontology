@@ -162,7 +162,9 @@ def build_parser() -> argparse.ArgumentParser:
         help="Ontology directory (default: ontology)",
     )
     gen_wiki.add_argument(
-        "--output-dir", default="docs/wiki", help="Output directory (default: docs/wiki)"
+        "--output-dir",
+        default=None,
+        help="Output directory (default: from config.yml wiki.output_dir)",
     )
     gen_wiki.add_argument(
         "--include-codelists",
@@ -471,15 +473,26 @@ def main(argv: Optional[List[str]] = None) -> int:
             # Construir path de shapes amb la versió del config
             shapes_dir = f"{config_obj.paths['shapes']}/{config_obj.shapes_version}"
             contexts_dir = f"{config_obj.paths['build']}/{config_obj.build_version}"
+            wiki_cfg = (config_obj._data.get("wiki", {}) or {})
+            output_dir = ns.output_dir
+            if not output_dir:
+                output_dir = str(wiki_cfg.get("output_dir", "docs/wiki"))
+            # Allow templating with build_version
+            output_dir = output_dir.replace("{build_version}", str(config_obj.build_version))
+
+            include_codelists = bool(ns.include_codelists) or bool(
+                wiki_cfg.get("include_codelists", False)
+            )
+
             cmd = [
                 sys.executable,
                 str(wiki_script),
                 "--ontology-dir", ns.ontology_dir,
-                "--output-dir", ns.output_dir,
+                "--output-dir", output_dir,
                 "--shapes-dir", shapes_dir,
                 "--contexts-dir", contexts_dir,
             ]
-            if ns.include_codelists:
+            if include_codelists:
                 cmd.append("--include-codelists")
             if ns.include_shapes:
                 cmd.append("--include-shapes")

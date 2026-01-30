@@ -169,7 +169,7 @@ conversion:
 # Wiki Documentation Configuration
 # --------------------------------
 wiki:
-  output_dir: "docs/wiki"
+  output_dir: "build/{build_version}/wiki"
   include_codelists: true
   formats:
     - markdown
