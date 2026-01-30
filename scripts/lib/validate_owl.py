@@ -95,7 +95,7 @@ def _validate_with_robot(
     # ----------------------
     # The catalog.xml file (OASIS XML Catalog standard) redirects external URIs 
     # to local files. This is needed because our ontologies have owl:imports with 
-    # absolute GitHub URLs (e.g., https://raw.githubusercontent.com/.../*.ttl).
+    # absolute GitHub URLs (e.g., https://blue-room-innovation.github.io/bri-ontology/build/vX.X/.../*.ttl).
     # Without the catalog, ROBOT tries to download from those URLs and fails.
     # The catalog maps those GitHub URIs to local files in codelists/v0.1/
     workspace_root = get_workspace_root()

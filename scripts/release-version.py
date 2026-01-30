@@ -35,6 +35,20 @@ if str(scripts_dir) not in sys.path:
     sys.path.insert(0, str(scripts_dir))
 
 from lib.utils import get_workspace_root
+from lib.config import load_config
+
+
+def get_pages_base_url() -> str:
+        """Get the GitHub Pages base URL from config.yml.
+
+        Expected config:
+            repository.pages_url (preferred) or repository.base_url
+        """
+        config = load_config()
+        base = (config.repository.get("pages_url") or config.repository.get("base_url") or "").strip()
+        if not base:
+                raise ValueError("Missing repository.pages_url (or repository.base_url) in config.yml")
+        return base.rstrip("/")
 
 
 def copy_version_folder(component: str, from_ver: str, to_ver: str, workspace: Path) -> Path:
@@ -133,15 +147,12 @@ def release_ontology(from_ver: str, to_ver: str, workspace: Path) -> None:
     
     dest_folder = copy_version_folder("ontology", from_ver, to_ver, workspace)
     
-    # Determine codelists version (usually stays same unless breaking change)
-    # For now, keep same codelists version
-    from_ver_num = from_ver.lstrip('v')
-    to_ver_num = to_ver.lstrip('v')
+    pages_base = get_pages_base_url()
     
     replacements = [
-        # Update ontology URIs
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/ontology/{re.escape(from_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/{to_ver}/'),
+        # Update ontology URIs (GitHub Pages)
+        (rf'{re.escape(pages_base)}/ontology/{re.escape(from_ver)}/',
+         f'{pages_base}/ontology/{to_ver}/'),
     ]
     
     total_replacements = 0
@@ -171,9 +182,12 @@ def release_codelists(from_ver: str, to_ver: str, workspace: Path) -> None:
     
     dest_folder = copy_version_folder("codelists", from_ver, to_ver, workspace)
     
+    pages_base = get_pages_base_url()
+
     replacements = [
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/codelists/{re.escape(from_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/codelists/{to_ver}/'),
+        # Update codelists URIs (GitHub Pages)
+        (rf'{re.escape(pages_base)}/codelists/{re.escape(from_ver)}/',
+         f'{pages_base}/codelists/{to_ver}/'),
     ]
     
     total_replacements = 0
@@ -208,10 +222,12 @@ def release_shapes(from_ver: str, to_ver: str, workspace: Path) -> None:
     
     dest_folder = copy_version_folder("shapes", from_ver, to_ver, workspace)
     
+    pages_base = get_pages_base_url()
+
     replacements = [
-        # Update ontology URIs (shapes reference ontologies)
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/ontology/{re.escape(from_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/{to_ver}/'),
+        # Update ontology URIs (GitHub Pages)
+        (rf'{re.escape(pages_base)}/ontology/{re.escape(from_ver)}/',
+         f'{pages_base}/ontology/{to_ver}/'),
     ]
     
     total_replacements = 0
@@ -239,13 +255,15 @@ def release_examples(from_ver: str, to_ver: str, workspace: Path) -> None:
     
     dest_folder = copy_version_folder("examples", from_ver, to_ver, workspace)
     
+    pages_base = get_pages_base_url()
+
     replacements = [
-        # Update ontology URIs
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/ontology/{re.escape(from_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/ontology/{to_ver}/'),
+        # Update ontology URIs (GitHub Pages)
+        (rf'{re.escape(pages_base)}/ontology/{re.escape(from_ver)}/',
+         f'{pages_base}/ontology/{to_ver}/'),
         # Update build artifact URIs (schemas, TS, generated contexts, etc.)
-        (rf'https://raw\.githubusercontent\.com/Blue-Room-Innovation/bri-ontology/main/build/{re.escape(from_ver)}/',
-         f'https://raw.githubusercontent.com/Blue-Room-Innovation/bri-ontology/main/build/{to_ver}/'),
+        (rf'{re.escape(pages_base)}/build/{re.escape(from_ver)}/',
+         f'{pages_base}/build/{to_ver}/'),
     ]
     
     total_replacements = 0
