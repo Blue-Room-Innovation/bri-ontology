@@ -325,7 +325,7 @@ bri-shape:ProductShape
 
   sh:property [
     sh:path untp-core:characteristics ;
-    sh:node untp-core:CharacteristicsShape ;
+    sh:node bri-shape:CharacteristicsShape ;
     sh:maxCount 1 ;
     sh:description "A placeholder for indusutry / ..."@en ;
   ] ;
@@ -346,7 +346,7 @@ bri-shape:ProductShape
 
   sh:property [
     sh:path untp-core:dimensions ;
-    sh:node untp-core:DimensionShape ;
+    sh:node bri-shape:DimensionShape ;
     sh:maxCount 1 ;
     sh:description "The physical dimensions of the ..."@en ;
   ] ;
@@ -382,7 +382,7 @@ bri-shape:ProductShape
 
   sh:property [
     sh:path untp-core:producedAtFacility ;
-    sh:node untp-core:FacilityShape ;
+    sh:node bri-shape:FacilityShape ;
     sh:maxCount 1 ;
     sh:description "The Facility where the product ..."@en ;
   ] ;
@@ -547,7 +547,7 @@ bri-shape:FacilityShape
 
   sh:property [
     sh:path untp-core:address ;
-    sh:node untp-core:AddressShape ;
+    sh:node bri-shape:AddressShape ;
     sh:maxCount 1 ;
     sh:description "The Postal address of the ..."@en ;
   ] ;
@@ -568,7 +568,7 @@ bri-shape:FacilityShape
 
   sh:property [
     sh:path untp-core:facilityAlsoKnownAs ;
-    sh:node untp-core:FacilityShape ;
+    sh:node bri-shape:FacilityShape ;
     sh:description "An optional list of other ..."@en ;
   ] ;
 
@@ -589,7 +589,7 @@ bri-shape:FacilityShape
 
   sh:property [
     sh:path untp-core:locationInformation ;
-    sh:node untp-core:LocationShape ;
+    sh:node bri-shape:LocationShape ;
     sh:maxCount 1 ;
     sh:description "Geo-location information for this facility ..."@en ;
   ] ;
@@ -817,6 +817,7 @@ bri-shape:ClaimShape
     sh:node bri-shape:StandardShape ;
     sh:description "The reference to the standard ..."@en ;
   ] .
+
 bri-shape:CriterionShape
   a sh:NodeShape ;
   sh:targetClass untp-core:Criterion ;
