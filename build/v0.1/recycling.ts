@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-03 09:46:15
+ * Generated: 2026-02-03 11:36:28
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 
