@@ -1,7 +1,5 @@
 @prefix bri-shape: <https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#> .
-@prefix dct: <http://purl.org/dc/terms/> .
 @prefix geojson: <https://purl.org/geojson/vocab#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -13,6 +11,9 @@
 bri-shape:DigitalProductPassportShape
   a sh:NodeShape ;
   sh:targetClass untp:DigitalProductPassport ;
+  rdfs:label "Digital Product Passport"@en ;
+  rdfs:comment "The Product Passport is a comprehensive data structure that encapsulates various details pertaining to a product, including its identification details, who issued it, batch information, provenance information, circularity information and a set of verifiable product conformity & sustainability claims."@en ;
+  rdfs:isDefinedBy untp:DigitalProductPassport ;
   sh:closed true ;
 
   sh:property [
@@ -51,16 +52,21 @@ bri-shape:DigitalProductPassportShape
     sh:maxCount 1 ;
   ] .
 
+
 bri-shape:CredentialIssuerShape
   a sh:NodeShape ;
   sh:targetClass untp-core:CredentialIssuer ;
-  sh:closed false ;
+  rdfs:label "Credential Issuer"@en ;
+  rdfs:comment "The issuer party (person or organisation) of a verifiable credential."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
@@ -68,6 +74,7 @@ bri-shape:CredentialIssuerShape
     sh:minCount 0 ;
     sh:maxCount 1 ;
     sh:node bri-shape:PartyShape ;
+    sh:description "An optional list of other ..."@en ;
   ] ;
 
   sh:property [
@@ -75,11 +82,16 @@ bri-shape:CredentialIssuerShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] .
 
 
 bri-shape:PartyShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Party ;
+  rdfs:label "Party"@en ;
+  rdfs:comment "An organisation. May be a supply chain actor, a certifier, a government agency."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
   sh:closed true ;
 
   sh:property [
@@ -87,6 +99,7 @@ bri-shape:PartyShape
     sh:datatype xsd:string ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
+    sh:description "An optional short description of ..."@en ;
   ] ;
 
   sh:property [
@@ -94,6 +107,7 @@ bri-shape:PartyShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
@@ -102,12 +116,14 @@ bri-shape:PartyShape
     sh:node bri-shape:IdentifierSchemeShape ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
+    sh:description "The identifier scheme of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:industryCategory ;
     sh:node bri-shape:ClassificationShape ;
     sh:minCount 0 ;
+    sh:description "The industry categories for this ..."@en ;
   ] ;
 
   sh:property [
@@ -115,6 +131,7 @@ bri-shape:PartyShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
@@ -122,13 +139,14 @@ bri-shape:PartyShape
     sh:datatype xsd:string ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
+    sh:description "Website for this organisation"@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:partyAlsoKnownAs ;
     sh:node bri-shape:PartyShape ;
     sh:minCount 0 ;
-    sh:description "An optional list of other parties this party is also known as." ;
+    sh:description "An optional list of other ..."@en ;
   ] ;
 
   sh:property [
@@ -136,7 +154,7 @@ bri-shape:PartyShape
     sh:datatype xsd:string ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
-    sh:description "The registration number (alphanumeric) of the party." ;
+    sh:description "The registration number (alphanumeric) of ..."@en ;
   ] ;
 
   sh:property [
@@ -144,11 +162,15 @@ bri-shape:PartyShape
     sh:datatype untp-core:countryCode ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
-    sh:description "The country in which the party is registered." ;
+    sh:description "the country in which this ..."@en ;
   ] .
 
 bri-shape:IdentifierSchemeShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:IdentifierScheme ;
+  rdfs:label "Identifier Scheme"@en ;
+  rdfs:comment "An identifier registration scheme for products, facilities, or organisations. Typically operated by a state, national or global authority."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> ;
   sh:closed true ;
 
   sh:property [
@@ -156,6 +178,7 @@ bri-shape:IdentifierSchemeShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
@@ -163,10 +186,16 @@ bri-shape:IdentifierSchemeShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] .
+
 
 bri-shape:ClassificationShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Classification ;
+  rdfs:label "Classification"@en ;
+  rdfs:comment "A classification scheme and code / name representing a category value for a product, entity, or facility."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ;
   sh:closed true ;
 
   sh:property [
@@ -174,6 +203,7 @@ bri-shape:ClassificationShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "classification code within the scheme ..."@en ;
   ] ;
 
   sh:property [
@@ -181,6 +211,7 @@ bri-shape:ClassificationShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
@@ -188,6 +219,7 @@ bri-shape:ClassificationShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
@@ -195,6 +227,7 @@ bri-shape:ClassificationShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "Classification scheme ID"@en ;
   ] ;
 
   sh:property [
@@ -202,34 +235,42 @@ bri-shape:ClassificationShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The name of the classification ..."@en ;
   ] .
 
-# https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport
 bri-shape:ProductPassportShape
   a sh:NodeShape ;
+  sh:targetClass untp:ProductPassport ;
+  rdfs:label "Product Passport"@en ;
+  rdfs:comment "The ProductClaim class encapsulates detailed information regarding a specific product, including its identification details, manufacturer, and other pertinent details, as well as information about the claims being made about the product."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport> ;
   sh:closed true ;
   
-   sh:property [
+  sh:property [
     sh:path untp:circularityScorecard ;
     sh:node bri-shape:CircularityPerformanceShape ;
     sh:maxCount 1 ;
+    sh:description "A circularity performance scorecard"@en ;
   ] ;
 
   sh:property [
     sh:path untp:conformityClaim ;
     sh:node bri-shape:ClaimShape ;
+    sh:description "An array of claim objects ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:dueDiligenceDeclaration ;
     sh:node bri-shape:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "The due diligence declaration that ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:emissionsScorecard ;
     sh:node bri-shape:EmissionsPerformanceShape ;
     sh:maxCount 1 ;
+    sh:description "An emissions performance scorecard"@en ;
   ] ;
 
   sh:property [
@@ -237,17 +278,20 @@ bri-shape:ProductPassportShape
     sh:datatype untp:granularityCode ;
     sh:in ( "item" "batch" "model" ) ;
     sh:maxCount 1 ;
+    sh:description "Code to indicate the granularity ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An id is not required ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:materialsProvenance ;
     sh:node bri-shape:MaterialShape ;
+    sh:description "An array of Provenance objects ..."@en ;
   ] ;
 
   sh:property [
@@ -255,51 +299,63 @@ bri-shape:ProductPassportShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:node bri-shape:ProductShape ;
+    sh:description "The ProductInformation class encapsulates detailed ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:traceabilityInformation ;
     sh:node bri-shape:TraceabilityPerformanceShape ;
+    sh:description "An array of traceability events ..."@en ;
   ] .
 
 bri-shape:ProductShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Product ;
+  rdfs:label "Product"@en ;
+  rdfs:comment "The ProductInformation class encapsulates detailed information regarding a specific product, including its identification details, manufacturer, and other pertinent details."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:batchNumber ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "Identifier of the specific production ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:characteristics ;
     sh:node untp-core:CharacteristicsShape ;
     sh:maxCount 1 ;
+    sh:description "A placeholder for indusutry / ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:countryOfProduction ;
     sh:datatype untp-core:countryCode ;
     sh:maxCount 1 ;
+    sh:description "The country in which this ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An optional short description of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:dimensions ;
     sh:node untp-core:DimensionShape ;
     sh:maxCount 1 ;
+    sh:description "The physical dimensions of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:furtherInformation ;
     sh:node untp-core:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "A URL pointing to further ..."@en ;
   ] ;
 
   sh:property [
@@ -307,105 +363,132 @@ bri-shape:ProductShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:idScheme ;
     sh:node bri-shape:IdentifierSchemeShape ;
     sh:maxCount 1 ;
+    sh:description "The identifier scheme of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:producedAtFacility ;
     sh:node untp-core:FacilityShape ;
     sh:maxCount 1 ;
+    sh:description "The Facility where the product ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:producedByParty ;
     sh:node bri-shape:PartyShape ;
     sh:maxCount 1 ;
+    sh:description "The Party entity that manufactured ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:productCategory ;
     sh:node bri-shape:ClassificationShape ;
     sh:maxCount 1 ;
+    sh:description "A code representing the product's ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:productImage ;
     sh:node untp-core:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "Reference information (location, type, name) ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:productionDate ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The ISO 8601 date on ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:registeredId ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The registration number (alphanumeric) of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:serialNumber ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A number or code representing ..."@en ;
   ] .
 
 
 bri-shape:CharacteristicsShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Characteristics ;
+  rdfs:label "Characteristics"@en ;
+  rdfs:comment "Extension point for commodity specific characteristics like battery capacity, clothing size, etc."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Characteristics> ;
   sh:closed true .
 
 
 bri-shape:DimensionShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Dimension ;
+  rdfs:label "Dimension"@en ;
+  rdfs:comment "Overall (length, width, height) dimensions and weight/volume of an item."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:height ;
     sh:node untp-core:MeasureShape ;
     sh:maxCount 1 ;
+    sh:description "The height of the product ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:length ;
     sh:node untp-core:MeasureShape ;
     sh:maxCount 1 ;
+    sh:description "The length of the product ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:volume ;
     sh:node untp-core:MeasureShape ;
     sh:maxCount 1 ;
+    sh:description "The displacement volume of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:weight ;
     sh:node untp-core:MeasureShape ;
     sh:maxCount 1 ;
+    sh:description "the weight of the product. ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:width ;
     sh:node untp-core:MeasureShape ;
     sh:maxCount 1 ;
+    sh:description "The width of the product ..."@en ;
   ] .
 
 
 bri-shape:MeasureShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Measure ;
+  rdfs:label "Measure"@en ;
+  rdfs:comment "The measure class defines a numeric measured value (eg 10) and a coded unit of measure (eg KG)."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Measure> ;
   sh:closed true ;
 
   sh:property [
@@ -413,6 +496,7 @@ bri-shape:MeasureShape
     sh:datatype untp-core:unitOfMeasure ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "Unit of measure drawn from ..."@en ;
   ] ;
 
   sh:property [
@@ -420,22 +504,29 @@ bri-shape:MeasureShape
     sh:datatype xsd:double ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The numeric value of the ..."@en ;
   ] .
 
 bri-shape:LinkShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:targetClass untp-core:Link ;
+  rdfs:label "Link"@en ;
+  rdfs:comment "A structure to provide a URL link plus metadata associated with the link."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Link> ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:linkName ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A display name for the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:linkType ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The type of the target ..."@en ;
   ] ;
 
   sh:property [
@@ -443,33 +534,42 @@ bri-shape:LinkShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The URL of the target ..."@en ;
   ] .
 
 bri-shape:FacilityShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Facility ;
+  rdfs:label "Facility"@en ;
+  rdfs:comment "The physical site (eg farm or factory) where the product or materials was produced."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:address ;
     sh:node untp-core:AddressShape ;
     sh:maxCount 1 ;
+    sh:description "The Postal address of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:countryOfOperation ;
     sh:datatype untp-core:countryCode ;
     sh:maxCount 1 ;
+    sh:description "The country in which this ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An optional short description of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:facilityAlsoKnownAs ;
     sh:node untp-core:FacilityShape ;
+    sh:description "An optional list of other ..."@en ;
   ] ;
 
   sh:property [
@@ -477,496 +577,617 @@ bri-shape:FacilityShape
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:idScheme ;
     sh:node bri-shape:IdentifierSchemeShape ;
     sh:maxCount 1 ;
+    sh:description "The identifier scheme of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:locationInformation ;
     sh:node untp-core:LocationShape ;
     sh:maxCount 1 ;
+    sh:description "Geo-location information for this facility ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:operatedByParty ;
     sh:node bri-shape:PartyShape ;
     sh:maxCount 1 ;
+    sh:description "The Party entity responsible for ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:processCategory ;
     sh:node bri-shape:ClassificationShape ;
     sh:maxCount 1 ;
+    sh:description "The industrial or production processes ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:registeredId ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The registration number (alphanumeric) of ..."@en ;
   ] .
 
 bri-shape:AddressShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Address ;
+  rdfs:label "Address"@en ;
+  rdfs:comment "A postal address."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:addressCountry ;
     sh:datatype untp-core:countryCode ;
     sh:maxCount 1 ;
+    sh:description "The address country as an ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:addressLocality ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The city, suburb or township ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:addressRegion ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The state or territory or ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:postalCode ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The postal code or zip ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:streetAddress ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "the street address as an ..."@en ;
   ] .
-
 
 bri-shape:LocationShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Location ;
+  rdfs:label "Location"@en ;
+  rdfs:comment "Location information including address and geo-location of points, areas, and boundaries"@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Location> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:geoBoundary ;
     sh:datatype geojson:appendix-A.3 ;
     sh:maxCount 1 ;
+    sh:description "The list of ordered coordinates ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:geoLocation ;
     sh:datatype geojson:appendix-A.1 ;
     sh:maxCount 1 ;
+    sh:description "The latitude and longitude coordinates ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:plusCode ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An open location code (https://maps.google.com/pluscodes/) ..."@en ;
   ] .
 
-# https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance
+
 bri-shape:CircularityPerformanceShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:CircularityPerformance ;
+  rdfs:label "CircularityPerformance"@en ;
+  rdfs:comment "High level circularity information about this product. Note that this does not substitute for detailed product circularity data sheet (PCDS) criteria which would be represented as a self-issued UNTP Digital Conformity Credential as a set of assessments against individual ISO PCDS criteria."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:materialCircularityIndicator ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The overall circularity performance indicator ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:recyclableContent ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The fraction of the this ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:recycledContent ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The fraction (by mass) of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:recyclingInformation ;
     sh:node bri-shape:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "A URI pointing to recycling ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:repairInformation ;
     sh:node bri-shape:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "A URI pointing to repair ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:utilityFactor ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "An indicator of durability defined ..."@en ;
   ] .
 
-# https://test.uncefact.org/vocabulary/untp/core/0/Claim
 bri-shape:ClaimShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Claim ;
+  rdfs:label "Claim"@en ;
+  rdfs:comment "A declaration of conformance with one or more criteria from a specific standard or regulation."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:assessmentCriteria ;
     sh:node bri-shape:CriterionShape ;
+    sh:description "The specification against which the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:assessmentDate ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The date on which this ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:conformance ;
     sh:datatype xsd:boolean ;
     sh:maxCount 1 ;
+    sh:description "An indicator of whether or ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:conformityEvidence ;
     sh:node bri-shape:SecureLinkShape ;
+    sh:description "A URI pointing to the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:conformityTopic ;
     sh:datatype untp-core:conformityTopicCode ;
     sh:maxCount 1 ;
+    sh:description "The conformity topic category for ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:declaredValue ;
     sh:node bri-shape:MetricShape ;
+    sh:description "The list of specific values ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An optional short description of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:referenceRegulation ;
     sh:node bri-shape:RegulationShape ;
+    sh:description "The reference to the regulation ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:referenceStandard ;
     sh:node bri-shape:StandardShape ;
+    sh:description "The reference to the standard ..."@en ;
   ] .
-
 bri-shape:CriterionShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Criterion ;
+  rdfs:label "Criterion"@en ;
+  rdfs:comment "A specific rule or criterion within a standard or regulation. eg a carbon intensity calculation rule within an emissions standard."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:category ;
     sh:node bri-shape:ClassificationShape ;
+    sh:description "A set of classification codes ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:conformityTopic ;
     sh:datatype untp-core:conformityTopicCode ;
     sh:maxCount 1 ;
+    sh:description "The conformity topic category for ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:description ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "An optional short description of ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:performanceLevel ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A performance category code to ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:status ;
     sh:datatype untp-core:statusCode ;
     sh:maxCount 1 ;
+    sh:description "The lifecycle status of this ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:subCriterion ;
     sh:node bri-shape:CriterionShape ;
+    sh:description "List of criterion that are ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:tag ;
     sh:datatype xsd:string ;
+    sh:description "A set of tags that ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:thresholdValue ;
     sh:node bri-shape:MetricShape ;
+    sh:description "A threshold value that defines ..."@en ;
   ] .
 
 bri-shape:MetricShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Metric ;
+  rdfs:label "Metric"@en ;
+  rdfs:comment "A specific measure of performance against the criteria that governs the claim. Expressed as an array of metric (ie unit of measure) / value (ie the actual numeric value) pairs."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:accuracy ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "A percentage represented as a ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:metricName ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A human readable name for ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:metricValue ;
     sh:node bri-shape:MeasureShape ;
+    sh:description "A numeric value and unit ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:score ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A score or rank associated ..."@en ;
   ] .
 
 bri-shape:SecureLinkShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:SecureLink ;
+  rdfs:label "SecureLink"@en ;
+  rdfs:comment "A binary file that is hashed ()for tamper evidence) and optionally encrypted (for confidentiality)."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:encryptionMethod ;
     sh:datatype untp-core:encryptionMethodCode ;
     sh:maxCount 1 ;
+    sh:description "The symmetric encryption algorithm used ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:hashDigest ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The hash of the file. ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:hashMethod ;
     sh:datatype untp-core:hashMethodCode ;
     sh:maxCount 1 ;
+    sh:description "The hashing algorithm used to ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:linkName ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "A display name for the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:linkType ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The type of the target ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:linkURL ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The URL of the target ..."@en ;
   ] .
 
 bri-shape:RegulationShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Regulation ;
+  rdfs:label "Regulation"@en ;
+  rdfs:comment "A regulation (eg EU deforestation regulation) that defines the criteria for assessment."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:administeredBy ;
     sh:node bri-shape:PartyShape ;
+    sh:description "the issuing body of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:effectiveDate ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "the date at which the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:jurisdictionCountry ;
     sh:datatype untp-core:countryCode ;
     sh:maxCount 1 ;
+    sh:description "The legal jurisdiction (country) under ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] .
-
 
 bri-shape:StandardShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Standard ;
+  rdfs:label "Standard"@en ;
+  rdfs:comment "A standard (eg ISO 14000) that specifies the criteria for conformance."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The W3C DID of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:issueDate ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The date when the standard ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:issuingParty ;
     sh:node bri-shape:PartyShape ;
+    sh:description "The party that issued the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] .
 
 bri-shape:EmissionsPerformanceShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:EmissionsPerformance ;
+  rdfs:label "EmissionsPerformance"@en ;
+  rdfs:comment "Product specific characteristics. This class is an extension point for industry specific product characteristics or performance information such as clothing size or battery capacity."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:carbonFootprint ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The carbon footprint of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:declaredUnit ;
     sh:datatype untp-core:unitOfMeasure ;
     sh:maxCount 1 ;
+    sh:description "The unit of product (EA, ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:operationalScope ;
     sh:datatype untp-core:operationalScopeCode ;
     sh:maxCount 1 ;
+    sh:description "The operational scope of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:primarySourcedRatio ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The ratio of emissions data ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:reportingStandard ;
     sh:node bri-shape:StandardShape ;
+    sh:description "The reporting standard (eg GHG ..."@en ;
   ] .
 
 bri-shape:MaterialShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:Material ;
+  rdfs:label "Material"@en ;
+  rdfs:comment "The material class encapsulates details about the origin or source of raw materials in a product, including the country of origin and the mass fraction."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp-core:hazardous ;
     sh:datatype xsd:boolean ;
     sh:maxCount 1 ;
+    sh:description "Indicates whether this material is ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:mass ;
     sh:node bri-shape:MeasureShape ;
+    sh:description "The mass of the material ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:massFraction ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The mass fraction of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:materialSafetyInformation ;
     sh:node bri-shape:LinkShape ;
     sh:maxCount 1 ;
+    sh:description "Reference to further information about ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:materialType ;
     sh:node bri-shape:ClassificationShape ;
+    sh:description "The type of this material ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "The name of the issuer ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:originCountry ;
     sh:datatype untp-core:countryCode ;
     sh:maxCount 1 ;
+    sh:description "A ISO 3166-1 code representing ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:recycledMassFraction ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "Mass fraction of this material ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:symbol ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "Based 64 encoded binary used ..."@en ;
   ] .
 
 bri-shape:TraceabilityPerformanceShape
   a sh:NodeShape ;
+  sh:targetClass untp:TraceabilityPerformance ;
+  rdfs:label "TraceabilityPerformance"@en ;
+  rdfs:comment "An array of secure links to TraceabilityEvent objects detailing EPCIS events related to the traceability of the product batch. Events are grouped by value chain process (eg \"Weaving\" in textiles supply chain)."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance> ;
   sh:closed true ;
 
   sh:property [
     sh:path untp:traceabilityEvent ;
     sh:node bri-shape:SecureLinkShape ;
+    sh:description "A list of secure links ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:valueChainProcess ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+    sh:description "Human readable name for the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp:verifiedRatio ;
     sh:datatype xsd:double ;
     sh:maxCount 1 ;
+    sh:description "The proportion (0 to 1) ..."@en ;
   ] .
