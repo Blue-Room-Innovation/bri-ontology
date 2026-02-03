@@ -97,7 +97,7 @@ validation:
       dpp-unece:
         name: "UNECE DPP"
         description: "Validates a DPP sample against the UNECE constraints"
-        data: "examples/v0.1/dpp-unece-sample.ttl"
+        data: "examples/v0.1/dpp-unece-sample.jsonld"
         shapes: "shapes/v0.1/dpp-unece.shacl.ttl"
         format: "human"
         extras: ""
