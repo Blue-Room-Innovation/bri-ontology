@@ -1,13 +1,13 @@
 {
   "@context": "../../build/v0.1/dppUnece.context.jsonld",
   "@id": "https://example.org/resource/dpp1",
-  "@type": "DigitalProductPassport",
+  "type": "DigitalProductPassport",
   "id": "https://example-company.com/credentials/2a423366-a0d6-4855-ba65-2e0c926d09b0",
   "issuer": {
     "type": [
       "CredentialIssuer"
     ],
-    "@id": "did:web:identifiers.example-company.com:12345",
+    "id": "did:web:identifiers.example-company.com:12345",
     "name": "Example Company Pty Ltd",
     "issuerAlsoKnownAs": [
       {

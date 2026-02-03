@@ -71,13 +71,16 @@ def _graph_prefixes(graph: Graph) -> Dict[str, str]:
     return {p: declared[p] for p in sorted(used) if p in declared}
 
 
-def _iter_property_paths(graph: Graph) -> Iterable[URIRef]:
+def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef]]]:
+    """Yield (sh:path, sh:datatype?) from property shapes."""
     # SHACL property shapes are blank nodes referenced via sh:property
     for shape in graph.subjects(RDF.type, SH.NodeShape):
         for prop_shape in graph.objects(shape, SH.property):
             path = graph.value(prop_shape, SH.path)
-            if isinstance(path, URIRef):
-                yield path
+            if not isinstance(path, URIRef):
+                continue
+            datatype = graph.value(prop_shape, SH.datatype)
+            yield path, datatype if isinstance(datatype, URIRef) else None
 
 
 def _iter_target_classes(graph: Graph) -> Iterable[URIRef]:
@@ -110,7 +113,7 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
             collisions.setdefault(local, set()).update({prev, iri})
 
     # Properties
-    for path in _iter_property_paths(graph):
+    for path, datatype in _iter_property_paths(graph):
         add_candidate(path)
 
     # Classes (so JSON-LD can use "@type": "LocalName")
@@ -143,11 +146,12 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
                     fallback = f"{fallback}_{abs(hash(iri)) % 10000}"
                 terms[fallback] = qn if qn else iri
 
-    # Compose @context: prefixes + terms
+    # Compose @context: prefixes + keyword aliases + terms
     ctx: Dict[str, object] = {}
     # Keep prefixes first (readability)
     for prefix, ns in sorted(prefixes.items()):
         ctx[prefix] = ns
+
     # Then terms
     for term, value in sorted(terms.items()):
         ctx[term] = value

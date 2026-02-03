@@ -1,5 +1,6 @@
 @prefix bri-shape: <https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#> .
 @prefix geojson: <https://purl.org/geojson/vocab#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -15,34 +16,37 @@ bri-shape:DigitalProductPassportShape
   rdfs:comment "The Product Passport is a comprehensive data structure that encapsulates various details pertaining to a product, including its identification details, who issued it, batch information, provenance information, circularity information and a set of verifiable product conformity & sustainability claims."@en ;
   rdfs:isDefinedBy untp:DigitalProductPassport ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:id ;
-    sh:datatype xsd:anyURI ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
     sh:path vc:issuer ;
-    sh:class untp:CredentialIssuer ;
+    sh:class untp-core:CredentialIssuer ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:node bri-shape:CredentialIssuerShape ;
   ] ;
 
-  # validFrom / validUntil
   sh:property [
     sh:path untp-core:validFrom ;
     sh:datatype schema:DateTime ;
     sh:maxCount 1 ;
+    sh:pattern "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$" ;
+    sh:description "The data from which this scheme version is valid."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:validUntil ;
-    sh:datatype schema:dateTime ;
+    sh:datatype schema:DateTime ;
     sh:maxCount 1 ;
-  ] ;
+    sh:pattern "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$" ;
+    sh:description "The date and time until which this scheme version remains valid."@en ;  ] ;
 
   sh:property [
     sh:path vc:credentialSubject ;
@@ -60,6 +64,7 @@ bri-shape:CredentialIssuerShape
   rdfs:comment "The issuer party (person or organisation) of a verifiable credential."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:id ;
@@ -72,7 +77,6 @@ bri-shape:CredentialIssuerShape
   sh:property [
     sh:path untp-core:issuerAlsoKnownAs ;
     sh:minCount 0 ;
-    sh:maxCount 1 ;
     sh:node bri-shape:PartyShape ;
     sh:description "An optional list of other ..."@en ;
   ] ;
@@ -93,6 +97,7 @@ bri-shape:PartyShape
   rdfs:comment "An organisation. May be a supply chain actor, a certifier, a government agency."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Party> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:description ;
@@ -112,7 +117,7 @@ bri-shape:PartyShape
 
   sh:property [
     sh:path untp-core:idScheme ;
-    sh:class untp:IdentifierScheme ;
+    sh:class untp-core:IdentifierScheme ;
     sh:node bri-shape:IdentifierSchemeShape ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
@@ -172,6 +177,7 @@ bri-shape:IdentifierSchemeShape
   rdfs:comment "An identifier registration scheme for products, facilities, or organisations. Typically operated by a state, national or global authority."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:id ;
@@ -197,6 +203,7 @@ bri-shape:ClassificationShape
   rdfs:comment "A classification scheme and code / name representing a category value for a product, entity, or facility."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Classification> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:code ;
@@ -245,6 +252,7 @@ bri-shape:ProductPassportShape
   rdfs:comment "The ProductClaim class encapsulates detailed information regarding a specific product, including its identification details, manufacturer, and other pertinent details, as well as information about the claims being made about the product."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
   
   sh:property [
     sh:path untp:circularityScorecard ;
@@ -276,13 +284,13 @@ bri-shape:ProductPassportShape
   sh:property [
     sh:path untp:granularityLevel ;
     sh:datatype untp:granularityCode ;
-    sh:in ( "item" "batch" "model" ) ;
+    sh:in ( "item"^^untp:granularityCode "batch"^^untp:granularityCode "model"^^untp:granularityCode ) ;
     sh:maxCount 1 ;
     sh:description "Code to indicate the granularity ..."@en ;
   ] ;
 
   sh:property [
-    sh:path untp:id ;
+    sh:path untp-core:id ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
     sh:description "An id is not required ..."@en ;
@@ -315,6 +323,7 @@ bri-shape:ProductShape
   rdfs:comment "The ProductInformation class encapsulates detailed information regarding a specific product, including its identification details, manufacturer, and other pertinent details."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Product> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:batchNumber ;
@@ -353,8 +362,7 @@ bri-shape:ProductShape
 
   sh:property [
     sh:path untp-core:furtherInformation ;
-    sh:node untp-core:LinkShape ;
-    sh:maxCount 1 ;
+    sh:node bri-shape:LinkShape ;
     sh:description "A URL pointing to further ..."@en ;
   ] ;
 
@@ -397,13 +405,12 @@ bri-shape:ProductShape
   sh:property [
     sh:path untp-core:productCategory ;
     sh:node bri-shape:ClassificationShape ;
-    sh:maxCount 1 ;
     sh:description "A code representing the product's ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:productImage ;
-    sh:node untp-core:LinkShape ;
+    sh:node bri-shape:LinkShape ;
     sh:maxCount 1 ;
     sh:description "Reference information (location, type, name) ..."@en ;
   ] ;
@@ -436,7 +443,8 @@ bri-shape:CharacteristicsShape
   rdfs:label "Characteristics"@en ;
   rdfs:comment "Extension point for commodity specific characteristics like battery capacity, clothing size, etc."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Characteristics> ;
-  sh:closed true .
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) .
 
 
 bri-shape:DimensionShape
@@ -446,38 +454,39 @@ bri-shape:DimensionShape
   rdfs:comment "Overall (length, width, height) dimensions and weight/volume of an item."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Dimension> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:height ;
-    sh:node untp-core:MeasureShape ;
+    sh:node bri-shape:MeasureShape ;
     sh:maxCount 1 ;
     sh:description "The height of the product ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:length ;
-    sh:node untp-core:MeasureShape ;
+    sh:node bri-shape:MeasureShape ;
     sh:maxCount 1 ;
     sh:description "The length of the product ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:volume ;
-    sh:node untp-core:MeasureShape ;
+    sh:node bri-shape:MeasureShape ;
     sh:maxCount 1 ;
     sh:description "The displacement volume of the ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:weight ;
-    sh:node untp-core:MeasureShape ;
+    sh:node bri-shape:MeasureShape ;
     sh:maxCount 1 ;
     sh:description "the weight of the product. ..."@en ;
   ] ;
 
   sh:property [
     sh:path untp-core:width ;
-    sh:node untp-core:MeasureShape ;
+    sh:node bri-shape:MeasureShape ;
     sh:maxCount 1 ;
     sh:description "The width of the product ..."@en ;
   ] .
@@ -490,6 +499,7 @@ bri-shape:MeasureShape
   rdfs:comment "The measure class defines a numeric measured value (eg 10) and a coded unit of measure (eg KG)."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Measure> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:unit ;
@@ -514,6 +524,7 @@ bri-shape:LinkShape
   rdfs:comment "A structure to provide a URL link plus metadata associated with the link."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Link> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:linkName ;
@@ -544,6 +555,7 @@ bri-shape:FacilityShape
   rdfs:comment "The physical site (eg farm or factory) where the product or materials was produced."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Facility> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:address ;
@@ -629,6 +641,7 @@ bri-shape:AddressShape
   rdfs:comment "A postal address."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Address> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:addressCountry ;
@@ -672,6 +685,7 @@ bri-shape:LocationShape
   rdfs:comment "Location information including address and geo-location of points, areas, and boundaries"@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Location> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:geoBoundary ;
@@ -702,6 +716,7 @@ bri-shape:CircularityPerformanceShape
   rdfs:comment "High level circularity information about this product. Note that this does not substitute for detailed product circularity data sheet (PCDS) criteria which would be represented as a self-issued UNTP Digital Conformity Credential as a set of assessments against individual ISO PCDS criteria."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:materialCircularityIndicator ;
@@ -752,6 +767,7 @@ bri-shape:ClaimShape
   rdfs:comment "A declaration of conformance with one or more criteria from a specific standard or regulation."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Claim> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:assessmentCriteria ;
@@ -825,6 +841,7 @@ bri-shape:CriterionShape
   rdfs:comment "A specific rule or criterion within a standard or regulation. eg a carbon intensity calculation rule within an emissions standard."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Criterion> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:category ;
@@ -899,6 +916,7 @@ bri-shape:MetricShape
   rdfs:comment "A specific measure of performance against the criteria that governs the claim. Expressed as an array of metric (ie unit of measure) / value (ie the actual numeric value) pairs."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Metric> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:accuracy ;
@@ -934,6 +952,7 @@ bri-shape:SecureLinkShape
   rdfs:comment "A binary file that is hashed ()for tamper evidence) and optionally encrypted (for confidentiality)."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/SecureLink> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:encryptionMethod ;
@@ -984,6 +1003,7 @@ bri-shape:RegulationShape
   rdfs:comment "A regulation (eg EU deforestation regulation) that defines the criteria for assessment."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Regulation> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:administeredBy ;
@@ -1026,6 +1046,7 @@ bri-shape:StandardShape
   rdfs:comment "A standard (eg ISO 14000) that specifies the criteria for conformance."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Standard> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:id ;
@@ -1061,6 +1082,7 @@ bri-shape:EmissionsPerformanceShape
   rdfs:comment "Product specific characteristics. This class is an extension point for industry specific product characteristics or performance information such as clothing size or battery capacity."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:carbonFootprint ;
@@ -1103,6 +1125,7 @@ bri-shape:MaterialShape
   rdfs:comment "The material class encapsulates details about the origin or source of raw materials in a product, including the country of origin and the mass fraction."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/core/0/Material> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp-core:hazardous ;
@@ -1172,6 +1195,7 @@ bri-shape:TraceabilityPerformanceShape
   rdfs:comment "An array of secure links to TraceabilityEvent objects detailing EPCIS events related to the traceability of the product batch. Events are grouped by value chain process (eg \"Weaving\" in textiles supply chain)."@en ;
   rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance> ;
   sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
     sh:path untp:traceabilityEvent ;
