@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-03 11:36:21
+ * Generated: 2026-02-03 13:48:10
  * Source: shapes/v0.1/dpp-unece.shacl.ttl
  */
 
@@ -11,7 +11,13 @@
 export interface DigitalProductPassportShape {
   id: string;
   issuer: CredentialIssuerShape;
+  /**
+   * The data from which this scheme version is valid.
+   */
   validFrom?: string;
+  /**
+   * The date and time until which this scheme version remains valid.
+   */
   validUntil?: string;
   credentialSubject: ProductPassportShape;
 }

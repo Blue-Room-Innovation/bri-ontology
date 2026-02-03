@@ -10,17 +10,20 @@
       "title": "DigitalProductPassportShape",
       "properties": {
         "id": {
-          "type": "string",
-          "format": "uri"
+          "type": "string"
         },
         "issuer": {
           "$ref": "#/$defs/CredentialIssuerShape"
         },
         "validFrom": {
-          "type": "string"
+          "description": "The data from which this scheme version is valid.",
+          "type": "string",
+          "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
         },
         "validUntil": {
-          "type": "string"
+          "description": "The date and time until which this scheme version remains valid.",
+          "type": "string",
+          "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
         },
         "credentialSubject": {
           "$ref": "#/$defs/ProductPassportShape"
@@ -991,17 +994,20 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string",
-      "format": "uri"
+      "type": "string"
     },
     "issuer": {
       "$ref": "#/$defs/CredentialIssuerShape"
     },
     "validFrom": {
-      "type": "string"
+      "description": "The data from which this scheme version is valid.",
+      "type": "string",
+      "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
     },
     "validUntil": {
-      "type": "string"
+      "description": "The date and time until which this scheme version remains valid.",
+      "type": "string",
+      "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
     },
     "credentialSubject": {
       "$ref": "#/$defs/ProductPassportShape"
