@@ -9,9 +9,6 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geojson: <https://purl.org/geojson/vocab#> .
 
-#######################################################################
-# Digital Product Passport (Verifiable Credential wrapper)
-#######################################################################
 
 untp:DigitalProductPassportShape
   a sh:NodeShape ;
@@ -50,14 +47,11 @@ untp:DigitalProductPassportShape
   # credentialSubject
   sh:property [
     sh:path vc:credentialSubject ;
+    sh:class untp:Product ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:node untp:ProductShape ;
   ] .
-
-#######################################################################
-# Credential Issuer (derived from $defs/CredentialIssuer)
-#######################################################################
 
 untp:CredentialIssuerShape
   a sh:NodeShape ;
@@ -210,11 +204,6 @@ untp-core:ClassificationShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
-
-
-#######################################################################
-# Product Passport (credentialSubject)
-#######################################################################
 
 untp:ProductPassportShape
   a sh:NodeShape ;
