@@ -21,7 +21,11 @@
         },
         "credentialSubject": {
           "description": "Must link exactly one WastePassport.",
-          "$ref": "#/$defs/WastePassportShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/WastePassportShape"
+            }
+          ]
         },
         "valid": {
           "type": "string",
@@ -43,7 +47,11 @@
       "properties": {
         "waste": {
           "description": "Must reference a Waste.",
-          "$ref": "#/$defs/WasteShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/WasteShape"
+            }
+          ]
         },
         "identifier": {
           "type": "string"
@@ -190,7 +198,11 @@
     },
     "credentialSubject": {
       "description": "Must link exactly one WastePassport.",
-      "$ref": "#/$defs/WastePassportShape"
+      "allOf": [
+        {
+          "$ref": "#/$defs/WastePassportShape"
+        }
+      ]
     },
     "valid": {
       "type": "string",

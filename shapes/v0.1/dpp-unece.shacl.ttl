@@ -5,17 +5,17 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix untp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
-@prefix vc: <https://www.w3.org/2018/credentials#> .
+@prefix vc: <https://www.w3.org/ns/credentials/v2#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix geojson: <https://purl.org/geojson/vocab#> .
+@prefix bri-shape: <https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#> .
 
 
-untp:DigitalProductPassportShape
+bri-shape:DigitalProductPassportShape
   a sh:NodeShape ;
   sh:targetClass untp:DigitalProductPassport ;
-  sh:closed false ;   # OPEN BY DESIGN (see governance notes above)
+  sh:closed true ;
 
-  # id (JSON Schema: "id", format: uri)
   sh:property [
     sh:path untp-core:id ;
     sh:datatype xsd:anyURI ;
@@ -23,12 +23,12 @@ untp:DigitalProductPassportShape
     sh:maxCount 1 ;
   ] ;
 
-  # issuer (JSON Schema: issuer)
   sh:property [
-    sh:path untp-core:CredentialIssuer ;
+    sh:path vc:issuer ;
+    sh:class untp:CredentialIssuer ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node untp:CredentialIssuerShape ;
+    sh:node bri-shape:CredentialIssuerShape ;
   ] ;
 
   # validFrom / validUntil
@@ -44,16 +44,15 @@ untp:DigitalProductPassportShape
     sh:maxCount 1 ;
   ] ;
 
-  # credentialSubject
   sh:property [
     sh:path vc:credentialSubject ;
-    sh:class untp:Product ;
+    sh:class untp:ProductPassport ;
+    sh:node bri-shape:ProductPassportShape ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node untp:ProductShape ;
   ] .
 
-untp:CredentialIssuerShape
+bri-shape:CredentialIssuerShape
   a sh:NodeShape ;
   sh:targetClass untp-core:CredentialIssuer ;
   sh:closed false ;
@@ -69,7 +68,7 @@ untp:CredentialIssuerShape
     sh:path untp-core:issuerAlsoKnownAs ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
-    sh:node untp:PartyShape ;
+    sh:node bri-shape:PartyShape ;
   ] ;
 
   sh:property [
@@ -80,7 +79,7 @@ untp:CredentialIssuerShape
   ] .
 
 
-untp:PartyShape
+bri-shape:PartyShape
   a sh:NodeShape ;
   sh:closed true ;
 
@@ -100,14 +99,15 @@ untp:PartyShape
 
   sh:property [
     sh:path untp-core:idScheme ;
-    sh:node untp-core:IdentifierSchemeShape ;
+    sh:class untp:IdentifierScheme ;
+    sh:node bri-shape:IdentifierSchemeShape ;
     sh:minCount 0 ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
     sh:path untp-core:industryCategory ;
-    sh:node untp-core:ClassificationShape ;
+    sh:node bri-shape:ClassificationShape ;
     sh:minCount 0 ;
   ] ;
 
@@ -127,7 +127,7 @@ untp:PartyShape
 
   sh:property [
     sh:path untp-core:partyAlsoKnownAs ;
-    sh:node untp-core:PartyShape ;
+    sh:node bri-shape:PartyShape ;
     sh:minCount 0 ;
     sh:description "An optional list of other parties this party is also known as." ;
   ] ;
@@ -148,7 +148,7 @@ untp:PartyShape
     sh:description "The country in which the party is registered." ;
   ] .
 
-untp-core:IdentifierSchemeShape
+bri-shape:IdentifierSchemeShape
   a sh:NodeShape ;
   sh:closed true ;
 
@@ -166,7 +166,7 @@ untp-core:IdentifierSchemeShape
     sh:maxCount 1 ;
   ] .
 
-untp-core:ClassificationShape
+bri-shape:ClassificationShape
   a sh:NodeShape ;
   sh:closed true ;
 
@@ -205,15 +205,15 @@ untp-core:ClassificationShape
     sh:maxCount 1 ;
   ] .
 
-untp:ProductPassportShape
+bri-shape:ProductPassportShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp:product ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node untp:ProductShape ;
+    sh:node bri-shape:ProductShape ;
   ] ;
 
   sh:property [
@@ -223,9 +223,9 @@ untp:ProductPassportShape
     sh:maxCount 1 ;
   ] .
 
-untp:ProductShape
+bri-shape:ProductShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:batchNumber ;
@@ -272,7 +272,7 @@ untp:ProductShape
 
   sh:property [
     sh:path untp-core:idScheme ;
-    sh:node untp-core:IdentifierSchemeShape ;
+    sh:node bri-shape:IdentifierSchemeShape ;
     sh:maxCount 1 ;
   ] ;
 
@@ -290,13 +290,13 @@ untp:ProductShape
 
   sh:property [
     sh:path untp-core:producedByParty ;
-    sh:node untp-core:PartyShape ;
+    sh:node bri-shape:PartyShape ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
     sh:path untp-core:productCategory ;
-    sh:node untp-core:ClassificationShape ;
+    sh:node bri-shape:ClassificationShape ;
     sh:maxCount 1 ;
   ] ;
 
@@ -325,14 +325,14 @@ untp:ProductShape
   ] .
 
 
-untp-core:CharacteristicsShape
+bri-shape:CharacteristicsShape
   a sh:NodeShape ;
-  sh:closed false .
+  sh:closed true .
 
 
-untp-core:DimensionShape
+bri-shape:DimensionShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:height ;
@@ -365,9 +365,9 @@ untp-core:DimensionShape
   ] .
 
 
-untp-core:MeasureShape
+bri-shape:MeasureShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:unit ;
@@ -383,7 +383,7 @@ untp-core:MeasureShape
     sh:maxCount 1 ;
   ] .
 
-untp-core:LinkShape
+bri-shape:LinkShape
   a sh:NodeShape ;
   sh:closed false ;
 
@@ -406,9 +406,9 @@ untp-core:LinkShape
     sh:maxCount 1 ;
   ] .
 
-untp-core:FacilityShape
+bri-shape:FacilityShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:address ;
@@ -442,7 +442,7 @@ untp-core:FacilityShape
 
   sh:property [
     sh:path untp-core:idScheme ;
-    sh:node untp-core:IdentifierSchemeShape ;
+    sh:node bri-shape:IdentifierSchemeShape ;
     sh:maxCount 1 ;
   ] ;
 
@@ -460,13 +460,13 @@ untp-core:FacilityShape
 
   sh:property [
     sh:path untp-core:operatedByParty ;
-    sh:node untp-core:PartyShape ;
+    sh:node bri-shape:PartyShape ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
     sh:path untp-core:processCategory ;
-    sh:node untp-core:ClassificationShape ;
+    sh:node bri-shape:ClassificationShape ;
     sh:maxCount 1 ;
   ] ;
 
@@ -476,9 +476,9 @@ untp-core:FacilityShape
     sh:maxCount 1 ;
   ] .
 
-untp-core:AddressShape
+bri-shape:AddressShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:addressCountry ;
@@ -511,9 +511,9 @@ untp-core:AddressShape
   ] .
 
 
-untp-core:LocationShape
+bri-shape:LocationShape
   a sh:NodeShape ;
-  sh:closed false ;
+  sh:closed true ;
 
   sh:property [
     sh:path untp-core:geoBoundary ;

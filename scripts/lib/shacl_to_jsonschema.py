@@ -409,29 +409,42 @@ class SHACLToJSONSchemaConverter:
         elif node_kind:
             prop_def.update(self._nodekind_to_schema(node_kind))
 
+        elif self.graph.value(prop_shape, SH.node):
+            # sh:node directly references another shape.
+            # NOTE: Some SHACL property shapes include both sh:class and sh:node.
+            # For structural typing, sh:node is the most precise link to a NodeShape,
+            # so we prefer it over sh:class.
+            node_shape = self.graph.value(prop_shape, SH.node)
+            shape_name = self._get_local_name(node_shape)
+            prop_def["$ref"] = f"#/$defs/{shape_name}"
+
         elif class_ref:
             # sh:class points to an ontology class. Find the Shape that targets this class.
             class_uri = str(class_ref)
             shape_name = self.class_to_shape_map.get(class_uri)
-            
+
             if shape_name:
                 # Found a shape that targets this class
                 prop_def["$ref"] = f"#/$defs/{shape_name}"
             else:
                 # No shape found for this class - might be external or missing
-                self.warnings.append(f"No shape found with sh:targetClass {class_ref} for property {prop_name}")
+                self.warnings.append(
+                    f"No shape found with sh:targetClass {class_ref} for property {prop_name}"
+                )
                 prop_def["$comment"] = f"sh:class {class_ref} - no corresponding shape found"
-        
-        elif self.graph.value(prop_shape, SH.node):
-            # sh:node directly references another shape
-            node_shape = self.graph.value(prop_shape, SH.node)
-            shape_name = self._get_local_name(node_shape)
-            prop_def["$ref"] = f"#/$defs/{shape_name}"
         
         else:
             # No explicit type - default to allowing any type
             prop_def["$comment"] = "No explicit sh:datatype or sh:class found"
         
+        # If the property schema is a $ref, avoid adding sibling keywords.
+        # Downstream tools (json-schema-to-typescript) can generate spurious
+        # helper interfaces (e.g. PartyShape1) when $ref coexists with description.
+        if "$ref" in prop_def and "description" in prop_def:
+            desc = prop_def["description"]
+            ref = prop_def["$ref"]
+            prop_def = {"description": desc, "allOf": [{"$ref": ref}]}
+
         # Handle cardinality
         min_count = self._get_literal_value(prop_shape, SH.minCount)
         max_count = self._get_literal_value(prop_shape, SH.maxCount)

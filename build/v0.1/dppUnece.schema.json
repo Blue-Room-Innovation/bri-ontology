@@ -9,7 +9,7 @@
       "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassportShape",
       "title": "DigitalProductPassportShape",
       "properties": {
-        "identifier": {
+        "id": {
           "type": "string",
           "format": "uri"
         },
@@ -17,40 +17,135 @@
           "$ref": "#/$defs/CredentialIssuerShape"
         },
         "validFrom": {
-          "type": "string",
-          "format": "date-time"
+          "type": "string"
         },
         "validUntil": {
-          "type": "string",
-          "format": "date-time"
+          "type": "string"
         },
         "credentialSubject": {
-          "$ref": "#/$defs/ProductPassportShape"
+          "$ref": "#/$defs/ProductShape"
         }
       },
       "required": [
-        "identifier",
+        "id",
         "issuer",
         "credentialSubject"
-      ]
+      ],
+      "additionalProperties": false
     },
     "CredentialIssuerShape": {
       "type": "object",
       "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/dpp/0/CredentialIssuerShape",
       "title": "CredentialIssuerShape",
       "properties": {
-        "identifier": {
-          "type": "string",
-          "format": "uri"
+        "id": {
+          "type": "string"
+        },
+        "issuerAlsoKnownAs": {
+          "$ref": "#/$defs/PartyShape"
         },
         "name": {
           "type": "string"
         }
       },
       "required": [
-        "identifier",
+        "id",
         "name"
       ]
+    },
+    "PartyShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/dpp/0/PartyShape",
+      "title": "PartyShape",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "$ref": "#/$defs/IdentifierSchemeShape"
+        },
+        "industryCategory": {
+          "$ref": "#/$defs/ClassificationShape"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisationWebsite": {
+          "type": "string"
+        },
+        "partyAlsoKnownAs": {
+          "description": "An optional list of other parties this party is also known as.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/PartyShape"
+            }
+          ]
+        },
+        "registeredId": {
+          "description": "The registration number (alphanumeric) of the party.",
+          "type": "string"
+        },
+        "registrationCountry": {
+          "description": "The country in which the party is registered.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "IdentifierSchemeShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/IdentifierSchemeShape",
+      "title": "IdentifierSchemeShape",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "ClassificationShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/ClassificationShape",
+      "title": "ClassificationShape",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "schemeID": {
+          "type": "string"
+        },
+        "schemeName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "id",
+        "name",
+        "schemeID",
+        "schemeName"
+      ],
+      "additionalProperties": false
     },
     "ProductPassportShape": {
       "type": "object",
@@ -71,30 +166,222 @@
       },
       "required": [
         "product"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ProductShape": {
       "type": "object",
       "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/dpp/0/ProductShape",
       "title": "ProductShape",
       "properties": {
-        "identifier": {
-          "type": "string",
-          "format": "uri"
+        "batchNumber": {
+          "type": "string"
+        },
+        "characteristics": {
+          "$ref": "#/$defs/CharacteristicsShape"
+        },
+        "countryOfProduction": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/DimensionShape"
+        },
+        "furtherInformation": {
+          "$ref": "#/$defs/LinkShape"
+        },
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "$ref": "#/$defs/IdentifierSchemeShape"
         },
         "name": {
+          "type": "string"
+        },
+        "producedAtFacility": {
+          "$ref": "#/$defs/FacilityShape"
+        },
+        "producedByParty": {
+          "$ref": "#/$defs/PartyShape"
+        },
+        "productCategory": {
+          "$ref": "#/$defs/ClassificationShape"
+        },
+        "productImage": {
+          "$ref": "#/$defs/LinkShape"
+        },
+        "productionDate": {
+          "type": "string"
+        },
+        "registeredId": {
+          "type": "string"
+        },
+        "serialNumber": {
           "type": "string"
         }
       },
       "required": [
-        "identifier",
-        "name"
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "CharacteristicsShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/CharacteristicsShape",
+      "title": "CharacteristicsShape",
+      "additionalProperties": false
+    },
+    "DimensionShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/DimensionShape",
+      "title": "DimensionShape",
+      "properties": {
+        "height": {
+          "$ref": "#/$defs/MeasureShape"
+        },
+        "length": {
+          "$ref": "#/$defs/MeasureShape"
+        },
+        "volume": {
+          "$ref": "#/$defs/MeasureShape"
+        },
+        "weight": {
+          "$ref": "#/$defs/MeasureShape"
+        },
+        "width": {
+          "$ref": "#/$defs/MeasureShape"
+        }
+      },
+      "additionalProperties": false
+    },
+    "MeasureShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/MeasureShape",
+      "title": "MeasureShape",
+      "properties": {
+        "unit": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "unit",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "LinkShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/LinkShape",
+      "title": "LinkShape",
+      "properties": {
+        "linkName": {
+          "type": "string"
+        },
+        "linkType": {
+          "type": "string"
+        },
+        "linkURL": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "linkURL"
       ]
+    },
+    "FacilityShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/FacilityShape",
+      "title": "FacilityShape",
+      "properties": {
+        "address": {
+          "$ref": "#/$defs/AddressShape"
+        },
+        "countryOfOperation": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "facilityAlsoKnownAs": {
+          "$ref": "#/$defs/FacilityShape"
+        },
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "$ref": "#/$defs/IdentifierSchemeShape"
+        },
+        "locationInformation": {
+          "$ref": "#/$defs/LocationShape"
+        },
+        "name": {
+          "type": "string"
+        },
+        "operatedByParty": {
+          "$ref": "#/$defs/PartyShape"
+        },
+        "processCategory": {
+          "$ref": "#/$defs/ClassificationShape"
+        },
+        "registeredId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "AddressShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/AddressShape",
+      "title": "AddressShape",
+      "properties": {
+        "addressCountry": {
+          "type": "string"
+        },
+        "addressLocality": {
+          "type": "string"
+        },
+        "addressRegion": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "streetAddress": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocationShape": {
+      "type": "object",
+      "$comment": "Generated from SHACL shape https://test.uncefact.org/vocabulary/untp/core/0/LocationShape",
+      "title": "LocationShape",
+      "properties": {
+        "geoBoundary": {
+          "type": "string"
+        },
+        "geoLocation": {
+          "type": "string"
+        },
+        "plusCode": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "type": "object",
   "properties": {
-    "identifier": {
+    "id": {
       "type": "string",
       "format": "uri"
     },
@@ -102,20 +389,19 @@
       "$ref": "#/$defs/CredentialIssuerShape"
     },
     "validFrom": {
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     },
     "validUntil": {
-      "type": "string",
-      "format": "date-time"
+      "type": "string"
     },
     "credentialSubject": {
-      "$ref": "#/$defs/ProductPassportShape"
+      "$ref": "#/$defs/ProductShape"
     }
   },
   "required": [
-    "identifier",
+    "id",
     "issuer",
     "credentialSubject"
-  ]
+  ],
+  "additionalProperties": false
 }

@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-02 13:40:14
+ * Generated: 2026-02-03 09:46:11
  * Source: shapes/v0.1/digital-waste-passport.shacl.ttl
  */
 
@@ -19,19 +19,25 @@ export interface DigitalWastePassportShape {
   publisher: {
     [k: string]: unknown;
   };
+  /**
+   * Must link exactly one WastePassport.
+   */
   credentialSubject: WastePassportShape;
   valid?: string;
 }
 /**
- * Must link exactly one WastePassport.
+ * WastePassport shape closed; only allows defined properties.
  */
 export interface WastePassportShape {
+  /**
+   * Must reference a Waste.
+   */
   waste: WasteShape;
   identifier?: string;
   reportingStandard?: StandardShape;
 }
 /**
- * Must reference a Waste.
+ * Waste shape closed with allowed UNECE properties.
  */
 export interface WasteShape {
   /**
