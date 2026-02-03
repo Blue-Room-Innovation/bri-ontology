@@ -1,4 +1,6 @@
+@prefix bri-shape: <https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#> .
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix geojson: <https://purl.org/geojson/vocab#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
@@ -7,9 +9,6 @@
 @prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
 @prefix vc: <https://www.w3.org/ns/credentials/v2#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix geojson: <https://purl.org/geojson/vocab#> .
-@prefix bri-shape: <https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#> .
-
 
 bri-shape:DigitalProductPassportShape
   a sh:NodeShape ;
@@ -205,9 +204,51 @@ bri-shape:ClassificationShape
     sh:maxCount 1 ;
   ] .
 
+# https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport
 bri-shape:ProductPassportShape
   a sh:NodeShape ;
   sh:closed true ;
+  
+   sh:property [
+    sh:path untp:circularityScorecard ;
+    sh:node bri-shape:CircularityPerformanceShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:conformityClaim ;
+    sh:node bri-shape:ClaimShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp:dueDiligenceDeclaration ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:emissionsScorecard ;
+    sh:node bri-shape:EmissionsPerformanceShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:granularityLevel ;
+    sh:datatype untp:granularityCode ;
+    sh:in ( "item" "batch" "model" ) ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:materialsProvenance ;
+    sh:node bri-shape:MaterialShape ;
+  ] ;
 
   sh:property [
     sh:path untp:product ;
@@ -217,10 +258,8 @@ bri-shape:ProductPassportShape
   ] ;
 
   sh:property [
-    sh:path untp:granularityLevel ;
-    sh:datatype xsd:string ;
-    sh:in ( "item" "batch" "model" ) ;
-    sh:maxCount 1 ;
+    sh:path untp:traceabilityInformation ;
+    sh:node bri-shape:TraceabilityPerformanceShape ;
   ] .
 
 bri-shape:ProductShape
@@ -530,5 +569,404 @@ bri-shape:LocationShape
   sh:property [
     sh:path untp-core:plusCode ;
     sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+# https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance
+bri-shape:CircularityPerformanceShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:materialCircularityIndicator ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:recyclableContent ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:recycledContent ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:recyclingInformation ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:repairInformation ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:utilityFactor ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] .
+
+# https://test.uncefact.org/vocabulary/untp/core/0/Claim
+bri-shape:ClaimShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:assessmentCriteria ;
+    sh:node bri-shape:CriterionShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:assessmentDate ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:conformance ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:conformityEvidence ;
+    sh:node bri-shape:SecureLinkShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:conformityTopic ;
+    sh:datatype untp-core:conformityTopicCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:declaredValue ;
+    sh:node bri-shape:MetricShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:referenceRegulation ;
+    sh:node bri-shape:RegulationShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:referenceStandard ;
+    sh:node bri-shape:StandardShape ;
+  ] .
+
+bri-shape:CriterionShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:category ;
+    sh:node bri-shape:ClassificationShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:conformityTopic ;
+    sh:datatype untp-core:conformityTopicCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:performanceLevel ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:status ;
+    sh:datatype untp-core:statusCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:subCriterion ;
+    sh:node bri-shape:CriterionShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:tag ;
+    sh:datatype xsd:string ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:thresholdValue ;
+    sh:node bri-shape:MetricShape ;
+  ] .
+
+bri-shape:MetricShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:accuracy ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:metricName ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:metricValue ;
+    sh:node bri-shape:MeasureShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:score ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+bri-shape:SecureLinkShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:encryptionMethod ;
+    sh:datatype untp-core:encryptionMethodCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:hashDigest ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:hashMethod ;
+    sh:datatype untp-core:hashMethodCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:linkName ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:linkType ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:linkURL ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+bri-shape:RegulationShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:administeredBy ;
+    sh:node bri-shape:PartyShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:effectiveDate ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:jurisdictionCountry ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+
+bri-shape:StandardShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:issueDate ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:issuingParty ;
+    sh:node bri-shape:PartyShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+bri-shape:EmissionsPerformanceShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:carbonFootprint ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:declaredUnit ;
+    sh:datatype untp-core:unitOfMeasure ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:operationalScope ;
+    sh:datatype untp-core:operationalScopeCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:primarySourcedRatio ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:reportingStandard ;
+    sh:node bri-shape:StandardShape ;
+  ] .
+
+bri-shape:MaterialShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:hazardous ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:mass ;
+    sh:node bri-shape:MeasureShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:massFraction ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:materialSafetyInformation ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:materialType ;
+    sh:node bri-shape:ClassificationShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:originCountry ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:recycledMassFraction ;
+    sh:datatype xsd:double ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:symbol ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+bri-shape:TraceabilityPerformanceShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp:traceabilityEvent ;
+    sh:node bri-shape:SecureLinkShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp:valueChainProcess ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp:verifiedRatio ;
+    sh:datatype xsd:double ;
     sh:maxCount 1 ;
   ] .
