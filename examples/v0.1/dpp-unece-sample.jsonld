@@ -1,5 +1,5 @@
 {
-  "@context": "../../build/v0.1/dppUneceExtended.context.jsonld",
+  "@context": "../../build/v0.1/dppUnece.context.jsonld",
   "@id": "https://example.org/resource/dpp1",
   "@type": "unece-dpp:DigitalProductPassport",
   "identifier": {

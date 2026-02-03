@@ -73,7 +73,6 @@ generation:
   # Artifacts to generate (SHACL → JSON Schema → TypeScript)
   artifacts:
     - dpp-unece
-    - dpp-unece-extended
     - dwp
     - dmwp
     - recycling
@@ -95,11 +94,11 @@ validation:
   shacl:
     # Available validation scenarios
     scenarios:
-      dpp-unece-extended:
-        name: "UNECE DPP Extended (Governed Hello World)"
-        description: "Validates a DPP sample against the UNECE bootstrap + governed hello-world constraints"
-        data: "examples/v0.1/dpp-unece-extended-sample.ttl"
-        shapes: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
+      dpp-unece:
+        name: "UNECE DPP"
+        description: "Validates a DPP sample against the UNECE constraints"
+        data: "examples/v0.1/dpp-unece-sample.ttl"
+        shapes: "shapes/v0.1/dpp-unece.shacl.ttl"
         format: "human"
         extras: ""
 
@@ -139,12 +138,6 @@ conversion:
       output: "build/v0.1/dppUnece.schema.json"
       naming: "local"
 
-    dpp-unece-extended:
-      name: "UNECE DPP Extended (Governed Hello World)"
-      input: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
-      output: "build/v0.1/dppUneceExtended.schema.json"
-      naming: "local"
-
     dwp:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
@@ -170,11 +163,6 @@ conversion:
       input: "shapes/v0.1/dpp-unece.shacl.ttl"
       output: "build/v0.1/dppUnece.context.jsonld"
 
-    dpp-unece-extended:
-      name: "UNECE DPP Extended (Governed Hello World)"
-      input: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
-      output: "build/v0.1/dppUneceExtended.context.jsonld"
-
     dwp:
       name: "Digital Waste Passport"
       input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
@@ -197,12 +185,6 @@ conversion:
       input: "build/v0.1/dppUnece.schema.json"
       output: "build/v0.1/dppUnece.ts"
       source: "shapes/v0.1/dpp-unece.shacl.ttl"
-
-    dpp-unece-extended:
-      name: "UNECE DPP Extended (Governed Hello World)"
-      input: "build/v0.1/dppUneceExtended.schema.json"
-      output: "build/v0.1/dppUneceExtended.ts"
-      source: "shapes/v0.1/dpp-unece-extended.shacl.ttl"
 
     dwp:
       name: "Digital Waste Passport"
