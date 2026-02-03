@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-02-03T13:48:25Z
+Generated: 2026-02-03T14:02:17Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -18,6 +18,7 @@ Generated: 2026-02-03T13:48:25Z
 
 - [digital-marpol-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-marpol-waste-passport.shacl.ttl)
 - [digital-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-waste-passport.shacl.ttl)
+- [dpp-unece-waste.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece-waste.shacl.ttl)
 - [dpp-unece.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl)
 - [recycling.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/recycling.shacl.ttl)
 
