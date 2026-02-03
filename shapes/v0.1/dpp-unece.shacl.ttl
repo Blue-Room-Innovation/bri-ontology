@@ -1,66 +1,26 @@
-#######################################################################
-# Digital Product Passport – SHACL BOOTSTRAP
-#
-# SOURCE
-# ------
-# This file is BOOTSTRAPPED from the official UNECE UNTP
-# Digital Product Passport JSON Schema (v0.6.0):
-#
-#   https://test.uncefact.org/vocabulary/untp/dpp/untp-dpp-schema-0.6.0.json
-#
-# The source schema is defined in JSON Schema draft 2020-12 and is
-# primarily intended for validating Digital Product Passports expressed
-# as W3C Verifiable Credentials serialized in JSON-LD.
-#
-# PURPOSE
-# -------
-# This file provides an INITIAL SHACL PROFILE that:
-#   - Mirrors EXPLICIT STRUCTURAL constraints from the UNECE JSON Schema
-#   - Enables early graph-based validation of JSON-LD DPP instances
-#   - Serves as a BOOTSTRAP artefact for semantic governance (IT0_00)
-#
-# IMPORTANT LIMITATIONS
-# ---------------------
-# - This is NOT a semantic conversion of the JSON Schema
-# - No OWL semantics, class hierarchies or inference are expressed here
-# - Constraints described only in natural language are NOT enforced
-# - JSON-LD @context ordering and content are NOT strictly validated
-#
-# GOVERNANCE RULE
-# ---------------
-# - THIS FILE IS IMMUTABLE
-# - It MUST NOT be modified to add business, regulatory or domain rules
-# - All additional constraints MUST be defined in separate SHACL files
-#   (e.g. dpp-governed.shacl.ttl, sector profiles, national profiles)
-#
-# DESIGN PRINCIPLE
-# ----------------
-# - Shapes in this file are intentionally LEFT OPEN (sh:closed false)
-# - Closure and stricter constraints are applied in governed profiles
-#
-#######################################################################
-
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
-@prefix sh:      <http://www.w3.org/ns/shacl#> .
-@prefix dct:     <http://purl.org/dc/terms/> .
-
-@prefix vc:      <https://www.w3.org/2018/credentials#> .
-@prefix unece:   <https://test.uncefact.org/vocabulary/untp/core/0/> .
-@prefix unece-dpp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix untp: <https://test.uncefact.org/vocabulary/untp/dpp/0/> .
+@prefix untp-core: <https://test.uncefact.org/vocabulary/untp/core/0/> .
+@prefix vc: <https://www.w3.org/2018/credentials#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geojson: <https://purl.org/geojson/vocab#> .
 
 #######################################################################
 # Digital Product Passport (Verifiable Credential wrapper)
 #######################################################################
 
-unece-dpp:DigitalProductPassportShape
+untp:DigitalProductPassportShape
   a sh:NodeShape ;
-  sh:targetClass unece-dpp:DigitalProductPassport ;
+  sh:targetClass untp:DigitalProductPassport ;
   sh:closed false ;   # OPEN BY DESIGN (see governance notes above)
 
   # id (JSON Schema: "id", format: uri)
   sh:property [
-    sh:path dct:identifier ;
+    sh:path untp-core:id ;
     sh:datatype xsd:anyURI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
@@ -68,22 +28,22 @@ unece-dpp:DigitalProductPassportShape
 
   # issuer (JSON Schema: issuer)
   sh:property [
-    sh:path vc:issuer ;
+    sh:path untp-core:CredentialIssuer ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node unece-dpp:CredentialIssuerShape ;
+    sh:node untp:CredentialIssuerShape ;
   ] ;
 
   # validFrom / validUntil
   sh:property [
-    sh:path vc:validFrom ;
-    sh:datatype xsd:dateTime ;
+    sh:path untp-core:validFrom ;
+    sh:datatype schema:DateTime ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path vc:validUntil ;
-    sh:datatype xsd:dateTime ;
+    sh:path untp-core:validUntil ;
+    sh:datatype schema:dateTime ;
     sh:maxCount 1 ;
   ] ;
 
@@ -92,71 +52,494 @@ unece-dpp:DigitalProductPassportShape
     sh:path vc:credentialSubject ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node unece-dpp:ProductPassportShape ;
+    sh:node untp:ProductShape ;
   ] .
 
 #######################################################################
 # Credential Issuer (derived from $defs/CredentialIssuer)
 #######################################################################
 
-unece-dpp:CredentialIssuerShape
+untp:CredentialIssuerShape
   a sh:NodeShape ;
+  sh:targetClass untp-core:CredentialIssuer ;
   sh:closed false ;
 
   sh:property [
-    sh:path dct:identifier ;
-    sh:datatype xsd:anyURI ;
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path unece:name ;
+    sh:path untp-core:issuerAlsoKnownAs ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:node untp:PartyShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] .
+
+
+untp:PartyShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:idScheme ;
+    sh:node untp-core:IdentifierSchemeShape ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:industryCategory ;
+    sh:node untp-core:ClassificationShape ;
+    sh:minCount 0 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:organisationWebsite ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:partyAlsoKnownAs ;
+    sh:node untp-core:PartyShape ;
+    sh:minCount 0 ;
+    sh:description "An optional list of other parties this party is also known as." ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:registeredId ;
+    sh:datatype xsd:string ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:description "The registration number (alphanumeric) of the party." ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:registrationCountry ;
+    sh:datatype untp-core:countryCode ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    sh:description "The country in which the party is registered." ;
+  ] .
+
+untp-core:IdentifierSchemeShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+untp-core:ClassificationShape
+  a sh:NodeShape ;
+  sh:closed true ;
+
+  sh:property [
+    sh:path untp-core:code ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:schemeID ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:schemeName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
 
 #######################################################################
 # Product Passport (credentialSubject)
 #######################################################################
 
-unece-dpp:ProductPassportShape
+untp:ProductPassportShape
   a sh:NodeShape ;
   sh:closed false ;
 
   sh:property [
-    sh:path unece-dpp:product ;
+    sh:path untp:product ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:node unece-dpp:ProductShape ;
+    sh:node untp:ProductShape ;
   ] ;
 
   sh:property [
-    sh:path unece-dpp:granularityLevel ;
+    sh:path untp:granularityLevel ;
     sh:datatype xsd:string ;
     sh:in ( "item" "batch" "model" ) ;
     sh:maxCount 1 ;
   ] .
 
-#######################################################################
-# Product (UNECE core concept)
-#######################################################################
-
-unece-dpp:ProductShape
+untp:ProductShape
   a sh:NodeShape ;
   sh:closed false ;
 
   sh:property [
-    sh:path dct:identifier ;
-    sh:datatype xsd:anyURI ;
+    sh:path untp-core:batchNumber ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:characteristics ;
+    sh:node untp-core:CharacteristicsShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:countryOfProduction ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:dimensions ;
+    sh:node untp-core:DimensionShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:furtherInformation ;
+    sh:node untp-core:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
 
   sh:property [
-    sh:path unece:name ;
+    sh:path untp-core:idScheme ;
+    sh:node untp-core:IdentifierSchemeShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:producedAtFacility ;
+    sh:node untp-core:FacilityShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:producedByParty ;
+    sh:node untp-core:PartyShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productCategory ;
+    sh:node untp-core:ClassificationShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productImage ;
+    sh:node untp-core:LinkShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productionDate ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:registeredId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:serialNumber ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+
+untp-core:CharacteristicsShape
+  a sh:NodeShape ;
+  sh:closed false .
+
+
+untp-core:DimensionShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:height ;
+    sh:node untp-core:MeasureShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:length ;
+    sh:node untp-core:MeasureShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:volume ;
+    sh:node untp-core:MeasureShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:weight ;
+    sh:node untp-core:MeasureShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:width ;
+    sh:node untp-core:MeasureShape ;
+    sh:maxCount 1 ;
+  ] .
+
+
+untp-core:MeasureShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:unit ;
+    sh:datatype untp-core:unitOfMeasure ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:value ;
+    sh:datatype xsd:double ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+untp-core:LinkShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:linkName ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:linkType ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:linkURL ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+untp-core:FacilityShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:address ;
+    sh:node untp-core:AddressShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:countryOfOperation ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:facilityAlsoKnownAs ;
+    sh:node untp-core:FacilityShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:idScheme ;
+    sh:node untp-core:IdentifierSchemeShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:locationInformation ;
+    sh:node untp-core:LocationShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:name ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:operatedByParty ;
+    sh:node untp-core:PartyShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:processCategory ;
+    sh:node untp-core:ClassificationShape ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:registeredId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+untp-core:AddressShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:addressCountry ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:addressLocality ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:addressRegion ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:postalCode ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:streetAddress ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+
+untp-core:LocationShape
+  a sh:NodeShape ;
+  sh:closed false ;
+
+  sh:property [
+    sh:path untp-core:geoBoundary ;
+    sh:datatype geojson:appendix-A.3 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:geoLocation ;
+    sh:datatype geojson:appendix-A.1 ;
+    sh:maxCount 1 ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:plusCode ;
+    sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .
