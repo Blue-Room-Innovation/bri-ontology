@@ -1130,6 +1130,9 @@ bri-shape:EmissionsPerformanceShape
     sh:datatype untp-core:operationalScopeCode ;
     sh:maxCount 1 ;
     sh:description "The operational scope of the ..."@en ;
+    sh:in (
+        "CradleToGate" "CradleToGrave" "None"
+    ) ;
   ] ;
 
   sh:property [

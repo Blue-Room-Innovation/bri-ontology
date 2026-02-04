@@ -129,13 +129,6 @@ dwp-shape:WastePassportShape
   ] ;
 
   # Propietat especialitzada per waste
-  sh:property [ # TODO: vols dir que està bé això aquí, ja ho deifeinx un altre shape aixo?
-    sh:path untp-core:operationalScope ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1 ;
-    sh:description "The operational scope of the emissions performance."@en ;
-  ] ;
-
   sh:property [
     sh:path dwp:waste ;
     sh:class dwp:Waste ;
