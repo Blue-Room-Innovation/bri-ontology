@@ -373,8 +373,32 @@ class SHACLToJSONSchemaConverter:
         class_ref = self.graph.value(prop_shape, SH["class"])
         node_kind = self.graph.value(prop_shape, SH.nodeKind)
         or_list = self.graph.value(prop_shape, SH["or"])
+        has_value = self.graph.value(prop_shape, SH.hasValue)
         
-        if or_list:
+        if has_value is not None:
+            # sh:hasValue -> const
+            if isinstance(has_value, URIRef):
+                val = self._get_property_name(has_value)
+                prop_def["const"] = val
+                prop_def["type"] = "string"
+            elif isinstance(has_value, Literal):
+                val = has_value.toPython()
+                # Handle dates/times which are not JSON serializable by default
+                if isinstance(val, (date, datetime, time)):
+                    val = val.isoformat()
+                elif isinstance(val, Decimal):
+                    val = float(val)
+                
+                prop_def["const"] = val
+                
+                if isinstance(val, bool):
+                     prop_def["type"] = "boolean"
+                elif isinstance(val, (int, float)):
+                     prop_def["type"] = "number"
+                else:
+                     prop_def["type"] = "string"
+
+        elif or_list:
             # sh:or is an RDF list of alternative constraint shapes.
             # Map it to JSON Schema anyOf.
             any_of: List[Dict[str, Any]] = []

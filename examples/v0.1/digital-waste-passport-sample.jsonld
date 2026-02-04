@@ -41,7 +41,7 @@
           "Link"
         ],
         "linkURL": "example",
-        "linkName": "",
+        "linkName": "test",
         "linkType": ""
       },
       "productCategory": [
@@ -61,7 +61,7 @@
           "Link"
         ],
         "linkURL": "example",
-        "linkName": "",
+        "linkName": "test",
         "linkType": ""
       },
       "producedByParty": {
@@ -82,7 +82,7 @@
           "Dimension"
         ],
         "volume": {
-          "value": 1,
+          "value": 1.0,
           "unit": "m3"
         }
       },
@@ -107,7 +107,7 @@
         "Link"
       ],
       "linkURL": "example",
-      "linkName": "",
+      "linkName": "test",
       "linkType": ""
     },
     "materialsProvenance": [],
@@ -161,12 +161,12 @@
     "emissionsScorecard": {
       "declaredUnit": "KGM",
       "operationalScope": "CradleToGate",
-      "primarySourcedRatio": 0,
+      "primarySourcedRatio": 0.0,
       "reportingStandard": {
         "type": [
           "Standard"
         ],
-        "@id": "https://ghgprotocol.org/standards/product-standard",
+        "id": "https://ghgprotocol.org/standards/product-standard",
         "name": "GHG Protocol Product Standard",
         "issuingParty": {
           "id": "https://ghgprotocol.org",
@@ -180,7 +180,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Commissioning",
-        "verifiedRatio": 1,
+        "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
             "type": [
@@ -199,7 +199,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Assigning",
-        "verifiedRatio": 1,
+        "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
             "type": [
@@ -218,7 +218,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Accepting",
-        "verifiedRatio": 1,
+        "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
             "type": [
@@ -237,7 +237,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Departing",
-        "verifiedRatio": 1,
+        "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
             "type": [
@@ -256,7 +256,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Arriving",
-        "verifiedRatio": 1,
+        "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
             "type": [

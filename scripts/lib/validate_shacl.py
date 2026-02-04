@@ -369,7 +369,7 @@ def validate_shacl(config: ShaclConfig) -> int:
         _load_local_owl_imports_into_graph(shacl_graph, config.shapes_file)
 
         # Apply datatype coercions derived from SHACL to the parsed data graph.
-        _apply_shacl_datatype_coercions(data_graph, shacl_graph)
+        # _apply_shacl_datatype_coercions(data_graph, shacl_graph)
         
         # Validate
         conforms, report_graph, report_text = validate(
