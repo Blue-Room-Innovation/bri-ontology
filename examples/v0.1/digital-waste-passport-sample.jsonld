@@ -1,10 +1,8 @@
 {
   "@context": "../../build/v0.1/digitalWastePassport.context.jsonld",
-  "@id": "https://example.org/resource/dpp1",
+  "@id": "https://example.org/resource/dwp1",
   "type": [
-    "DigitalProductPassport",
-    "DigitalWastePassport",
-    "VerifiableCredential"
+    "DigitalWastePassport"
   ],
   "id": "urn:uuid:0c5ef74b-a32e-4344-8659-4b142e37ee0d",
   "issuer": {

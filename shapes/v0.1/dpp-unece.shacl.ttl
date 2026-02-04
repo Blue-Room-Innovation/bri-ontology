@@ -13,8 +13,8 @@ bri-shape:DigitalProductPassportShape
   a sh:NodeShape ;
   sh:targetClass untp:DigitalProductPassport ;
   rdfs:label "Digital Product Passport"@en ;
-  rdfs:comment "The Product Passport is a comprehensive data structure that encapsulates various details pertaining to a product, including its identification details, who issued it, batch information, provenance information, circularity information and a set of verifiable product conformity & sustainability claims."@en ;
-  rdfs:isDefinedBy untp:DigitalProductPassport ;
+  rdfs:comment "The Digital Product Passport is a comprehensive data structure that encapsulates various details pertaining to a product, including its identification details, who issued it, batch information, provenance information, circularity information and a set of verifiable product conformity & sustainability claims."@en ;
+  rdfs:isDefinedBy <https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport> ;
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
 

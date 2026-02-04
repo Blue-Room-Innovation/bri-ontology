@@ -10,6 +10,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix vc: <https://www.w3.org/ns/credentials/v2#> .
+@prefix schema: <http://schema.org/> .
 
 <> a owl:Ontology ;
    owl:imports <./dpp-unece.shacl.ttl>.
@@ -17,14 +19,46 @@
 dwp-shape:DigitalWastePassportShape
   a sh:NodeShape ;
   sh:targetClass dwp:DigitalWastePassport ;
-  sh:and ( bri-shape:DigitalProductPassportShape ) ;
   rdfs:label "Digital Waste Passport"@en ;
   rdfs:comment "A Digital Waste Passport that contains waste-specific information."@en ;
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
 
+  # Propietats heretades de DigitalProductPassport
+sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+
   sh:property [
-    sh:path dwp:credentialSubject ;
+    sh:path vc:issuer ;
+    sh:class untp-core:CredentialIssuer ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:node bri-shape:CredentialIssuerShape ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:validFrom ;
+    sh:datatype schema:DateTime ;
+    sh:maxCount 1 ;
+    sh:pattern "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$" ;
+    sh:description "The data from which this version is valid."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:validUntil ;
+    sh:datatype schema:DateTime ;
+    sh:maxCount 1 ;
+    sh:pattern "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$" ;
+    sh:description "The date and time until which this version remains valid."@en ;
+  ] ;
+
+  # Propietat especialitzada per WastePassport
+  sh:property [
+    sh:path vc:credentialSubject ;
     sh:class dwp:WastePassport ;
     sh:node dwp-shape:WastePassportShape ;
     sh:minCount 1 ;
@@ -34,11 +68,73 @@ dwp-shape:DigitalWastePassportShape
 dwp-shape:WastePassportShape
   a sh:NodeShape ;
   sh:targetClass dwp:WastePassport ;
-  sh:and ( bri-shape:ProductPassportShape ) ;
   rdfs:label "Waste Passport"@en ;
-  rdfs:comment "A Product Passport specialized for waste products."@en ;
+  rdfs:comment "A product claim specialized for waste products."@en ;
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
+
+# Propietats heretades de ProductPassport
+  sh:property [
+    sh:path untp:circularityScorecard ;
+    sh:node bri-shape:CircularityPerformanceShape ;
+    sh:maxCount 1 ;
+    sh:description "A circularity performance scorecard"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:conformityClaim ;
+    sh:node bri-shape:ClaimShape ;
+    sh:description "An array of claim objects ..."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:dueDiligenceDeclaration ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+    sh:description "The due diligence declaration that ..."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:emissionsScorecard ;
+    sh:node bri-shape:EmissionsPerformanceShape ;
+    sh:maxCount 1 ;
+    sh:description "An emissions performance scorecard"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:granularityLevel ;
+    sh:datatype untp:granularityCode ;
+    sh:in ( "item"^^untp:granularityCode "batch"^^untp:granularityCode "model"^^untp:granularityCode ) ;
+    sh:maxCount 1 ;
+    sh:description "Code to indicate the granularity ..."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "An id is not required ..."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:materialsProvenance ;
+    sh:node bri-shape:MaterialShape ;
+    sh:description "An array of Provenance objects ..."@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp:traceabilityInformation ;
+    sh:node bri-shape:TraceabilityPerformanceShape ;
+    sh:description "An array of traceability events ..."@en ;
+  ] ;
+
+  # Propietat especialitzada per waste
+  sh:property [ # TODO: vols dir que està bé això aquí, ja ho deifeinx un altre shape aixo?
+    sh:path untp-core:operationalScope ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "The operational scope of the emissions performance."@en ;
+  ] ;
 
   sh:property [
     sh:path dwp:waste ;
@@ -47,23 +143,97 @@ dwp-shape:WastePassportShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:description "The waste being documented in this passport"@en ;
-  ] ;
- 
-  sh:property [
-    sh:path untp-core:operationalScope ;
-    sh:datatype xsd:string ;
-    sh:maxCount 1 ;
-    sh:description "The operational scope of the emissions performance. Only scope 1 & 2, or including upstream scope 3 (cradle to gate) or upstream and downstream scope 3 (cradle to grave)."@en ;
   ] .
 
 dwp-shape:WasteShape
   a sh:NodeShape ;
   sh:targetClass dwp:Waste ;
-  sh:and ( bri-shape:ProductShape ) ;
   rdfs:label "Waste"@en ;
   rdfs:comment "Shape for waste products."@en ;
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
+
+  sh:property [
+    sh:path untp-core:batchNumber ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "Identifier of the specific production batch"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:characteristics ;
+    sh:node bri-shape:CharacteristicsShape ;
+    sh:maxCount 1 ;
+    sh:description "Extension point for waste specific characteristics"@en ;
+  ] ;
+  
+  sh:property [
+    sh:path untp-core:countryOfProduction ;
+    sh:datatype untp-core:countryCode ;
+    sh:maxCount 1 ;
+    sh:description "The country in which this ..."@en ;
+    sh:in (
+        "AD" "AE" "AF" "AG" "AI" "AL" "AM" "AO" "AQ" "AR" 
+        "AS" "AT" "AU" "AW" "AX" "AZ" "BA" "BB" "BD" "BE" 
+        "BF" "BG" "BH" "BI" "BJ" "BL" "BM" "BN" "BO" "BQ" 
+        "BR" "BS" "BT" "BV" "BW" "BY" "BZ" "CA" "CC" "CD" 
+        "CF" "CG" "CH" "CI" "CK" "CL" "CM" "CN" "CO" "CR" 
+        "CU" "CV" "CW" "CX" "CY" "CZ" "DE" "DJ" "DK" "DM" 
+        "DO" "DZ" "EC" "EE" "EG" "EH" "ER" "ES" "ET" "FI" 
+        "FJ" "FK" "FM" "FO" "FR" "GA" "GB" "GD" "GE" "GF" 
+        "GG" "GH" "GI" "GL" "GM" "GN" "GP" "GQ" "GR" "GS" 
+        "GT" "GU" "GW" "GY" "HK" "HM" "HN" "HR" "HT" "HU" 
+        "ID" "IE" "IL" "IM" "IN" "IO" "IQ" "IR" "IS" "IT" 
+        "JE" "JM" "JO" "JP" "KE" "KG" "KH" "KI" "KM" "KN" 
+        "KP" "KR" "KW" "KY" "KZ" "LA" "LB" "LC" "LI" "LK" 
+        "LR" "LS" "LT" "LU" "LV" "LY" "MA" "MC" "MD" "ME" 
+        "MF" "MG" "MH" "MK" "ML" "MM" "MN" "MO" "MP" "MQ" 
+        "MR" "MS" "MT" "MU" "MV" "MW" "MX" "MY" "MZ" "NA" 
+        "NC" "NE" "NF" "NG" "NI" "NL" "NO" "NP" "NR" "NU" 
+        "NZ" "OM" "PA" "PE" "PF" "PG" "PH" "PK" "PL" "PM" 
+        "PN" "PR" "PS" "PT" "PW" "PY" "QA" "RE" "RO" "RS" 
+        "RU" "RW" "SA" "SB" "SC" "SD" "SE" "SG" "SH" "SI" 
+        "SJ" "SK" "SL" "SM" "SN" "SO" "SR" "SS" "ST" "SV" 
+        "SX" "SY" "SZ" "TC" "TD" "TF" "TG" "TH" "TJ" "TK" 
+        "TL" "TM" "TN" "TO" "TR" "TT" "TV" "TW" "TZ" "UA" 
+        "UG" "UM" "US" "UY" "UZ" "VA" "VC" "VE" "VG" "VI" 
+        "VN" "VU" "WF" "WS" "YE" "YT" "ZA" "ZM" "ZW"
+    ) ; # extrets de https://vocabulary.uncefact.org/CountryId ;
+  ] ;
+  
+  sh:property [
+    sh:path untp-core:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "An optional short description of the waste"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:dimensions ;
+    sh:node bri-shape:DimensionShape ;
+    sh:maxCount 1 ;
+    sh:description "The physical dimensions of the waste"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:furtherInformation ;
+    sh:node bri-shape:LinkShape ;
+    sh:description "A URL pointing to further information"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:id ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "The W3C DID of the waste"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:idScheme ;
+    sh:node bri-shape:IdentifierSchemeShape ;
+    sh:maxCount 1 ;
+    sh:description "The identifier scheme of the waste"@en ;
+  ] ;
 
   sh:property [
     sh:path untp-core:name ;
@@ -73,11 +243,54 @@ dwp-shape:WasteShape
   ] ;
 
   sh:property [
-    sh:path untp-core:productCategory ;
-    sh:node bri-shape:ClassificationShape ;
-    sh:description "A code representing the waste ..."@en ;
+    sh:path untp-core:producedAtFacility ;
+    sh:node bri-shape:FacilityShape ;
+    sh:maxCount 1 ;
+    sh:description "The Facility where the waste was produced"@en ;
   ] ;
 
+  sh:property [
+    sh:path untp-core:producedByParty ;
+    sh:node bri-shape:PartyShape ;
+    sh:maxCount 1 ;
+    sh:description "The Party entity that produced the waste"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productCategory ;
+    sh:node bri-shape:ClassificationShape ;
+    sh:description "A code representing the waste category"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productImage ;
+    sh:node bri-shape:LinkShape ;
+    sh:maxCount 1 ;
+    sh:description "Reference information for product image"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:productionDate ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "The ISO 8601 date on which the waste was produced"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:registeredId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "The registration number of the waste"@en ;
+  ] ;
+
+  sh:property [
+    sh:path untp-core:serialNumber ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:description "A number or code representing the serial number"@en ;
+  ] ;
+
+  # Propietat especialitzada per waste
   sh:property [
     sh:path unece:weightQuantity ;
     sh:datatype xsd:decimal ;
@@ -93,7 +306,6 @@ dwp-shape:WasteShape
     sh:description "The Facility where the waste ..."@en ;
   ] ;
 
-  
   sh:property [
     sh:path dwp:wasteAgentParty ;
     sh:node bri-shape:PartyShape ;
