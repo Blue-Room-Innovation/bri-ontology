@@ -1,12 +1,12 @@
 {
   "@context": "../../build/v0.1/digitalWastePassport.context.jsonld",
   "@id": "https://example.org/resource/dwp1",
-  "type": [
+  "@type": [
     "DigitalWastePassport"
   ],
   "id": "urn:uuid:0c5ef74b-a32e-4344-8659-4b142e37ee0d",
   "issuer": {
-    "type": [
+    "@type": [
       "CredentialIssuer"
     ],
     "id": "https://dev.gs1resolver.blueroominnovation.com/417/0400070000014",
@@ -14,11 +14,11 @@
   },
   "validFrom": "2026-01-13T07:46:22.096Z",
   "credentialSubject": {
-    "type": [
+    "@type": [
       "WastePassport"
     ],
     "waste": {
-      "type": [
+      "@type": [
         "Waste"
       ],
       "@id": "did:web:dev-api.circularport.eu:id:01:0400000000121:10:dzCrdHYMyzn16Y4",
@@ -30,14 +30,14 @@
       "productionDate": "1705929175000",
       "countryOfProduction": "AD",
       "idScheme": {
-        "type": [
+        "@type": [
           "IdentifierScheme"
         ],
         "id": "ex",
         "name": "in"
       },
       "productImage": {
-        "type": [
+        "@type": [
           "Link"
         ],
         "linkURL": "example",
@@ -46,7 +46,7 @@
       },
       "productCategory": [
         {
-          "type": [
+          "@type": [
             "Classification"
           ],
           "id": "https://emsa.europa.eu/emswe-mig/Codes/cd1.htm",
@@ -57,7 +57,7 @@
         }
       ],
       "furtherInformation": {
-        "type": [
+        "@type": [
           "Link"
         ],
         "linkURL": "example",
@@ -70,7 +70,7 @@
         "registeredId": "9243447"
       },
       "producedAtFacility": {
-        "type": [
+        "@type": [
           "Facility"
         ],
         "id": "https://dev.gs1resolver.blueroominnovation.com/414/0400070000014",
@@ -78,7 +78,7 @@
         "registeredId": "9243447"
       },
       "dimensions": {
-        "type": [
+        "@type": [
           "Dimension"
         ],
         "volume": {
@@ -88,7 +88,7 @@
       },
       "characteristics": {},
       "pickupFacility": {
-        "type": [
+        "@type": [
           "Facility"
         ],
         "id": "https://dev.gs1resolver.blueroominnovation.com/414/0400000000060",
@@ -103,7 +103,7 @@
     },
     "granularityLevel": "batch",
     "dueDiligenceDeclaration": {
-      "type": [
+      "@type": [
         "Link"
       ],
       "linkURL": "example",
@@ -113,7 +113,7 @@
     "materialsProvenance": [],
     "conformityClaim": [
       {
-        "type": [
+        "@type": [
           "Claim",
           "Declaration"
         ],
@@ -123,7 +123,7 @@
         "conformityTopic": "environment.emissions",
         "description": "Environmental Product Declaration calculated using EPD. Operational scope: CradleToGate",
         "referenceStandard": {
-          "type": [
+          "@type": [
             "Standard"
           ],
           "@id": "https://environdec.com/epd",
@@ -136,7 +136,7 @@
         },
         "assessmentCriteria": [
           {
-            "type": [
+            "@type": [
               "Criterion"
             ],
             "@id": "https://eplca.jrc.ec.europa.eu/LCDN/EF3.1Method",
@@ -148,7 +148,7 @@
         ],
         "declaredValue": [],
         "conformityEvidence": {
-          "type": [
+          "@type": [
             "SecureLink"
           ],
           "linkURL": "https://cc-registry.circularpass.org/credential/2af7e50e-abd2-483f-a275-226fa7757b31",
@@ -163,7 +163,7 @@
       "operationalScope": "CradleToGate",
       "primarySourcedRatio": 0.0,
       "reportingStandard": {
-        "type": [
+        "@type": [
           "Standard"
         ],
         "id": "https://ghgprotocol.org/standards/product-standard",
@@ -176,14 +176,14 @@
     },
     "traceabilityInformation": [
       {
-        "type": [
+        "@type": [
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Commissioning",
         "verifiedRatio": 1,
         "traceabilityEvent": [
           {
-            "type": [
+            "@type": [
               "SecureLink"
             ],
             "linkURL": "example",
@@ -195,14 +195,14 @@
         ]
       },
       {
-        "type": [
+        "@type": [
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Assigning",
         "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
-            "type": [
+            "@type": [
               "SecureLink"
             ],
             "linkURL": "https://dev-api.circularport.eu/api/v1/events/ni%3A%2F%2F%2Fsha-256%3B28e586262e75964ac7b77adea9e7d8537dec6ee4fa27a91b994bf42918f0e7d0%3Fver%3DCBV2.0",
@@ -214,14 +214,14 @@
         ]
       },
       {
-        "type": [
+        "@type": [
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Accepting",
         "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
-            "type": [
+            "@type": [
               "SecureLink"
             ],
             "linkURL": "https://dev-api.circularport.eu/api/v1/events/ni%3A%2F%2F%2Fsha-256%3B3f50221d20bca76c0622b8581420ac6464ea4465c0826c14eee2a24f528b5a5d%3Fver%3DCBV2.0",
@@ -233,14 +233,14 @@
         ]
       },
       {
-        "type": [
+        "@type": [
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Departing",
         "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
-            "type": [
+            "@type": [
               "SecureLink"
             ],
             "linkURL": "https://dev-api.circularport.eu/api/v1/events/ni%3A%2F%2F%2Fsha-256%3Be529380f14a6a079509a07ee02735b6528bbe75cc7fe38ca3e4f1f4166bd31a6%3Fver%3DCBV2.0",
@@ -252,15 +252,15 @@
         ]
       },
       {
-        "type": [
+        "@type": [
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Arriving",
         "verifiedRatio": 1.0,
         "traceabilityEvent": [
           {
-            "type": [
-              "SecureLink"
+            "@type": [
+              "SecureLinks"
             ],
             "linkURL": "https://dev-api.circularport.eu/api/v1/events/ni%3A%2F%2F%2Fsha-256%3Bf03cb451216417555467512e5b71c31a4a638ecaf40e3483ffdc10adae4fef04%3Fver%3DCBV2.0",
             "linkName": "Arriving Process Event",

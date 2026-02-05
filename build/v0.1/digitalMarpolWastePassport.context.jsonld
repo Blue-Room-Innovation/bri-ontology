@@ -15,35 +15,86 @@
     "MarpolWastePassport": "dmwp:MarpolWastePassport",
     "ResidueInformation": "dmwp:ResidueInformation",
     "Ship": "dmwp:Ship",
-    "arrivalPort": "dmwp:arrivalPort",
+    "arrivalPort": {
+      "@id": "dmwp:arrivalPort",
+      "@type": "xsd:string"
+    },
     "contactPoint": "dmwp:contactPoint",
     "credentialSubject": "dmwp:credentialSubject",
-    "deliveryType": "dmwp:deliveryType",
-    "dischargeMeans": "dmwp:dischargeMeans",
+    "deliveryType": {
+      "@id": "dmwp:deliveryType",
+      "@type": "xsd:string"
+    },
+    "dischargeMeans": {
+      "@id": "dmwp:dischargeMeans",
+      "@type": "xsd:string"
+    },
     "estimatedGenerated": "dmwp:estimatedGenerated",
-    "flag": "dmwp:flag",
-    "identifier": "dmwp:identifier",
-    "imoNumber": "dmwp:imoNumber",
+    "flag": {
+      "@id": "dmwp:flag",
+      "@type": "xsd:string"
+    },
+    "identifier": {
+      "@id": "dmwp:identifier",
+      "@type": "xsd:string"
+    },
+    "imoNumber": {
+      "@id": "dmwp:imoNumber",
+      "@type": "xsd:string"
+    },
     "involvedParty": "dmwp:involvedParty",
-    "issued": "dct:issued",
-    "lastDeliveryDate": "dmwp:lastDeliveryDate",
-    "lastWasteDeliveryPort": "dmwp:lastWasteDeliveryPort",
-    "marpolEdition": "dmwp:marpolEdition",
+    "issued": {
+      "@id": "dct:issued",
+      "@type": "xsd:dateTime"
+    },
+    "lastDeliveryDate": {
+      "@id": "dmwp:lastDeliveryDate",
+      "@type": "xsd:dateTime"
+    },
+    "lastWasteDeliveryPort": {
+      "@id": "dmwp:lastWasteDeliveryPort",
+      "@type": "xsd:string"
+    },
+    "marpolEdition": {
+      "@id": "dmwp:marpolEdition",
+      "@type": "xsd:string"
+    },
     "maxCapacity": "dmwp:maxCapacity",
     "message": "dmwp:message",
-    "name": "dmwp:name",
-    "nextCollectionPort": "dmwp:nextCollectionPort",
-    "nextPlannedDeliveryPort": "dmwp:nextPlannedDeliveryPort",
+    "name": {
+      "@id": "dmwp:name",
+      "@type": "xsd:string"
+    },
+    "nextCollectionPort": {
+      "@id": "dmwp:nextCollectionPort",
+      "@type": "xsd:string"
+    },
+    "nextPlannedDeliveryPort": {
+      "@id": "dmwp:nextPlannedDeliveryPort",
+      "@type": "xsd:string"
+    },
     "publisher": "dct:publisher",
     "quantityRemainingOnBoard": "dmwp:quantityRemainingOnBoard",
     "quantityToDeliver": "dmwp:quantityToDeliver",
     "residue": "dmwp:residue",
     "role": "dmwp:role",
     "ship": "dmwp:ship",
-    "shipScale": "dmwp:shipScale",
-    "substance": "dmwp:substance",
-    "subtypeCode": "dmwp:subtypeCode",
-    "typeCode": "dmwp:typeCode",
+    "shipScale": {
+      "@id": "dmwp:shipScale",
+      "@type": "xsd:string"
+    },
+    "substance": {
+      "@id": "dmwp:substance",
+      "@type": "xsd:string"
+    },
+    "subtypeCode": {
+      "@id": "dmwp:subtypeCode",
+      "@type": "xsd:string"
+    },
+    "typeCode": {
+      "@id": "dmwp:typeCode",
+      "@type": "xsd:string"
+    },
     "waste": "dmwp:waste",
     "wasteAgent": "dmwp:wasteAgent"
   }

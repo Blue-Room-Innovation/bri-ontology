@@ -1,11 +1,11 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-30 14:48:00
+ * Generated: 2026-02-05 12:11:54
  * Source: shapes/v0.1/digital-marpol-waste-passport.shacl.ttl
  */
 /**
- * Must have at least one ResidueInformation.
+ * Information for each waste batch (closed).
  */
 export type ResidueInformationShape = {
     quantityToDeliver: {
@@ -27,6 +27,9 @@ export type ResidueInformationShape = {
  * Main shape of the Digital MARPOL Waste Passport (closed).
  */
 export interface DigitalMarpolWastePassportShape {
+    /**
+     * Must have a credentialSubject (MarpolWastePassport).
+     */
     credentialSubject: MarpolWastePassportShape;
     /**
      * Missing issued date (dct:issued).
@@ -40,16 +43,25 @@ export interface DigitalMarpolWastePassportShape {
     };
 }
 /**
- * Must have a credentialSubject (MarpolWastePassport).
+ * MarpolWastePassport shape (closed).
  */
 export interface MarpolWastePassportShape {
+    /**
+     * Must link a MarpolWaste.
+     */
     waste: MarpolWasteShape;
 }
 /**
- * Must link a MarpolWaste.
+ * MARPOL waste shape (closed).
  */
 export interface MarpolWasteShape {
+    /**
+     * Must specify the ship (ship).
+     */
     ship: ShipShape;
+    /**
+     * Must have at least one ResidueInformation.
+     */
     residue: ResidueInformationShape;
     lastDeliveryDate?: string;
     /**
@@ -73,7 +85,7 @@ export interface MarpolWasteShape {
     };
 }
 /**
- * Must specify the ship (ship).
+ * Ship data (closed).
  */
 export interface ShipShape {
     /**

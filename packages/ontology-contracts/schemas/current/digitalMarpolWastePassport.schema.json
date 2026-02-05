@@ -12,7 +12,11 @@
       "properties": {
         "credentialSubject": {
           "description": "Must have a credentialSubject (MarpolWastePassport).",
-          "$ref": "#/$defs/MarpolWastePassportShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/MarpolWastePassportShape"
+            }
+          ]
         },
         "issued": {
           "description": "Missing issued date (dct:issued).",
@@ -39,7 +43,11 @@
       "properties": {
         "waste": {
           "description": "Must link a MarpolWaste.",
-          "$ref": "#/$defs/MarpolWasteShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/MarpolWasteShape"
+            }
+          ]
         }
       },
       "required": [
@@ -55,11 +63,19 @@
       "properties": {
         "ship": {
           "description": "Must specify the ship (ship).",
-          "$ref": "#/$defs/ShipShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/ShipShape"
+            }
+          ]
         },
         "residue": {
           "description": "Must have at least one ResidueInformation.",
-          "$ref": "#/$defs/ResidueInformationShape"
+          "allOf": [
+            {
+              "$ref": "#/$defs/ResidueInformationShape"
+            }
+          ]
         },
         "lastDeliveryDate": {
           "type": "string",
@@ -261,7 +277,11 @@
   "properties": {
     "credentialSubject": {
       "description": "Must have a credentialSubject (MarpolWastePassport).",
-      "$ref": "#/$defs/MarpolWastePassportShape"
+      "allOf": [
+        {
+          "$ref": "#/$defs/MarpolWastePassportShape"
+        }
+      ]
     },
     "issued": {
       "description": "Missing issued date (dct:issued).",

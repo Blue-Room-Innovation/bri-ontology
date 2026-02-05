@@ -5,18 +5,16 @@
  */
 
 export type { DigitalProductPassportShape } from "../generated/current/dppUnece.js";
-export type { DigitalProductPassportGovernedShape } from "../generated/current/dppUneceExtended.js";
 export type { DigitalWastePassportShape } from "../generated/current/digitalWastePassport.js";
 export type { DigitalMarpolWastePassportShape } from "../generated/current/digitalMarpolWastePassport.js";
 export type { RecyclingOrganisationShape } from "../generated/current/recycling.js";
 
 export const CURRENT_BUILD_VERSION = "v0.1" as const;
 
-export type SchemaKeyCurrent = "dpp-unece" | "dpp-unece-extended" | "dwp" | "dmwp" | "recycling";
+export type SchemaKeyCurrent = "dpp-unece" | "dwp" | "dmwp" | "recycling";
 
 export interface SchemaTypeMapCurrent {
   "dpp-unece": import("../generated/current/dppUnece.js").DigitalProductPassportShape;
-  "dpp-unece-extended": import("../generated/current/dppUneceExtended.js").DigitalProductPassportGovernedShape;
   "dwp": import("../generated/current/digitalWastePassport.js").DigitalWastePassportShape;
   "dmwp": import("../generated/current/digitalMarpolWastePassport.js").DigitalMarpolWastePassportShape;
   "recycling": import("../generated/current/recycling.js").RecyclingOrganisationShape;
