@@ -180,7 +180,7 @@
           "TraceabilityPerformance"
         ],
         "valueChainProcess": "Commissioning",
-        "verifiedRatio": 1.0,
+        "verifiedRatio": 1,
         "traceabilityEvent": [
           {
             "type": [

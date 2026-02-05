@@ -102,6 +102,7 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     # Candidate term mappings: localName -> iri
     local_to_iri: Dict[str, str] = {}
     collisions: Dict[str, Set[str]] = {}
+    iri_to_datatype: Dict[str, str] = {}
 
     def add_candidate(uri: URIRef) -> None:
         iri = str(uri)
@@ -115,13 +116,16 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     # Properties
     for path, datatype in _iter_property_paths(graph):
         add_candidate(path)
+        if datatype:
+            qn_dt = _qname(graph, datatype)
+            iri_to_datatype[str(path)] = qn_dt if qn_dt else str(datatype)
 
     # Classes (so JSON-LD can use "@type": "LocalName")
     for target_class in _iter_target_classes(graph):
         add_candidate(target_class)
 
     # Build final terms, resolving collisions
-    terms: Dict[str, str] = {}
+    terms: Dict[str, object] = {}
 
     for local, iri in sorted(local_to_iri.items()):
         if local in collisions:
@@ -129,7 +133,13 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
             continue
         qn = _qname(graph, URIRef(iri))
         # Prefer CURIE in values if available, else full IRI.
-        terms[local] = qn if qn else iri
+        val = qn if qn else iri
+        
+        dt = iri_to_datatype.get(iri)
+        if dt:
+            terms[local] = {"@id": val, "@type": dt}
+        else:
+            terms[local] = val
 
     if collisions:
         logger.warning("Found %d local-name collisions; using prefixed fallback terms", len(collisions))
@@ -142,9 +152,20 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
                 else:
                     fallback = f"iri_{local}"
                 # If still collides, append a short hash-like suffix.
-                if fallback in terms and terms[fallback] != (qn if qn else iri):
+                val = qn if qn else iri
+                dt = iri_to_datatype.get(iri)
+                
+                # Check collision with existing terms (simple string or dict ID)
+                existing = terms.get(fallback)
+                existing_id = existing["@id"] if isinstance(existing, dict) else existing
+                
+                if existing and existing_id != val:
                     fallback = f"{fallback}_{abs(hash(iri)) % 10000}"
-                terms[fallback] = qn if qn else iri
+                
+                if dt:
+                    terms[fallback] = {"@id": val, "@type": dt}
+                else:
+                    terms[fallback] = val
 
     # Compose @context: prefixes + keyword aliases + terms
     ctx: Dict[str, object] = {}
