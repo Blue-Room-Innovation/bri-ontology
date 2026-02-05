@@ -982,13 +982,6 @@ bri-shape:SecureLinkShape
   sh:ignoredProperties ( rdf:type ) ;
 
   sh:property [
-    sh:path rdf:type ;
-    sh:hasValue untp-core:SecureLink ;
-    sh:minCount 1 ;
-    sh:description "Type definition for SecureLink"@en ;
-  ] ;
-
-  sh:property [
     sh:path untp-core:encryptionMethod ;
     sh:datatype untp-core:encryptionMethodCode ;
     sh:maxCount 1 ;
