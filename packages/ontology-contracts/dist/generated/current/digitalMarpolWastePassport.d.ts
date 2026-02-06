@@ -1,11 +1,11 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-30 13:50:34
- * Source: shapes/v0.1/digitalMarpolWastePassportShapes.ttl
+ * Generated: 2026-02-06 13:20:53
+ * Source: shapes/v0.1/digital-marpol-waste-passport.shacl.ttl
  */
 /**
- * Must have at least one ResidueInformation.
+ * Information for each waste batch (closed).
  */
 export type ResidueInformationShape = {
     quantityToDeliver: {
@@ -27,6 +27,13 @@ export type ResidueInformationShape = {
  * Main shape of the Digital MARPOL Waste Passport (closed).
  */
 export interface DigitalMarpolWastePassportShape {
+    /**
+     * Type identifier for DigitalMarpolWastePassport
+     */
+    "@type": "DigitalMarpolWastePassport";
+    /**
+     * Must have a credentialSubject (MarpolWastePassport).
+     */
     credentialSubject: MarpolWastePassportShape;
     /**
      * Missing issued date (dct:issued).
@@ -40,16 +47,33 @@ export interface DigitalMarpolWastePassportShape {
     };
 }
 /**
- * Must have a credentialSubject (MarpolWastePassport).
+ * MarpolWastePassport shape (closed).
  */
 export interface MarpolWastePassportShape {
+    /**
+     * Type identifier for MarpolWastePassport
+     */
+    "@type": "MarpolWastePassport";
+    /**
+     * Must link a MarpolWaste.
+     */
     waste: MarpolWasteShape;
 }
 /**
- * Must link a MarpolWaste.
+ * MARPOL waste shape (closed).
  */
 export interface MarpolWasteShape {
+    /**
+     * Type identifier for MarpolWaste
+     */
+    "@type": "MarpolWaste";
+    /**
+     * Must specify the ship (ship).
+     */
     ship: ShipShape;
+    /**
+     * Must have at least one ResidueInformation.
+     */
     residue: ResidueInformationShape;
     lastDeliveryDate?: string;
     /**
@@ -73,9 +97,13 @@ export interface MarpolWasteShape {
     };
 }
 /**
- * Must specify the ship (ship).
+ * Ship data (closed).
  */
 export interface ShipShape {
+    /**
+     * Type identifier for Ship
+     */
+    "@type": "Ship";
     /**
      * IMO must be 7 digits.
      */
@@ -90,6 +118,10 @@ export interface ShipShape {
  * Authorized entity (closed).
  */
 export interface AuthorizedPartyShape {
+    /**
+     * Type identifier for AuthorizedParty
+     */
+    "@type": "AuthorizedParty";
     identifier: string;
     contactPoint?: {
         [k: string]: unknown;

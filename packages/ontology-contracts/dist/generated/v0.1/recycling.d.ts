@@ -1,13 +1,25 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-01-30 13:50:36
+ * Generated: 2026-02-06 13:20:55
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 /**
  * This schema was automatically generated from SHACL shapes. It provides structural validation only. For semantic validation, use the original SHACL shapes.
  */
-export interface RecyclingOrganisationShape {
+export type RecyclingOrganisationShape = RecyclingOrganisationShape1 & RecyclingOrganisationShape2;
+export type RecyclingOrganisationShape1 = {
+    [k: string]: unknown;
+} | {
+    latitude: number;
+    longitude: number;
+    [k: string]: unknown;
+};
+export interface RecyclingOrganisationShape2 {
+    /**
+     * Type identifier for Recycler
+     */
+    "@type": "Recycler";
     managerCode: string;
     nimaCode: string;
     name: string;

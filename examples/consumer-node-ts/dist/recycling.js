@@ -2,6 +2,7 @@ import { createValidator, } from "@blueroominnovation/ontology-contracts";
 const validator = createValidator();
 const schemaKey = "recycling";
 const payload = {
+    "@type": "Recycler",
     managerCode: "laborum",
     nimaCode: "sit proident est sed cupidatat",
     name: "dolor reprehenderit eu laborum aute",

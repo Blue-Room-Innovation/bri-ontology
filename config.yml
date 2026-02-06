@@ -56,11 +56,11 @@ ontologies:
 # --------------------------
 shapes:
   - name: "digitalWastePassport"
-    file: "digitalWastePassportShapes.ttl"
+    file: "digital-waste-passport.shacl.ttl"
     ontology: "digitalWastePassport"
 
   - name: "digitalMarpolWastePassport"
-    file: "digitalMarpolWastePassportShapes.ttl"
+    file: "digital-marpol-waste-passport.shacl.ttl"
     ontology: "digitalMarpolWastePassport"
 
   - name: "wasteActors"
@@ -72,6 +72,7 @@ shapes:
 generation:
   # Artifacts to generate (SHACL → JSON Schema → TypeScript)
   artifacts:
+    - dpp-unece
     - dwp
     - dmwp
     - recycling
@@ -93,11 +94,19 @@ validation:
   shacl:
     # Available validation scenarios
     scenarios:
+      dpp-unece:
+        name: "UNECE DPP"
+        description: "Validates a DPP sample against the UNECE constraints"
+        data: "examples/v0.1/dpp-unece-sample.jsonld"
+        shapes: "shapes/v0.1/dpp-unece.shacl.ttl"
+        format: "human"
+        extras: ""
+
       dwp:
         name: "Digital Waste Passport"
         description: "Validates DWP sample data against DWP shapes"
-        data: "examples/v0.1/digital-waste-passport-sample.ttl"
-        shapes: "shapes/v0.1/digitalWastePassportShapes.ttl"
+        data: "examples/v0.1/digital-waste-passport-sample.jsonld"
+        shapes: "shapes/v0.1/digital-waste-passport.shacl.ttl"
         format: "human"
         extras: ""
 
@@ -105,7 +114,7 @@ validation:
         name: "Digital MARPOL Waste Passport"
         description: "Validates MARPOL sample data against MARPOL shapes"
         data: "examples/v0.1/digital-marpol-waste-passport-sample.ttl"
-        shapes: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+        shapes: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
         format: "human"
         extras: ""
 
@@ -123,15 +132,21 @@ validation:
 conversion:
   # SHACL to JSON Schema conversions
   shacl_to_json:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "shapes/v0.1/dpp-unece.shacl.ttl"
+      output: "build/v0.1/dppUnece.schema.json"
+      naming: "local"
+
     dwp:
       name: "Digital Waste Passport"
-      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalWastePassport.schema.json"
       naming: "local"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
-      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.schema.json"
       naming: "local"
 
@@ -143,14 +158,19 @@ conversion:
 
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "shapes/v0.1/dpp-unece.shacl.ttl"
+      output: "build/v0.1/dppUnece.context.jsonld"
+
     dwp:
       name: "Digital Waste Passport"
-      input: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalWastePassport.context.jsonld"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
-      input: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      input: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
       output: "build/v0.1/digitalMarpolWastePassport.context.jsonld"
 
     recycling:
@@ -160,17 +180,23 @@ conversion:
 
   # JSON Schema to TypeScript conversions
   json_to_ts:
+    dpp-unece:
+      name: "UNECE DPP Bootstrap"
+      input: "build/v0.1/dppUnece.schema.json"
+      output: "build/v0.1/dppUnece.ts"
+      source: "shapes/v0.1/dpp-unece.shacl.ttl"
+
     dwp:
       name: "Digital Waste Passport"
       input: "build/v0.1/digitalWastePassport.schema.json"
       output: "build/v0.1/digitalWastePassport.ts"
-      source: "shapes/v0.1/digitalWastePassportShapes.ttl"
+      source: "shapes/v0.1/digital-waste-passport.shacl.ttl"
 
     dmwp:
       name: "Digital MARPOL Waste Passport"
       input: "build/v0.1/digitalMarpolWastePassport.schema.json"
       output: "build/v0.1/digitalMarpolWastePassport.ts"
-      source: "shapes/v0.1/digitalMarpolWastePassportShapes.ttl"
+      source: "shapes/v0.1/digital-marpol-waste-passport.shacl.ttl"
 
     recycling:
       name: "Recycling"

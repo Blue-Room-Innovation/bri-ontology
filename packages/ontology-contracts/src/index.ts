@@ -26,6 +26,7 @@ export type {
   SchemaTypeMapV01,
   SchemaTypeV01,
   DigitalMarpolWastePassportShape,
+  DigitalProductPassportShape,
   DigitalWastePassportShape,
   RecyclingOrganisationShape
 } from "./v0.1/index.js";

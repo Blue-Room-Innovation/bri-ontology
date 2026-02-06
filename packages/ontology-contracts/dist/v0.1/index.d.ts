@@ -3,11 +3,13 @@
  * DO NOT EDIT MANUALLY
  * Output: src/v0.1/index.ts
  */
+export type { DigitalProductPassportShape } from "../generated/v0.1/dppUnece.js";
 export type { DigitalWastePassportShape } from "../generated/v0.1/digitalWastePassport.js";
 export type { DigitalMarpolWastePassportShape } from "../generated/v0.1/digitalMarpolWastePassport.js";
 export type { RecyclingOrganisationShape } from "../generated/v0.1/recycling.js";
-export type SchemaKeyV01 = "dwp" | "dmwp" | "recycling";
+export type SchemaKeyV01 = "dpp-unece" | "dwp" | "dmwp" | "recycling";
 export interface SchemaTypeMapV01 {
+    "dpp-unece": import("../generated/v0.1/dppUnece.js").DigitalProductPassportShape;
     "dwp": import("../generated/v0.1/digitalWastePassport.js").DigitalWastePassportShape;
     "dmwp": import("../generated/v0.1/digitalMarpolWastePassport.js").DigitalMarpolWastePassportShape;
     "recycling": import("../generated/v0.1/recycling.js").RecyclingOrganisationShape;

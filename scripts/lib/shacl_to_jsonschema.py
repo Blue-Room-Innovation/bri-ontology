@@ -10,8 +10,8 @@ constraints that can be expressed in JSON Schema. SHACL remains the source
 of truth for semantic validation.
 
 Usage:
-    python shacl-to-jsonschema.py --input shapes/v0.1/digitalWastePassportShapes.ttl --output build/v0.1/digitalWastePassport.schema.json
-    python shacl-to-jsonschema.py --input shapes/v0.1/digitalMarpolWastePassportShapes.ttl --output build/v0.1/digitalMarpolWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digital-waste-passport.shacl.ttl --output build/v0.1/digitalWastePassport.schema.json
+    python shacl-to-jsonschema.py --input shapes/v0.1/digital-marpol-waste-passport.shacl.ttl --output build/v0.1/digitalMarpolWastePassport.schema.json
 
 Author: Blue Room Innovation
 Date: 2026-01-08
@@ -26,8 +26,9 @@ from typing import Dict, List, Any, Optional, Set, Tuple
 from datetime import date, datetime, time
 from decimal import Decimal
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, RDFS, XSD
-from rdflib.namespace import SH
+from rdflib.namespace import SH, OWL
 from pathlib import Path
+from urllib.parse import urlparse, unquote
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
@@ -157,6 +158,11 @@ class SHACLToJSONSchemaConverter:
             })
             if "additionalProperties" in first_shape:
                 schema["additionalProperties"] = first_shape["additionalProperties"]
+            # Preserve composition keywords so downstream tooling (json-schema-to-typescript)
+            # can reflect sh:and/sh:or mappings correctly.
+            for key in ("allOf", "anyOf", "oneOf", "not"):
+                if key in first_shape:
+                    schema[key] = first_shape[key]
             if "title" in first_shape:
                 schema["title"] = first_shape["title"]
             if "description" in first_shape:
@@ -193,6 +199,18 @@ class SHACLToJSONSchemaConverter:
         # Process properties
         properties: Dict[str, Any] = {}
         required: List[str] = []
+        
+        # Add @type property based on sh:targetClass
+        target_class = self.graph.value(shape, SH.targetClass)
+        if target_class:
+            class_name = self._get_local_name(target_class)
+            properties["@type"] = {
+                "type": "string",
+                "const": class_name,
+                "description": f"Type identifier for {class_name}"
+            }
+            required.append("@type")
+            logger.debug(f"Added required @type field with value '{class_name}' to {shape_name}")
         
         for prop_shape in self.graph.objects(shape, SH.property):
             prop_name, prop_def, is_required = self._convert_property_shape(prop_shape)
@@ -233,6 +251,39 @@ class SHACLToJSONSchemaConverter:
         
         if required:
             definition["required"] = required
+
+        # Handle NodeShape-level sh:and (shape composition) -> JSON Schema allOf
+        and_list = self.graph.value(shape, SH["and"])
+        if and_list:
+            all_of: List[Dict[str, Any]] = []
+
+            for and_node in self._extract_list_nodes(and_list):
+                if isinstance(and_node, URIRef):
+                    # If this points at another NodeShape, model it as a $ref.
+                    ref_name = self._get_local_name(and_node)
+                    if ref_name == shape_name:
+                        # Avoid self-reference
+                        continue
+                    all_of.append({"$ref": f"#/$defs/{ref_name}"})
+                else:
+                    # Inline constraint node (BNode) - best-effort conversion.
+                    and_schema, and_props = self._convert_node_constraint_node_to_schema(and_node)
+                    for name, schema in and_props.items():
+                        existing = properties.get(name)
+                        if existing is None or (
+                            not self._is_informative_property_schema(existing)
+                            and self._is_informative_property_schema(schema)
+                        ):
+                            properties[name] = schema
+                    if and_schema:
+                        all_of.append(and_schema)
+
+            if all_of:
+                definition["allOf"] = all_of
+            else:
+                self.warnings.append(
+                    f"sh:and found in NodeShape {shape_name} but no convertible members were found"
+                )
         
         # Handle sh:closed
         closed = self._get_literal_value(shape, SH.closed)
@@ -334,8 +385,32 @@ class SHACLToJSONSchemaConverter:
         class_ref = self.graph.value(prop_shape, SH["class"])
         node_kind = self.graph.value(prop_shape, SH.nodeKind)
         or_list = self.graph.value(prop_shape, SH["or"])
+        has_value = self.graph.value(prop_shape, SH.hasValue)
         
-        if or_list:
+        if has_value is not None:
+            # sh:hasValue -> const
+            if isinstance(has_value, URIRef):
+                val = self._get_property_name(has_value)
+                prop_def["const"] = val
+                prop_def["type"] = "string"
+            elif isinstance(has_value, Literal):
+                val = has_value.toPython()
+                # Handle dates/times which are not JSON serializable by default
+                if isinstance(val, (date, datetime, time)):
+                    val = val.isoformat()
+                elif isinstance(val, Decimal):
+                    val = float(val)
+                
+                prop_def["const"] = val
+                
+                if isinstance(val, bool):
+                     prop_def["type"] = "boolean"
+                elif isinstance(val, (int, float)):
+                     prop_def["type"] = "number"
+                else:
+                     prop_def["type"] = "string"
+
+        elif or_list:
             # sh:or is an RDF list of alternative constraint shapes.
             # Map it to JSON Schema anyOf.
             any_of: List[Dict[str, Any]] = []
@@ -370,29 +445,42 @@ class SHACLToJSONSchemaConverter:
         elif node_kind:
             prop_def.update(self._nodekind_to_schema(node_kind))
 
+        elif self.graph.value(prop_shape, SH.node):
+            # sh:node directly references another shape.
+            # NOTE: Some SHACL property shapes include both sh:class and sh:node.
+            # For structural typing, sh:node is the most precise link to a NodeShape,
+            # so we prefer it over sh:class.
+            node_shape = self.graph.value(prop_shape, SH.node)
+            shape_name = self._get_local_name(node_shape)
+            prop_def["$ref"] = f"#/$defs/{shape_name}"
+
         elif class_ref:
             # sh:class points to an ontology class. Find the Shape that targets this class.
             class_uri = str(class_ref)
             shape_name = self.class_to_shape_map.get(class_uri)
-            
+
             if shape_name:
                 # Found a shape that targets this class
                 prop_def["$ref"] = f"#/$defs/{shape_name}"
             else:
                 # No shape found for this class - might be external or missing
-                self.warnings.append(f"No shape found with sh:targetClass {class_ref} for property {prop_name}")
+                self.warnings.append(
+                    f"No shape found with sh:targetClass {class_ref} for property {prop_name}"
+                )
                 prop_def["$comment"] = f"sh:class {class_ref} - no corresponding shape found"
-        
-        elif self.graph.value(prop_shape, SH.node):
-            # sh:node directly references another shape
-            node_shape = self.graph.value(prop_shape, SH.node)
-            shape_name = self._get_local_name(node_shape)
-            prop_def["$ref"] = f"#/$defs/{shape_name}"
         
         else:
             # No explicit type - default to allowing any type
             prop_def["$comment"] = "No explicit sh:datatype or sh:class found"
         
+        # If the property schema is a $ref, avoid adding sibling keywords.
+        # Downstream tools (json-schema-to-typescript) can generate spurious
+        # helper interfaces (e.g. PartyShape1) when $ref coexists with description.
+        if "$ref" in prop_def and "description" in prop_def:
+            desc = prop_def["description"]
+            ref = prop_def["$ref"]
+            prop_def = {"description": desc, "allOf": [{"$ref": ref}]}
+
         # Handle cardinality
         min_count = self._get_literal_value(prop_shape, SH.minCount)
         max_count = self._get_literal_value(prop_shape, SH.maxCount)
@@ -719,8 +807,8 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python shacl-to-jsonschema.py -i shapes/v0.1/digitalWastePassportShapes.ttl -o build/v0.1/digitalWastePassport.schema.json
-  python shacl-to-jsonschema.py --input shapes/digitalMarpolWastePassportShapes.ttl --output build/digitalMarpolWastePassport.schema.json
+  python shacl-to-jsonschema.py -i shapes/v0.1/digital-waste-passport.shacl.ttl -o build/v0.1/digitalWastePassport.schema.json
+  python shacl-to-jsonschema.py --input shapes/digital-marpol-waste-passport.shacl.ttl --output build/digitalMarpolWastePassport.schema.json
         """
     )
     
@@ -766,12 +854,73 @@ Examples:
         logger.error(f"Input file not found: {args.input}")
         sys.exit(1)
     
-    # Load SHACL graph
+    # Load SHACL graph (and any owl:imports)
     logger.info(f"Loading SHACL file: {args.input}")
     graph = Graph()
     try:
         graph.parse(args.input, format="turtle")
         logger.info(f"Loaded {len(graph)} triples")
+
+        # Follow owl:imports recursively for local Turtle files.
+        input_path_abs = input_path.resolve()
+
+        def resolve_import_path(import_iri: str, base_dir: Path) -> Optional[Path]:
+            try:
+                parsed = urlparse(import_iri)
+                if parsed.scheme in ("http", "https"):
+                    return None
+                if parsed.scheme == "file":
+                    # file:///C:/path or file:/C:/path
+                    p = unquote(parsed.path)
+                    if p.startswith("/") and len(p) >= 3 and p[2] == ":":
+                        p = p[1:]  # strip leading '/' for Windows drive paths
+                    return Path(p)
+            except Exception:
+                pass
+
+            # Treat as a filesystem path (absolute or relative)
+            candidate = Path(import_iri)
+            if not candidate.is_absolute():
+                candidate = base_dir / candidate
+            return candidate
+
+        def load_imports_recursive(base_file: Path, visited: Set[Path]):
+            base_dir = base_file.parent
+            for imported in list(graph.objects(None, OWL.imports)):
+                if not isinstance(imported, URIRef):
+                    continue
+                import_iri = str(imported)
+                import_path = resolve_import_path(import_iri, base_dir)
+                if not import_path:
+                    logger.debug(f"Skipping non-local owl:imports: {import_iri}")
+                    continue
+
+                try:
+                    import_path_abs = import_path.resolve()
+                except Exception:
+                    import_path_abs = import_path
+
+                if import_path_abs in visited:
+                    continue
+                if not import_path_abs.exists():
+                    logger.warning(f"owl:imports target not found (skipped): {import_path_abs}")
+                    visited.add(import_path_abs)
+                    continue
+
+                logger.info(f"Loading owl:imports: {import_path_abs}")
+                try:
+                    graph.parse(str(import_path_abs), format="turtle")
+                    visited.add(import_path_abs)
+                except Exception as e:
+                    logger.warning(f"Failed to parse owl:imports '{import_path_abs}': {e}")
+                    visited.add(import_path_abs)
+                    continue
+
+                # Recurse: imported files may themselves declare owl:imports
+                load_imports_recursive(import_path_abs, visited)
+
+        load_imports_recursive(input_path_abs, visited={input_path_abs})
+        logger.info(f"Graph size after owl:imports: {len(graph)} triples")
     except Exception as e:
         logger.error(f"Failed to parse SHACL file: {e}")
         sys.exit(1)

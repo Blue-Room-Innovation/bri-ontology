@@ -6,8 +6,8 @@
 
 | Ontology | #Classes | #ObjProps | #DataProps | #Shapes | #Contexts |
 | ----------- | --------- | ----------- | ----------- | --------- | ----------- |
-| digitalMarpolWastePassport | 14 | 13 | 20 | 7 | 1 |
-| digitalWastePassport | 6 | 2 | 0 | 5 | 1 |
+| digitalMarpolWastePassport | 14 | 13 | 20 | 0 | 1 |
+| digitalWastePassport | 8 | 2 | 0 | 0 | 1 |
 | recycling | 1 | 0 | 7 | 1 | 1 |
 
 ## Ontologies
