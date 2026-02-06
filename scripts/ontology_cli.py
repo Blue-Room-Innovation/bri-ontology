@@ -8,7 +8,7 @@ Commands:
 - validate shacl : validates RDF data against SHACL shapes
 - generate types : generates TypeScript types from SHACL shapes (autogenerate)
 - generate wiki  : generates wiki documentation from ontologies
-- convert shacl  : converts SHACL shapes to JSON Schema
+- convert json-schema : converts SHACL shapes to JSON Schema
 - convert ts     : converts JSON Schema to TypeScript
 
 This CLI delegates to modular components in the cli/ package.
@@ -193,7 +193,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     # SHACL to JSON Schema
     conv_shacl = convert_sub.add_parser(
-        "shacl", help="Convert SHACL shapes to JSON Schema"
+        "json-schema", help="Convert SHACL shapes to JSON Schema"
     )
     conv_shacl.add_argument(
         "scenario",
@@ -510,7 +510,7 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     # ===== CONVERT COMMANDS =====
     elif ns.command == "convert":
-        if ns.convert_cmd == "shacl":
+        if ns.convert_cmd == "json-schema":
             import subprocess
             shacl_script = workspace_root / "scripts" / "lib" / "shacl_to_jsonschema.py"
             conversions = config_obj._data.get("conversion", {}).get("shacl_to_json", {})
@@ -528,9 +528,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                     print(f"   Input:  {scenario.get('input', 'N/A')}")
                     print(f"   Output: {scenario.get('output', 'N/A')}")
                 print("\n💡 Usage:")
-                print("   npm run convert:shacl                 # converts all scenarios")
-                print("   npm run convert:shacl <scenario-name> # converts one scenario")
-                print("   npm run convert:shacl -- -i in.ttl -o out.json")
+                print("   npm run generate:json-schema                 # converts all scenarios")
+                print("   npm run generate:json-schema <scenario-name> # converts one scenario")
+                print("   npm run generate:json-schema -- -i in.ttl -o out.json")
                 return 0
 
             has_overrides = any(v is not None for v in (ns.input, ns.output))
@@ -542,7 +542,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 if not scenario:
                     print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
                     print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
-                    print("Run 'node docker/docker.js run cli convert shacl --list' to see all scenarios")
+                    print("Run 'node docker/docker.js run cli convert json-schema --list' to see all scenarios")
                     return 1
 
                 input_file = ns.input or scenario.get("input")

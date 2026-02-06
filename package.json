@@ -20,7 +20,7 @@
     "generate:wiki": "node docker/docker.js run generate:wiki",
     "generate:wiki:verbose": "node docker/docker.js run generate:wiki:verbose",
     "generate:build-index": "node docker/docker.js run generate:build-index",
-    "convert:shacl": "node docker/docker.js run convert:shacl",
+    "generate:json-schema": "node docker/docker.js run generate:json-schema",
     "convert:context": "node docker/docker.js run convert:context",
     "convert:ts": "node docker/docker.js run convert:ts",
     "convert:ts:list": "node docker/docker.js run cli convert ts --list",

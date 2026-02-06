@@ -26,7 +26,7 @@ const SCRIPT_COMMANDS = {
   "generate:wiki:verbose":
     "python scripts/ontology_cli.py generate wiki --verbose",
   "generate:build-index": "python scripts/ontology_cli.py generate build-index",
-  "convert:shacl": "python scripts/ontology_cli.py convert shacl",
+  "generate:json-schema": "python scripts/ontology_cli.py convert json-schema",
   "convert:context": "python scripts/ontology_cli.py convert context",
   "convert:ts": "python scripts/ontology_cli.py convert ts",
   "release:version": "python scripts/release-version.py",
@@ -105,13 +105,13 @@ function run(scriptName, ...args) {
     args = ["-d", args[0], "-s", args[1], ...args.slice(2)];
   }
 
-  // Special handling for convert:shacl - convert positional args to flags
+  // Special handling for generate:json-schema - convert positional args to flags
   if (
-    scriptName === "convert:shacl" &&
+    scriptName === "generate:json-schema" &&
     args.length >= 2 &&
     !args[0].startsWith("-")
   ) {
-    // User passed: npm run convert:shacl -- input.ttl output.json
+    // User passed: npm run generate:json-schema -- input.ttl output.json
     // Convert to: -i input.ttl -o output.json
     args = ["-i", args[0], "-o", args[1], ...args.slice(2)];
   }
