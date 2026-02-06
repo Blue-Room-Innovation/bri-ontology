@@ -60,6 +60,11 @@
         }
       ],
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Recycler",
+          "description": "Type identifier for Recycler"
+        },
         "managerCode": {
           "type": "string",
           "minLength": 1
@@ -147,6 +152,7 @@
         }
       },
       "required": [
+        "@type",
         "managerCode",
         "nimaCode",
         "name",
@@ -162,6 +168,11 @@
   },
   "type": "object",
   "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Recycler",
+      "description": "Type identifier for Recycler"
+    },
     "managerCode": {
       "type": "string",
       "minLength": 1
@@ -249,6 +260,7 @@
     }
   },
   "required": [
+    "@type",
     "managerCode",
     "nimaCode",
     "name",

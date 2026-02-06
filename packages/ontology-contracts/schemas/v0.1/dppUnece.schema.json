@@ -9,6 +9,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#DigitalProductPassportShape",
       "title": "DigitalProductPassportShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "DigitalProductPassport",
+          "description": "Type identifier for DigitalProductPassport"
+        },
         "id": {
           "type": "string"
         },
@@ -30,6 +35,7 @@
         }
       },
       "required": [
+        "@type",
         "id",
         "issuer",
         "credentialSubject"
@@ -41,6 +47,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#CredentialIssuerShape",
       "title": "CredentialIssuerShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "CredentialIssuer",
+          "description": "Type identifier for CredentialIssuer"
+        },
         "id": {
           "description": "The W3C DID of the ...",
           "type": "string"
@@ -59,6 +70,7 @@
         }
       },
       "required": [
+        "@type",
         "id",
         "name"
       ],
@@ -69,6 +81,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#PartyShape",
       "title": "PartyShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Party",
+          "description": "Type identifier for Party"
+        },
         "description": {
           "description": "An optional short description of ...",
           "type": "string"
@@ -119,6 +136,7 @@
         }
       },
       "required": [
+        "@type",
         "id",
         "name"
       ],
@@ -129,6 +147,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#IdentifierSchemeShape",
       "title": "IdentifierSchemeShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "IdentifierScheme",
+          "description": "Type identifier for IdentifierScheme"
+        },
         "id": {
           "description": "The W3C DID of the ...",
           "type": "string"
@@ -139,6 +162,7 @@
         }
       },
       "required": [
+        "@type",
         "id",
         "name"
       ],
@@ -149,6 +173,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#ClassificationShape",
       "title": "ClassificationShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Classification",
+          "description": "Type identifier for Classification"
+        },
         "code": {
           "description": "classification code within the scheme ...",
           "type": "string"
@@ -171,6 +200,7 @@
         }
       },
       "required": [
+        "@type",
         "code",
         "id",
         "name",
@@ -184,6 +214,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#ProductPassportShape",
       "title": "ProductPassportShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "ProductPassport",
+          "description": "Type identifier for ProductPassport"
+        },
         "circularityScorecard": {
           "description": "A circularity performance scorecard",
           "allOf": [
@@ -255,6 +290,7 @@
         }
       },
       "required": [
+        "@type",
         "product"
       ],
       "additionalProperties": false
@@ -264,6 +300,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#ProductShape",
       "title": "ProductShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Product",
+          "description": "Type identifier for Product"
+        },
         "batchNumber": {
           "description": "Identifier of the specific production ...",
           "type": "string"
@@ -613,6 +654,7 @@
         }
       },
       "required": [
+        "@type",
         "id"
       ],
       "additionalProperties": false
@@ -621,6 +663,16 @@
       "type": "object",
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#CharacteristicsShape",
       "title": "CharacteristicsShape",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Characteristics",
+          "description": "Type identifier for Characteristics"
+        }
+      },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "DimensionShape": {
@@ -628,6 +680,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#DimensionShape",
       "title": "DimensionShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Dimension",
+          "description": "Type identifier for Dimension"
+        },
         "height": {
           "description": "The height of the product ...",
           "allOf": [
@@ -669,6 +726,9 @@
           ]
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "MeasureShape": {
@@ -676,6 +736,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#MeasureShape",
       "title": "MeasureShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Measure",
+          "description": "Type identifier for Measure"
+        },
         "unit": {
           "description": "Unit of measure drawn from ...",
           "type": "string"
@@ -686,6 +751,7 @@
         }
       },
       "required": [
+        "@type",
         "unit",
         "value"
       ],
@@ -696,6 +762,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#LinkShape",
       "title": "LinkShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Link",
+          "description": "Type identifier for Link"
+        },
         "linkName": {
           "description": "A display name for the ...",
           "type": "string"
@@ -710,6 +781,7 @@
         }
       },
       "required": [
+        "@type",
         "linkURL"
       ],
       "additionalProperties": false
@@ -719,6 +791,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#FacilityShape",
       "title": "FacilityShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Facility",
+          "description": "Type identifier for Facility"
+        },
         "address": {
           "description": "The Postal address of the ...",
           "allOf": [
@@ -789,6 +866,7 @@
         }
       },
       "required": [
+        "@type",
         "id"
       ],
       "additionalProperties": false
@@ -798,6 +876,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#AddressShape",
       "title": "AddressShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Address",
+          "description": "Type identifier for Address"
+        },
         "addressCountry": {
           "description": "The address country as an ...",
           "type": "string"
@@ -819,6 +902,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "LocationShape": {
@@ -826,6 +912,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#LocationShape",
       "title": "LocationShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Location",
+          "description": "Type identifier for Location"
+        },
         "geoBoundary": {
           "description": "The list of ordered coordinates ...",
           "type": "string"
@@ -839,6 +930,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "CircularityPerformanceShape": {
@@ -846,6 +940,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#CircularityPerformanceShape",
       "title": "CircularityPerformanceShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "CircularityPerformance",
+          "description": "Type identifier for CircularityPerformance"
+        },
         "materialCircularityIndicator": {
           "description": "The overall circularity performance indicator ...",
           "type": "number"
@@ -879,6 +978,9 @@
           "type": "number"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "ClaimShape": {
@@ -886,6 +988,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#ClaimShape",
       "title": "ClaimShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Claim",
+          "description": "Type identifier for Claim"
+        },
         "assessmentCriteria": {
           "description": "The specification against which the ...",
           "allOf": [
@@ -947,6 +1054,9 @@
           ]
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "CriterionShape": {
@@ -954,6 +1064,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#CriterionShape",
       "title": "CriterionShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Criterion",
+          "description": "Type identifier for Criterion"
+        },
         "category": {
           "description": "A set of classification codes ...",
           "allOf": [
@@ -1007,6 +1122,9 @@
           ]
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "MetricShape": {
@@ -1014,6 +1132,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#MetricShape",
       "title": "MetricShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Metric",
+          "description": "Type identifier for Metric"
+        },
         "accuracy": {
           "description": "A percentage represented as a ...",
           "type": "number"
@@ -1035,6 +1158,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "SecureLinkShape": {
@@ -1042,6 +1168,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#SecureLinkShape",
       "title": "SecureLinkShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "SecureLink",
+          "description": "Type identifier for SecureLink"
+        },
         "encryptionMethod": {
           "description": "The symmetric encryption algorithm used ...",
           "type": "string"
@@ -1067,6 +1198,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "RegulationShape": {
@@ -1074,6 +1208,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#RegulationShape",
       "title": "RegulationShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Regulation",
+          "description": "Type identifier for Regulation"
+        },
         "administeredBy": {
           "description": "the issuing body of the ...",
           "allOf": [
@@ -1099,6 +1238,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "StandardShape": {
@@ -1106,6 +1248,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#StandardShape",
       "title": "StandardShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Standard",
+          "description": "Type identifier for Standard"
+        },
         "id": {
           "description": "The W3C DID of the ...",
           "type": "string"
@@ -1127,6 +1274,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "EmissionsPerformanceShape": {
@@ -1134,6 +1284,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#EmissionsPerformanceShape",
       "title": "EmissionsPerformanceShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "EmissionsPerformance",
+          "description": "Type identifier for EmissionsPerformance"
+        },
         "carbonFootprint": {
           "description": "The carbon footprint of the ...",
           "type": "number"
@@ -1164,6 +1319,9 @@
           ]
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "MaterialShape": {
@@ -1171,6 +1329,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#MaterialShape",
       "title": "MaterialShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Material",
+          "description": "Type identifier for Material"
+        },
         "hazardous": {
           "description": "Indicates whether this material is ...",
           "type": "boolean"
@@ -1220,6 +1383,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     },
     "TraceabilityPerformanceShape": {
@@ -1227,6 +1393,11 @@
       "$comment": "Generated from SHACL shape https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#TraceabilityPerformanceShape",
       "title": "TraceabilityPerformanceShape",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "TraceabilityPerformance",
+          "description": "Type identifier for TraceabilityPerformance"
+        },
         "traceabilityEvent": {
           "description": "A list of secure links ...",
           "allOf": [
@@ -1244,11 +1415,19 @@
           "type": "number"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     }
   },
   "type": "object",
   "properties": {
+    "@type": {
+      "type": "string",
+      "const": "DigitalProductPassport",
+      "description": "Type identifier for DigitalProductPassport"
+    },
     "id": {
       "type": "string"
     },
@@ -1270,6 +1449,7 @@
     }
   },
   "required": [
+    "@type",
     "id",
     "issuer",
     "credentialSubject"

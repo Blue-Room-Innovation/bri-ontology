@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-05 12:11:52
+ * Generated: 2026-02-06 13:12:35
  * Source: shapes/v0.1/digital-waste-passport.shacl.ttl
  */
 
@@ -9,6 +9,10 @@
  * This schema was automatically generated from SHACL shapes. It provides structural validation only. For semantic validation, use the original SHACL shapes.
  */
 export interface DigitalWastePassportShape {
+  /**
+   * Type identifier for DigitalWastePassport
+   */
+  "@type": "DigitalWastePassport";
   id: string;
   issuer: CredentialIssuerShape;
   /**
@@ -23,6 +27,10 @@ export interface DigitalWastePassportShape {
 }
 export interface CredentialIssuerShape {
   /**
+   * Type identifier for CredentialIssuer
+   */
+  "@type": "CredentialIssuer";
+  /**
    * The W3C DID of the ...
    */
   id: string;
@@ -36,6 +44,10 @@ export interface CredentialIssuerShape {
   name: string;
 }
 export interface PartyShape {
+  /**
+   * Type identifier for Party
+   */
+  "@type": "Party";
   /**
    * An optional short description of ...
    */
@@ -75,6 +87,10 @@ export interface PartyShape {
 }
 export interface IdentifierSchemeShape {
   /**
+   * Type identifier for IdentifierScheme
+   */
+  "@type": "IdentifierScheme";
+  /**
    * The W3C DID of the ...
    */
   id: string;
@@ -84,6 +100,10 @@ export interface IdentifierSchemeShape {
   name: string;
 }
 export interface ClassificationShape {
+  /**
+   * Type identifier for Classification
+   */
+  "@type": "Classification";
   /**
    * classification code within the scheme ...
    */
@@ -106,6 +126,10 @@ export interface ClassificationShape {
   schemeName: string;
 }
 export interface WastePassportShape {
+  /**
+   * Type identifier for WastePassport
+   */
+  "@type": "WastePassport";
   /**
    * A circularity performance scorecard
    */
@@ -145,6 +169,10 @@ export interface WastePassportShape {
 }
 export interface CircularityPerformanceShape {
   /**
+   * Type identifier for CircularityPerformance
+   */
+  "@type": "CircularityPerformance";
+  /**
    * The overall circularity performance indicator ...
    */
   materialCircularityIndicator?: number;
@@ -171,6 +199,10 @@ export interface CircularityPerformanceShape {
 }
 export interface LinkShape {
   /**
+   * Type identifier for Link
+   */
+  "@type": "Link";
+  /**
    * A display name for the ...
    */
   linkName?: string;
@@ -184,6 +216,10 @@ export interface LinkShape {
   linkURL: string;
 }
 export interface ClaimShape {
+  /**
+   * Type identifier for Claim
+   */
+  "@type": "Claim";
   /**
    * The specification against which the ...
    */
@@ -227,6 +263,10 @@ export interface ClaimShape {
 }
 export interface CriterionShape {
   /**
+   * Type identifier for Criterion
+   */
+  "@type": "Criterion";
+  /**
    * A set of classification codes ...
    */
   category?: ClassificationShape;
@@ -269,6 +309,10 @@ export interface CriterionShape {
 }
 export interface MetricShape {
   /**
+   * Type identifier for Metric
+   */
+  "@type": "Metric";
+  /**
    * A percentage represented as a ...
    */
   accuracy?: number;
@@ -287,6 +331,10 @@ export interface MetricShape {
 }
 export interface MeasureShape {
   /**
+   * Type identifier for Measure
+   */
+  "@type": "Measure";
+  /**
    * Unit of measure drawn from ...
    */
   unit: string;
@@ -296,6 +344,10 @@ export interface MeasureShape {
   value: number;
 }
 export interface SecureLinkShape {
+  /**
+   * Type identifier for SecureLink
+   */
+  "@type": "SecureLink";
   /**
    * The symmetric encryption algorithm used ...
    */
@@ -323,6 +375,10 @@ export interface SecureLinkShape {
 }
 export interface RegulationShape {
   /**
+   * Type identifier for Regulation
+   */
+  "@type": "Regulation";
+  /**
    * the issuing body of the ...
    */
   administeredBy?: PartyShape;
@@ -345,6 +401,10 @@ export interface RegulationShape {
 }
 export interface StandardShape {
   /**
+   * Type identifier for Standard
+   */
+  "@type": "Standard";
+  /**
    * The W3C DID of the ...
    */
   id?: string;
@@ -362,6 +422,10 @@ export interface StandardShape {
   name?: string;
 }
 export interface EmissionsPerformanceShape {
+  /**
+   * Type identifier for EmissionsPerformance
+   */
+  "@type": "EmissionsPerformance";
   /**
    * The carbon footprint of the ...
    */
@@ -384,6 +448,10 @@ export interface EmissionsPerformanceShape {
   reportingStandard?: StandardShape;
 }
 export interface MaterialShape {
+  /**
+   * Type identifier for Material
+   */
+  "@type": "Material";
   /**
    * Indicates whether this material is ...
    */
@@ -423,6 +491,10 @@ export interface MaterialShape {
 }
 export interface TraceabilityPerformanceShape {
   /**
+   * Type identifier for TraceabilityPerformance
+   */
+  "@type": "TraceabilityPerformance";
+  /**
    * A list of secure links ...
    */
   traceabilityEvent?: SecureLinkShape;
@@ -436,6 +508,10 @@ export interface TraceabilityPerformanceShape {
   verifiedRatio?: number;
 }
 export interface WasteShape {
+  /**
+   * Type identifier for Waste
+   */
+  "@type": "Waste";
   /**
    * Identifier of the specific production batch
    */
@@ -762,8 +838,17 @@ export interface WasteShape {
    */
   wasteAgentParty?: PartyShape;
 }
-export interface CharacteristicsShape {}
+export interface CharacteristicsShape {
+  /**
+   * Type identifier for Characteristics
+   */
+  "@type": "Characteristics";
+}
 export interface DimensionShape {
+  /**
+   * Type identifier for Dimension
+   */
+  "@type": "Dimension";
   /**
    * The height of the product ...
    */
@@ -786,6 +871,10 @@ export interface DimensionShape {
   width?: MeasureShape;
 }
 export interface FacilityShape {
+  /**
+   * Type identifier for Facility
+   */
+  "@type": "Facility";
   /**
    * The Postal address of the ...
    */
@@ -833,6 +922,10 @@ export interface FacilityShape {
 }
 export interface AddressShape {
   /**
+   * Type identifier for Address
+   */
+  "@type": "Address";
+  /**
    * The address country as an ...
    */
   addressCountry?: string;
@@ -854,6 +947,10 @@ export interface AddressShape {
   streetAddress?: string;
 }
 export interface LocationShape {
+  /**
+   * Type identifier for Location
+   */
+  "@type": "Location";
   /**
    * The list of ordered coordinates ...
    */

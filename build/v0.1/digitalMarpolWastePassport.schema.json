@@ -10,6 +10,11 @@
       "title": "DigitalMarpolWastePassportShape",
       "description": "Main shape of the Digital MARPOL Waste Passport (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "DigitalMarpolWastePassport",
+          "description": "Type identifier for DigitalMarpolWastePassport"
+        },
         "credentialSubject": {
           "description": "Must have a credentialSubject (MarpolWastePassport).",
           "allOf": [
@@ -29,6 +34,7 @@
         }
       },
       "required": [
+        "@type",
         "credentialSubject",
         "issued",
         "publisher"
@@ -41,6 +47,11 @@
       "title": "MarpolWastePassportShape",
       "description": "MarpolWastePassport shape (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "MarpolWastePassport",
+          "description": "Type identifier for MarpolWastePassport"
+        },
         "waste": {
           "description": "Must link a MarpolWaste.",
           "allOf": [
@@ -51,6 +62,7 @@
         }
       },
       "required": [
+        "@type",
         "waste"
       ],
       "additionalProperties": false
@@ -61,6 +73,11 @@
       "title": "MarpolWasteShape",
       "description": "MARPOL waste shape (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "MarpolWaste",
+          "description": "Type identifier for MarpolWaste"
+        },
         "ship": {
           "description": "Must specify the ship (ship).",
           "allOf": [
@@ -120,6 +137,7 @@
         }
       },
       "required": [
+        "@type",
         "ship",
         "residue"
       ],
@@ -166,6 +184,11 @@
         }
       ],
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "ResidueInformation",
+          "description": "Type identifier for ResidueInformation"
+        },
         "typeCode": {
           "description": "typeCode must be OIL (placeholder).",
           "type": "string",
@@ -210,6 +233,7 @@
         }
       },
       "required": [
+        "@type",
         "typeCode",
         "subtypeCode"
       ],
@@ -221,6 +245,11 @@
       "title": "ShipShape",
       "description": "Ship data (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Ship",
+          "description": "Type identifier for Ship"
+        },
         "imoNumber": {
           "description": "IMO must be 7 digits.",
           "type": "string",
@@ -236,6 +265,7 @@
         }
       },
       "required": [
+        "@type",
         "imoNumber",
         "name",
         "flag"
@@ -248,6 +278,11 @@
       "title": "AuthorizedPartyShape",
       "description": "Authorized entity (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "AuthorizedParty",
+          "description": "Type identifier for AuthorizedParty"
+        },
         "identifier": {
           "type": "string"
         },
@@ -256,6 +291,7 @@
         }
       },
       "required": [
+        "@type",
         "identifier"
       ],
       "additionalProperties": false
@@ -266,15 +302,28 @@
       "title": "InvolvedPartyShape",
       "description": "Involved party (closed).",
       "properties": {
+        "@type": {
+          "type": "string",
+          "const": "InvolvedParty",
+          "description": "Type identifier for InvolvedParty"
+        },
         "role": {
           "$comment": "No explicit sh:datatype or sh:class found"
         }
       },
+      "required": [
+        "@type"
+      ],
       "additionalProperties": false
     }
   },
   "type": "object",
   "properties": {
+    "@type": {
+      "type": "string",
+      "const": "DigitalMarpolWastePassport",
+      "description": "Type identifier for DigitalMarpolWastePassport"
+    },
     "credentialSubject": {
       "description": "Must have a credentialSubject (MarpolWastePassport).",
       "allOf": [
@@ -294,6 +343,7 @@
     }
   },
   "required": [
+    "@type",
     "credentialSubject",
     "issued",
     "publisher"

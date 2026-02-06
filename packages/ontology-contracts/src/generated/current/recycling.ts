@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-05 12:11:56
+ * Generated: 2026-02-06 13:12:38
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 
@@ -20,6 +20,10 @@ export type RecyclingOrganisationShape1 =
     };
 
 export interface RecyclingOrganisationShape2 {
+  /**
+   * Type identifier for Recycler
+   */
+  "@type": "Recycler";
   managerCode: string;
   nimaCode: string;
   name: string;

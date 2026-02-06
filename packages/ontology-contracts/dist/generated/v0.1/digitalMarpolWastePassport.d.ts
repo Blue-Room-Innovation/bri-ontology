@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-05 12:11:54
+ * Generated: 2026-02-06 13:12:36
  * Source: shapes/v0.1/digital-marpol-waste-passport.shacl.ttl
  */
 /**
@@ -28,6 +28,10 @@ export type ResidueInformationShape = {
  */
 export interface DigitalMarpolWastePassportShape {
     /**
+     * Type identifier for DigitalMarpolWastePassport
+     */
+    "@type": "DigitalMarpolWastePassport";
+    /**
      * Must have a credentialSubject (MarpolWastePassport).
      */
     credentialSubject: MarpolWastePassportShape;
@@ -47,6 +51,10 @@ export interface DigitalMarpolWastePassportShape {
  */
 export interface MarpolWastePassportShape {
     /**
+     * Type identifier for MarpolWastePassport
+     */
+    "@type": "MarpolWastePassport";
+    /**
      * Must link a MarpolWaste.
      */
     waste: MarpolWasteShape;
@@ -55,6 +63,10 @@ export interface MarpolWastePassportShape {
  * MARPOL waste shape (closed).
  */
 export interface MarpolWasteShape {
+    /**
+     * Type identifier for MarpolWaste
+     */
+    "@type": "MarpolWaste";
     /**
      * Must specify the ship (ship).
      */
@@ -89,6 +101,10 @@ export interface MarpolWasteShape {
  */
 export interface ShipShape {
     /**
+     * Type identifier for Ship
+     */
+    "@type": "Ship";
+    /**
      * IMO must be 7 digits.
      */
     imoNumber: string;
@@ -102,6 +118,10 @@ export interface ShipShape {
  * Authorized entity (closed).
  */
 export interface AuthorizedPartyShape {
+    /**
+     * Type identifier for AuthorizedParty
+     */
+    "@type": "AuthorizedParty";
     identifier: string;
     contactPoint?: {
         [k: string]: unknown;
