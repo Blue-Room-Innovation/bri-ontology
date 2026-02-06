@@ -1,22 +1,22 @@
 import {
   createValidator,
   type SchemaKeyCurrent,
-  type DigitalProductPassportGovernedShape,
+  type DigitalProductPassportShape,
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
 
-const schemaKey: SchemaKeyCurrent = "dpp-unece-extended";
+const schemaKey: SchemaKeyCurrent = "dpp-unece";
 
-const payload: DigitalProductPassportGovernedShape = {
-  identifier: "https://example.org/dpp/1",
+const payload: DigitalProductPassportShape = {
+  id: "https://example.org/dpp/1",
   issuer: {
-    identifier: "https://example.org/org/issuer-1",
+    id: "https://example.org/org/issuer-1",
     name: "Demo Issuer",
   },
   credentialSubject: {
     product: {
-      identifier: "https://example.org/product/sku-123",
+      id: "https://example.org/product/sku-123",
       name: "Demo Product",
     },
     granularityLevel: "item",
