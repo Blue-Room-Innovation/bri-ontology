@@ -200,6 +200,18 @@ class SHACLToJSONSchemaConverter:
         properties: Dict[str, Any] = {}
         required: List[str] = []
         
+        # Add @type property based on sh:targetClass
+        target_class = self.graph.value(shape, SH.targetClass)
+        if target_class:
+            class_name = self._get_local_name(target_class)
+            properties["@type"] = {
+                "type": "string",
+                "const": class_name,
+                "description": f"Type identifier for {class_name}"
+            }
+            required.append("@type")
+            logger.debug(f"Added required @type field with value '{class_name}' to {shape_name}")
+        
         for prop_shape in self.graph.objects(shape, SH.property):
             prop_name, prop_def, is_required = self._convert_property_shape(prop_shape)
             if prop_name:

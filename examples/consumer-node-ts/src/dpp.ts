@@ -9,13 +9,17 @@ const validator = createValidator();
 const schemaKey: SchemaKeyCurrent = "dpp-unece";
 
 const payload: DigitalProductPassportShape = {
+  "@type": "DigitalProductPassport",
   id: "https://example.org/dpp/1",
   issuer: {
+    "@type": "CredentialIssuer",
     id: "https://example.org/org/issuer-1",
     name: "Demo Issuer",
   },
   credentialSubject: {
+    "@type": "ProductPassport",
     product: {
+      "@type": "Product",
       id: "https://example.org/product/sku-123",
       name: "Demo Product",
     },

@@ -9,19 +9,28 @@ const validator = createValidator();
 const schemaKey: SchemaKeyCurrent = "dmwp";
 
 const payload: DigitalMarpolWastePassportShape = {
+  "@type": "DigitalMarpolWastePassport",
   issued: new Date().toISOString(),
-  publisher: {},
+  publisher: {
+    "@type": "AuthorizedParty",
+  },
   credentialSubject: {
+    "@type": "MarpolWastePassport",
     waste: {
+      "@type": "MarpolWaste",
       ship: {
+        "@type": "Ship",
         imoNumber: "1234567",
         name: "Demo ship",
         flag: "ES",
       },
       residue: {
+        "@type": "ResidueInformation",
         typeCode: "OIL",
         subtypeCode: "SLU",
-        quantityToDeliver: {},
+        quantityToDeliver: {
+          "@type": "Measure",
+        },
       },
     },
   },

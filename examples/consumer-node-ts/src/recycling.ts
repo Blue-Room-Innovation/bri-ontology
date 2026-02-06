@@ -9,6 +9,7 @@ const validator = createValidator();
 const schemaKey: SchemaKeyCurrent = "recycling";
 
 const payload: RecyclingOrganisationShape = {
+  "@type": "Recycler",
   managerCode: "laborum",
   nimaCode: "sit proident est sed cupidatat",
   name: "dolor reprehenderit eu laborum aute",

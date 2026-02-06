@@ -9,14 +9,18 @@ const validator = createValidator();
 const schemaKey: SchemaKeyCurrent = "dwp";
 
 const payload: DigitalWastePassportShape = {
+  "@type": "DigitalWastePassport",
   id: "https://example.org/dwp/1",
   issuer: {
+    "@type": "CredentialIssuer",
     id: "https://example.org/org/issuer-1",
     name: "Demo Issuer",
   },
   validFrom: new Date().toISOString(),
   credentialSubject: {
+    "@type": "WastePassport",
     waste: {
+      "@type": "Waste",
       name: "Demo waste",
     },
   },

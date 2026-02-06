@@ -2,13 +2,17 @@ import { createValidator, } from "@blueroominnovation/ontology-contracts";
 const validator = createValidator();
 const schemaKey = "dpp-unece";
 const payload = {
+    "@type": "DigitalProductPassport",
     id: "https://example.org/dpp/1",
     issuer: {
+        "@type": "CredentialIssuer",
         id: "https://example.org/org/issuer-1",
         name: "Demo Issuer",
     },
     credentialSubject: {
+        "@type": "ProductPassport",
         product: {
+            "@type": "Product",
             id: "https://example.org/product/sku-123",
             name: "Demo Product",
         },
