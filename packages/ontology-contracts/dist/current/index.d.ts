@@ -3,17 +3,24 @@
  * DO NOT EDIT MANUALLY
  * Output: src/current/index.ts
  */
-export type { DigitalProductPassportShape } from "../generated/current/dppUnece.js";
-export type { DigitalWastePassportShape } from "../generated/current/digitalWastePassport.js";
-export type { DigitalMarpolWastePassportShape } from "../generated/current/digitalMarpolWastePassport.js";
-export type { RecyclingOrganisationShape } from "../generated/current/recycling.js";
+export type { DppUneceSchema } from "../generated/current/dppUnece.js";
+export * as DppUneceSchemaNS from "../generated/current/dppUnece.js";
+export type { DigitalWastePassportSchema } from "../generated/current/digitalWastePassport.js";
+export * as DigitalWastePassportSchemaNS from "../generated/current/digitalWastePassport.js";
+export type { DigitalMarpolWastePassportSchema } from "../generated/current/digitalMarpolWastePassport.js";
+export * as DigitalMarpolWastePassportSchemaNS from "../generated/current/digitalMarpolWastePassport.js";
+export type { RecyclingSchema } from "../generated/current/recycling.js";
+export * as RecyclingSchemaNS from "../generated/current/recycling.js";
+export type { EpcisEventsSchema } from "../generated/current/epcisEvents.js";
+export * as EpcisEventsSchemaNS from "../generated/current/epcisEvents.js";
 export declare const CURRENT_BUILD_VERSION: "v0.1";
-export type SchemaKeyCurrent = "dpp-unece" | "dwp" | "dmwp" | "recycling";
+export type SchemaKeyCurrent = "dpp-unece" | "dwp" | "dmwp" | "recycling" | "epcis-events";
 export interface SchemaTypeMapCurrent {
-    "dpp-unece": import("../generated/current/dppUnece.js").DigitalProductPassportShape;
-    "dwp": import("../generated/current/digitalWastePassport.js").DigitalWastePassportShape;
-    "dmwp": import("../generated/current/digitalMarpolWastePassport.js").DigitalMarpolWastePassportShape;
-    "recycling": import("../generated/current/recycling.js").RecyclingOrganisationShape;
+    "dpp-unece": import("../generated/current/dppUnece.js").DppUneceSchema;
+    "dwp": import("../generated/current/digitalWastePassport.js").DigitalWastePassportSchema;
+    "dmwp": import("../generated/current/digitalMarpolWastePassport.js").DigitalMarpolWastePassportSchema;
+    "recycling": import("../generated/current/recycling.js").RecyclingSchema;
+    "epcis-events": import("../generated/current/epcisEvents.js").EpcisEventsSchema;
 }
 export type SchemaTypeCurrent<K extends SchemaKeyCurrent> = SchemaTypeMapCurrent[K];
 //# sourceMappingURL=index.d.ts.map

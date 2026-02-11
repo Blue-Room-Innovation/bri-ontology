@@ -3,5 +3,9 @@
  * DO NOT EDIT MANUALLY
  * Output: src/v0.1/index.ts
  */
-export {};
+export * as DppUneceSchemaNS from "../generated/v0.1/dppUnece.js";
+export * as DigitalWastePassportSchemaNS from "../generated/v0.1/digitalWastePassport.js";
+export * as DigitalMarpolWastePassportSchemaNS from "../generated/v0.1/digitalMarpolWastePassport.js";
+export * as RecyclingSchemaNS from "../generated/v0.1/recycling.js";
+export * as EpcisEventsSchemaNS from "../generated/v0.1/epcisEvents.js";
 //# sourceMappingURL=index.js.map

@@ -1,0 +1,227 @@
+{
+  "@context": "../../temporal.context.jsonld",
+  "@type": "Collection",
+  "member": [
+    {
+      "@id": "https://example.org/event/object-event-001",
+      "@type": "ObjectEvent",
+      "eventTime": "2026-02-10T08:30:00.000Z",
+      "recordTime": "2026-02-10T08:30:05.123Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "OBSERVE",
+      "bizStep": "receiving",
+      "disposition": "in_transit",
+      "bizLocation": "urn:epc:id:sgln:0400070.00001.0",
+      "readPoint": "urn:epc:id:sgln:0400070.00001.1",
+      "epcList": [
+        "urn:epc:id:sgtin:0400070.012345.001",
+        "urn:epc:id:sgtin:0400070.012345.002",
+        "urn:epc:id:sgtin:0400070.012345.003"
+      ],
+      "bizTransactionList": [
+        {
+          "type": "po",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00001.PO12345"
+        }
+      ],
+      "sourceList": [
+        {
+          "type": "possessing_party",
+          "source": "urn:epc:id:pgln:0400070.00000"
+        }
+      ],
+      "destinationList": [
+        {
+          "type": "possessing_party",
+          "destination": "urn:epc:id:pgln:0400010.00000"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/aggregation-event-001",
+      "@type": "AggregationEvent",
+      "eventTime": "2026-02-10T09:15:00.000Z",
+      "recordTime": "2026-02-10T09:15:02.456Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "ADD",
+      "bizStep": "packing",
+      "disposition": "container_closed",
+      "bizLocation": "urn:epc:id:sgln:0400070.00002.0",
+      "parentID": "urn:epc:id:sscc:0400070.0000000001",
+      "childEPCs": [
+        "urn:epc:id:sgtin:0400070.012345.001",
+        "urn:epc:id:sgtin:0400070.012345.002",
+        "urn:epc:id:sgtin:0400070.012345.003",
+        "urn:epc:id:sgtin:0400070.012345.004"
+      ],
+      "bizTransactionList": [
+        {
+          "type": "desadv",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00002.ASN98765"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/transformation-event-001",
+      "@type": "TransformationEvent",
+      "eventTime": "2026-02-10T10:00:00.000Z",
+      "recordTime": "2026-02-10T10:00:03.789Z",
+      "eventTimeZoneOffset": "+01:00",
+      "bizStep": "assembling",
+      "disposition": "active",
+      "bizLocation": "urn:epc:id:sgln:0400070.00003.0",
+      "transformationID": "urn:epc:id:gdti:0400070.00003.TRF001",
+      "inputEPCList": [
+        "urn:epc:id:sgtin:0400070.011111.001",
+        "urn:epc:id:sgtin:0400070.022222.001"
+      ],
+      "inputQuantityList": [
+        {
+          "epcClass": "urn:epc:idpat:sgtin:0400070.033333.*",
+          "quantity": 5,
+          "uom": "KGM"
+        }
+      ],
+      "outputEPCList": [
+        "urn:epc:id:sgtin:0400070.044444.001"
+      ],
+      "outputQuantityList": [
+        {
+          "epcClass": "urn:epc:idpat:sgtin:0400070.055555.*",
+          "quantity": 2.5,
+          "uom": "KGM"
+        }
+      ],
+      "bizTransactionList": [
+        {
+          "type": "prodorder",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00003.WO54321"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/transaction-event-001",
+      "@type": "TransactionEvent",
+      "eventTime": "2026-02-10T11:30:00.000Z",
+      "recordTime": "2026-02-10T11:30:01.234Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "ADD",
+      "bizStep": "shipping",
+      "disposition": "in_transit",
+      "bizLocation": "urn:epc:id:sgln:0400070.00004.0",
+      "epcList": [
+        "urn:epc:id:sscc:0400070.0000000001"
+      ],
+      "bizTransactionList": [
+        {
+          "type": "bol",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00004.BOL99999"
+        },
+        {
+          "type": "inv",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00004.INV88888"
+        }
+      ],
+      "sourceList": [
+        {
+          "type": "owning_party",
+          "source": "urn:epc:id:pgln:0400070.00000"
+        },
+        {
+          "type": "location",
+          "source": "urn:epc:id:sgln:0400070.00004.0"
+        }
+      ],
+      "destinationList": [
+        {
+          "type": "owning_party",
+          "destination": "urn:epc:id:pgln:0400010.00000"
+        },
+        {
+          "type": "location",
+          "destination": "urn:epc:id:sgln:0400010.00001.0"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/association-event-001",
+      "@type": "AssociationEvent",
+      "eventTime": "2026-02-10T12:00:00.000Z",
+      "recordTime": "2026-02-10T12:00:02.567Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "ADD",
+      "bizStep": "loading",
+      "disposition": "in_transit",
+      "bizLocation": "urn:epc:id:sgln:0400070.00005.0",
+      "parentID": "urn:epc:id:giai:0400070.TRUCK001",
+      "childEPCs": [
+        "urn:epc:id:sscc:0400070.0000000001",
+        "urn:epc:id:sscc:0400070.0000000002",
+        "urn:epc:id:sscc:0400070.0000000003"
+      ],
+      "bizTransactionList": [
+        {
+          "type": "bol",
+          "bizTransaction": "urn:epc:id:gdti:0400070.00005.BOL77777"
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/object-event-with-sensors",
+      "@type": "ObjectEvent",
+      "eventTime": "2026-02-10T13:00:00.000Z",
+      "recordTime": "2026-02-10T13:00:01.890Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "OBSERVE",
+      "bizStep": "transporting",
+      "disposition": "in_transit",
+      "bizLocation": "urn:epc:id:sgln:0400070.00006.0",
+      "epcList": [
+        "urn:epc:id:sscc:0400070.0000000001"
+      ],
+      "sensorElementList": [
+        {
+          "sensorMetadata": {
+            "startTime": "2026-02-10T12:00:00.000Z",
+            "endTime": "2026-02-10T13:00:00.000Z"
+          },
+          "sensorReport": [
+            {
+              "type": "Temperature",
+              "value": 4.5,
+              "uom": "CEL",
+              "time": "2026-02-10T12:30:00.000Z"
+            },
+            {
+              "type": "RelativeHumidity",
+              "value": 65,
+              "uom": "A93",
+              "time": "2026-02-10T12:30:00.000Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@id": "https://example.org/event/object-event-with-error",
+      "@type": "ObjectEvent",
+      "eventTime": "2026-02-10T14:00:00.000Z",
+      "recordTime": "2026-02-10T14:00:01.123Z",
+      "eventTimeZoneOffset": "+01:00",
+      "action": "OBSERVE",
+      "bizStep": "receiving",
+      "disposition": "available",
+      "bizLocation": "urn:epc:id:sgln:0400010.00001.0",
+      "epcList": [
+        "urn:epc:id:sgtin:0400070.012345.001"
+      ],
+      "errorDeclaration": {
+        "declarationTime": "2026-02-10T14:30:00.000Z",
+        "reason": "incorrect_data",
+        "correctiveEventIDs": [
+          "https://example.org/event/object-event-corrected-001"
+        ]
+      }
+    }
+  ]
+}

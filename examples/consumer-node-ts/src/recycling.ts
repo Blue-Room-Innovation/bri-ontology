@@ -1,14 +1,14 @@
 import {
   createValidator,
-  type RecyclingOrganisationShape,
   type SchemaKeyCurrent,
+  RecyclingSchemaNS,
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
 
 const schemaKey: SchemaKeyCurrent = "recycling";
 
-const payload: RecyclingOrganisationShape = {
+const payload: RecyclingSchemaNS.RecyclingOrganisationShape = {
   "@type": "Recycler",
   managerCode: "laborum",
   nimaCode: "sit proident est sed cupidatat",
@@ -22,9 +22,7 @@ const payload: RecyclingOrganisationShape = {
   telephone: "+34 987 567 564",
   faxNumber: "+34 912 345 678",
   email: "contacto@empresa.com",
-  url: {
-    "@id": "https://example.com",
-  },
+  url: "https://example.com",
   wasteTreatmentActivity: "sit",
   adaptedToRD1102015: true,
   latitude: 22,

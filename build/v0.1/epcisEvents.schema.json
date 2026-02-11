@@ -1,0 +1,6163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$defs": {
+    "epcis_EPCISDocumentShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "versionInfo": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "created": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "instanceIdentifier": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sender": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "receiver": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "epcisHeader": {},
+            "epcisBody": {},
+            "eventList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "created",
+            "versionInfo"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "epcisHeader": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_EpcisHeaderShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_EpcisHeaderShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "epcisBody": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_EpcisBodyShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_EpcisBodyShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            }
+          },
+          "required": [
+            "epcisBody"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/EPCISDocument"
+                    },
+                    {
+                      "const": "EPCISDocument"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/EPCISDocument"
+                      },
+                      {
+                        "const": "EPCISDocument"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_EpcisHeaderShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcisHeader": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_EpcisBodyShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcisBody": {},
+            "eventList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "eventList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_EventListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_EventListShape"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_EventListShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_ObjectEventShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "eventTimeZoneOffset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "recordTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "action": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "enum": [
+                        "ADD",
+                        "OBSERVE",
+                        "DELETE"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "enum": [
+                          "ADD",
+                          "OBSERVE",
+                          "DELETE"
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizStep": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "disposition": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "readPoint": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizLocation": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "epcList": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "parentID": {},
+            "childEPCs": {},
+            "inputEPCList": {},
+            "outputEPCList": {},
+            "quantityList": {},
+            "epcClass": {},
+            "quantity": {},
+            "uom": {},
+            "inputQuantityList": {},
+            "outputQuantityList": {},
+            "childQuantityList": {},
+            "ilmd": {},
+            "persistentDisposition": {},
+            "set": {},
+            "unset": {},
+            "bizTransactionList": {},
+            "bizTransactionType": {},
+            "sourceList": {},
+            "sourceOrDestination": {},
+            "sourceOrDestinationType": {},
+            "destinationList": {},
+            "errorDeclaration": {},
+            "correctiveEventIDs": {},
+            "reason": {},
+            "declarationTime": {},
+            "sensorElementList": {},
+            "sensorMetadata": {},
+            "sensorReport": {},
+            "certificationInfo": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "eventTime",
+            "eventTimeZoneOffset"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "not": {
+            "required": [
+              "parentID"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "childEPCs"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputEPCList"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_QuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_QuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "childQuantityList"
+            ]
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "ilmd"
+                ]
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "ADD"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "ADD"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "persistentDisposition": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_PersistentDispositionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_PersistentDispositionShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_BizTransactionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_BizTransactionShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SourceListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SourceListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "destinationList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_DestinationListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_DestinationListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "errorDeclaration": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sensorElementList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "certificationInfo": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/ObjectEvent"
+                    },
+                    {
+                      "const": "ObjectEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/ObjectEvent"
+                      },
+                      {
+                        "const": "ObjectEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(urn:uuid:|ni:///)"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string",
+                      "pattern": "^_:.+"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "not": {
+                    "required": [
+                      "@id"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_AggregationEventShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "eventTimeZoneOffset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "recordTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "action": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "enum": [
+                        "ADD",
+                        "OBSERVE",
+                        "DELETE"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "enum": [
+                          "ADD",
+                          "OBSERVE",
+                          "DELETE"
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizStep": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "disposition": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "readPoint": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizLocation": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "parentID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "childEPCs": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "epcList": {},
+            "inputEPCList": {},
+            "outputEPCList": {},
+            "ilmd": {},
+            "childQuantityList": {},
+            "epcClass": {},
+            "quantity": {},
+            "uom": {},
+            "quantityList": {},
+            "inputQuantityList": {},
+            "outputQuantityList": {},
+            "persistentDisposition": {},
+            "bizTransactionList": {},
+            "bizTransactionType": {},
+            "sourceList": {},
+            "sourceOrDestination": {},
+            "sourceOrDestinationType": {},
+            "destinationList": {},
+            "errorDeclaration": {},
+            "correctiveEventIDs": {},
+            "reason": {},
+            "declarationTime": {},
+            "sensorElementList": {},
+            "sensorMetadata": {},
+            "sensorReport": {},
+            "certificationInfo": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "eventTime",
+            "eventTimeZoneOffset"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "not": {
+            "required": [
+              "epcList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "ilmd"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "childQuantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ChildQuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ChildQuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "quantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "persistentDisposition"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_BizTransactionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_BizTransactionShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SourceListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SourceListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "destinationList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_DestinationListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_DestinationListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "errorDeclaration": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sensorElementList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "certificationInfo": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/AggregationEvent"
+                    },
+                    {
+                      "const": "AggregationEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/AggregationEvent"
+                      },
+                      {
+                        "const": "AggregationEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(urn:uuid:|ni:///)"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string",
+                      "pattern": "^_:.+"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "not": {
+                    "required": [
+                      "@id"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_AssociationEventShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "eventTimeZoneOffset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "recordTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "action": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "enum": [
+                        "ADD",
+                        "OBSERVE",
+                        "DELETE"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "enum": [
+                          "ADD",
+                          "OBSERVE",
+                          "DELETE"
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizStep": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "disposition": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "readPoint": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizLocation": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "parentID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "childEPCs": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "epcList": {},
+            "inputEPCList": {},
+            "outputEPCList": {},
+            "ilmd": {},
+            "childQuantityList": {},
+            "epcClass": {},
+            "quantity": {},
+            "uom": {},
+            "quantityList": {},
+            "inputQuantityList": {},
+            "outputQuantityList": {},
+            "persistentDisposition": {},
+            "bizTransactionList": {},
+            "bizTransactionType": {},
+            "sourceList": {},
+            "sourceOrDestination": {},
+            "sourceOrDestinationType": {},
+            "destinationList": {},
+            "errorDeclaration": {},
+            "correctiveEventIDs": {},
+            "reason": {},
+            "declarationTime": {},
+            "sensorElementList": {},
+            "sensorMetadata": {},
+            "sensorReport": {},
+            "certificationInfo": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "eventTime",
+            "eventTimeZoneOffset",
+            "parentID"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "not": {
+            "required": [
+              "epcList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "ilmd"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "childQuantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ChildQuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ChildQuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "quantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "persistentDisposition"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_BizTransactionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_BizTransactionShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SourceListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SourceListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "destinationList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_DestinationListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_DestinationListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "errorDeclaration": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sensorElementList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "certificationInfo": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/AssociationEvent"
+                    },
+                    {
+                      "const": "AssociationEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/AssociationEvent"
+                      },
+                      {
+                        "const": "AssociationEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(urn:uuid:|ni:///)"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string",
+                      "pattern": "^_:.+"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "not": {
+                    "required": [
+                      "@id"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_TransactionEventShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "eventTimeZoneOffset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "recordTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "action": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "enum": [
+                        "ADD",
+                        "OBSERVE",
+                        "DELETE"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "enum": [
+                          "ADD",
+                          "OBSERVE",
+                          "DELETE"
+                        ]
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizStep": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "disposition": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "readPoint": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizLocation": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "parentID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "epcList": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "childEPCs": {},
+            "inputEPCList": {},
+            "outputEPCList": {},
+            "ilmd": {},
+            "quantityList": {},
+            "epcClass": {},
+            "quantity": {},
+            "uom": {},
+            "childQuantityList": {},
+            "inputQuantityList": {},
+            "outputQuantityList": {},
+            "persistentDisposition": {},
+            "bizTransactionList": {},
+            "bizTransactionType": {},
+            "sourceList": {},
+            "sourceOrDestination": {},
+            "sourceOrDestinationType": {},
+            "destinationList": {},
+            "errorDeclaration": {},
+            "correctiveEventIDs": {},
+            "reason": {},
+            "declarationTime": {},
+            "sensorElementList": {},
+            "sensorMetadata": {},
+            "sensorReport": {},
+            "certificationInfo": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "eventTime",
+            "eventTimeZoneOffset"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "not": {
+            "required": [
+              "childEPCs"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputEPCList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "ilmd"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_QuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_QuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "childQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "inputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "outputQuantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "persistentDisposition"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_BizTransactionMandatoryShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_BizTransactionMandatoryShape"
+                  },
+                  "minItems": 1
+                }
+              ]
+            }
+          },
+          "required": [
+            "bizTransactionList"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SourceListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SourceListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "destinationList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_DestinationListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_DestinationListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "errorDeclaration": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sensorElementList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "certificationInfo": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/TransactionEvent"
+                    },
+                    {
+                      "const": "TransactionEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/TransactionEvent"
+                      },
+                      {
+                        "const": "TransactionEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(urn:uuid:|ni:///)"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string",
+                      "pattern": "^_:.+"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "not": {
+                    "required": [
+                      "@id"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_TransformationEventShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "eventTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "eventTimeZoneOffset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(\\+|-)((0[0-9]|1[0-3]):([0-5][0-9])|14:00)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "recordTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizStep": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "disposition": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "readPoint": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizLocation": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "inputEPCList": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "outputEPCList": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "transformationID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "action": {},
+            "parentID": {},
+            "childEPCs": {},
+            "epcList": {},
+            "inputQuantityList": {},
+            "epcClass": {},
+            "quantity": {},
+            "uom": {},
+            "outputQuantityList": {},
+            "quantityList": {},
+            "childQuantityList": {},
+            "persistentDisposition": {},
+            "set": {},
+            "unset": {},
+            "bizTransactionList": {},
+            "bizTransactionType": {},
+            "sourceList": {},
+            "sourceOrDestination": {},
+            "sourceOrDestinationType": {},
+            "destinationList": {},
+            "errorDeclaration": {},
+            "correctiveEventIDs": {},
+            "reason": {},
+            "declarationTime": {},
+            "sensorElementList": {},
+            "sensorMetadata": {},
+            "sensorReport": {},
+            "certificationInfo": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "eventTime",
+            "eventTimeZoneOffset"
+          ],
+          "unevaluatedProperties": false
+        },
+        {
+          "not": {
+            "required": [
+              "action"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "parentID"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "childEPCs"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "epcList"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "inputQuantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_InputQuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_InputQuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "outputQuantityList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_OutputQuantityElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_OutputQuantityElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "quantityList"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "childQuantityList"
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "persistentDisposition": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_PersistentDispositionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_PersistentDispositionShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_BizTransactionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_BizTransactionShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sourceList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SourceListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SourceListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "destinationList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_DestinationListShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_DestinationListShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "errorDeclaration": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_ErrorDeclarationShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sensorElementList": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorElementShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorElementShape"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "certificationInfo": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "transformationID": {
+                      "anyOf": [
+                        {},
+                        {
+                          "type": "array",
+                          "items": {},
+                          "minItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "transformationID"
+                  ]
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputQuantityList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputQuantityList"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputQuantityList"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputQuantityList"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/TransformationEvent"
+                    },
+                    {
+                      "const": "TransformationEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/TransformationEvent"
+                      },
+                      {
+                        "const": "TransformationEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@id": {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(urn:uuid:|ni:///)"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@id"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "@id": {
+                      "type": "string",
+                      "pattern": "^_:.+"
+                    }
+                  },
+                  "required": [
+                    "@id"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "not": {
+                    "required": [
+                      "@id"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_TransformationIDConditionsShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "transformationID": {},
+            "outputEPCList": {},
+            "outputQuantityList": {},
+            "inputEPCList": {},
+            "inputQuantityList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://ref.gs1.org/epcis/TransformationEvent"
+                    },
+                    {
+                      "const": "TransformationEvent"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://ref.gs1.org/epcis/TransformationEvent"
+                      },
+                      {
+                        "const": "TransformationEvent"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "transformationID": {
+                      "anyOf": [
+                        {},
+                        {
+                          "type": "array",
+                          "items": {},
+                          "minItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "transformationID"
+                  ]
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputQuantityList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputQuantityList"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "outputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "outputQuantityList"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputEPCList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputEPCList"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "inputQuantityList": {
+                          "anyOf": [
+                            {},
+                            {
+                              "type": "array",
+                              "items": {},
+                              "minItems": 1
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "inputQuantityList"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_PersistentDispositionShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "set": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "unset": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "persistentDisposition": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "set": {
+                  "anyOf": [
+                    {},
+                    {
+                      "type": "array",
+                      "items": {},
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "set"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "unset": {
+                  "anyOf": [
+                    {},
+                    {
+                      "type": "array",
+                      "items": {},
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "unset"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_PersistentDispositionForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_SpecifySetOrUnsetShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "set": {},
+            "unset": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "set": {
+                  "anyOf": [
+                    {},
+                    {
+                      "type": "array",
+                      "items": {},
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "set"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "unset": {
+                  "anyOf": [
+                    {},
+                    {
+                      "type": "array",
+                      "items": {},
+                      "minItems": 1
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "unset"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_BizTransactionShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionType": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizTransactionList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_BizTransactionMandatoryShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "bizTransactionType": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_SourceListShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sourceOrDestination": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sourceOrDestinationType": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sourceList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "sourceOrDestination",
+            "sourceOrDestinationType"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_DestinationListShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sourceOrDestination": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sourceOrDestinationType": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "destinationList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "sourceOrDestination",
+            "sourceOrDestinationType"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_QuantityElementShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcClass": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "quantity": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uom": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9]{2,3}$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^[A-Z0-9]{2,3}$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "quantityList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "epcClass"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_QuantityElementForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_ChildQuantityElementShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcClass": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "quantity": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uom": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9]{2,3}$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^[A-Z0-9]{2,3}$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "childQuantityList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "epcClass"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_ChildQuantityElementForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_InputQuantityElementShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcClass": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "quantity": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uom": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9]{2,3}$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^[A-Z0-9]{2,3}$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "inputQuantityList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "epcClass"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_OutputQuantityElementShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "epcClass": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "quantity": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uom": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9]{2,3}$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^[A-Z0-9]{2,3}$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "outputQuantityList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "epcClass"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_InputQuantityElementForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_OutputQuantityElementForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "epcis_ILMDConditionallyForbiddenShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "ilmd": {},
+            "action": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "ilmd"
+                ]
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "ADD"
+                      ]
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "enum": [
+                          "ADD"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "epcis_ErrorDeclarationShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "correctiveEventIDs": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "reason": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "declarationTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "errorDeclaration": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "declarationTime"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_SensorElementShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "sensorMetadata": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorMetadataShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorMetadataShape"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sensorReport": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/epcis_SensorReportShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/epcis_SensorReportShape"
+                  },
+                  "minItems": 1
+                }
+              ]
+            },
+            "sensorElementList": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "sensorReport"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_SensorReportShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "time": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "deviceID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "deviceMetadata": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "rawData": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "dataProcessingMethod": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "measurementType": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "exception": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "microorganism": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "chemicalSubstance": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "coordinateReferenceSystem": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uriValue": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "minValue": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "maxValue": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "meanValue": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sDev": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "percRank": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "percValue": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "not": {
+                        "const": "NaN"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "not": {
+                          "const": "NaN"
+                        }
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "booleanValue": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "hexBinaryValue": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "stringValue": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "uom": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "component": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sensorReport": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "epcis_SensorMetadataShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "time": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "startTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "endTime": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "deviceID": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "deviceMetadata": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "rawData": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "dataProcessingMethod": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bizRules": {
+              "anyOf": [
+                {
+                  "allOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^(?!_:).+:.+"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^(.+?):(.+)$"
+                    }
+                  ]
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(?!_:).+:.+"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(.+?):(.+)$"
+                      }
+                    ]
+                  },
+                  "maxItems": 1
+                }
+              ]
+            },
+            "sensorMetadata": {},
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "unevaluatedProperties": false
+        }
+      ]
+    }
+  },
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "@graph": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/epcis_EPCISDocumentShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_ObjectEventShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_AggregationEventShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_AssociationEventShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_TransactionEventShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_TransformationEventShape"
+              },
+              {
+                "$ref": "#/$defs/epcis_TransformationIDConditionsShape"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "@graph"
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "@graph"
+            ]
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/epcis_EPCISDocumentShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_ObjectEventShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_AggregationEventShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_AssociationEventShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_TransactionEventShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_TransformationEventShape"
+            },
+            {
+              "$ref": "#/$defs/epcis_TransformationIDConditionsShape"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

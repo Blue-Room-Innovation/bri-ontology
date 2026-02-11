@@ -1,14 +1,14 @@
 import {
   createValidator,
   type SchemaKeyCurrent,
-  type DigitalProductPassportShape,
+  DppUneceSchemaNS,
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
 
 const schemaKey: SchemaKeyCurrent = "dpp-unece";
 
-const payload: DigitalProductPassportShape = {
+const payload: DppUneceSchemaNS.DigitalProductPassportShape = {
   "@type": "DigitalProductPassport",
   id: "https://example.org/dpp/1",
   issuer: {

@@ -21,12 +21,23 @@ export type {
   SchemaTypeCurrent
 } from "./current/index.js";
 
+export * from "./current/index.js";
+
 export type {
   SchemaKeyV01,
   SchemaTypeMapV01,
   SchemaTypeV01,
-  DigitalMarpolWastePassportShape,
-  DigitalProductPassportShape,
-  DigitalWastePassportShape,
-  RecyclingOrganisationShape
+  DigitalMarpolWastePassportSchema,
+  DigitalWastePassportSchema,
+  DppUneceSchema,
+  EpcisEventsSchema,
+  RecyclingSchema
+} from "./v0.1/index.js";
+
+export {
+  DigitalMarpolWastePassportSchemaNS,
+  DigitalWastePassportSchemaNS,
+  DppUneceSchemaNS,
+  EpcisEventsSchemaNS,
+  RecyclingSchemaNS
 } from "./v0.1/index.js";

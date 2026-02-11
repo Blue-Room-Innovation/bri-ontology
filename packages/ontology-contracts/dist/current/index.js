@@ -3,5 +3,10 @@
  * DO NOT EDIT MANUALLY
  * Output: src/current/index.ts
  */
+export * as DppUneceSchemaNS from "../generated/current/dppUnece.js";
+export * as DigitalWastePassportSchemaNS from "../generated/current/digitalWastePassport.js";
+export * as DigitalMarpolWastePassportSchemaNS from "../generated/current/digitalMarpolWastePassport.js";
+export * as RecyclingSchemaNS from "../generated/current/recycling.js";
+export * as EpcisEventsSchemaNS from "../generated/current/epcisEvents.js";
 export const CURRENT_BUILD_VERSION = "v0.1";
 //# sourceMappingURL=index.js.map

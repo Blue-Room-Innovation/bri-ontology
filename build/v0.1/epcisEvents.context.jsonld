@@ -1,0 +1,145 @@
+{
+  "@version": 1.1,
+  "@protected": true,
+  "@context": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "epcis": "https://ref.gs1.org/epcis/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AggregationEvent": "epcis:AggregationEvent",
+    "AssociationEvent": "epcis:AssociationEvent",
+    "EPCISDocument": "epcis:EPCISDocument",
+    "ObjectEvent": "epcis:ObjectEvent",
+    "TransactionEvent": "epcis:TransactionEvent",
+    "TransformationEvent": "epcis:TransformationEvent",
+    "action": {
+      "@id": "epcis:action",
+      "@type": "xsd:string"
+    },
+    "bizLocation": "epcis:bizLocation",
+    "bizRules": "epcis:bizRules",
+    "bizStep": "epcis:bizStep",
+    "bizTransactionType": "epcis:bizTransactionType",
+    "booleanValue": {
+      "@id": "epcis:booleanValue",
+      "@type": "xsd:boolean"
+    },
+    "chemicalSubstance": "epcis:chemicalSubstance",
+    "childEPCs": "epcis:childEPCs",
+    "component": "epcis:component",
+    "coordinateReferenceSystem": "epcis:coordinateReferenceSystem",
+    "correctiveEventIDs": "epcis:correctiveEventIDs",
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "dataProcessingMethod": "epcis:dataProcessingMethod",
+    "declarationTime": {
+      "@id": "epcis:declarationTime",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "deviceID": "epcis:deviceID",
+    "deviceMetadata": "epcis:deviceMetadata",
+    "disposition": "epcis:disposition",
+    "endTime": {
+      "@id": "epcis:endTime",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "epcClass": "epcis:epcClass",
+    "epcList": "epcis:epcList",
+    "eventTime": {
+      "@id": "epcis:eventTime",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "eventTimeZoneOffset": {
+      "@id": "epcis:eventTimeZoneOffset",
+      "@type": "xsd:string"
+    },
+    "exception": "epcis:exception",
+    "hexBinaryValue": {
+      "@id": "epcis:hexBinaryValue",
+      "@type": "xsd:hexBinary"
+    },
+    "ilmd": "epcis:ilmd",
+    "inputEPCList": "epcis:inputEPCList",
+    "instanceIdentifier": {
+      "@id": "epcis:instanceIdentifier",
+      "@type": "xsd:string"
+    },
+    "maxValue": {
+      "@id": "epcis:maxValue",
+      "@type": "xsd:double"
+    },
+    "meanValue": {
+      "@id": "epcis:meanValue",
+      "@type": "xsd:double"
+    },
+    "measurementType": "epcis:measurementType",
+    "microorganism": "epcis:microorganism",
+    "minValue": {
+      "@id": "epcis:minValue",
+      "@type": "xsd:double"
+    },
+    "outputEPCList": "epcis:outputEPCList",
+    "parentID": "epcis:parentID",
+    "percRank": {
+      "@id": "epcis:percRank",
+      "@type": "xsd:double"
+    },
+    "percValue": {
+      "@id": "epcis:percValue",
+      "@type": "xsd:double"
+    },
+    "quantity": {
+      "@id": "epcis:quantity",
+      "@type": "xsd:double"
+    },
+    "rawData": "epcis:rawData",
+    "readPoint": "epcis:readPoint",
+    "reason": "epcis:reason",
+    "receiver": "epcis:receiver",
+    "recordTime": {
+      "@id": "epcis:recordTime",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "sDev": {
+      "@id": "epcis:sDev",
+      "@type": "xsd:double"
+    },
+    "sender": "epcis:sender",
+    "sensorMetadata": "epcis:sensorMetadata",
+    "sensorReport": "epcis:sensorReport",
+    "set": "epcis:set",
+    "sourceOrDestination": "epcis:sourceOrDestination",
+    "sourceOrDestinationType": "epcis:sourceOrDestinationType",
+    "startTime": {
+      "@id": "epcis:startTime",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "stringValue": {
+      "@id": "epcis:stringValue",
+      "@type": "xsd:string"
+    },
+    "time": {
+      "@id": "epcis:time",
+      "@type": "xsd:dateTimeStamp"
+    },
+    "transformationID": "epcis:transformationID",
+    "unset": "epcis:unset",
+    "uom": {
+      "@id": "epcis:uom",
+      "@type": "xsd:string"
+    },
+    "uriValue": "epcis:uriValue",
+    "value": {
+      "@id": "epcis:value",
+      "@type": "xsd:double"
+    },
+    "versionInfo": {
+      "@id": "owl:versionInfo",
+      "@type": "xsd:string"
+    }
+  }
+}

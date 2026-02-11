@@ -6,5 +6,7 @@
 export { createValidator } from "./validator.js";
 export type { AjvInstance, CreateValidatorOptions, SchemaVersion, SchemaKey, ValidationError, ValidateResult, OntologyValidator } from "./validator.js";
 export type { SchemaKeyCurrent, SchemaTypeMapCurrent, SchemaTypeCurrent } from "./current/index.js";
-export type { SchemaKeyV01, SchemaTypeMapV01, SchemaTypeV01, DigitalMarpolWastePassportShape, DigitalProductPassportShape, DigitalWastePassportShape, RecyclingOrganisationShape } from "./v0.1/index.js";
+export * from "./current/index.js";
+export type { SchemaKeyV01, SchemaTypeMapV01, SchemaTypeV01, DigitalMarpolWastePassportSchema, DigitalWastePassportSchema, DppUneceSchema, EpcisEventsSchema, RecyclingSchema } from "./v0.1/index.js";
+export { DigitalMarpolWastePassportSchemaNS, DigitalWastePassportSchemaNS, DppUneceSchemaNS, EpcisEventsSchemaNS, RecyclingSchemaNS } from "./v0.1/index.js";
 //# sourceMappingURL=index.d.ts.map

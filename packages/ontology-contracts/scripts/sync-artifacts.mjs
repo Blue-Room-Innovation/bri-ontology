@@ -60,6 +60,45 @@ function parseRootExportName(tsSource) {
   return null;
 }
 
+function parseExportedTypeNames(tsSource) {
+  const names = new Set();
+  const typeRegex = /export\s+type\s+([A-Za-z0-9_]+)\s*=/g;
+  const ifaceRegex = /export\s+interface\s+([A-Za-z0-9_]+)/g;
+
+  let match;
+  while ((match = typeRegex.exec(tsSource)) !== null) {
+    names.add(match[1]);
+  }
+  while ((match = ifaceRegex.exec(tsSource)) !== null) {
+    names.add(match[1]);
+  }
+
+  return Array.from(names);
+}
+
+function buildAliasBlock(tsSource) {
+  const exported = parseExportedTypeNames(tsSource);
+  if (exported.length === 0) return "";
+  const existing = new Set(exported);
+  const usedAliases = new Set();
+  const lines = [];
+
+  for (const name of exported) {
+    const underscoreIndex = name.indexOf("_");
+    if (underscoreIndex <= 0) continue;
+
+    const alias = name.slice(underscoreIndex + 1);
+    if (!alias || existing.has(alias) || usedAliases.has(alias)) continue;
+
+    usedAliases.add(alias);
+    lines.push(`export type ${alias} = ${name};`);
+  }
+
+  if (lines.length === 0) return "";
+
+  return `\n/**\n * Alias exports without internal prefixes.\n */\n${lines.join("\n")}\n`;
+}
+
 function parseBuildVersionTag(buildVersion) {
   const match = /^v(\d+)\.(\d+)$/.exec(buildVersion);
   if (!match) {
@@ -215,20 +254,23 @@ for (const item of items) {
   const tsDestVersioned = path.join(generatedDestDirVersioned, item.typescript);
 
   await fs.copyFile(schemaSrc, schemaDestCurrent);
-  await fs.copyFile(tsSrc, tsDestCurrent);
 
   log("  copy schema ->", schemaDestCurrent);
   log("  copy types  ->", tsDestCurrent);
 
   // Keep versioned copies too (for optional versioned exports)
   await fs.copyFile(schemaSrc, schemaDestVersioned);
-  await fs.copyFile(tsSrc, tsDestVersioned);
 
   log("  copy schema (versioned) ->", schemaDestVersioned);
   log("  copy types  (versioned) ->", tsDestVersioned);
 
   const schemaSource = await fs.readFile(schemaSrc, "utf8");
   const tsSource = await fs.readFile(tsSrc, "utf8");
+  const aliasBlock = buildAliasBlock(tsSource);
+
+  const tsOutput = aliasBlock ? `${tsSource}${aliasBlock}` : tsSource;
+  await fs.writeFile(tsDestCurrent, tsOutput, "utf8");
+  await fs.writeFile(tsDestVersioned, tsOutput, "utf8");
 
   // Prefer JSON Schema root title (deterministic). Fallback to parsing TS exports.
   const rootExport =
@@ -256,7 +298,8 @@ const currentIndexPath = path.join(currentIndexDir, "index.ts");
 const exportTypes = typeEntries
   .map(
     (t) =>
-      `export type { ${t.rootInterface} } from "../generated/current/${t.typescript.replace(/\.ts$/, ".js")}";`,
+      `export type { ${t.rootInterface} } from "../generated/current/${t.typescript.replace(/\.ts$/, ".js")}";
+export * as ${t.rootInterface}NS from "../generated/current/${t.typescript.replace(/\.ts$/, ".js")}";`,
   )
   .join("\n");
 
@@ -294,7 +337,8 @@ const versionedIndexPath = path.join(versionedIndexDir, "index.ts");
 const versionedExportTypes = typeEntries
   .map(
     (t) =>
-      `export type { ${t.rootInterface} } from "../generated/${buildVersion}/${t.typescript.replace(/\.ts$/, ".js")}";`,
+      `export type { ${t.rootInterface} } from "../generated/${buildVersion}/${t.typescript.replace(/\.ts$/, ".js")}";
+export * as ${t.rootInterface}NS from "../generated/${buildVersion}/${t.typescript.replace(/\.ts$/, ".js")}";`,
   )
   .join("\n");
 
@@ -329,6 +373,10 @@ const versionedExportTypeNames = typeEntries
   .map((t) => t.rootInterface)
   .sort((a, b) => a.localeCompare(b));
 
+const versionedNsExportNames = typeEntries
+  .map((t) => `${t.rootInterface}NS`)
+  .sort((a, b) => a.localeCompare(b));
+
 const rootIndexSource = `${generatedHeader("src/index.ts")}export { createValidator } from "./validator.js";
 export type {
   AjvInstance,
@@ -346,11 +394,17 @@ export type {
   SchemaTypeCurrent
 } from "./current/index.js";
 
+export * from "./current/index.js";
+
 export type {
   SchemaKey${versionTag},
   SchemaTypeMap${versionTag},
   SchemaType${versionTag},
   ${versionedExportTypeNames.join(",\n  ")}
+} from "./${buildVersion}/index.js";
+
+export {
+  ${versionedNsExportNames.join(",\n  ")}
 } from "./${buildVersion}/index.js";
 `;
 
