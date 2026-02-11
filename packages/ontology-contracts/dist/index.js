@@ -4,4 +4,6 @@
  * Output: src/index.ts
  */
 export { createValidator } from "./validator.js";
+export * from "./current/index.js";
+export { DigitalMarpolWastePassportSchemaNS, DigitalWastePassportSchemaNS, DppUneceSchemaNS, EpcisEventsSchemaNS, RecyclingSchemaNS } from "./v0.1/index.js";
 //# sourceMappingURL=index.js.map

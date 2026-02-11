@@ -1,954 +1,1079 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-06 13:20:49
+ * Generated: 2026-02-11 15:11:12
  * Source: shapes/v0.1/dpp-unece.shacl.ttl
  */
 
-/**
- * This schema was automatically generated from SHACL shapes. It provides structural validation only. For semantic validation, use the original SHACL shapes.
- */
-export interface DigitalProductPassportShape {
-  /**
-   * Type identifier for DigitalProductPassport
-   */
-  "@type": "DigitalProductPassport";
-  id: string;
-  issuer: CredentialIssuerShape;
-  /**
-   * The data from which this version is valid.
-   */
-  validFrom?: string;
-  /**
-   * The date and time until which this version remains valid.
-   */
-  validUntil?: string;
-  credentialSubject: ProductPassportShape;
-}
-export interface CredentialIssuerShape {
-  /**
-   * Type identifier for CredentialIssuer
-   */
-  "@type": "CredentialIssuer";
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * An optional list of other ...
-   */
-  issuerAlsoKnownAs?: PartyShape;
-  /**
-   * The name of the issuer ...
-   */
-  name: string;
-}
-export interface PartyShape {
-  /**
-   * Type identifier for Party
-   */
-  "@type": "Party";
-  /**
-   * An optional short description of ...
-   */
-  description?: string;
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * The identifier scheme of the ...
-   */
-  idScheme?: IdentifierSchemeShape;
-  /**
-   * The industry categories for this ...
-   */
-  industryCategory?: ClassificationShape;
-  /**
-   * The name of the issuer ...
-   */
-  name: string;
-  /**
-   * Website for this organisation
-   */
-  organisationWebsite?: string;
-  /**
-   * An optional list of other ...
-   */
-  partyAlsoKnownAs?: PartyShape;
-  /**
-   * The registration number (alphanumeric) of ...
-   */
-  registeredId?: string;
-  /**
-   * the country in which this ...
-   */
-  registrationCountry?: string;
-}
-export interface IdentifierSchemeShape {
-  /**
-   * Type identifier for IdentifierScheme
-   */
-  "@type": "IdentifierScheme";
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * The name of the issuer ...
-   */
-  name: string;
-}
-export interface ClassificationShape {
-  /**
-   * Type identifier for Classification
-   */
-  "@type": "Classification";
-  /**
-   * classification code within the scheme ...
-   */
-  code: string;
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * The name of the issuer ...
-   */
-  name: string;
-  /**
-   * Classification scheme ID
-   */
-  schemeID: string;
-  /**
-   * The name of the classification ...
-   */
-  schemeName: string;
-}
-export interface ProductPassportShape {
-  /**
-   * Type identifier for ProductPassport
-   */
-  "@type": "ProductPassport";
-  /**
-   * A circularity performance scorecard
-   */
-  circularityScorecard?: CircularityPerformanceShape;
-  /**
-   * An array of claim objects ...
-   */
-  conformityClaim?: ClaimShape;
-  /**
-   * The due diligence declaration that ...
-   */
-  dueDiligenceDeclaration?: LinkShape;
-  /**
-   * An emissions performance scorecard
-   */
-  emissionsScorecard?: EmissionsPerformanceShape;
-  /**
-   * Code to indicate the granularity ...
-   */
-  granularityLevel?: "item" | "batch" | "model";
-  /**
-   * An id is not required ...
-   */
-  id?: string;
-  /**
-   * An array of Provenance objects ...
-   */
-  materialsProvenance?: MaterialShape;
-  /**
-   * The ProductInformation class encapsulates detailed ...
-   */
-  product: ProductShape;
-  /**
-   * An array of traceability events ...
-   */
-  traceabilityInformation?: TraceabilityPerformanceShape;
-}
-export interface CircularityPerformanceShape {
-  /**
-   * Type identifier for CircularityPerformance
-   */
-  "@type": "CircularityPerformance";
-  /**
-   * The overall circularity performance indicator ...
-   */
-  materialCircularityIndicator?: number;
-  /**
-   * The fraction of the this ...
-   */
-  recyclableContent?: number;
-  /**
-   * The fraction (by mass) of ...
-   */
-  recycledContent?: number;
-  /**
-   * A URI pointing to recycling ...
-   */
-  recyclingInformation?: LinkShape;
-  /**
-   * A URI pointing to repair ...
-   */
-  repairInformation?: LinkShape;
-  /**
-   * An indicator of durability defined ...
-   */
-  utilityFactor?: number;
-}
-export interface LinkShape {
-  /**
-   * Type identifier for Link
-   */
-  "@type": "Link";
-  /**
-   * A display name for the ...
-   */
-  linkName?: string;
-  /**
-   * The type of the target ...
-   */
-  linkType?: string;
-  /**
-   * The URL of the target ...
-   */
-  linkURL: string;
-}
-export interface ClaimShape {
-  /**
-   * Type identifier for Claim
-   */
-  "@type": "Claim";
-  /**
-   * The specification against which the ...
-   */
-  assessmentCriteria?: CriterionShape;
-  /**
-   * The date on which this ...
-   */
-  assessmentDate?: string;
-  /**
-   * An indicator of whether or ...
-   */
-  conformance?: boolean;
-  /**
-   * A URI pointing to the ...
-   */
-  conformityEvidence?: SecureLinkShape;
-  /**
-   * The conformity topic category for ...
-   */
-  conformityTopic?: string;
-  /**
-   * The list of specific values ...
-   */
-  declaredValue?: MetricShape;
-  /**
-   * An optional short description of ...
-   */
-  description?: string;
-  /**
-   * The W3C DID of the ...
-   */
-  id?: string;
-  /**
-   * The reference to the regulation ...
-   */
-  referenceRegulation?: RegulationShape;
-  /**
-   * The reference to the standard ...
-   */
-  referenceStandard?: StandardShape;
-}
-export interface CriterionShape {
-  /**
-   * Type identifier for Criterion
-   */
-  "@type": "Criterion";
-  /**
-   * A set of classification codes ...
-   */
-  category?: ClassificationShape;
-  /**
-   * The conformity topic category for ...
-   */
-  conformityTopic?: string;
-  /**
-   * An optional short description of ...
-   */
-  description?: string;
-  /**
-   * The W3C DID of the ...
-   */
-  id?: string;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-  /**
-   * A performance category code to ...
-   */
-  performanceLevel?: string;
-  /**
-   * The lifecycle status of this ...
-   */
-  status?: string;
-  /**
-   * List of criterion that are ...
-   */
-  subCriterion?: CriterionShape;
-  /**
-   * A set of tags that ...
-   */
-  tag?: string;
-  /**
-   * A threshold value that defines ...
-   */
-  thresholdValue?: MetricShape;
-}
-export interface MetricShape {
-  /**
-   * Type identifier for Metric
-   */
-  "@type": "Metric";
-  /**
-   * A percentage represented as a ...
-   */
-  accuracy?: number;
-  /**
-   * A human readable name for ...
-   */
-  metricName?: string;
-  /**
-   * A numeric value and unit ...
-   */
-  metricValue?: MeasureShape;
-  /**
-   * A score or rank associated ...
-   */
-  score?: string;
-}
-export interface MeasureShape {
-  /**
-   * Type identifier for Measure
-   */
-  "@type": "Measure";
-  /**
-   * Unit of measure drawn from ...
-   */
-  unit: string;
-  /**
-   * The numeric value of the ...
-   */
-  value: number;
-}
-export interface SecureLinkShape {
-  /**
-   * Type identifier for SecureLink
-   */
-  "@type": "SecureLink";
-  /**
-   * The symmetric encryption algorithm used ...
-   */
-  encryptionMethod?: string;
-  /**
-   * The hash of the file. ...
-   */
-  hashDigest?: string;
-  /**
-   * The hashing algorithm used to ...
-   */
-  hashMethod?: string;
-  /**
-   * A display name for the ...
-   */
-  linkName?: string;
-  /**
-   * The type of the target ...
-   */
-  linkType?: string;
-  /**
-   * The URL of the target ...
-   */
-  linkURL?: string;
-}
-export interface RegulationShape {
-  /**
-   * Type identifier for Regulation
-   */
-  "@type": "Regulation";
-  /**
-   * the issuing body of the ...
-   */
-  administeredBy?: PartyShape;
-  /**
-   * the date at which the ...
-   */
-  effectiveDate?: string;
-  /**
-   * The W3C DID of the ...
-   */
-  id?: string;
-  /**
-   * The legal jurisdiction (country) under ...
-   */
-  jurisdictionCountry?: string;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-}
-export interface StandardShape {
-  /**
-   * Type identifier for Standard
-   */
-  "@type": "Standard";
-  /**
-   * The W3C DID of the ...
-   */
-  id?: string;
-  /**
-   * The date when the standard ...
-   */
-  issueDate?: string;
-  /**
-   * The party that issued the ...
-   */
-  issuingParty?: PartyShape;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-}
-export interface EmissionsPerformanceShape {
-  /**
-   * Type identifier for EmissionsPerformance
-   */
-  "@type": "EmissionsPerformance";
-  /**
-   * The carbon footprint of the ...
-   */
-  carbonFootprint?: number;
-  /**
-   * The unit of product (EA, ...
-   */
-  declaredUnit?: string;
-  /**
-   * The operational scope of the ...
-   */
-  operationalScope?: "CradleToGate" | "CradleToGrave" | "None";
-  /**
-   * The ratio of emissions data ...
-   */
-  primarySourcedRatio?: number;
-  /**
-   * The reporting standard (eg GHG ...
-   */
-  reportingStandard?: StandardShape;
-}
-export interface MaterialShape {
-  /**
-   * Type identifier for Material
-   */
-  "@type": "Material";
-  /**
-   * Indicates whether this material is ...
-   */
-  hazardous?: boolean;
-  /**
-   * The mass of the material ...
-   */
-  mass?: MeasureShape;
-  /**
-   * The mass fraction of the ...
-   */
-  massFraction?: number;
-  /**
-   * Reference to further information about ...
-   */
-  materialSafetyInformation?: LinkShape;
-  /**
-   * The type of this material ...
-   */
-  materialType?: ClassificationShape;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-  /**
-   * A ISO 3166-1 code representing ...
-   */
-  originCountry?: string;
-  /**
-   * Mass fraction of this material ...
-   */
-  recycledMassFraction?: number;
-  /**
-   * Based 64 encoded binary used ...
-   */
-  symbol?: string;
-}
-export interface ProductShape {
-  /**
-   * Type identifier for Product
-   */
-  "@type": "Product";
-  /**
-   * Identifier of the specific production ...
-   */
-  batchNumber?: string;
-  /**
-   * A placeholder for indusutry / ...
-   */
-  characteristics?: CharacteristicsShape;
-  /**
-   * The country in which this ...
-   */
+export type DppUneceSchema =
+  | {
+      "@graph": (
+        | BriShape_DigitalProductPassportShape
+        | BriShape_CredentialIssuerShape
+        | BriShape_PartyShape
+        | BriShape_IdentifierSchemeShape
+        | BriShape_ClassificationShape
+        | BriShape_ProductPassportShape
+        | BriShape_ProductShape
+        | BriShape_CharacteristicsShape
+        | BriShape_DimensionShape
+        | BriShape_MeasureShape
+        | BriShape_LinkShape
+        | BriShape_FacilityShape
+        | BriShape_AddressShape
+        | BriShape_LocationShape
+        | BriShape_CircularityPerformanceShape
+        | BriShape_ClaimShape
+        | BriShape_CriterionShape
+        | BriShape_MetricShape
+        | BriShape_SecureLinkShape
+        | BriShape_RegulationShape
+        | BriShape_StandardShape
+        | BriShape_EmissionsPerformanceShape
+        | BriShape_MaterialShape
+        | BriShape_TraceabilityPerformanceShape
+      )[];
+      [k: string]: unknown;
+    }
+  | ({
+      [k: string]: unknown;
+    } & (
+      | BriShape_DigitalProductPassportShape
+      | BriShape_CredentialIssuerShape
+      | BriShape_PartyShape
+      | BriShape_IdentifierSchemeShape
+      | BriShape_ClassificationShape
+      | BriShape_ProductPassportShape
+      | BriShape_ProductShape
+      | BriShape_CharacteristicsShape
+      | BriShape_DimensionShape
+      | BriShape_MeasureShape
+      | BriShape_LinkShape
+      | BriShape_FacilityShape
+      | BriShape_AddressShape
+      | BriShape_LocationShape
+      | BriShape_CircularityPerformanceShape
+      | BriShape_ClaimShape
+      | BriShape_CriterionShape
+      | BriShape_MetricShape
+      | BriShape_SecureLinkShape
+      | BriShape_RegulationShape
+      | BriShape_StandardShape
+      | BriShape_EmissionsPerformanceShape
+      | BriShape_MaterialShape
+      | BriShape_TraceabilityPerformanceShape
+    ));
+export type BriShape_DigitalProductPassportShape = {
+  id: string | [string];
+  issuer: BriShape_CredentialIssuerShape | [BriShape_CredentialIssuerShape & BriShape_CredentialIssuerShape];
+  validFrom?: string | [] | [string & string];
+  validUntil?: string | [] | [string & string];
+  credentialSubject: BriShape_ProductPassportShape | [BriShape_ProductPassportShape & BriShape_ProductPassportShape];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport" | "DigitalProductPassport";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_CredentialIssuerShape = {
+  id: string | [string];
+  issuerAlsoKnownAs?: BriShape_PartyShape | BriShape_PartyShape[];
+  name: string | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer" | "CredentialIssuer";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_PartyShape = {
+  description?: string | [] | [string];
+  id: string | [string];
+  idScheme?: BriShape_IdentifierSchemeShape | [] | [BriShape_IdentifierSchemeShape & BriShape_IdentifierSchemeShape];
+  industryCategory?: BriShape_ClassificationShape | BriShape_ClassificationShape[];
+  name: string | [string];
+  organisationWebsite?: string | [] | [string];
+  partyAlsoKnownAs?: BriShape_PartyShape | BriShape_PartyShape[];
+  registeredId?: string | [] | [string];
+  registrationCountry?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Party" | "Party";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_IdentifierSchemeShape = {
+  id: string | [string];
+  name: string | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme" | "IdentifierScheme";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_ClassificationShape = {
+  code: string | [string];
+  id: string | [string];
+  name: string | [string];
+  schemeID: string | [string];
+  schemeName: string | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Classification" | "Classification";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_ProductPassportShape = {
+  circularityScorecard?: BriShape_CircularityPerformanceShape | [] | [BriShape_CircularityPerformanceShape];
+  conformityClaim?: BriShape_ClaimShape | BriShape_ClaimShape[];
+  dueDiligenceDeclaration?: BriShape_LinkShape | [] | [BriShape_LinkShape];
+  emissionsScorecard?: BriShape_EmissionsPerformanceShape | [] | [BriShape_EmissionsPerformanceShape];
+  granularityLevel?: (string & ("item" | "batch" | "model")) | [] | [string & ("item" | "batch" | "model")];
+  id?: string | [] | [string];
+  materialsProvenance?: BriShape_MaterialShape | BriShape_MaterialShape[];
+  product: BriShape_ProductShape | [BriShape_ProductShape];
+  traceabilityInformation?: BriShape_TraceabilityPerformanceShape | BriShape_TraceabilityPerformanceShape[];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport" | "ProductPassport";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_CircularityPerformanceShape = {
+  materialCircularityIndicator?: number | [] | [number];
+  recyclableContent?: number | [] | [number];
+  recycledContent?: number | [] | [number];
+  recyclingInformation?: BriShape_LinkShape | [] | [BriShape_LinkShape];
+  repairInformation?: BriShape_LinkShape | [] | [BriShape_LinkShape];
+  utilityFactor?: number | [] | [number];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance" | "CircularityPerformance";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_LinkShape = {
+  linkName?: string | [] | [string];
+  linkType?: string | [] | [string];
+  linkURL: string | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Link" | "Link";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_ClaimShape = {
+  assessmentCriteria?: BriShape_CriterionShape | BriShape_CriterionShape[];
+  assessmentDate?: string | [] | [string];
+  conformance?: boolean | [] | [boolean];
+  conformityEvidence?: BriShape_SecureLinkShape | BriShape_SecureLinkShape[];
+  conformityTopic?: string | [] | [string];
+  declaredValue?: BriShape_MetricShape | BriShape_MetricShape[];
+  description?: string | [] | [string];
+  id?: string | [] | [string];
+  referenceRegulation?: BriShape_RegulationShape | BriShape_RegulationShape[];
+  referenceStandard?: BriShape_StandardShape | BriShape_StandardShape[];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Claim" | "Claim";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_CriterionShape = {
+  category?: BriShape_ClassificationShape | BriShape_ClassificationShape[];
+  conformityTopic?: string | [] | [string];
+  description?: string | [] | [string];
+  id?: string | [] | [string];
+  name?: string | [] | [string];
+  performanceLevel?: string | [] | [string];
+  status?: string | [] | [string];
+  subCriterion?: BriShape_CriterionShape | BriShape_CriterionShape[];
+  tag?: string | string[];
+  thresholdValue?: BriShape_MetricShape | BriShape_MetricShape[];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Criterion" | "Criterion";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_MetricShape = {
+  accuracy?: number | [] | [number];
+  metricName?: string | [] | [string];
+  metricValue?: BriShape_MeasureShape | BriShape_MeasureShape[];
+  score?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Metric" | "Metric";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_MeasureShape = {
+  unit: string | [string];
+  value: number | [number];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Measure" | "Measure";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_SecureLinkShape = {
+  encryptionMethod?: string | [] | [string];
+  hashDigest?: string | [] | [string];
+  hashMethod?: string | [] | [string];
+  linkName?: string | [] | [string];
+  linkType?: string | [] | [string];
+  linkURL?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/SecureLink" | "SecureLink";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_RegulationShape = {
+  administeredBy?: BriShape_PartyShape | BriShape_PartyShape[];
+  effectiveDate?: string | [] | [string];
+  id?: string | [] | [string];
+  jurisdictionCountry?: string | [] | [string];
+  name?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Regulation" | "Regulation";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_StandardShape = {
+  id?: string | [] | [string];
+  issueDate?: string | [] | [string];
+  issuingParty?: BriShape_PartyShape | BriShape_PartyShape[];
+  name?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Standard" | "Standard";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_EmissionsPerformanceShape = {
+  carbonFootprint?: number | [] | [number];
+  declaredUnit?: string | [] | [string];
+  operationalScope?:
+    | (string & ("CradleToGate" | "CradleToGrave" | "None"))
+    | []
+    | [string & ("CradleToGate" | "CradleToGrave" | "None")];
+  primarySourcedRatio?: number | [] | [number];
+  reportingStandard?: BriShape_StandardShape | BriShape_StandardShape[];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance" | "EmissionsPerformance";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_MaterialShape = {
+  hazardous?: boolean | [] | [boolean];
+  mass?: BriShape_MeasureShape | BriShape_MeasureShape[];
+  massFraction?: number | [] | [number];
+  materialSafetyInformation?: BriShape_LinkShape | [] | [BriShape_LinkShape];
+  materialType?: BriShape_ClassificationShape | BriShape_ClassificationShape[];
+  name?: string | [] | [string];
+  originCountry?: string | [] | [string];
+  recycledMassFraction?: number | [] | [number];
+  symbol?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Material" | "Material";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_ProductShape = {
+  batchNumber?: string | [] | [string];
+  characteristics?: BriShape_CharacteristicsShape | [] | [BriShape_CharacteristicsShape];
   countryOfProduction?:
-    | "AD"
-    | "AE"
-    | "AF"
-    | "AG"
-    | "AI"
-    | "AL"
-    | "AM"
-    | "AO"
-    | "AQ"
-    | "AR"
-    | "AS"
-    | "AT"
-    | "AU"
-    | "AW"
-    | "AX"
-    | "AZ"
-    | "BA"
-    | "BB"
-    | "BD"
-    | "BE"
-    | "BF"
-    | "BG"
-    | "BH"
-    | "BI"
-    | "BJ"
-    | "BL"
-    | "BM"
-    | "BN"
-    | "BO"
-    | "BQ"
-    | "BR"
-    | "BS"
-    | "BT"
-    | "BV"
-    | "BW"
-    | "BY"
-    | "BZ"
-    | "CA"
-    | "CC"
-    | "CD"
-    | "CF"
-    | "CG"
-    | "CH"
-    | "CI"
-    | "CK"
-    | "CL"
-    | "CM"
-    | "CN"
-    | "CO"
-    | "CR"
-    | "CU"
-    | "CV"
-    | "CW"
-    | "CX"
-    | "CY"
-    | "CZ"
-    | "DE"
-    | "DJ"
-    | "DK"
-    | "DM"
-    | "DO"
-    | "DZ"
-    | "EC"
-    | "EE"
-    | "EG"
-    | "EH"
-    | "ER"
-    | "ES"
-    | "ET"
-    | "FI"
-    | "FJ"
-    | "FK"
-    | "FM"
-    | "FO"
-    | "FR"
-    | "GA"
-    | "GB"
-    | "GD"
-    | "GE"
-    | "GF"
-    | "GG"
-    | "GH"
-    | "GI"
-    | "GL"
-    | "GM"
-    | "GN"
-    | "GP"
-    | "GQ"
-    | "GR"
-    | "GS"
-    | "GT"
-    | "GU"
-    | "GW"
-    | "GY"
-    | "HK"
-    | "HM"
-    | "HN"
-    | "HR"
-    | "HT"
-    | "HU"
-    | "ID"
-    | "IE"
-    | "IL"
-    | "IM"
-    | "IN"
-    | "IO"
-    | "IQ"
-    | "IR"
-    | "IS"
-    | "IT"
-    | "JE"
-    | "JM"
-    | "JO"
-    | "JP"
-    | "KE"
-    | "KG"
-    | "KH"
-    | "KI"
-    | "KM"
-    | "KN"
-    | "KP"
-    | "KR"
-    | "KW"
-    | "KY"
-    | "KZ"
-    | "LA"
-    | "LB"
-    | "LC"
-    | "LI"
-    | "LK"
-    | "LR"
-    | "LS"
-    | "LT"
-    | "LU"
-    | "LV"
-    | "LY"
-    | "MA"
-    | "MC"
-    | "MD"
-    | "ME"
-    | "MF"
-    | "MG"
-    | "MH"
-    | "MK"
-    | "ML"
-    | "MM"
-    | "MN"
-    | "MO"
-    | "MP"
-    | "MQ"
-    | "MR"
-    | "MS"
-    | "MT"
-    | "MU"
-    | "MV"
-    | "MW"
-    | "MX"
-    | "MY"
-    | "MZ"
-    | "NA"
-    | "NC"
-    | "NE"
-    | "NF"
-    | "NG"
-    | "NI"
-    | "NL"
-    | "NO"
-    | "NP"
-    | "NR"
-    | "NU"
-    | "NZ"
-    | "OM"
-    | "PA"
-    | "PE"
-    | "PF"
-    | "PG"
-    | "PH"
-    | "PK"
-    | "PL"
-    | "PM"
-    | "PN"
-    | "PR"
-    | "PS"
-    | "PT"
-    | "PW"
-    | "PY"
-    | "QA"
-    | "RE"
-    | "RO"
-    | "RS"
-    | "RU"
-    | "RW"
-    | "SA"
-    | "SB"
-    | "SC"
-    | "SD"
-    | "SE"
-    | "SG"
-    | "SH"
-    | "SI"
-    | "SJ"
-    | "SK"
-    | "SL"
-    | "SM"
-    | "SN"
-    | "SO"
-    | "SR"
-    | "SS"
-    | "ST"
-    | "SV"
-    | "SX"
-    | "SY"
-    | "SZ"
-    | "TC"
-    | "TD"
-    | "TF"
-    | "TG"
-    | "TH"
-    | "TJ"
-    | "TK"
-    | "TL"
-    | "TM"
-    | "TN"
-    | "TO"
-    | "TR"
-    | "TT"
-    | "TV"
-    | "TW"
-    | "TZ"
-    | "UA"
-    | "UG"
-    | "UM"
-    | "US"
-    | "UY"
-    | "UZ"
-    | "VA"
-    | "VC"
-    | "VE"
-    | "VG"
-    | "VI"
-    | "VN"
-    | "VU"
-    | "WF"
-    | "WS"
-    | "YE"
-    | "YT"
-    | "ZA"
-    | "ZM"
-    | "ZW";
-  /**
-   * An optional short description of ...
-   */
-  description?: string;
-  /**
-   * The physical dimensions of the ...
-   */
-  dimensions?: DimensionShape;
-  /**
-   * A URL pointing to further ...
-   */
-  furtherInformation?: LinkShape;
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * The identifier scheme of the ...
-   */
-  idScheme?: IdentifierSchemeShape;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-  /**
-   * The Facility where the product ...
-   */
-  producedAtFacility?: FacilityShape;
-  /**
-   * The Party entity that manufactured ...
-   */
-  producedByParty?: PartyShape;
-  /**
-   * A code representing the product's ...
-   */
-  productCategory?: ClassificationShape;
-  /**
-   * Reference information (location, type, name) ...
-   */
-  productImage?: LinkShape;
-  /**
-   * The ISO 8601 date on ...
-   */
-  productionDate?: string;
-  /**
-   * The registration number (alphanumeric) of ...
-   */
-  registeredId?: string;
-  /**
-   * A number or code representing ...
-   */
-  serialNumber?: string;
-}
-export interface CharacteristicsShape {
-  /**
-   * Type identifier for Characteristics
-   */
-  "@type": "Characteristics";
-}
-export interface DimensionShape {
-  /**
-   * Type identifier for Dimension
-   */
-  "@type": "Dimension";
-  /**
-   * The height of the product ...
-   */
-  height?: MeasureShape;
-  /**
-   * The length of the product ...
-   */
-  length?: MeasureShape;
-  /**
-   * The displacement volume of the ...
-   */
-  volume?: MeasureShape;
-  /**
-   * the weight of the product. ...
-   */
-  weight?: MeasureShape;
-  /**
-   * The width of the product ...
-   */
-  width?: MeasureShape;
-}
-export interface FacilityShape {
-  /**
-   * Type identifier for Facility
-   */
-  "@type": "Facility";
-  /**
-   * The Postal address of the ...
-   */
-  address?: AddressShape;
-  /**
-   * The country in which this ...
-   */
-  countryOfOperation?: string;
-  /**
-   * An optional short description of ...
-   */
-  description?: string;
-  /**
-   * An optional list of other ...
-   */
-  facilityAlsoKnownAs?: FacilityShape;
-  /**
-   * The W3C DID of the ...
-   */
-  id: string;
-  /**
-   * The identifier scheme of the ...
-   */
-  idScheme?: IdentifierSchemeShape;
-  /**
-   * Geo-location information for this facility ...
-   */
-  locationInformation?: LocationShape;
-  /**
-   * The name of the issuer ...
-   */
-  name?: string;
-  /**
-   * The Party entity responsible for ...
-   */
-  operatedByParty?: PartyShape;
-  /**
-   * The industrial or production processes ...
-   */
-  processCategory?: ClassificationShape;
-  /**
-   * The registration number (alphanumeric) of ...
-   */
-  registeredId?: string;
-}
-export interface AddressShape {
-  /**
-   * Type identifier for Address
-   */
-  "@type": "Address";
-  /**
-   * The address country as an ...
-   */
-  addressCountry?: string;
-  /**
-   * The city, suburb or township ...
-   */
-  addressLocality?: string;
-  /**
-   * The state or territory or ...
-   */
-  addressRegion?: string;
-  /**
-   * The postal code or zip ...
-   */
-  postalCode?: string;
-  /**
-   * the street address as an ...
-   */
-  streetAddress?: string;
-}
-export interface LocationShape {
-  /**
-   * Type identifier for Location
-   */
-  "@type": "Location";
-  /**
-   * The list of ordered coordinates ...
-   */
-  geoBoundary?: string;
-  /**
-   * The latitude and longitude coordinates ...
-   */
-  geoLocation?: string;
-  /**
-   * An open location code (https://maps.google.com/pluscodes/) ...
-   */
-  plusCode?: string;
-}
-export interface TraceabilityPerformanceShape {
-  /**
-   * Type identifier for TraceabilityPerformance
-   */
-  "@type": "TraceabilityPerformance";
-  /**
-   * A list of secure links ...
-   */
-  traceabilityEvent?: SecureLinkShape;
-  /**
-   * Human readable name for the ...
-   */
-  valueChainProcess?: string;
-  /**
-   * The proportion (0 to 1) ...
-   */
-  verifiedRatio?: number;
-}
+    | (string &
+        (
+          | "AD"
+          | "AE"
+          | "AF"
+          | "AG"
+          | "AI"
+          | "AL"
+          | "AM"
+          | "AO"
+          | "AQ"
+          | "AR"
+          | "AS"
+          | "AT"
+          | "AU"
+          | "AW"
+          | "AX"
+          | "AZ"
+          | "BA"
+          | "BB"
+          | "BD"
+          | "BE"
+          | "BF"
+          | "BG"
+          | "BH"
+          | "BI"
+          | "BJ"
+          | "BL"
+          | "BM"
+          | "BN"
+          | "BO"
+          | "BQ"
+          | "BR"
+          | "BS"
+          | "BT"
+          | "BV"
+          | "BW"
+          | "BY"
+          | "BZ"
+          | "CA"
+          | "CC"
+          | "CD"
+          | "CF"
+          | "CG"
+          | "CH"
+          | "CI"
+          | "CK"
+          | "CL"
+          | "CM"
+          | "CN"
+          | "CO"
+          | "CR"
+          | "CU"
+          | "CV"
+          | "CW"
+          | "CX"
+          | "CY"
+          | "CZ"
+          | "DE"
+          | "DJ"
+          | "DK"
+          | "DM"
+          | "DO"
+          | "DZ"
+          | "EC"
+          | "EE"
+          | "EG"
+          | "EH"
+          | "ER"
+          | "ES"
+          | "ET"
+          | "FI"
+          | "FJ"
+          | "FK"
+          | "FM"
+          | "FO"
+          | "FR"
+          | "GA"
+          | "GB"
+          | "GD"
+          | "GE"
+          | "GF"
+          | "GG"
+          | "GH"
+          | "GI"
+          | "GL"
+          | "GM"
+          | "GN"
+          | "GP"
+          | "GQ"
+          | "GR"
+          | "GS"
+          | "GT"
+          | "GU"
+          | "GW"
+          | "GY"
+          | "HK"
+          | "HM"
+          | "HN"
+          | "HR"
+          | "HT"
+          | "HU"
+          | "ID"
+          | "IE"
+          | "IL"
+          | "IM"
+          | "IN"
+          | "IO"
+          | "IQ"
+          | "IR"
+          | "IS"
+          | "IT"
+          | "JE"
+          | "JM"
+          | "JO"
+          | "JP"
+          | "KE"
+          | "KG"
+          | "KH"
+          | "KI"
+          | "KM"
+          | "KN"
+          | "KP"
+          | "KR"
+          | "KW"
+          | "KY"
+          | "KZ"
+          | "LA"
+          | "LB"
+          | "LC"
+          | "LI"
+          | "LK"
+          | "LR"
+          | "LS"
+          | "LT"
+          | "LU"
+          | "LV"
+          | "LY"
+          | "MA"
+          | "MC"
+          | "MD"
+          | "ME"
+          | "MF"
+          | "MG"
+          | "MH"
+          | "MK"
+          | "ML"
+          | "MM"
+          | "MN"
+          | "MO"
+          | "MP"
+          | "MQ"
+          | "MR"
+          | "MS"
+          | "MT"
+          | "MU"
+          | "MV"
+          | "MW"
+          | "MX"
+          | "MY"
+          | "MZ"
+          | "NA"
+          | "NC"
+          | "NE"
+          | "NF"
+          | "NG"
+          | "NI"
+          | "NL"
+          | "NO"
+          | "NP"
+          | "NR"
+          | "NU"
+          | "NZ"
+          | "OM"
+          | "PA"
+          | "PE"
+          | "PF"
+          | "PG"
+          | "PH"
+          | "PK"
+          | "PL"
+          | "PM"
+          | "PN"
+          | "PR"
+          | "PS"
+          | "PT"
+          | "PW"
+          | "PY"
+          | "QA"
+          | "RE"
+          | "RO"
+          | "RS"
+          | "RU"
+          | "RW"
+          | "SA"
+          | "SB"
+          | "SC"
+          | "SD"
+          | "SE"
+          | "SG"
+          | "SH"
+          | "SI"
+          | "SJ"
+          | "SK"
+          | "SL"
+          | "SM"
+          | "SN"
+          | "SO"
+          | "SR"
+          | "SS"
+          | "ST"
+          | "SV"
+          | "SX"
+          | "SY"
+          | "SZ"
+          | "TC"
+          | "TD"
+          | "TF"
+          | "TG"
+          | "TH"
+          | "TJ"
+          | "TK"
+          | "TL"
+          | "TM"
+          | "TN"
+          | "TO"
+          | "TR"
+          | "TT"
+          | "TV"
+          | "TW"
+          | "TZ"
+          | "UA"
+          | "UG"
+          | "UM"
+          | "US"
+          | "UY"
+          | "UZ"
+          | "VA"
+          | "VC"
+          | "VE"
+          | "VG"
+          | "VI"
+          | "VN"
+          | "VU"
+          | "WF"
+          | "WS"
+          | "YE"
+          | "YT"
+          | "ZA"
+          | "ZM"
+          | "ZW"
+        ))
+    | []
+    | [
+        string &
+          (
+            | "AD"
+            | "AE"
+            | "AF"
+            | "AG"
+            | "AI"
+            | "AL"
+            | "AM"
+            | "AO"
+            | "AQ"
+            | "AR"
+            | "AS"
+            | "AT"
+            | "AU"
+            | "AW"
+            | "AX"
+            | "AZ"
+            | "BA"
+            | "BB"
+            | "BD"
+            | "BE"
+            | "BF"
+            | "BG"
+            | "BH"
+            | "BI"
+            | "BJ"
+            | "BL"
+            | "BM"
+            | "BN"
+            | "BO"
+            | "BQ"
+            | "BR"
+            | "BS"
+            | "BT"
+            | "BV"
+            | "BW"
+            | "BY"
+            | "BZ"
+            | "CA"
+            | "CC"
+            | "CD"
+            | "CF"
+            | "CG"
+            | "CH"
+            | "CI"
+            | "CK"
+            | "CL"
+            | "CM"
+            | "CN"
+            | "CO"
+            | "CR"
+            | "CU"
+            | "CV"
+            | "CW"
+            | "CX"
+            | "CY"
+            | "CZ"
+            | "DE"
+            | "DJ"
+            | "DK"
+            | "DM"
+            | "DO"
+            | "DZ"
+            | "EC"
+            | "EE"
+            | "EG"
+            | "EH"
+            | "ER"
+            | "ES"
+            | "ET"
+            | "FI"
+            | "FJ"
+            | "FK"
+            | "FM"
+            | "FO"
+            | "FR"
+            | "GA"
+            | "GB"
+            | "GD"
+            | "GE"
+            | "GF"
+            | "GG"
+            | "GH"
+            | "GI"
+            | "GL"
+            | "GM"
+            | "GN"
+            | "GP"
+            | "GQ"
+            | "GR"
+            | "GS"
+            | "GT"
+            | "GU"
+            | "GW"
+            | "GY"
+            | "HK"
+            | "HM"
+            | "HN"
+            | "HR"
+            | "HT"
+            | "HU"
+            | "ID"
+            | "IE"
+            | "IL"
+            | "IM"
+            | "IN"
+            | "IO"
+            | "IQ"
+            | "IR"
+            | "IS"
+            | "IT"
+            | "JE"
+            | "JM"
+            | "JO"
+            | "JP"
+            | "KE"
+            | "KG"
+            | "KH"
+            | "KI"
+            | "KM"
+            | "KN"
+            | "KP"
+            | "KR"
+            | "KW"
+            | "KY"
+            | "KZ"
+            | "LA"
+            | "LB"
+            | "LC"
+            | "LI"
+            | "LK"
+            | "LR"
+            | "LS"
+            | "LT"
+            | "LU"
+            | "LV"
+            | "LY"
+            | "MA"
+            | "MC"
+            | "MD"
+            | "ME"
+            | "MF"
+            | "MG"
+            | "MH"
+            | "MK"
+            | "ML"
+            | "MM"
+            | "MN"
+            | "MO"
+            | "MP"
+            | "MQ"
+            | "MR"
+            | "MS"
+            | "MT"
+            | "MU"
+            | "MV"
+            | "MW"
+            | "MX"
+            | "MY"
+            | "MZ"
+            | "NA"
+            | "NC"
+            | "NE"
+            | "NF"
+            | "NG"
+            | "NI"
+            | "NL"
+            | "NO"
+            | "NP"
+            | "NR"
+            | "NU"
+            | "NZ"
+            | "OM"
+            | "PA"
+            | "PE"
+            | "PF"
+            | "PG"
+            | "PH"
+            | "PK"
+            | "PL"
+            | "PM"
+            | "PN"
+            | "PR"
+            | "PS"
+            | "PT"
+            | "PW"
+            | "PY"
+            | "QA"
+            | "RE"
+            | "RO"
+            | "RS"
+            | "RU"
+            | "RW"
+            | "SA"
+            | "SB"
+            | "SC"
+            | "SD"
+            | "SE"
+            | "SG"
+            | "SH"
+            | "SI"
+            | "SJ"
+            | "SK"
+            | "SL"
+            | "SM"
+            | "SN"
+            | "SO"
+            | "SR"
+            | "SS"
+            | "ST"
+            | "SV"
+            | "SX"
+            | "SY"
+            | "SZ"
+            | "TC"
+            | "TD"
+            | "TF"
+            | "TG"
+            | "TH"
+            | "TJ"
+            | "TK"
+            | "TL"
+            | "TM"
+            | "TN"
+            | "TO"
+            | "TR"
+            | "TT"
+            | "TV"
+            | "TW"
+            | "TZ"
+            | "UA"
+            | "UG"
+            | "UM"
+            | "US"
+            | "UY"
+            | "UZ"
+            | "VA"
+            | "VC"
+            | "VE"
+            | "VG"
+            | "VI"
+            | "VN"
+            | "VU"
+            | "WF"
+            | "WS"
+            | "YE"
+            | "YT"
+            | "ZA"
+            | "ZM"
+            | "ZW"
+          )
+      ];
+  description?: string | [] | [string];
+  dimensions?: BriShape_DimensionShape | [] | [BriShape_DimensionShape];
+  furtherInformation?: BriShape_LinkShape | BriShape_LinkShape[];
+  id: string | [string];
+  idScheme?: BriShape_IdentifierSchemeShape | [] | [BriShape_IdentifierSchemeShape];
+  name?: string | [] | [string];
+  producedAtFacility?: BriShape_FacilityShape | [] | [BriShape_FacilityShape];
+  producedByParty?: BriShape_PartyShape | [] | [BriShape_PartyShape];
+  productCategory?: BriShape_ClassificationShape | BriShape_ClassificationShape[];
+  productImage?: BriShape_LinkShape | [] | [BriShape_LinkShape];
+  productionDate?: string | [] | [string];
+  registeredId?: string | [] | [string];
+  serialNumber?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Product" | "Product";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_CharacteristicsShape = {
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Characteristics" | "Characteristics";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_DimensionShape = {
+  height?: BriShape_MeasureShape | [] | [BriShape_MeasureShape];
+  length?: BriShape_MeasureShape | [] | [BriShape_MeasureShape];
+  volume?: BriShape_MeasureShape | [] | [BriShape_MeasureShape];
+  weight?: BriShape_MeasureShape | [] | [BriShape_MeasureShape];
+  width?: BriShape_MeasureShape | [] | [BriShape_MeasureShape];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Dimension" | "Dimension";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_FacilityShape = {
+  address?: BriShape_AddressShape | [] | [BriShape_AddressShape];
+  countryOfOperation?: string | [] | [string];
+  description?: string | [] | [string];
+  facilityAlsoKnownAs?: BriShape_FacilityShape | BriShape_FacilityShape[];
+  id: string | [string];
+  idScheme?: BriShape_IdentifierSchemeShape | [] | [BriShape_IdentifierSchemeShape];
+  locationInformation?: BriShape_LocationShape | [] | [BriShape_LocationShape];
+  name?: string | [] | [string];
+  operatedByParty?: BriShape_PartyShape | [] | [BriShape_PartyShape];
+  processCategory?: BriShape_ClassificationShape | [] | [BriShape_ClassificationShape];
+  registeredId?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Facility" | "Facility";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_AddressShape = {
+  addressCountry?: string | [] | [string];
+  addressLocality?: string | [] | [string];
+  addressRegion?: string | [] | [string];
+  postalCode?: string | [] | [string];
+  streetAddress?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Address" | "Address";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_LocationShape = {
+  geoBoundary?: string | [] | [string];
+  geoLocation?: string | [] | [string];
+  plusCode?: string | [] | [string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/core/0/Location" | "Location";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type BriShape_TraceabilityPerformanceShape = {
+  traceabilityEvent?: BriShape_SecureLinkShape | BriShape_SecureLinkShape[];
+  valueChainProcess?: string | [] | [string];
+  verifiedRatio?: number | [] | [number];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type": "https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance" | "TraceabilityPerformance";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+
+/**
+ * Alias exports without internal prefixes.
+ */
+export type DigitalProductPassportShape = BriShape_DigitalProductPassportShape;
+export type CredentialIssuerShape = BriShape_CredentialIssuerShape;
+export type PartyShape = BriShape_PartyShape;
+export type IdentifierSchemeShape = BriShape_IdentifierSchemeShape;
+export type ClassificationShape = BriShape_ClassificationShape;
+export type ProductPassportShape = BriShape_ProductPassportShape;
+export type CircularityPerformanceShape = BriShape_CircularityPerformanceShape;
+export type LinkShape = BriShape_LinkShape;
+export type ClaimShape = BriShape_ClaimShape;
+export type CriterionShape = BriShape_CriterionShape;
+export type MetricShape = BriShape_MetricShape;
+export type MeasureShape = BriShape_MeasureShape;
+export type SecureLinkShape = BriShape_SecureLinkShape;
+export type RegulationShape = BriShape_RegulationShape;
+export type StandardShape = BriShape_StandardShape;
+export type EmissionsPerformanceShape = BriShape_EmissionsPerformanceShape;
+export type MaterialShape = BriShape_MaterialShape;
+export type ProductShape = BriShape_ProductShape;
+export type CharacteristicsShape = BriShape_CharacteristicsShape;
+export type DimensionShape = BriShape_DimensionShape;
+export type FacilityShape = BriShape_FacilityShape;
+export type AddressShape = BriShape_AddressShape;
+export type LocationShape = BriShape_LocationShape;
+export type TraceabilityPerformanceShape = BriShape_TraceabilityPerformanceShape;

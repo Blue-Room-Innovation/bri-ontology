@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-02-06T13:21:03Z
+Generated: 2026-02-11T15:11:37Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 
@@ -19,6 +19,7 @@ Generated: 2026-02-06T13:21:03Z
 - [digital-marpol-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-marpol-waste-passport.shacl.ttl)
 - [digital-waste-passport.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/digital-waste-passport.shacl.ttl)
 - [dpp-unece.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl)
+- [epcis-events.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/epcis-events.shacl.ttl)
 - [recycling.shacl.ttl](https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/recycling.shacl.ttl)
 
 ## Codelists (v0.1)
@@ -40,6 +41,7 @@ Generated: 2026-02-06T13:21:03Z
 - [digitalMarpolWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.context.jsonld)
 - [digitalWastePassport.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.context.jsonld)
 - [dppUnece.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.context.jsonld)
+- [epcisEvents.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/epcisEvents.context.jsonld)
 - [recycling.context.jsonld](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.context.jsonld)
 
 ## JSON Schema / JSON
@@ -47,6 +49,7 @@ Generated: 2026-02-06T13:21:03Z
 - [digitalMarpolWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.schema.json)
 - [digitalWastePassport.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.schema.json)
 - [dppUnece.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.schema.json)
+- [epcisEvents.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/epcisEvents.schema.json)
 - [recycling.schema.json](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.schema.json)
 
 ## TypeScript
@@ -54,4 +57,5 @@ Generated: 2026-02-06T13:21:03Z
 - [digitalMarpolWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalMarpolWastePassport.ts)
 - [digitalWastePassport.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/digitalWastePassport.ts)
 - [dppUnece.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/dppUnece.ts)
+- [epcisEvents.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/epcisEvents.ts)
 - [recycling.ts](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/recycling.ts)

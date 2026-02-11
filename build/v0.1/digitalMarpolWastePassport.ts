@@ -1,134 +1,368 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-06 13:20:53
+ * Generated: 2026-02-11 15:11:21
  * Source: shapes/v0.1/digital-marpol-waste-passport.shacl.ttl
  */
 
-/**
- * Information for each waste batch (closed).
- */
-export type ResidueInformationShape =
+export type DigitalMarpolWastePassportSchema =
   | {
-      quantityToDeliver: {
-        [k: string]: unknown;
-      };
+      "@graph": (
+        | Dmwp_DigitalMarpolWastePassportShape
+        | Dmwp_MarpolWastePassportShape
+        | Dmwp_MarpolWasteShape
+        | Dmwp_ResidueInformationShape
+        | Dmwp_ShipShape
+        | Dmwp_AuthorizedPartyShape
+        | Dmwp_InvolvedPartyShape
+      )[];
+      [k: string]: unknown;
+    }
+  | ({
+      [k: string]: unknown;
+    } & (
+      | Dmwp_DigitalMarpolWastePassportShape
+      | Dmwp_MarpolWastePassportShape
+      | Dmwp_MarpolWasteShape
+      | Dmwp_ResidueInformationShape
+      | Dmwp_ShipShape
+      | Dmwp_AuthorizedPartyShape
+      | Dmwp_InvolvedPartyShape
+    ));
+export type Dmwp_DigitalMarpolWastePassportShape = {
+  credentialSubject: Dmwp_MarpolWastePassportShape | [Dmwp_MarpolWastePassportShape];
+  issued: string | [string];
+  publisher: unknown;
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport"
+        | "DigitalMarpolWastePassport";
       [k: string]: unknown;
     }
   | {
-      quantityRemainingOnBoard: {
-        [k: string]: unknown;
-      };
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type Dmwp_MarpolWastePassportShape = {
+  waste: Dmwp_MarpolWasteShape | [Dmwp_MarpolWasteShape];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport"
+        | "MarpolWastePassport";
       [k: string]: unknown;
     }
   | {
-      estimatedGenerated: {
-        [k: string]: unknown;
-      };
+      "@type": unknown[];
       [k: string]: unknown;
-    };
-
-/**
- * Main shape of the Digital MARPOL Waste Passport (closed).
- */
-export interface DigitalMarpolWastePassportShape {
-  /**
-   * Type identifier for DigitalMarpolWastePassport
-   */
-  "@type": "DigitalMarpolWastePassport";
-  /**
-   * Must have a credentialSubject (MarpolWastePassport).
-   */
-  credentialSubject: MarpolWastePassportShape;
-  /**
-   * Missing issued date (dct:issued).
-   */
-  issued: string;
-  /**
-   * Missing publisher (dct:publisher).
-   */
-  publisher: {
-    [k: string]: unknown;
-  };
-}
-/**
- * MarpolWastePassport shape (closed).
- */
-export interface MarpolWastePassportShape {
-  /**
-   * Type identifier for MarpolWastePassport
-   */
-  "@type": "MarpolWastePassport";
-  /**
-   * Must link a MarpolWaste.
-   */
-  waste: MarpolWasteShape;
-}
-/**
- * MARPOL waste shape (closed).
- */
-export interface MarpolWasteShape {
-  /**
-   * Type identifier for MarpolWaste
-   */
-  "@type": "MarpolWaste";
-  /**
-   * Must specify the ship (ship).
-   */
-  ship: ShipShape;
-  /**
-   * Must have at least one ResidueInformation.
-   */
-  residue: ResidueInformationShape;
-  lastDeliveryDate?: string;
-  /**
-   * arrivalPort must match UN/LOCODE pattern (e.g. ESPMI).
-   */
-  arrivalPort?: string;
-  nextPlannedDeliveryPort?: string;
-  lastWasteDeliveryPort?: string;
-  /**
-   * deliveryType outside allowed list (ZTO, REC, DIS).
-   */
-  deliveryType?: "ZTO" | "REC" | "DIS";
-  shipScale?: string;
-  marpolEdition?: string;
-  wasteAgent?: AuthorizedPartyShape;
-  message?: {
-    [k: string]: unknown;
-  };
-  involvedParty?: {
-    [k: string]: unknown;
-  };
-}
-/**
- * Ship data (closed).
- */
-export interface ShipShape {
-  /**
-   * Type identifier for Ship
-   */
-  "@type": "Ship";
-  /**
-   * IMO must be 7 digits.
-   */
-  imoNumber: string;
-  name: string;
-  /**
-   * flag must be ISO 3166-1 alpha-2.
-   */
-  flag: string;
-}
-/**
- * Authorized entity (closed).
- */
-export interface AuthorizedPartyShape {
-  /**
-   * Type identifier for AuthorizedParty
-   */
-  "@type": "AuthorizedParty";
-  identifier: string;
-  contactPoint?: {
-    [k: string]: unknown;
-  };
-}
+    }
+);
+export type Dmwp_MarpolWasteShape = {
+  ship: Dmwp_ShipShape | [Dmwp_ShipShape];
+  residue: Dmwp_ResidueInformationShape | [Dmwp_ResidueInformationShape, ...Dmwp_ResidueInformationShape[]];
+  lastDeliveryDate?: string | [] | [string];
+  arrivalPort?: string | [] | [string & string];
+  nextPlannedDeliveryPort?: string | [] | [string & string];
+  lastWasteDeliveryPort?: string | [] | [string & string];
+  deliveryType?: (string & ("ZTO" | "REC" | "DIS")) | [] | [string & ("ZTO" | "REC" | "DIS")];
+  shipScale?: string | [] | [string];
+  marpolEdition?: string | [] | [string];
+  wasteAgent?: Dmwp_AuthorizedPartyShape | [] | [Dmwp_AuthorizedPartyShape];
+  message?: unknown;
+  involvedParty?: unknown;
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste"
+        | "MarpolWaste";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type Dmwp_ShipShape = {
+  imoNumber: string | [string & string];
+  name: string | [string];
+  flag: string | [string & string];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship"
+        | "Ship";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type Dmwp_ResidueInformationShape = {
+  typeCode: (string & "OIL") | [string & "OIL"];
+  subtypeCode: (string & "SLU") | [string & "SLU"];
+  substance?: string | [] | [string];
+  dischargeMeans?: (string & ("ZTE" | "ZTD" | "ZTC" | "ZTB")) | [] | [string & ("ZTE" | "ZTD" | "ZTC" | "ZTB")];
+  nextCollectionPort?: string | [] | [string & string];
+  quantityToDeliver?:
+    | (
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      )
+    | []
+    | [
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      ];
+  quantityRemainingOnBoard?:
+    | (
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      )
+    | []
+    | [
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      ];
+  estimatedGenerated?:
+    | (
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      )
+    | []
+    | [
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      ];
+  maxCapacity?:
+    | (
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      )
+    | []
+    | [
+        | {
+            "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+            [k: string]: unknown;
+          }
+        | {
+            "@type": unknown[];
+            [k: string]: unknown;
+          }
+      ];
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation"
+        | "ResidueInformation";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+) &
+  (
+    | {
+        quantityToDeliver:
+          | (
+              | {
+                  "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                  [k: string]: unknown;
+                }
+              | {
+                  "@type": unknown[];
+                  [k: string]: unknown;
+                }
+            )
+          | [
+              (
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              ),
+              ...(
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              )[]
+            ];
+        [k: string]: unknown;
+      }
+    | {
+        quantityRemainingOnBoard:
+          | (
+              | {
+                  "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                  [k: string]: unknown;
+                }
+              | {
+                  "@type": unknown[];
+                  [k: string]: unknown;
+                }
+            )
+          | [
+              (
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              ),
+              ...(
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              )[]
+            ];
+        [k: string]: unknown;
+      }
+    | {
+        estimatedGenerated:
+          | (
+              | {
+                  "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                  [k: string]: unknown;
+                }
+              | {
+                  "@type": unknown[];
+                  [k: string]: unknown;
+                }
+            )
+          | [
+              (
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              ),
+              ...(
+                | {
+                    "@type": "https://ontology.untp.io/core/Measure" | "Measure";
+                    [k: string]: unknown;
+                  }
+                | {
+                    "@type": unknown[];
+                    [k: string]: unknown;
+                  }
+              )[]
+            ];
+        [k: string]: unknown;
+      }
+  );
+export type Dmwp_AuthorizedPartyShape = {
+  identifier: string | [string];
+  contactPoint?: unknown;
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty"
+        | "AuthorizedParty";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
+export type Dmwp_InvolvedPartyShape = {
+  role?: unknown;
+  "@id"?: string;
+  "@type"?: string | unknown[];
+  [k: string]: unknown;
+} & (
+  | {
+      "@type":
+        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty"
+        | "InvolvedParty";
+      [k: string]: unknown;
+    }
+  | {
+      "@type": unknown[];
+      [k: string]: unknown;
+    }
+);
