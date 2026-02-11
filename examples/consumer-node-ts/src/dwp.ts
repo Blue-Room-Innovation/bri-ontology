@@ -1,15 +1,16 @@
 import {
   createValidator,
-  type DigitalWastePassportShape,
   type SchemaKeyCurrent,
+  DigitalWastePassportSchemaNS
 } from "@blueroominnovation/ontology-contracts";
 
 const validator = createValidator();
 
 const schemaKey: SchemaKeyCurrent = "dwp";
 
-const payload: DigitalWastePassportShape = {
+const payload: DigitalWastePassportSchemaNS.DigitalWastePassportShape = {
   "@type": "DigitalWastePassport",
+
   id: "https://example.org/dwp/1",
   issuer: {
     "@type": "CredentialIssuer",

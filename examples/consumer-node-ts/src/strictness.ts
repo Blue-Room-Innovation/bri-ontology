@@ -10,20 +10,22 @@ console.log("---------------------------------------------------------");
 console.log("STRICTNESS TEST: Verifying rejection of extra properties");
 console.log("---------------------------------------------------------");
 
-// 1. Create a payload with an ILLEGAL extra property
+// 1. Create a minimally valid payload and add an ILLEGAL extra property
 const payloadWithJunk: any = {
-    // Required fields
-    identifier: "https://example.org/dpp/strict-test",
+    "@type": "DigitalProductPassport",
+    id: "https://example.org/dpp/strict-test",
     issuer: {
-        identifier: "https://example.org/org/issuer-strict",
+        "@type": "CredentialIssuer",
+        id: "https://example.org/org/issuer-strict",
         name: "Strictness Tester",
     },
     credentialSubject: {
+        "@type": "ProductPassport",
         product: {
-            identifier: "https://example.org/product/strict-1",
+            "@type": "Product",
+            id: "https://example.org/product/strict-1",
             name: "Strict Product",
         },
-        // Required property
         granularityLevel: "item",
     },
     // ILLEGAL PROPERTY
@@ -38,15 +40,15 @@ if (result.ok) {
     console.error("❌ STRICTNESS CHECK FAILED: Validation succeeded but should have failed due to '_thisShouldNotBeAllowed'");
     process.exit(1);
 } else {
-    // Check if error is about additionalProperties
-    const hasAdditionalPropsError = result.errors && JSON.stringify(result.errors).includes("additionalProperties");
+    // Check if error is about unexpected properties
+    const errorText = JSON.stringify(result.errors);
+    const hasExtraPropsError = errorText.includes("additionalProperties") || errorText.includes("unevaluatedProperties");
 
-    if (hasAdditionalPropsError) {
-        console.log("✅ STRICTNESS CHECK PASSED: Validation failed as expected with 'additionalProperties' error.");
+    if (hasExtraPropsError) {
+        console.log("✅ STRICTNESS CHECK PASSED: Validation failed as expected with extra properties error.");
     } else {
-        console.warn("⚠️  STRICTNESS CHECK WARNING: Validation failed, but not strictly due to 'additionalProperties'?");
+        console.warn("⚠️  STRICTNESS CHECK WARNING: Validation failed, but not strictly due to extra properties?");
         console.warn("   Error details:", JSON.stringify(result.errors, null, 2));
-        // accepted as pass for now if it failed
     }
 }
 console.log("---------------------------------------------------------");

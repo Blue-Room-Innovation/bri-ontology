@@ -5,7 +5,7 @@
 
 # Current Component Versions
 # --------------------------
-ontology_version: "v0.1" # Digital Waste Passport & MARPOL ontologies
+ontology_version: "v0.1" # Ontologies
 shapes_version: "v0.1" # SHACL shape definitions
 examples_version: "v0.1" # Example data files
 codelists_version: "v0.1" # Code lists (standardized versioning)
@@ -67,6 +67,10 @@ shapes:
     file: "waste-actors.shacl.ttl"
     ontology: "wasteActors"
 
+  - name: "epcisEvents"
+    file: "epcis-events.shacl.ttl"
+    ontology: "epcisEvents"
+
 # Generation Pipeline Configuration
 # ---------------------------------
 generation:
@@ -76,6 +80,7 @@ generation:
     - dwp
     - dmwp
     - recycling
+    - epcis-events
 
 # Validation Configuration
 # ------------------------
@@ -126,6 +131,14 @@ validation:
         format: "human"
         extras: ""
 
+      epcis-events:
+        name: "EPCIS Events"
+        description: ""
+        data: "examples/v0.1/epcis-events.sample.jsonld"
+        shapes: "shapes/v0.1/epcis-events.shacl.ttl"
+        format: "human"
+        extras: ""
+
 # Conversion Configuration
 # ------------------------
 # Define conversion scenarios for SHACL → JSON Schema → TypeScript
@@ -156,6 +169,12 @@ conversion:
       output: "build/v0.1/recycling.schema.json"
       naming: "local"
 
+    epcis-events:
+      name: "EPCIS Events"
+      input: "shapes/v0.1/epcis-events.shacl.ttl"
+      output: "build/v0.1/epcisEvents.schema.json"
+      naming: "local"
+
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
     dpp-unece:
@@ -177,6 +196,11 @@ conversion:
       name: "Recycling"
       input: "shapes/v0.1/recycling.shacl.ttl"
       output: "build/v0.1/recycling.context.jsonld"
+
+    epcis-events:
+      name: "EPCIS Events"
+      input: "shapes/v0.1/epcis-events.shacl.ttl"
+      output: "build/v0.1/epcisEvents.context.jsonld"
 
   # JSON Schema to TypeScript conversions
   json_to_ts:
@@ -203,6 +227,12 @@ conversion:
       input: "build/v0.1/recycling.schema.json"
       output: "build/v0.1/recycling.ts"
       source: "shapes/v0.1/recycling.shacl.ttl"
+
+    epcis-events:
+      name: "EPCIS Events"
+      input: "build/v0.1/epcisEvents.schema.json"
+      output: "build/v0.1/epcisEvents.ts"
+      source: "shapes/v0.1/epcis-events.shacl.ttl"
 
 # Wiki Documentation Configuration
 # --------------------------------
