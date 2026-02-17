@@ -1,5 +1,5 @@
 {
-  "@context": "../../temporal.context.jsonld",
+  "@context": "../../build/v0.1/epcisEvents.context.jsonld",
   "@type": "Collection",
   "member": [
     {

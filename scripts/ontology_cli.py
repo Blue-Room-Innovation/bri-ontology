@@ -138,6 +138,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="List all available validation scenarios from config.yml",
     )
+    shacl.add_argument(
+        "--no-meta",
+        action="store_true",
+        help="Disable meta-SHACL validation (validation of shapes)",
+    )
 
     # ===== GENERATE COMMANDS =====
     generate = sub.add_parser("generate", help="Generation commands")
@@ -399,6 +404,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                     shapes_file=workspace_root / Path(shapes_file),
                     extras_csv=extras_csv,
                     output_format=fmt,
+                    meta_shacl=not ns.no_meta,
                 )
                 return validate_shacl(config)
 
@@ -420,6 +426,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                     shapes_file=workspace_root / Path(shapes_file),
                     extras_csv=extras_csv,
                     output_format=fmt,
+                    meta_shacl=not ns.no_meta,
                 )
                 return validate_shacl(config)
 
@@ -449,6 +456,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                     shapes_file=workspace_root / Path(shapes_file),
                     extras_csv=extras_csv or "",
                     output_format=fmt or "human",
+                    meta_shacl=not ns.no_meta,
                 )
                 code = validate_shacl(config)
                 worst_exit = max(worst_exit, code)

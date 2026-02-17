@@ -14,6 +14,7 @@
     "validate:owl:quiet": "node docker/docker.js run validate:owl:quiet",
     "validate:owl:with-codelists": "node docker/docker.js run validate:owl:with-codelists",
     "validate:shacl": "node docker/docker.js run validate:shacl",
+    "validate:shacl:no-meta": "node docker/docker.js run validate:shacl --no-meta",
     "validate:shacl:list": "node docker/docker.js run validate:shacl:list",
     "generate:types": "node docker/docker.js run generate:types",
     "generate:types:verbose": "node docker/docker.js run generate:types:verbose",

@@ -25,6 +25,7 @@ class ShaclConfig:
     shapes_file: Path
     extras_csv: str = ""
     output_format: str = "human"
+    meta_shacl: bool = True
 
 
 def _load_graph(path: Path):
@@ -327,6 +328,45 @@ def _apply_shacl_datatype_coercions(data_graph, shacl_graph) -> None:
         data_graph.add((s, p, new))
 
 
+def _sanitize_shapes(shacl_graph) -> None:
+    """Sanitize SHACL shapes by fixing common issues that break pyshacl.
+    
+    CRITICAL: This function is necessary because pyshacl throws a hard exception (crash) 
+    if it encounters structurally invalid shapes (e.g. a sh:NodeShape that defines a sh:path).
+    Without this sanitization, the validation process aborts immediately, preventing any
+    validation of the actual data.
+    
+    This function "fixes" these structural issues in-memory to allow the validator to run
+    and check the data conformance.
+    """
+    from rdflib import RDF
+    from rdflib.namespace import SH
+
+    shapes_with_path_and_nodeshape = []
+    for s in shacl_graph.subjects(SH.path, None):
+        if (s, RDF.type, SH.NodeShape) in shacl_graph:
+            shapes_with_path_and_nodeshape.append(s)
+    
+    if shapes_with_path_and_nodeshape:
+        print(f"[SHACL] WORKAROUND (in-memory): Removing rdf:type sh:NodeShape from {len(shapes_with_path_and_nodeshape)} shapes because they have sh:path. The original SHACL file remains untouched.")
+        for s in shapes_with_path_and_nodeshape:
+            shacl_graph.remove((s, RDF.type, SH.NodeShape))
+            # Removing NodeShape is mandatory if sh:path exists.
+
+    # Fix step 2: sh:node pointing to a shape with sh:path is invalid in pyshacl (expects NodeShape).
+    # Convert sh:node -> sh:property in these cases.
+    fixed_node_refs = 0
+    # Iterate over all sh:node triples
+    for s, p, o in list(shacl_graph.triples((None, SH.node, None))):
+        # check if object 'o' has sh:path
+        if (o, SH.path, None) in shacl_graph:
+            shacl_graph.remove((s, SH.node, o))
+            shacl_graph.add((s, SH.property, o))
+            fixed_node_refs += 1
+            
+    if fixed_node_refs:
+        print(f"[SHACL] WORKAROUND (in-memory): Converting {fixed_node_refs} sh:node references to sh:property because target shape has sh:path. The original SHACL file remains untouched.")
+
 def validate_shacl(config: ShaclConfig) -> int:
     """Validate RDF data against SHACL shapes.
     
@@ -371,11 +411,15 @@ def validate_shacl(config: ShaclConfig) -> int:
         # Apply datatype coercions derived from SHACL to the parsed data graph.
         # _apply_shacl_datatype_coercions(data_graph, shacl_graph)
         
+        # If strict validation is disabled, try to fix common shape issues
+        if not config.meta_shacl:
+            _sanitize_shapes(shacl_graph)
+
         # Validate
         conforms, report_graph, report_text = validate(
             data_graph=data_graph,
             shacl_graph=shacl_graph,
-            meta_shacl=True,
+            meta_shacl=config.meta_shacl,
             inference="rdfs",
             advanced=True,
             abort_on_first=False,
