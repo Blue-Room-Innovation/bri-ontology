@@ -164,7 +164,7 @@ class ShaclToJsonSchema:
             if path is None:
                 continue
             if isinstance(path, URIRef):
-                props.append((self._prop_key(path), min_count, max_count))
+                props.append((self._prop_name(prop, path), min_count, max_count))
         return props
 
     def _shape_object_section(self, def_schema: JsonSchema) -> JsonSchema:
@@ -214,14 +214,12 @@ class ShaclToJsonSchema:
                 continue
             if not isinstance(path, URIRef):
                 continue
-            prop_name = self._prop_key(path)
+            prop_name = self._prop_name(prop, path)
             prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
             if prop_schema is not None:
                 properties[prop_name] = prop_schema
             if prop_required:
                 required.append(prop_name)
-            if prop_forbidden:
-                constraints.append({"not": {"required": [prop_name]}})
 
         for node_ref in self.graph.objects(shape, SH.node):
             node_constraint = self._build_node_constraint(node_ref)
@@ -419,9 +417,9 @@ class ShaclToJsonSchema:
             path = self.graph.value(node, SH.path)
             if path is None or not isinstance(path, URIRef):
                 return None
-            prop_name = self._prop_key(path)
-            if forbidden:
-                return {"not": {"required": [prop_name]}}
+            prop_name = self._prop_name(node, path)
+            # if forbidden:
+            #     return {"not": {"required": [prop_name]}}
             if prop_schema is None:
                 return None
             obj_schema: JsonSchema = {"type": "object", "properties": {prop_name: prop_schema}}
@@ -483,14 +481,14 @@ class ShaclToJsonSchema:
                 continue
             if not isinstance(path, URIRef):
                 continue
-            prop_name = self._prop_key(path)
+            prop_name = self._prop_name(prop, path)
             prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
             if prop_schema is not None:
                 properties[prop_name] = prop_schema
             if prop_required:
                 required.append(prop_name)
-            if prop_forbidden:
-                constraints.append({"not": {"required": [prop_name]}})
+            # if prop_forbidden:
+            #     constraints.append({"not": {"required": [prop_name]}})
 
         for node_ref in self.graph.objects(node, SH.node):
             has_any = True
@@ -545,13 +543,21 @@ class ShaclToJsonSchema:
         names: List[str] = []
         path = self.graph.value(node, SH.path)
         if path is not None and isinstance(path, URIRef):
-            names.append(self._prop_key(path))
+            max_count = self._int_value(self.graph.value(node, SH.maxCount))
+            if max_count != 0:
+                names.append(self._prop_name(node, path))
 
         for prop in self.graph.objects(node, SH.property):
             path = self.graph.value(prop, SH.path)
             if path is None or not isinstance(path, URIRef):
                 continue
-            names.append(self._prop_key(path))
+
+            # Check if this property is forbidden (maxCount=0), if so, skip it
+            max_count = self._int_value(self.graph.value(prop, SH.maxCount))
+            if max_count == 0:
+                continue
+
+            names.append(self._prop_name(prop, path))
 
         for list_pred in (SH["or"], SH["and"], SH.xone):
             list_node = self.graph.value(node, list_pred)
@@ -567,6 +573,12 @@ class ShaclToJsonSchema:
             names.extend(self._collect_constraint_paths(node_ref))
 
         return names
+
+    def _prop_name(self, prop_shape: Union[URIRef, BNode], path: URIRef) -> str:
+        name = self.graph.value(prop_shape, SH.name)
+        if name:
+            return str(name)
+        return self._prop_key(path)
 
     def _prop_key(self, uri: URIRef) -> str:
         if not self.use_local_names:

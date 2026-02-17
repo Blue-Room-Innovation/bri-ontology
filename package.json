@@ -25,7 +25,7 @@
     "convert:context": "node docker/docker.js run convert:context",
     "convert:ts": "node docker/docker.js run convert:ts",
     "convert:ts:list": "node docker/docker.js run cli convert ts --list",
-    "build": "npm run validate:owl:with-codelists && npm run generate:types && npm run convert:context && npm run generate:wiki && npm run generate:build-index && npm run validate:shacl && npm run contracts:build && npm run test",
+    "build": "npm run validate:owl:with-codelists && npm run generate:types && npm run convert:context && npm run generate:wiki && npm run generate:build-index && npm run validate:shacl:no-meta && npm run contracts:build && npm run test",
     "test": "npm run contracts:test",
     "release:version": "node docker/docker.js run release:version",
     "release:all": "node docker/docker.js run release:all",

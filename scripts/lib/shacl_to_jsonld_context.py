@@ -71,16 +71,27 @@ def _graph_prefixes(graph: Graph) -> Dict[str, str]:
     return {p: declared[p] for p in sorted(used) if p in declared}
 
 
-def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef]]]:
-    """Yield (sh:path, sh:datatype?) from property shapes."""
+def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef], Optional[str]]]:
+    """Yield (sh:path, sh:datatype?, sh:name?) from property shapes."""
     # SHACL property shapes are blank nodes referenced via sh:property
     for shape in graph.subjects(RDF.type, SH.NodeShape):
         for prop_shape in graph.objects(shape, SH.property):
+            # Check for forbidden properties (maxCount 0)
+            max_count = graph.value(prop_shape, SH.maxCount)
+            if max_count is not None and str(max_count) == "0":
+                continue
+
             path = graph.value(prop_shape, SH.path)
             if not isinstance(path, URIRef):
                 continue
             datatype = graph.value(prop_shape, SH.datatype)
-            yield path, datatype if isinstance(datatype, URIRef) else None
+            name = graph.value(prop_shape, SH.name)
+            yield (
+                path, 
+                datatype if isinstance(datatype, URIRef) else None,
+                str(name) if name else None
+            )
+
 
 
 def _iter_target_classes(graph: Graph) -> Iterable[URIRef]:
@@ -102,10 +113,25 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     # Candidate term mappings: localName -> iri
     local_to_iri: Dict[str, str] = {}
     collisions: Dict[str, Set[str]] = {}
+    # Explicit name mappings: name -> iri
+    name_to_iri: Dict[str, str] = {}
+    
     iri_to_datatype: Dict[str, str] = {}
 
-    def add_candidate(uri: URIRef) -> None:
+    def add_candidate(uri: URIRef, explicit_name: Optional[str] = None) -> None:
         iri = str(uri)
+        
+        if explicit_name:
+            # If sh:name is present, use it directly.
+            # We assume explicit names take precedence.
+            name_to_iri[explicit_name] = iri
+            # Don't return here; we might also want to register the local name 
+            # as a fallback or for collision detection if the explicit name is weird,
+            # but usually for JSON-LD context we just want the key.
+            # Actually, if we have an explicit name, we DO NOT want to add the local name
+            # automatically unless requested, to avoid clutter. 
+            return
+
         local = _local_name(iri)
         prev = local_to_iri.get(local)
         if prev is None:
@@ -114,8 +140,8 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
             collisions.setdefault(local, set()).update({prev, iri})
 
     # Properties
-    for path, datatype in _iter_property_paths(graph):
-        add_candidate(path)
+    for path, datatype, name in _iter_property_paths(graph):
+        add_candidate(path, explicit_name=name)
         if datatype:
             qn_dt = _qname(graph, datatype)
             iri_to_datatype[str(path)] = qn_dt if qn_dt else str(datatype)
@@ -127,12 +153,28 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     # Build final terms, resolving collisions
     terms: Dict[str, object] = {}
 
+    # 1. Add explicit name mappings first
+    for name, iri in name_to_iri.items():
+        qn = _qname(graph, URIRef(iri))
+        # Prefer CURIE in values if available, else full IRI.
+        val = qn if qn else iri
+        
+        dt = iri_to_datatype.get(iri)
+        if dt:
+            terms[name] = {"@id": val, "@type": dt}
+        else:
+            terms[name] = val
+
+    # 2. Add local name mappings, avoiding overwriting explicit ones
     for local, iri in sorted(local_to_iri.items()):
+        if local in terms:
+             # Already handled by an explicit name with the same key
+            continue
+
         if local in collisions:
             # Do not use plain local name for colliding IRIs.
             continue
         qn = _qname(graph, URIRef(iri))
-        # Prefer CURIE in values if available, else full IRI.
         val = qn if qn else iri
         
         dt = iri_to_datatype.get(iri)
