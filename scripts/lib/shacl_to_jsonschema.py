@@ -269,9 +269,14 @@ class ShaclToJsonSchema:
                 properties[key] = {}
 
         if closed:
-            for prop_name in self._collect_constraint_paths(shape):
-                if prop_name not in properties:
-                    properties[prop_name] = {}
+            # If closed, we previously added empty schemas for all referenced properties.
+            # This causes "unknown" types in TypeScript.
+            # Instead, we rely on the constraints in allOf/anyOf to define the types,
+            # and trust that unevaluatedProperties works or that the generator handles intersections correctly.
+            # for prop_name in self._collect_constraint_paths(shape):
+            #     if prop_name not in properties:
+            #         properties[prop_name] = {}
+            pass
 
         # Always allow JSON-LD core properties
         properties.setdefault("@id", {"type": "string"})
@@ -393,7 +398,7 @@ class ShaclToJsonSchema:
             array_schema["maxItems"] = max_count
 
         if max_count == 1:
-            return {"anyOf": [schema, array_schema]}
+            return schema
         if min_count is not None and min_count > 1:
             return array_schema
         return {"anyOf": [schema, array_schema]}
