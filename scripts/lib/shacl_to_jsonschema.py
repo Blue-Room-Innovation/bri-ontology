@@ -513,6 +513,10 @@ class ShaclToJsonSchema:
         return {"anyOf": [schema, array_schema]}
 
     def _build_node_constraint(self, node: Union[URIRef, BNode]) -> Optional[JsonSchema]:
+        # If the node is a known shape, return a reference to it
+        if node in self.shapes:
+            return self._ref_schema(node)
+
         or_list = self.graph.value(node, SH["or"])
         if or_list:
             or_constraints = self._build_list_constraints(or_list)

@@ -71,24 +71,39 @@ def _graph_prefixes(graph: Graph) -> Dict[str, str]:
     return {p: declared[p] for p in sorted(used) if p in declared}
 
 
-def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef], Optional[str]]]:
-    """Yield (sh:path, sh:datatype?, sh:name?) from property shapes."""
+def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[object], Optional[str]]]:
+    """Yield (sh:path, sh:datatype|'@id'?, sh:name?) from property shapes."""
     # SHACL property shapes are blank nodes referenced via sh:property
     for shape in graph.subjects(RDF.type, SH.NodeShape):
-        for prop_shape in graph.objects(shape, SH.property):
+        # Collect both sh:property and sh:node references
+        # Reason: Sometimes shapes with sh:path are linked via sh:node (e.g. EPCIS)
+        prop_shapes = list(graph.objects(shape, SH.property))
+        node_shapes = list(graph.objects(shape, SH.node))
+
+        for s in prop_shapes + node_shapes:
             # Check for forbidden properties (maxCount 0)
-            max_count = graph.value(prop_shape, SH.maxCount)
+            max_count = graph.value(s, SH.maxCount)
             if max_count is not None and str(max_count) == "0":
                 continue
 
-            path = graph.value(prop_shape, SH.path)
+            path = graph.value(s, SH.path)
             if not isinstance(path, URIRef):
                 continue
-            datatype = graph.value(prop_shape, SH.datatype)
-            name = graph.value(prop_shape, SH.name)
+            
+            datatype = graph.value(s, SH.datatype)
+            node_kind = graph.value(s, SH.nodeKind)
+            
+            final_datatype = None
+            if isinstance(datatype, URIRef):
+                final_datatype = datatype
+            elif node_kind == SH.IRI:
+                # Signal that this property expects an IRI value
+                final_datatype = "@id"
+
+            name = graph.value(s, SH.name)
             yield (
                 path, 
-                datatype if isinstance(datatype, URIRef) else None,
+                final_datatype,
                 str(name) if name else None
             )
 
@@ -143,8 +158,11 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     for path, datatype, name in _iter_property_paths(graph):
         add_candidate(path, explicit_name=name)
         if datatype:
-            qn_dt = _qname(graph, datatype)
-            iri_to_datatype[str(path)] = qn_dt if qn_dt else str(datatype)
+            if datatype == "@id":
+                iri_to_datatype[str(path)] = "@id"
+            else:
+                qn_dt = _qname(graph, datatype)
+                iri_to_datatype[str(path)] = qn_dt if qn_dt else str(datatype)
 
     # Classes (so JSON-LD can use "@type": "LocalName")
     for target_class in _iter_target_classes(graph):
@@ -210,7 +228,12 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
                     terms[fallback] = val
 
     # Compose @context: prefixes + keyword aliases + terms
-    ctx: Dict[str, object] = {}
+    ctx: Dict[str, object] = {
+        "id": "@id",
+        "type": "@type",
+        "baseURL": "@base"
+    }
+
     # Keep prefixes first (readability)
     for prefix, ns in sorted(prefixes.items()):
         ctx[prefix] = ns
