@@ -228,7 +228,11 @@ class ShaclToJsonSchema:
 
         target_classes = list(self.graph.objects(shape, SH.targetClass))
         if target_classes:
-            constraints.append(self._build_type_constraint(target_classes))
+            # constraints.append(self._build_type_constraint(target_classes))
+            # Integrate targetClass directly into properties to avoid allOf
+            type_prop_schema = self._build_type_property_schema(target_classes)
+            properties["@type"] = type_prop_schema
+            required.append("@type")
 
         or_list = self.graph.value(shape, SH["or"])
         if or_list:
@@ -290,11 +294,85 @@ class ShaclToJsonSchema:
             obj_schema["required"] = sorted(set(required))
         if closed:
             obj_schema["unevaluatedProperties"] = False
+            obj_schema["additionalProperties"] = False
+
+        if not constraints:
+            return obj_schema
+
+        # Consolidate simple object constraints to avoid excessive allOf nesting
+        remaining_constraints = []
+        for c in constraints:
+            # Check if constraint is a mergeable object schema
+            # It should have type=object and only properties/required keys
+            is_simple_object = (
+                isinstance(c, dict) and 
+                c.get("type") == "object" and
+                set(c.keys()).issubset({"type", "properties", "required"})
+            )
+            
+            if is_simple_object:
+                # Merge properties
+                c_props = c.get("properties", {})
+                for k, v in c_props.items():
+                    if k not in obj_schema["properties"]:
+                        obj_schema["properties"][k] = v
+                    else:
+                        # Conflict or refinement -> keep existing, wrap in allOf if needed
+                        # But wait, if we merge, we put 'v' into properties[k].
+                        # If properties[k] exists, we make it an allOf of both schemas
+                        existing = obj_schema["properties"][k]
+                        if "allOf" in existing:
+                             # Create new list so we don't mutate shared reference if any
+                             new_all_of = list(existing["allOf"])
+                             new_all_of.append(v)
+                             obj_schema["properties"][k] = {"allOf": new_all_of}
+                        else:
+                             obj_schema["properties"][k] = {"allOf": [existing, v]}
+
+                # Merge required
+                c_req = c.get("required", [])
+                if c_req:
+                    if "required" not in obj_schema:
+                        obj_schema["required"] = []
+                    # Add unique required fields
+                    current_req = set(obj_schema["required"])
+                    for r in c_req:
+                        if r not in current_req:
+                            obj_schema["required"].append(r)
+                            current_req.add(r)
+            else:
+                remaining_constraints.append(c)
+        
+        constraints = remaining_constraints
+
+        if not constraints:
+            return obj_schema
 
         shape_schema: JsonSchema = {"allOf": [obj_schema]}
-        if constraints:
-            shape_schema["allOf"].extend(constraints)
+        shape_schema["allOf"].extend(constraints)
         return shape_schema
+
+    def _build_type_property_schema(self, target_classes: List[URIRef]) -> JsonSchema:
+        """Build schema for the @type property itself."""
+        enum_values = []
+        for cls in target_classes:
+            enum_values.extend(self._type_aliases(cls))
+        
+        enum_values = sorted(set(enum_values))
+        if not enum_values:
+            return {"type": ["string", "array"]}
+            
+        value_schema = {"enum": enum_values}
+        return {
+            "anyOf": [
+                value_schema,
+                {
+                    "type": "array",
+                    "contains": value_schema,
+                    # Ensure at least one type matches
+                }
+            ]
+        }
 
     def _build_property_schema(self, prop: Union[URIRef, BNode]) -> Tuple[Optional[JsonSchema], bool, bool]:
         max_count = self._int_value(self.graph.value(prop, SH.maxCount))
@@ -328,6 +406,14 @@ class ShaclToJsonSchema:
             not_schema = self._build_value_schema_from_node(not_node)
             if not_schema:
                 if base_schema:
+                    # Try to merge 'not' directly into base_schema if it's a dict
+                    # to avoid creating an intersection type in TypeScript (number & { ... })
+                    if isinstance(base_schema, dict) and "allOf" not in base_schema and "anyOf" not in base_schema and "oneOf" not in base_schema:
+                        # Copy to avoid side effects if reused
+                        new_schema = base_schema.copy()
+                        new_schema["not"] = not_schema
+                        return new_schema
+                    
                     return {"allOf": [base_schema, {"not": not_schema}]}
                 return {"not": not_schema}
 
@@ -386,8 +472,31 @@ class ShaclToJsonSchema:
 
         if not schemas:
             return {}
+        
+        # Merge compatible schemas to avoid unnecessary allOf
+        merged_schema = {}
+        complex_merge = False
+        
+        for s in schemas:
+            # If schema has logic keywords (allOf, anyOf, oneOf, not, $ref), complex merge is needed
+            if any(k in s for k in ("allOf", "anyOf", "oneOf", "not", "$ref", "enum", "const")):
+                complex_merge = True
+                break
+            # Simply merge properties
+            for key, val in s.items():
+                if key in merged_schema and merged_schema[key] != val:
+                    complex_merge = True
+                    break
+                merged_schema[key] = val
+            if complex_merge:
+                break
+        
+        if not complex_merge and len(schemas) > 0:
+            return merged_schema
+
         if len(schemas) == 1:
             return schemas[0]
+            
         return {"allOf": schemas}
 
     def _wrap_value_schema(self, schema: JsonSchema, min_count: Optional[int], max_count: Optional[int]) -> JsonSchema:
