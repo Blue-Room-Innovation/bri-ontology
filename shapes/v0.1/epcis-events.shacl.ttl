@@ -638,7 +638,7 @@ epcis:BizTransactionShape
 epcis:BizTransactionTypeShape 
     a sh:PropertyShape ;
     sh:path epcis:bizTransactionType ;
-    sh:name "type (within epcis:BizTransaction)" ;
+    sh:name "bizTransactionType" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "^(.+?):(.+)$" ;
 	sh:maxCount 1;
@@ -679,7 +679,6 @@ epcis:DestinationListShape
 epcis:SourceShape 
     a sh:PropertyShape ;
     sh:path epcis:sourceOrDestination ;
-    sh:name "'source' within sourceList" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "^(.+?):(.+)$" ;
     sh:minCount 1;
@@ -690,7 +689,7 @@ epcis:SourceShape
 epcis:DestinationShape 
     a sh:PropertyShape ;
     sh:path epcis:sourceOrDestination ;
-    sh:name "'destination' within destinationList" ;
+    sh:name "sourceOrDestination" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "^(.+?):(.+)$" ;
     sh:minCount 1;
@@ -701,7 +700,6 @@ epcis:DestinationShape
 epcis:SourceOrDestinationTypeShape 
     a sh:PropertyShape ;
     sh:path epcis:sourceOrDestinationType ;
-    sh:name "'type' within sourceList or destinationList" ;
     sh:nodeKind sh:IRI ;
     sh:pattern "^(.+?):(.+)$" ;
     sh:minCount 1;
