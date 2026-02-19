@@ -258,17 +258,20 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
                     terms[fallback] = val
 
     # Compose @context: prefixes + keyword aliases + terms
-    # Reserve 'id' and 'type' as JSON-LD keyword aliases.
-    # If a property has local name 'id' or 'type', skip it so the
-    # alias is not overwritten — the property is still accessible
-    # via its namespace prefix (e.g. "untp-core:id").
-    _RESERVED_ALIASES = {"id", "type"}
+    # Reserve 'type' as JSON-LD keyword alias.
+    # We do NOT treat 'id' as reserved if it appears in terms from SHACL.
+    # If a property has local name 'id', we respect it so it maps
+    # to the SHACL property (e.g. untp-core:id) instead of @id.
+    _RESERVED_ALIASES = {"type"}
 
     ctx: Dict[str, object] = {
-        "id": "@id",
         "type": "@type",
         "baseURL": "@base"
     }
+    
+    # Only add default "id": "@id" if not present in terms
+    if "id" not in terms:
+        ctx["id"] = "@id"
 
     # Keep prefixes first (readability)
     for prefix, ns in sorted(prefixes.items()):

@@ -162,7 +162,12 @@ class ShaclToJsonSchema:
         constraint_keys: set = set()
 
         def _collect_refs_in_allof(schema: object, parent_def_key: Optional[str] = None) -> None:
-            """Recursively collect $def keys that appear as $ref inside allOf."""
+            """Recursively collect $def keys that appear as $ref inside allOf.
+
+            Walks the entire schema tree (including nested properties, items,
+            anyOf, oneOf, etc.) so that constraint refs buried inside property
+            definitions are also discovered.
+            """
             if not isinstance(schema, dict):
                 return
             all_of = schema.get("allOf")
@@ -174,14 +179,13 @@ class ShaclToJsonSchema:
                             ref_key = ref[len("#/$defs/"):]
                             if ref_key != parent_def_key:
                                 constraint_keys.add(ref_key)
-                        # recurse into nested structures
-                        _collect_refs_in_allof(entry, parent_def_key)
-            # Also check anyOf / oneOf members for nested allOf
-            for kw in ("anyOf", "oneOf"):
-                branch_list = schema.get(kw)
-                if isinstance(branch_list, list):
-                    for branch in branch_list:
-                        _collect_refs_in_allof(branch, parent_def_key)
+            # Recurse into ALL values to find nested allOf compositions
+            for value in schema.values():
+                if isinstance(value, dict):
+                    _collect_refs_in_allof(value, parent_def_key)
+                elif isinstance(value, list):
+                    for item in value:
+                        _collect_refs_in_allof(item, parent_def_key)
 
         for def_key, def_schema in defs.items():
             _collect_refs_in_allof(def_schema, def_key)
@@ -191,20 +195,15 @@ class ShaclToJsonSchema:
         # _collect_constraint_paths, so additionalProperties: false on
         # them is CORRECT and must be preserved — it gives TS clean types
         # without `[k: string]: unknown`.
-        # EXCEPTION: shapes that have targetClass BUT are also used as
-        # sh:node constraints DIRECTLY by another named shape act as mixins — strip them.
-        # Shapes referenced via sh:node from blank-nodes inside sh:or / sh:xone
-        # lists are discriminated-union members, NOT mixins — keep them closed.
-        node_constraint_targets: set = set()
-        for _s, _p, _o in self.graph.triples((None, SH.node, None)):
-            if isinstance(_o, (URIRef, BNode)) and isinstance(_s, URIRef):
-                node_constraint_targets.add(_o)
-
+        # All shapes with sh:targetClass represent real data types (entities)
+        # and must be protected from constraint-stripping, even when also
+        # referenced via sh:node — their $def may have an incomplete
+        # property set (e.g. CredentialIssuerShape) so closing them for TS
+        # would reject valid properties.
         entity_def_keys: set = set()
         for shape in self.shapes:
             if any(self.graph.objects(shape, SH.targetClass)):
-                if shape not in node_constraint_targets:
-                    entity_def_keys.add(self._def_name(shape))
+                entity_def_keys.add(self._def_name(shape))
 
         # Strip only NON-entity constraint $defs
         for ck in constraint_keys:
@@ -212,6 +211,12 @@ class ShaclToJsonSchema:
                 continue
             if ck not in defs:
                 continue
+            # Annotate ALL non-entity constraint shapes for TS re-closing.
+            # Any constraint shape used in an allOf intersection that keeps
+            # [k: string]: unknown will defeat TypeScript autocomplete for
+            # the entire intersection type.  Entity shapes (which represent
+            # real extensible data types) are already filtered out above.
+            defs[ck]["x-ts-constraint"] = True
             self._remove_additional_properties_deep(defs[ck])
 
     @staticmethod
@@ -394,12 +399,13 @@ class ShaclToJsonSchema:
             type_prop_schema = self._build_type_property_schema(all_type_classes)
             properties["@type"] = type_prop_schema
             properties["type"] = type_prop_schema
-            # NOTE: We intentionally do NOT add an anyOf required @type/type
-            # constraint here.  Adding it as an allOf member produces
-            # `{[k: string]: unknown}` in TypeScript (json-schema-to-typescript
-            # can't express "required one-of" cleanly).  The typed enum literals
-            # on @type/type are enough for TS discrimination, and SHACL validation
-            # is handled by the shapes themselves (rdf:type is in ignoredProperties).
+            # Make @type required so TypeScript can narrow discriminated unions.
+            # When a user writes `"@type": "ObjectEvent"`, TS will narrow the
+            # union to the matching variant and provide full autocomplete.
+            # NOTE: We require "@type" (the JSON-LD canonical form). Payloads
+            # using the "type" alias will still pass runtime JSON Schema
+            # validation via the SHACL layer; the TS requirement is for DX only.
+            required.append("@type")
 
         or_list = self.graph.value(shape, SH["or"])
         if or_list:

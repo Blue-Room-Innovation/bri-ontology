@@ -21,9 +21,12 @@ Date: 2026-01-13
 """
 
 import argparse
+import json
 import logging
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from datetime import datetime
 
@@ -101,11 +104,17 @@ class JSONSchemaToTypeScriptConverter:
         """Run json-schema-to-typescript CLI."""
         json2ts_cmd = self.workspace_root / "node_modules" / "json-schema-to-typescript" / "dist" / "src" / "cli.js"
         
+        # Pre-process: close all object schemas so json-schema-to-typescript
+        # does NOT emit [k: string]: unknown index signatures.
+        # This is essential for TypeScript discriminated union narrowing and autocomplete.
+        # The original JSON Schema file (used for runtime validation) is left untouched.
+        ts_input_file = self._preprocess_schema_for_typescript(input_file)
+
         # Build command
         cmd = [
             "node",
             str(json2ts_cmd),
-            str(input_file),
+            str(ts_input_file),
             "--output", str(output_file)
         ]
         
@@ -125,6 +134,13 @@ class JSONSchemaToTypeScriptConverter:
             if self.verbose and result.stdout:
                 print(result.stdout)
             
+            # Clean up temp file and directory
+            if ts_input_file != input_file:
+                try:
+                    shutil.rmtree(ts_input_file.parent, ignore_errors=True)
+                except OSError:
+                    pass
+
             # Show relative path if possible, otherwise absolute
             try:
                 rel_path = output_file.relative_to(self.workspace_root)
@@ -143,6 +159,72 @@ class JSONSchemaToTypeScriptConverter:
             logger.error("Node.js not found. Make sure it's installed and in PATH.")
             return False
     
+    def _preprocess_schema_for_typescript(self, input_file: Path) -> Path:
+        """Create a modified copy of the JSON Schema optimized for TypeScript generation.
+
+        Two targeted transformations:
+
+        1. Re-close **constraint / mixin** ``$defs`` that carry the
+           ``"x-ts-constraint": true`` annotation (set by the SHACL-to-JSON-Schema
+           converter when it strips ``additionalProperties: false`` for correct
+           runtime validation).  Adding ``additionalProperties: false`` back
+           prevents ``json-schema-to-typescript`` from emitting
+           ``[k: string]: unknown`` index signatures on these mixin interfaces.
+
+        2. Close inline anonymous object schemas that appear inside ``allOf``
+           compositions (e.g. the identity-union ``{ "@id": string }`` objects).
+
+        The original JSON Schema file (used for runtime AJV validation) is NOT modified.
+        """
+        try:
+            with open(input_file, "r", encoding="utf-8") as f:
+                schema = json.load(f)
+        except (json.JSONDecodeError, OSError) as exc:
+            logger.warning(f"Could not pre-process schema for TS ({exc}); using original")
+            return input_file
+
+        changed = False
+        defs = schema.get("$defs", {})
+
+        # 1. Re-close annotated constraint shapes
+        for def_name, def_schema in defs.items():
+            if isinstance(def_schema, dict) and def_schema.pop("x-ts-constraint", None):
+                self._close_all_objects(def_schema)
+                changed = True
+
+        if not changed:
+            return input_file
+
+        # Write the modified schema to a temp directory, keeping the original
+        # filename so json-schema-to-typescript derives valid TypeScript identifiers.
+        tmp_dir = tempfile.mkdtemp(prefix="json2ts_")
+        tmp_path = Path(tmp_dir) / input_file.name
+        try:
+            with open(tmp_path, "w", encoding="utf-8") as tmp_f:
+                json.dump(schema, tmp_f, indent=2)
+        except OSError as exc:
+            logger.warning(f"Could not write temp schema ({exc}); using original")
+            return input_file
+
+        logger.debug(f"Pre-processed schema for TS → {tmp_path}")
+        return Path(tmp_path)
+
+    @staticmethod
+    def _close_all_objects(node):
+        """Recursively add ``additionalProperties: false`` to all object sub-schemas.
+
+        Used only on constraint / mixin shapes where the index signature
+        ``[k: string]: unknown`` must be suppressed for TypeScript DX.
+        """
+        if isinstance(node, dict):
+            if node.get("type") == "object" and "additionalProperties" not in node:
+                node["additionalProperties"] = False
+            for value in node.values():
+                JSONSchemaToTypeScriptConverter._close_all_objects(value)
+        elif isinstance(node, list):
+            for item in node:
+                JSONSchemaToTypeScriptConverter._close_all_objects(item)
+
     @staticmethod
     def get_default_banner(source_file: str = None) -> str:
         """Get default banner comment for generated TypeScript."""
