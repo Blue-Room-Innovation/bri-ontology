@@ -136,6 +136,15 @@ bri-recycling:RecyclingOrganisationShape
     sh:maxCount 1 ;
   ] ;
 
+ # Explicitly allow latitude/longitude for sh:closed (logic handled by sh:or below)
+  sh:property [
+    sh:path schema:latitude ;
+    sh:minCount 0 ;
+  ] ;
+  sh:property [
+    sh:path schema:longitude ;
+    sh:minCount 0 ;
+  ] ;
   # Location
   # Latitude and longitude: both present or both absent
   sh:or (
