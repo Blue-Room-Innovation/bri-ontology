@@ -27,6 +27,7 @@ from pathlib import Path
 from typing import Dict, Iterable, Optional, Set, Tuple
 
 from rdflib import Graph, RDF, URIRef
+from rdflib.collection import Collection
 from rdflib.namespace import SH, OWL
 from urllib.parse import urlparse, unquote
 
@@ -72,40 +73,69 @@ def _graph_prefixes(graph: Graph) -> Dict[str, str]:
 
 
 def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[object], Optional[str]]]:
-    """Yield (sh:path, sh:datatype|'@id'?, sh:name?) from property shapes."""
-    # SHACL property shapes are blank nodes referenced via sh:property
+    """Yield (sh:path, sh:datatype|'@id'?, sh:name?) from property shapes.
+
+    Recursively walks logical constraint branches (sh:or, sh:and, sh:xone,
+    sh:not) so that properties nested inside those constructs are also
+    collected.  For example, ``schema:latitude`` inside an ``sh:or`` branch
+    will be yielded.
+    """
+
+    def _process_prop_shape(s):
+        """Extract (path, datatype, name) from a single property shape, or None."""
+        # Skip forbidden properties (maxCount 0)
+        max_count = graph.value(s, SH.maxCount)
+        if max_count is not None and str(max_count) == "0":
+            return None
+
+        path = graph.value(s, SH.path)
+        if not isinstance(path, URIRef):
+            return None
+
+        datatype = graph.value(s, SH.datatype)
+        node_kind = graph.value(s, SH.nodeKind)
+
+        final_datatype = None
+        if isinstance(datatype, URIRef):
+            final_datatype = datatype
+        elif node_kind == SH.IRI:
+            final_datatype = "@id"
+
+        name = graph.value(s, SH.name)
+        return (path, final_datatype, str(name) if name else None)
+
+    def _walk(node, visited: Set[str]):
+        """Recursively collect property path tuples from *node*."""
+        key = str(node)
+        if key in visited:
+            return
+        visited.add(key)
+
+        # The node itself may be a PropertyShape with sh:path
+        result = _process_prop_shape(node)
+        if result:
+            yield result
+
+        # Direct sh:property and sh:node links
+        for s in list(graph.objects(node, SH.property)) + list(graph.objects(node, SH.node)):
+            yield from _walk(s, visited)
+
+        # Logical constraint lists: sh:or, sh:and, sh:xone
+        for pred in (SH["or"], SH["and"], SH.xone):
+            list_node = graph.value(node, pred)
+            if list_node:
+                for entry in Collection(graph, list_node):
+                    yield from _walk(entry, visited)
+
+        # sh:not constraints (can be multiple)
+        for not_node in graph.objects(node, SH["not"]):
+            yield from _walk(not_node, visited)
+
+    # Use a single visited set across all starting shapes to avoid
+    # duplicate yields from shared sub-shapes.
+    visited: Set[str] = set()
     for shape in graph.subjects(RDF.type, SH.NodeShape):
-        # Collect both sh:property and sh:node references
-        # Reason: Sometimes shapes with sh:path are linked via sh:node (e.g. EPCIS)
-        prop_shapes = list(graph.objects(shape, SH.property))
-        node_shapes = list(graph.objects(shape, SH.node))
-
-        for s in prop_shapes + node_shapes:
-            # Check for forbidden properties (maxCount 0)
-            max_count = graph.value(s, SH.maxCount)
-            if max_count is not None and str(max_count) == "0":
-                continue
-
-            path = graph.value(s, SH.path)
-            if not isinstance(path, URIRef):
-                continue
-            
-            datatype = graph.value(s, SH.datatype)
-            node_kind = graph.value(s, SH.nodeKind)
-            
-            final_datatype = None
-            if isinstance(datatype, URIRef):
-                final_datatype = datatype
-            elif node_kind == SH.IRI:
-                # Signal that this property expects an IRI value
-                final_datatype = "@id"
-
-            name = graph.value(s, SH.name)
-            yield (
-                path, 
-                final_datatype,
-                str(name) if name else None
-            )
+        yield from _walk(shape, visited)
 
 
 
@@ -228,6 +258,12 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
                     terms[fallback] = val
 
     # Compose @context: prefixes + keyword aliases + terms
+    # Reserve 'id' and 'type' as JSON-LD keyword aliases.
+    # If a property has local name 'id' or 'type', skip it so the
+    # alias is not overwritten — the property is still accessible
+    # via its namespace prefix (e.g. "untp-core:id").
+    _RESERVED_ALIASES = {"id", "type"}
+
     ctx: Dict[str, object] = {
         "id": "@id",
         "type": "@type",
@@ -238,8 +274,10 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     for prefix, ns in sorted(prefixes.items()):
         ctx[prefix] = ns
 
-    # Then terms
+    # Then terms (skipping reserved aliases)
     for term, value in sorted(terms.items()):
+        if term in _RESERVED_ALIASES:
+            continue
         ctx[term] = value
 
     return {

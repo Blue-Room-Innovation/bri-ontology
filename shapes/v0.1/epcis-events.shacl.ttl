@@ -19,8 +19,8 @@ epcis:EPCISDocumentShape
     sh:property epcis:InstanceIdentifierShape;
     sh:property epcis:SenderShape;
     sh:property epcis:ReceiverShape;
-    sh:node epcis:EpcisHeaderShape;
-    sh:node epcis:EpcisBodyShape;
+    sh:property epcis:EpcisHeaderShape; # Changed to sh:property because these are now PropertyShapes
+    sh:property epcis:EpcisBodyShape; # Changed to sh:property because these are now PropertyShapes
 .
     
 epcis:SchemaVersionShape
@@ -80,7 +80,7 @@ epcis:ReceiverShape
 .
 
 epcis:EpcisHeaderShape
-    a sh:NodeShape;
+    a sh:PropertyShape; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:epcisHeader;
@@ -89,7 +89,7 @@ epcis:EpcisHeaderShape
 .
 
 epcis:EpcisBodyShape
-    a sh:NodeShape;
+    a sh:PropertyShape; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:epcisBody;
@@ -100,11 +100,22 @@ epcis:EpcisBodyShape
 .
 
 epcis:EventListShape
-    a sh:NodeShape;
-    sh:closed true ;
-    sh:ignoredProperties ( rdf:type ) ;
+    a sh:PropertyShape; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:eventList;
     sh:name "eventList" ;
+    sh:node epcis:EPCISEventShape ;
+.
+
+epcis:EPCISEventShape
+    a sh:NodeShape ;
+    sh:targetClass epcis:EPCISEvent ;
+    sh:or (
+        [ sh:node epcis:ObjectEventShape ]
+        [ sh:node epcis:AggregationEventShape ]
+        [ sh:node epcis:AssociationEventShape ]
+        [ sh:node epcis:TransactionEventShape ]
+        [ sh:node epcis:TransformationEventShape ]
+    );
 .
 
 
@@ -434,7 +445,7 @@ epcis:ParentIDShape
 .
 
 epcis:ParentIDForbiddenShape
-	a sh:PropertyShape;
+	a sh:PropertyShape; # Changed to PropertyShape because it defines a path (sh:path)
 	sh:path epcis:parentID;
     sh:name "parentID (forbidden within ObjectEvent or TransformationEvent)" ;
 	sh:maxCount 0;
@@ -516,7 +527,7 @@ epcis:EPCListShape
 .
 
 epcis:EPCListForbiddenShape
-    a sh:PropertyShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:epcList ;
     sh:name "epcList (forbidden within AggregationEvent, AssociationEvent or TransformationEvent)" ;
     sh:maxCount 0 ;
@@ -542,7 +553,7 @@ epcis:OutputEPCListShape
 .
 
 epcis:InputEPCListForbiddenShape
-    a sh:PropertyShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:inputEPCList ;
     sh:name "inputEPCList (forbidden)" ;
     sh:maxCount 0 ;
@@ -550,7 +561,7 @@ epcis:InputEPCListForbiddenShape
 .
 
 epcis:OutputEPCListForbiddenShape
-    a sh:PropertyShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:outputEPCList ;
     sh:name "outputEPCList (forbidden)" ;
     sh:maxCount 0 ;
@@ -558,7 +569,7 @@ epcis:OutputEPCListForbiddenShape
 .
 
 epcis:PersistentDispositionShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:persistentDisposition ;
@@ -566,12 +577,12 @@ epcis:PersistentDispositionShape
     sh:maxCount 1;
     sh:property epcis:SetShape ;
     sh:property epcis:UnsetShape ;
-    sh:property epcis:SpecifySetOrUnsetShape;
+    sh:node epcis:SpecifySetOrUnsetShape;
     sh:message "Within each event, persistentDisposition must not appear more than once, although its properties 'set' and 'unset' may each specify multiple values.";
 .
 
 epcis:PersistentDispositionForbiddenShape
-	a sh:NodeShape ;
+	a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
 	sh:path epcis:persistentDisposition ;
     sh:name "persistentDisposition (forbidden)" ;
 	sh:maxCount 0;
@@ -597,7 +608,7 @@ epcis:UnsetShape
 .
 
 epcis:SpecifySetOrUnsetShape
-	a sh:NodeShape ;
+	a sh:NodeShape ; # Kept as NodeShape because it does not have a direct sh:path, but acts as a logical constraint (sh:or) on the focus node
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
 	sh:or (
@@ -624,7 +635,7 @@ epcis:TransformationIDShape
 .
 
 epcis:BizTransactionShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:bizTransactionList ;
@@ -646,7 +657,7 @@ epcis:BizTransactionTypeShape
 .
 
 epcis:BizTransactionMandatoryShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:bizTransactionList ;
     sh:name "bizTransactionList" ;
     sh:nodeKind sh:IRI ;
@@ -657,7 +668,7 @@ epcis:BizTransactionMandatoryShape
 .
 
 epcis:SourceListShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:sourceList ;
@@ -667,7 +678,7 @@ epcis:SourceListShape
 .
 
 epcis:DestinationListShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:destinationList ;
@@ -708,7 +719,7 @@ epcis:SourceOrDestinationTypeShape
 .
 
 epcis:QuantityElementShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:quantityList ;
@@ -719,7 +730,7 @@ epcis:QuantityElementShape
 .
 
 epcis:QuantityElementForbiddenShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:quantityList ;
     sh:name "quantityList (forbidden)" ;
     sh:maxCount 0;
@@ -727,7 +738,7 @@ epcis:QuantityElementForbiddenShape
 .
 
 epcis:ChildQuantityElementShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:childQuantityList ;
@@ -738,7 +749,7 @@ epcis:ChildQuantityElementShape
 .
 
 epcis:ChildQuantityElementForbiddenShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:childQuantityList ;
     sh:name "childQuantityList (forbidden)" ;
     sh:maxCount 0;
@@ -746,7 +757,7 @@ epcis:ChildQuantityElementForbiddenShape
 .
 
 epcis:InputQuantityElementShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:inputQuantityList ;
@@ -757,7 +768,7 @@ epcis:InputQuantityElementShape
 .
 
 epcis:OutputQuantityElementShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:outputQuantityList ;
@@ -768,7 +779,7 @@ epcis:OutputQuantityElementShape
 .
 
 epcis:InputQuantityElementForbiddenShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:inputQuantityList ;
     sh:name "inputQuantityList (forbidden)" ;
 	sh:maxCount 0;
@@ -776,7 +787,7 @@ epcis:InputQuantityElementForbiddenShape
 .
 
 epcis:OutputQuantityElementForbiddenShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:path epcis:outputQuantityList ;
     sh:name "outputQuantityList (forbidden)" ;
 	sh:maxCount 0;
@@ -838,7 +849,7 @@ epcis:UOMAnyStringShape
 .
 
 epcis:ErrorDeclarationShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:errorDeclaration ;
@@ -880,7 +891,7 @@ epcis:DeclarationTimeShape
 .
 
 epcis:SensorElementShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:sensorElementList ;
@@ -890,7 +901,7 @@ epcis:SensorElementShape
 .
 
 epcis:SensorReportShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:sensorReport ;
@@ -922,7 +933,7 @@ epcis:SensorReportShape
 .
 
 epcis:SensorMetadataShape
-    a sh:NodeShape ;
+    a sh:PropertyShape ; # Changed to PropertyShape because it defines a path (sh:path)
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:path epcis:sensorMetadata ;

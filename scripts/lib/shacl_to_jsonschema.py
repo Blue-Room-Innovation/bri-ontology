@@ -75,7 +75,15 @@ class ShaclToJsonSchema:
     def __init__(self, shacl_path: Path, use_local_names: bool = True) -> None:
         self.graph = Graph()
         self.graph.parse(shacl_path, format="turtle")
+        # Collect explicit NodeShapes
         self.shapes = list(self.graph.subjects(RDF.type, SH.NodeShape))
+        
+        # Also collect any shape referenced by sh:node, even if not explicitly a NodeShape
+        # This handles cases like epcis:EventListShape which is a PropertyShape but used as a NodeShape
+        for s, p, o in self.graph.triples((None, SH.node, None)):
+            if isinstance(o, (URIRef, BNode)) and o not in self.shapes:
+                self.shapes.append(o)
+                
         self.def_name_map: Dict[Union[URIRef, BNode], str] = {}
         self.def_to_shape: Dict[str, Union[URIRef, BNode]] = {}
         self.use_local_names = use_local_names
@@ -88,32 +96,41 @@ class ShaclToJsonSchema:
             def_name = self._def_name(shape)
             defs[def_name] = self._build_shape_schema(shape)
 
+        # Post-process: remove additionalProperties:false from $defs that are
+        # referenced as $ref targets inside other shapes' allOf compositions.
+        # In JSON Schema, additionalProperties:false in an allOf member rejects
+        # properties from sibling allOf entries — a known limitation.
+        # Only unevaluatedProperties:false (JSON Schema 2020-12) handles this
+        # correctly across allOf boundaries.
+        self._strip_additional_properties_from_constraint_defs(defs)
+
         root_shapes = self._root_shapes()
         for shape in root_shapes:
             shape_refs.append({"$ref": f"#/$defs/{self._def_name(shape)}"})
+
+        # Root schema: either a @graph envelope or a direct shape.
+        # Avoid {allOf: [{not: {required: ['@graph']}}, ...]} because
+        # json-schema-to-typescript turns `not` constraints into
+        # `{[k: string]: unknown}` which kills autocompletion.
+        root_branches: list = [
+            {
+                "type": "object",
+                "properties": {
+                    "@graph": {
+                        "type": "array",
+                        "items": {"anyOf": shape_refs},
+                    }
+                },
+                "required": ["@graph"],
+            },
+        ]
+        root_branches.extend(shape_refs)
 
         schema: JsonSchema = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "object",
             "$defs": defs,
-            "anyOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "@graph": {
-                            "type": "array",
-                            "items": {"anyOf": shape_refs},
-                        }
-                    },
-                    "required": ["@graph"],
-                },
-                {
-                    "allOf": [
-                        {"not": {"required": ["@graph"]}},
-                        {"anyOf": shape_refs},
-                    ]
-                },
-            ],
+            "anyOf": root_branches,
         }
 
         return schema
@@ -130,6 +147,92 @@ class ShaclToJsonSchema:
                 roots.append(shape)
 
         return roots if roots else self.shapes
+
+    # ------------------------------------------------------------------
+    # Post-processing: strip additionalProperties from constraint $defs
+    # ------------------------------------------------------------------
+    def _strip_additional_properties_from_constraint_defs(self, defs: Dict[str, JsonSchema]) -> None:
+        """Walk every $defs schema.  For any schema that contains allOf with
+        $ref entries pointing to OTHER $defs, those referenced $defs are
+        "constraint / mixin" shapes.  Remove ``additionalProperties: false``
+        from them so that they don't reject the parent shape's properties
+        when composed via allOf.  ``unevaluatedProperties: false`` at the
+        allOf-wrapper level already handles closure correctly in 2020-12."""
+
+        constraint_keys: set = set()
+
+        def _collect_refs_in_allof(schema: object, parent_def_key: Optional[str] = None) -> None:
+            """Recursively collect $def keys that appear as $ref inside allOf."""
+            if not isinstance(schema, dict):
+                return
+            all_of = schema.get("allOf")
+            if isinstance(all_of, list):
+                for entry in all_of:
+                    if isinstance(entry, dict):
+                        ref = entry.get("$ref")
+                        if isinstance(ref, str) and ref.startswith("#/$defs/"):
+                            ref_key = ref[len("#/$defs/"):]
+                            if ref_key != parent_def_key:
+                                constraint_keys.add(ref_key)
+                        # recurse into nested structures
+                        _collect_refs_in_allof(entry, parent_def_key)
+            # Also check anyOf / oneOf members for nested allOf
+            for kw in ("anyOf", "oneOf"):
+                branch_list = schema.get(kw)
+                if isinstance(branch_list, list):
+                    for branch in branch_list:
+                        _collect_refs_in_allof(branch, parent_def_key)
+
+        for def_key, def_schema in defs.items():
+            _collect_refs_in_allof(def_schema, def_key)
+
+        # Entity shapes (those with sh:targetClass) already have all
+        # constraint paths declared in their `properties` dict via
+        # _collect_constraint_paths, so additionalProperties: false on
+        # them is CORRECT and must be preserved — it gives TS clean types
+        # without `[k: string]: unknown`.
+        # EXCEPTION: shapes that have targetClass BUT are also used as
+        # sh:node constraints DIRECTLY by another named shape act as mixins — strip them.
+        # Shapes referenced via sh:node from blank-nodes inside sh:or / sh:xone
+        # lists are discriminated-union members, NOT mixins — keep them closed.
+        node_constraint_targets: set = set()
+        for _s, _p, _o in self.graph.triples((None, SH.node, None)):
+            if isinstance(_o, (URIRef, BNode)) and isinstance(_s, URIRef):
+                node_constraint_targets.add(_o)
+
+        entity_def_keys: set = set()
+        for shape in self.shapes:
+            if any(self.graph.objects(shape, SH.targetClass)):
+                if shape not in node_constraint_targets:
+                    entity_def_keys.add(self._def_name(shape))
+
+        # Strip only NON-entity constraint $defs
+        for ck in constraint_keys:
+            if ck in entity_def_keys:
+                continue
+            if ck not in defs:
+                continue
+            self._remove_additional_properties_deep(defs[ck])
+
+    @staticmethod
+    def _remove_additional_properties_deep(schema: object) -> None:
+        """Remove ``additionalProperties: false`` AND ``unevaluatedProperties: false``
+        from a schema and its nested allOf/anyOf/oneOf members.
+        When the schema is used via $ref inside a parent allOf, these keywords
+        would incorrectly reject properties from sibling allOf entries.
+        The PARENT allOf wrapper already has ``unevaluatedProperties: false``
+        to enforce closure across the composition."""
+        if not isinstance(schema, dict):
+            return
+        if schema.get("additionalProperties") is False:
+            del schema["additionalProperties"]
+        if schema.get("unevaluatedProperties") is False:
+            del schema["unevaluatedProperties"]
+        for kw in ("allOf", "anyOf", "oneOf"):
+            branch_list = schema.get(kw)
+            if isinstance(branch_list, list):
+                for branch in branch_list:
+                    ShaclToJsonSchema._remove_additional_properties_deep(branch)
 
     def report_diffs(self, schema: JsonSchema) -> None:
         defs = schema.get("$defs", {})
@@ -205,34 +308,98 @@ class ShaclToJsonSchema:
         required: List[str] = []
         constraints: List[JsonSchema] = []
 
-        for prop in self.graph.objects(shape, SH.property):
-            path = self.graph.value(prop, SH.path)
-            if path is None:
-                node_constraint = self._build_node_constraint(prop)
-                if node_constraint:
-                    constraints.append(node_constraint)
-                continue
-            if not isinstance(path, URIRef):
-                continue
-            prop_name = self._prop_name(prop, path)
-            prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
-            if prop_schema is not None:
-                properties[prop_name] = prop_schema
-            if prop_required:
-                required.append(prop_name)
+        # Detect if this shape is a PropertyShape wrapper (has sh:path).
+        # When it has sh:path, its sh:property sub-shapes constrain the VALUE
+        # nodes of the path, NOT the wrapper object itself.
+        is_property_shape = self.graph.value(shape, SH.path) is not None
+
+        # 1. Standard SHACL: sh:property links to property shapes
+        #    Skip when the shape is a PropertyShape — those sub-properties
+        #    constrain the value objects and are handled in Section 2 via
+        #    _build_value_schema_from_node.
+        if not is_property_shape:
+            for prop in self.graph.objects(shape, SH.property):
+                path = self.graph.value(prop, SH.path)
+                if path is None:
+                    node_constraint = self._build_node_constraint(prop)
+                    if node_constraint:
+                        constraints.append(node_constraint)
+                    continue
+                if not isinstance(path, URIRef):
+                    continue
+                prop_name = self._prop_name(prop, path)
+                prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
+                if prop_schema is not None:
+                    properties[prop_name] = prop_schema
+                if prop_required:
+                    required.append(prop_name)
+
+        # 2. Handle case where 'shape' IS a PropertyShape itself acting as a NodeShape wrapper
+        # valid for cases like 'epcis:EventListShape' where it defines 'sh:path epcis:eventList'
+        # directly on the shape definition.
+        # This implies the shape describes a node that must have this property.
+        path = self.graph.value(shape, SH.path)
+        if path and isinstance(path, URIRef):
+             # Treating the shape itself as a property definition on the focus node
+             prop_name = self._prop_name(shape, path)
+             # Use the shape itself as the property definition source
+             # IMPORTANT: Avoid using the shape as a reference to itself, otherwise infinite recursion
+             # We pass avoid_ref_if_self=True to prevent recursive reference in value schema
+             # But here we are building the PROPERTY schema (the container/wrapper for the value)
+             prop_schema, prop_required, prop_forbidden = self._build_property_schema(shape, avoid_ref_if_self=True)
+             
+             if prop_schema is not None:
+                 # If we are using the shape as a wrapper, we define the property HERE.
+                 # The validation of the property VALUE is handled inside prop_schema.
+                 properties[prop_name] = prop_schema
+             if prop_required:
+                 required.append(prop_name)
+
+        # Exclude 'sh:node' constraints if we are treating the shape as a property definition wrapper
+        # because sh:node on a PropertyShape usually constrains the value of the property, 
+        # which we handled above in _build_property_schema(shape).
+        
+        # CRITICAL FIX: If sh:node is present on a PropertyShape, it applies to the VALUE of the property (via sh:path),
+        # NOT the focus node itself (wrapper).
+        # Standard SHACL behavior for PropertyShape: sh:node constrains value nodes.
+        # So we MUST skip adding sh:node constraints to the "wrapper" object here.
+        # The constraint was already incorporated into 'prop_schema' via _build_value_schema -> _build_value_schema_from_node(shape).
+        skip_node_constraints = (path is not None)
 
         for node_ref in self.graph.objects(shape, SH.node):
+            if skip_node_constraints:
+                continue
             node_constraint = self._build_node_constraint(node_ref)
             if node_constraint:
                 constraints.append(node_constraint)
 
         target_classes = list(self.graph.objects(shape, SH.targetClass))
+
+        # For union shapes (sh:or/sh:xone with sh:node references to typed shapes),
+        # collect subtype target classes so the @type enum includes them.
+        # Without this, TypeScript intersections of base @type with subtype @type
+        # produce 'never' (e.g., "EPCISEvent" & "ObjectEvent" = never).
+        all_type_classes = list(target_classes)
+        for union_pred in (SH["or"], SH.xone):
+            union_list = self.graph.value(shape, union_pred)
+            if union_list:
+                for entry in Collection(self.graph, union_list):
+                    node_ref = self.graph.value(entry, SH.node)
+                    if node_ref:
+                        for sub_cls in self.graph.objects(node_ref, SH.targetClass):
+                            if sub_cls not in all_type_classes:
+                                all_type_classes.append(sub_cls)
+
         if target_classes:
-            # constraints.append(self._build_type_constraint(target_classes))
-            # Integrate targetClass directly into properties to avoid allOf
-            type_prop_schema = self._build_type_property_schema(target_classes)
+            type_prop_schema = self._build_type_property_schema(all_type_classes)
             properties["@type"] = type_prop_schema
-            required.append("@type")
+            properties["type"] = type_prop_schema
+            # NOTE: We intentionally do NOT add an anyOf required @type/type
+            # constraint here.  Adding it as an allOf member produces
+            # `{[k: string]: unknown}` in TypeScript (json-schema-to-typescript
+            # can't express "required one-of" cleanly).  The typed enum literals
+            # on @type/type are enough for TS discrimination, and SHACL validation
+            # is handled by the shapes themselves (rdf:type is in ignoredProperties).
 
         or_list = self.graph.value(shape, SH["or"])
         if or_list:
@@ -253,6 +420,47 @@ class ShaclToJsonSchema:
                 constraints.append({"oneOf": xone_constraints})
 
         closed = self._bool_value(self.graph.value(shape, SH.closed))
+
+        # For PropertyShapes (shapes with sh:path), sh:closed applies to the VALUE
+        # objects, not the wrapper.  The value schema already has
+        # additionalProperties: false if closed (set in _build_value_schema_from_node).
+        # So suppress closure on the wrapper object.
+        if is_property_shape:
+            closed = False
+        
+        # Heuristic: If a shape is purely a Disjoint Union (xone) or Choice (or) of other shapes,
+        # and doesn't define its own properties (other than type/id), treat it as closed.
+        # This prevents TypeScript from adding [k:string]: unknown to the union type.
+        is_pure_union = (
+            (self.graph.value(shape, SH.xone) or self.graph.value(shape, SH["or"])) and
+            not self.graph.value(shape, SH.property) and
+            not self.graph.value(shape, SH.node)
+        )
+        if is_pure_union:
+            # Pure union strategy: emit a FLAT anyOf / oneOf of $refs.
+            # This avoids wrapping in allOf with an open base object, which
+            # generates `{[k: string]: unknown}` in TypeScript and kills
+            # autocomplete.  Each member shape already carries its own @type
+            # constraints, so the base @type enum is redundant.
+            or_list  = self.graph.value(shape, SH["or"])
+            xone_list = self.graph.value(shape, SH.xone)
+            union_list = or_list or xone_list
+            keyword    = "anyOf" if or_list else "oneOf"
+
+            refs: List[JsonSchema] = []
+            for entry in Collection(self.graph, union_list):
+                node_ref = self.graph.value(entry, SH.node)
+                if node_ref and node_ref in self.shapes:
+                    refs.append(self._ref_schema(node_ref))
+                else:
+                    # Fallback: build the branch constraint normally
+                    constraint = self._build_node_constraint(entry)
+                    if constraint:
+                        refs.append(constraint)
+
+            if refs:
+                return {keyword: refs}
+             
         ignored = []
         for ignored_list in self.graph.objects(shape, SH.ignoredProperties):
             try:
@@ -273,18 +481,16 @@ class ShaclToJsonSchema:
                 properties[key] = {}
 
         if closed:
-            # If closed, we previously added empty schemas for all referenced properties.
-            # This causes "unknown" types in TypeScript.
-            # Instead, we rely on the constraints in allOf/anyOf to define the types,
-            # and trust that unevaluatedProperties works or that the generator handles intersections correctly.
-            # for prop_name in self._collect_constraint_paths(shape):
-            #     if prop_name not in properties:
-            #         properties[prop_name] = {}
+            # Property paths from logical constraints (sh:or, sh:and, etc.) are collected
+            # and added to properties further below, after additionalProperties is set.
             pass
 
-        # Always allow JSON-LD core properties
+        # Always allow JSON-LD core properties and their aliases
         properties.setdefault("@id", {"type": "string"})
+        properties.setdefault("id", {"type": "string"})
+        
         properties.setdefault("@type", {"type": ["string", "array"]})
+        properties.setdefault("type", {"type": ["string", "array"]})
 
         obj_schema: JsonSchema = {
             "type": "object",
@@ -293,63 +499,40 @@ class ShaclToJsonSchema:
         if required:
             obj_schema["required"] = sorted(set(required))
         if closed:
+            # If closed, strict validation. 
+            # If we have constraints (mixins), we rely on unevaluatedProperties: false which works in JSON Schema 2019-09+.
+            # However, for TS generation, unevaluatedProperties is sometimes ignored.
+            # To fix the index signature issue, we explicitly set additionalProperties: false
+            # BUT only if we can be sure it won't break validation due to mixins not being in "properties".
+            # The safe bet is to use unevaluatedProperties: false.
             obj_schema["unevaluatedProperties"] = False
+            # Force additionalProperties: false to prevent [k: string]: unknown in TS
+            # This is safe because we are defining the "base" properties here.
             obj_schema["additionalProperties"] = False
-
-        if not constraints:
-            return obj_schema
-
-        # Consolidate simple object constraints to avoid excessive allOf nesting
-        remaining_constraints = []
-        for c in constraints:
-            # Check if constraint is a mergeable object schema
-            # It should have type=object and only properties/required keys
-            is_simple_object = (
-                isinstance(c, dict) and 
-                c.get("type") == "object" and
-                set(c.keys()).issubset({"type", "properties", "required"})
-            )
             
-            if is_simple_object:
-                # Merge properties
-                c_props = c.get("properties", {})
-                for k, v in c_props.items():
-                    if k not in obj_schema["properties"]:
-                        obj_schema["properties"][k] = v
-                    else:
-                        # Conflict or refinement -> keep existing, wrap in allOf if needed
-                        # But wait, if we merge, we put 'v' into properties[k].
-                        # If properties[k] exists, we make it an allOf of both schemas
-                        existing = obj_schema["properties"][k]
-                        if "allOf" in existing:
-                             # Create new list so we don't mutate shared reference if any
-                             new_all_of = list(existing["allOf"])
-                             new_all_of.append(v)
-                             obj_schema["properties"][k] = {"allOf": new_all_of}
-                        else:
-                             obj_schema["properties"][k] = {"allOf": [existing, v]}
+            # Make sure TypeScript sees this as closed by adding all referenced properties as optional if not present
+            # This is a hack to get TS to not complain about unknown properties when mixing types
+            for prop_name in self._collect_constraint_paths(shape):
+                if prop_name not in properties and prop_name not in ["@id", "id", "@type", "type"]:
+                     # Declare as empty schema so additionalProperties:false won't reject them.
+                     # The real type constraints come from the allOf/anyOf entries;
+                     # in TypeScript: unknown & T  =  T, so the intersection still narrows correctly.
+                     properties[prop_name] = {}
 
-                # Merge required
-                c_req = c.get("required", [])
-                if c_req:
-                    if "required" not in obj_schema:
-                        obj_schema["required"] = []
-                    # Add unique required fields
-                    current_req = set(obj_schema["required"])
-                    for r in c_req:
-                        if r not in current_req:
-                            obj_schema["required"].append(r)
-                            current_req.add(r)
-            else:
-                remaining_constraints.append(c)
-        
-        constraints = remaining_constraints
-
+        if not constraints and closed:
+            # If there are no other constraints/mixins, we can safely close it
+            obj_schema["additionalProperties"] = False
+            
         if not constraints:
             return obj_schema
 
         shape_schema: JsonSchema = {"allOf": [obj_schema]}
         shape_schema["allOf"].extend(constraints)
+        
+        # Apply unevaluatedProperties: false on the COMBINED schema if closed
+        if closed:
+            shape_schema["unevaluatedProperties"] = False
+            
         return shape_schema
 
     def _build_type_property_schema(self, target_classes: List[URIRef]) -> JsonSchema:
@@ -360,33 +543,24 @@ class ShaclToJsonSchema:
         
         enum_values = sorted(set(enum_values))
         if not enum_values:
-            return {"type": ["string", "array"]}
+            return {"type": "string"}
             
-        value_schema = {"enum": enum_values}
-        return {
-            "anyOf": [
-                value_schema,
-                {
-                    "type": "array",
-                    "contains": value_schema,
-                    # Ensure at least one type matches
-                }
-            ]
-        }
+        # Simplification: Return direct enum to support TypeScript discriminated unions
+        return {"enum": enum_values}
 
-    def _build_property_schema(self, prop: Union[URIRef, BNode]) -> Tuple[Optional[JsonSchema], bool, bool]:
+    def _build_property_schema(self, prop: Union[URIRef, BNode], avoid_ref_if_self: bool = False) -> Tuple[Optional[JsonSchema], bool, bool]:
         max_count = self._int_value(self.graph.value(prop, SH.maxCount))
         min_count = self._int_value(self.graph.value(prop, SH.minCount))
 
         if max_count == 0:
             return None, False, True
 
-        value_schema = self._build_value_schema(prop)
+        value_schema = self._build_value_schema(prop, avoid_ref_if_self=avoid_ref_if_self)
         wrapped = self._wrap_value_schema(value_schema, min_count, max_count)
         is_required = min_count is not None and min_count >= 1
         return wrapped, is_required, False
 
-    def _build_value_schema(self, prop: Union[URIRef, BNode]) -> JsonSchema:
+    def _build_value_schema(self, prop: Union[URIRef, BNode], avoid_ref_if_self: bool = False) -> JsonSchema:
         or_list = self.graph.value(prop, SH["or"])
         if or_list:
             base_schema: JsonSchema = {"anyOf": self._build_list_value_constraints(or_list)}
@@ -399,7 +573,7 @@ class ShaclToJsonSchema:
                 if xone_list:
                     base_schema = {"oneOf": self._build_list_value_constraints(xone_list)}
                 else:
-                    base_schema = self._build_value_schema_from_node(prop)
+                    base_schema = self._build_value_schema_from_node(prop, avoid_ref_if_self=avoid_ref_if_self)
 
         not_node = self.graph.value(prop, SH["not"])
         if not_node is not None:
@@ -419,8 +593,8 @@ class ShaclToJsonSchema:
 
         return base_schema
 
-    def _build_value_schema_from_node(self, node: Union[URIRef, BNode]) -> JsonSchema:
-        if self._is_node_shape(node) and self._has_structural_constraints(node):
+    def _build_value_schema_from_node(self, node: Union[URIRef, BNode], avoid_ref_if_self: bool = False) -> JsonSchema:
+        if not avoid_ref_if_self and self._is_node_shape(node) and self._has_structural_constraints(node):
             # Use the node shape itself as the value schema when it defines structure
             return self._ref_schema(node)
 
@@ -448,6 +622,23 @@ class ShaclToJsonSchema:
                 schema["maxLength"] = max_length
             schemas.append(schema)
 
+        # Numeric range constraints: sh:minInclusive, sh:maxInclusive, sh:minExclusive, sh:maxExclusive
+        min_inclusive = self._numeric_value(self.graph.value(node, SH.minInclusive))
+        max_inclusive = self._numeric_value(self.graph.value(node, SH.maxInclusive))
+        min_exclusive = self._numeric_value(self.graph.value(node, SH.minExclusive))
+        max_exclusive = self._numeric_value(self.graph.value(node, SH.maxExclusive))
+        if any(v is not None for v in (min_inclusive, max_inclusive, min_exclusive, max_exclusive)):
+            range_schema: JsonSchema = {"type": "number"}
+            if min_inclusive is not None:
+                range_schema["minimum"] = min_inclusive
+            if max_inclusive is not None:
+                range_schema["maximum"] = max_inclusive
+            if min_exclusive is not None:
+                range_schema["exclusiveMinimum"] = min_exclusive
+            if max_exclusive is not None:
+                range_schema["exclusiveMaximum"] = max_exclusive
+            schemas.append(range_schema)
+
         in_list = self.graph.value(node, SH["in"])
         if in_list:
             values = [v.toPython() for v in Collection(self.graph, in_list)]
@@ -470,6 +661,33 @@ class ShaclToJsonSchema:
             if self._is_node_shape(node_ref):
                 schemas.append(self._ref_schema(node_ref))
 
+        # When avoid_ref_if_self is True, this node IS the PropertyShape itself.
+        # Its sh:property sub-shapes define properties of the VALUE objects
+        # (e.g., QuantityElementShape has sh:path quantityList + sh:property epcClass).
+        # Build an object schema describing the value structure.
+        if avoid_ref_if_self:
+            sub_props: Dict[str, JsonSchema] = {}
+            sub_required: List[str] = []
+            for sub_prop in self.graph.objects(node, SH.property):
+                sub_path = self.graph.value(sub_prop, SH.path)
+                if sub_path is None or not isinstance(sub_path, URIRef):
+                    continue
+                sub_name = self._prop_name(sub_prop, sub_path)
+                sub_schema, sub_req, sub_forbidden = self._build_property_schema(sub_prop)
+                if sub_schema is not None:
+                    sub_props[sub_name] = sub_schema
+                if sub_req:
+                    sub_required.append(sub_name)
+            if sub_props:
+                value_obj: JsonSchema = {"type": "object", "properties": sub_props}
+                if sub_required:
+                    value_obj["required"] = sorted(set(sub_required))
+                # If the PropertyShape is sh:closed, apply closure to value objects
+                closed = self.graph.value(node, SH.closed)
+                if closed and closed.toPython():
+                    value_obj["additionalProperties"] = False
+                schemas.append(value_obj)
+
         if not schemas:
             return {}
         
@@ -479,7 +697,8 @@ class ShaclToJsonSchema:
         
         for s in schemas:
             # If schema has logic keywords (allOf, anyOf, oneOf, not, $ref), complex merge is needed
-            if any(k in s for k in ("allOf", "anyOf", "oneOf", "not", "$ref", "enum", "const")):
+            # Note: "enum" and "const" are allowed in simple merges (e.g., {type: boolean} + {enum: [true, false]})
+            if any(k in s for k in ("allOf", "anyOf", "oneOf", "not", "$ref")):
                 complex_merge = True
                 break
             # Simply merge properties
@@ -536,8 +755,10 @@ class ShaclToJsonSchema:
             if path is None or not isinstance(path, URIRef):
                 return None
             prop_name = self._prop_name(node, path)
-            # if forbidden:
-            #     return {"not": {"required": [prop_name]}}
+            if forbidden:
+                # sh:maxCount 0 means the property must be ABSENT.
+                # Express as: the object must NOT have this property as required.
+                return {"not": {"required": [prop_name]}}
             if prop_schema is None:
                 return None
             obj_schema: JsonSchema = {"type": "object", "properties": {prop_name: prop_schema}}
@@ -613,6 +834,13 @@ class ShaclToJsonSchema:
             node_constraint = self._build_node_constraint(node_ref)
             if node_constraint:
                 constraints.append(node_constraint)
+
+        # Handle sh:not constraints (e.g., sh:not [ sh:property [ sh:path X ; sh:minCount 1 ] ])
+        for not_node in self.graph.objects(node, SH["not"]):
+            has_any = True
+            not_constraint = self._build_node_constraint(not_node)
+            if not_constraint:
+                constraints.append({"not": not_constraint})
 
         closed = self._bool_value(self.graph.value(node, SH.closed))
         ignored: List[str] = []
@@ -796,12 +1024,29 @@ class ShaclToJsonSchema:
             return None
 
     @staticmethod
+    def _numeric_value(value: Optional[object]) -> Optional[float]:
+        """Convert an RDF literal to a Python numeric value (int or float)."""
+        if value is None:
+            return None
+        try:
+            v = value.toPython() if hasattr(value, 'toPython') else value
+            if isinstance(v, (int, float)):
+                return v
+            return float(v)
+        except Exception:
+            return None
+
+    @staticmethod
     def _bool_value(value: Optional[object]) -> bool:
         if value is None:
             return False
         return str(value).lower() in ("true", "1")
 
     def _is_node_shape(self, node: Union[URIRef, BNode]) -> bool:
+        # Check explicit type or if we've decided to treat it as a shape
+        # (e.g. because it was referenced by sh:node)
+        if hasattr(self, 'shapes') and node in self.shapes:
+            return True
         return (node, RDF.type, SH.NodeShape) in self.graph
 
     @staticmethod
