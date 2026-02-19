@@ -3,502 +3,166 @@
   "type": "object",
   "$defs": {
     "dmwp_DigitalMarpolWastePassportShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "credentialSubject": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/dmwp_MarpolWastePassportShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/dmwp_MarpolWastePassportShape"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "issued": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "publisher": {
-              "anyOf": [
-                {},
-                {
-                  "type": "array",
-                  "items": {},
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "credentialSubject",
-            "issued",
-            "publisher"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "credentialSubject": {
+          "$ref": "#/$defs/dmwp_MarpolWastePassportShape"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport"
-                    },
-                    {
-                      "const": "DigitalMarpolWastePassport"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport"
-                      },
-                      {
-                        "const": "DigitalMarpolWastePassport"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "issued": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "publisher": {},
+        "@type": {
+          "enum": [
+            "DigitalMarpolWastePassport",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport"
           ]
+        },
+        "type": {
+          "enum": [
+            "DigitalMarpolWastePassport",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "credentialSubject",
+        "issued",
+        "publisher"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "dmwp_MarpolWastePassportShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "waste": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/dmwp_MarpolWasteShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/dmwp_MarpolWasteShape"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "waste"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "waste": {
+          "$ref": "#/$defs/dmwp_MarpolWasteShape"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport"
-                    },
-                    {
-                      "const": "MarpolWastePassport"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport"
-                      },
-                      {
-                        "const": "MarpolWastePassport"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "@type": {
+          "enum": [
+            "MarpolWastePassport",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport"
           ]
+        },
+        "type": {
+          "enum": [
+            "MarpolWastePassport",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "waste"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "dmwp_MarpolWasteShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "ship": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/dmwp_ShipShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/dmwp_ShipShape"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "residue": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/dmwp_ResidueInformationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/dmwp_ResidueInformationShape"
-                  },
-                  "minItems": 1
-                }
-              ]
-            },
-            "lastDeliveryDate": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "format": "date-time"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "arrivalPort": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "nextPlannedDeliveryPort": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "lastWasteDeliveryPort": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "deliveryType": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "ZTO",
-                        "REC",
-                        "DIS"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "ZTO",
-                          "REC",
-                          "DIS"
-                        ]
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "shipScale": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "marpolEdition": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "wasteAgent": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/dmwp_AuthorizedPartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/dmwp_AuthorizedPartyShape"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "message": {
-              "anyOf": [
-                {},
-                {
-                  "type": "array",
-                  "items": {},
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "involvedParty": {
-              "anyOf": [
-                {},
-                {
-                  "type": "array",
-                  "items": {},
-                  "minItems": 0
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "residue",
-            "ship"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "ship": {
+          "$ref": "#/$defs/dmwp_ShipShape"
         },
-        {
+        "residue": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste"
-                    },
-                    {
-                      "const": "MarpolWaste"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/dmwp_ResidueInformationShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste"
-                      },
-                      {
-                        "const": "MarpolWaste"
-                      }
-                    ]
-                  }
-                }
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/dmwp_ResidueInformationShape"
               },
-              "required": [
-                "@type"
-              ]
+              "minItems": 1
             }
           ]
+        },
+        "lastDeliveryDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "arrivalPort": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+        },
+        "nextPlannedDeliveryPort": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+        },
+        "lastWasteDeliveryPort": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
+        },
+        "deliveryType": {
+          "type": "string",
+          "enum": [
+            "ZTO",
+            "REC",
+            "DIS"
+          ]
+        },
+        "shipScale": {
+          "type": "string"
+        },
+        "marpolEdition": {
+          "type": "string"
+        },
+        "wasteAgent": {
+          "$ref": "#/$defs/dmwp_AuthorizedPartyShape"
+        },
+        "message": {},
+        "involvedParty": {
+          "anyOf": [
+            {},
+            {
+              "type": "array",
+              "items": {},
+              "minItems": 0
+            }
+          ]
+        },
+        "@type": {
+          "enum": [
+            "MarpolWaste",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste"
+          ]
+        },
+        "type": {
+          "enum": [
+            "MarpolWaste",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "residue",
+        "ship"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "dmwp_ResidueInformationShape": {
       "allOf": [
@@ -506,594 +170,231 @@
           "type": "object",
           "properties": {
             "typeCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "OIL"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "OIL"
-                        ]
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
+              "type": "string",
+              "enum": [
+                "OIL"
               ]
             },
             "subtypeCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "SLU"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "SLU"
-                        ]
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
+              "type": "string",
+              "enum": [
+                "SLU"
               ]
             },
             "substance": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string"
             },
             "dischargeMeans": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "ZTE",
-                        "ZTD",
-                        "ZTC",
-                        "ZTB"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "ZTE",
-                          "ZTD",
-                          "ZTC",
-                          "ZTB"
-                        ]
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
+              "type": "string",
+              "enum": [
+                "ZTE",
+                "ZTD",
+                "ZTC",
+                "ZTB"
               ]
             },
             "nextCollectionPort": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "pattern": "^[A-Z]{2}[A-Z0-9]{3}$"
             },
             "quantityToDeliver": {
               "anyOf": [
                 {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "anyOf": [
-                            {
-                              "const": "https://ontology.untp.io/core/Measure"
-                            },
-                            {
-                              "const": "Measure"
-                            }
-                          ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "anyOf": [
+                        {
+                          "const": "https://ontology.untp.io/core/Measure"
+                        },
+                        {
+                          "const": "Measure"
                         }
-                      },
-                      "required": [
-                        "@type"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "array",
-                          "contains": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "@type"
                       ]
                     }
+                  },
+                  "required": [
+                    "@type"
                   ]
                 },
                 {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "type": "array",
+                      "contains": {
+                        "anyOf": [
+                          {
+                            "const": "https://ontology.untp.io/core/Measure"
+                          },
+                          {
+                            "const": "Measure"
                           }
-                        },
-                        "required": [
-                          "@type"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "array",
-                            "contains": {
-                              "anyOf": [
-                                {
-                                  "const": "https://ontology.untp.io/core/Measure"
-                                },
-                                {
-                                  "const": "Measure"
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "@type"
                         ]
                       }
-                    ]
+                    }
                   },
-                  "minItems": 0,
-                  "maxItems": 1
+                  "required": [
+                    "@type"
+                  ]
                 }
               ]
             },
             "quantityRemainingOnBoard": {
               "anyOf": [
                 {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "anyOf": [
-                            {
-                              "const": "https://ontology.untp.io/core/Measure"
-                            },
-                            {
-                              "const": "Measure"
-                            }
-                          ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "anyOf": [
+                        {
+                          "const": "https://ontology.untp.io/core/Measure"
+                        },
+                        {
+                          "const": "Measure"
                         }
-                      },
-                      "required": [
-                        "@type"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "array",
-                          "contains": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "@type"
                       ]
                     }
+                  },
+                  "required": [
+                    "@type"
                   ]
                 },
                 {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "type": "array",
+                      "contains": {
+                        "anyOf": [
+                          {
+                            "const": "https://ontology.untp.io/core/Measure"
+                          },
+                          {
+                            "const": "Measure"
                           }
-                        },
-                        "required": [
-                          "@type"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "array",
-                            "contains": {
-                              "anyOf": [
-                                {
-                                  "const": "https://ontology.untp.io/core/Measure"
-                                },
-                                {
-                                  "const": "Measure"
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "@type"
                         ]
                       }
-                    ]
+                    }
                   },
-                  "minItems": 0,
-                  "maxItems": 1
+                  "required": [
+                    "@type"
+                  ]
                 }
               ]
             },
             "estimatedGenerated": {
               "anyOf": [
                 {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "anyOf": [
-                            {
-                              "const": "https://ontology.untp.io/core/Measure"
-                            },
-                            {
-                              "const": "Measure"
-                            }
-                          ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "anyOf": [
+                        {
+                          "const": "https://ontology.untp.io/core/Measure"
+                        },
+                        {
+                          "const": "Measure"
                         }
-                      },
-                      "required": [
-                        "@type"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "array",
-                          "contains": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "@type"
                       ]
                     }
+                  },
+                  "required": [
+                    "@type"
                   ]
                 },
                 {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "type": "array",
+                      "contains": {
+                        "anyOf": [
+                          {
+                            "const": "https://ontology.untp.io/core/Measure"
+                          },
+                          {
+                            "const": "Measure"
                           }
-                        },
-                        "required": [
-                          "@type"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "array",
-                            "contains": {
-                              "anyOf": [
-                                {
-                                  "const": "https://ontology.untp.io/core/Measure"
-                                },
-                                {
-                                  "const": "Measure"
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "@type"
                         ]
                       }
-                    ]
+                    }
                   },
-                  "minItems": 0,
-                  "maxItems": 1
+                  "required": [
+                    "@type"
+                  ]
                 }
               ]
             },
             "maxCapacity": {
               "anyOf": [
                 {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "anyOf": [
-                            {
-                              "const": "https://ontology.untp.io/core/Measure"
-                            },
-                            {
-                              "const": "Measure"
-                            }
-                          ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "anyOf": [
+                        {
+                          "const": "https://ontology.untp.io/core/Measure"
+                        },
+                        {
+                          "const": "Measure"
                         }
-                      },
-                      "required": [
-                        "@type"
-                      ]
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "@type": {
-                          "type": "array",
-                          "contains": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
-                          }
-                        }
-                      },
-                      "required": [
-                        "@type"
                       ]
                     }
+                  },
+                  "required": [
+                    "@type"
                   ]
                 },
                 {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "anyOf": [
-                              {
-                                "const": "https://ontology.untp.io/core/Measure"
-                              },
-                              {
-                                "const": "Measure"
-                              }
-                            ]
+                  "type": "object",
+                  "properties": {
+                    "@type": {
+                      "type": "array",
+                      "contains": {
+                        "anyOf": [
+                          {
+                            "const": "https://ontology.untp.io/core/Measure"
+                          },
+                          {
+                            "const": "Measure"
                           }
-                        },
-                        "required": [
-                          "@type"
-                        ]
-                      },
-                      {
-                        "type": "object",
-                        "properties": {
-                          "@type": {
-                            "type": "array",
-                            "contains": {
-                              "anyOf": [
-                                {
-                                  "const": "https://ontology.untp.io/core/Measure"
-                                },
-                                {
-                                  "const": "Measure"
-                                }
-                              ]
-                            }
-                          }
-                        },
-                        "required": [
-                          "@type"
                         ]
                       }
-                    ]
+                    }
                   },
-                  "minItems": 0,
-                  "maxItems": 1
+                  "required": [
+                    "@type"
+                  ]
                 }
+              ]
+            },
+            "@type": {
+              "enum": [
+                "ResidueInformation",
+                "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation"
+              ]
+            },
+            "type": {
+              "enum": [
+                "ResidueInformation",
+                "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation"
               ]
             },
             "@id": {
               "type": "string"
             },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
+            "id": {
+              "type": "string"
             }
           },
           "required": [
+            "@type",
             "subtypeCode",
             "typeCode"
           ],
-          "unevaluatedProperties": false
-        },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation"
-                    },
-                    {
-                      "const": "ResidueInformation"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation"
-                      },
-                      {
-                        "const": "ResidueInformation"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
-          ]
+          "unevaluatedProperties": false,
+          "additionalProperties": false
         },
         {
           "anyOf": [
@@ -1405,315 +706,112 @@
             }
           ]
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     },
     "dmwp_ShipShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "imoNumber": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^\\d{7}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^\\d{7}$"
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "flag": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[A-Z]{2}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[A-Z]{2}$"
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "flag",
-            "imoNumber",
-            "name"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "imoNumber": {
+          "type": "string",
+          "pattern": "^\\d{7}$"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship"
-                    },
-                    {
-                      "const": "Ship"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship"
-                      },
-                      {
-                        "const": "Ship"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "name": {
+          "type": "string"
+        },
+        "flag": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "@type": {
+          "enum": [
+            "Ship",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship"
           ]
+        },
+        "type": {
+          "enum": [
+            "Ship",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "flag",
+        "imoNumber",
+        "name"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "dmwp_AuthorizedPartyShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "identifier": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "contactPoint": {
-              "anyOf": [
-                {},
-                {
-                  "type": "array",
-                  "items": {},
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "identifier"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty"
-                    },
-                    {
-                      "const": "AuthorizedParty"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty"
-                      },
-                      {
-                        "const": "AuthorizedParty"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "contactPoint": {},
+        "@type": {
+          "enum": [
+            "AuthorizedParty",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty"
           ]
+        },
+        "type": {
+          "enum": [
+            "AuthorizedParty",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "identifier"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "dmwp_InvolvedPartyShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "role": {
-              "anyOf": [
-                {},
-                {
-                  "type": "array",
-                  "items": {},
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty"
-                    },
-                    {
-                      "const": "InvolvedParty"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty"
-                      },
-                      {
-                        "const": "InvolvedParty"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+      "type": "object",
+      "properties": {
+        "role": {},
+        "@type": {
+          "enum": [
+            "InvolvedParty",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty"
           ]
+        },
+        "type": {
+          "enum": [
+            "InvolvedParty",
+            "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     }
   },
   "anyOf": [
@@ -1754,40 +852,25 @@
       ]
     },
     {
-      "allOf": [
-        {
-          "not": {
-            "required": [
-              "@graph"
-            ]
-          }
-        },
-        {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/dmwp_DigitalMarpolWastePassportShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_MarpolWastePassportShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_MarpolWasteShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_ResidueInformationShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_ShipShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_AuthorizedPartyShape"
-            },
-            {
-              "$ref": "#/$defs/dmwp_InvolvedPartyShape"
-            }
-          ]
-        }
-      ]
+      "$ref": "#/$defs/dmwp_DigitalMarpolWastePassportShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_MarpolWastePassportShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_MarpolWasteShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_ResidueInformationShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_ShipShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_AuthorizedPartyShape"
+    },
+    {
+      "$ref": "#/$defs/dmwp_InvolvedPartyShape"
     }
   ]
 }

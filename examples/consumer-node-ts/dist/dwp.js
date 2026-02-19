@@ -1,4 +1,4 @@
-import { createValidator, } from "@blueroominnovation/ontology-contracts";
+import { createValidator } from "@blueroominnovation/ontology-contracts";
 const validator = createValidator();
 const schemaKey = "dwp";
 const payload = {

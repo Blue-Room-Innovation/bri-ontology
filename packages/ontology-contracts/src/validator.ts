@@ -86,7 +86,7 @@ function normalizeErrors(errors: ValidateFunction["errors"]): ValidationError[] 
 
 export function createValidator(options: CreateValidatorOptions = {}): OntologyValidator {
   const require = createRequire(import.meta.url);
-  const Ajv = require("ajv") as unknown as AjvCtor;
+  const Ajv = (require("ajv/dist/2020") as any).default as AjvCtor;
   const addFormats = require("ajv-formats") as unknown as FormatsPlugin;
 
   const ajv = options.ajv ??

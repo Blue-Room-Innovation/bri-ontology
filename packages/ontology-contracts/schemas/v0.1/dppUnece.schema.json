@@ -3,4127 +3,1617 @@
   "type": "object",
   "$defs": {
     "bri_shape_DigitalProductPassportShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "issuer": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
-                    },
-                    {
-                      "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
-                      },
-                      {
-                        "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "validFrom": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "validUntil": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "credentialSubject": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "$ref": "#/$defs/bri_shape_ProductPassportShape"
-                    },
-                    {
-                      "$ref": "#/$defs/bri_shape_ProductPassportShape"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/$defs/bri_shape_ProductPassportShape"
-                      },
-                      {
-                        "$ref": "#/$defs/bri_shape_ProductPassportShape"
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "credentialSubject",
-            "id",
-            "issuer"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         },
-        {
-          "anyOf": [
+        "issuer": {
+          "allOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport"
-                    },
-                    {
-                      "const": "DigitalProductPassport"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport"
-                      },
-                      {
-                        "const": "DigitalProductPassport"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
             }
           ]
+        },
+        "validFrom": {
+          "type": "string",
+          "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
+        },
+        "validUntil": {
+          "type": "string",
+          "pattern": "^[-]?\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([Z]|([+-]\\d{2}:\\d{2}))$"
+        },
+        "credentialSubject": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/bri_shape_ProductPassportShape"
+            },
+            {
+              "$ref": "#/$defs/bri_shape_ProductPassportShape"
+            }
+          ]
+        },
+        "@type": {
+          "enum": [
+            "DigitalProductPassport",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport"
+          ]
+        },
+        "type": {
+          "enum": [
+            "DigitalProductPassport",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/DigitalProductPassport"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "credentialSubject",
+        "id",
+        "issuer"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_CredentialIssuerShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "issuerAlsoKnownAs": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  },
-                  "minItems": 0
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "id",
-            "name"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         },
-        {
+        "issuerAlsoKnownAs": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer"
-                    },
-                    {
-                      "const": "CredentialIssuer"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_PartyShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer"
-                      },
-                      {
-                        "const": "CredentialIssuer"
-                      }
-                    ]
-                  }
-                }
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_PartyShape"
               },
-              "required": [
-                "@type"
-              ]
+              "minItems": 0
             }
           ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "CredentialIssuer",
+            "https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer"
+          ]
+        },
+        "type": {
+          "enum": [
+            "CredentialIssuer",
+            "https://test.uncefact.org/vocabulary/untp/core/0/CredentialIssuer"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "id",
+        "name"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_PartyShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "description": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "idScheme": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                    },
-                    {
-                      "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                      },
-                      {
-                        "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                      }
-                    ]
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "industryCategory": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClassificationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClassificationShape"
-                  },
-                  "minItems": 0
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "organisationWebsite": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "partyAlsoKnownAs": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  },
-                  "minItems": 0
-                }
-              ]
-            },
-            "registeredId": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "registrationCountry": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 0,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "id",
-            "name"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
         },
-        {
-          "anyOf": [
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "allOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Party"
-                    },
-                    {
-                      "const": "Party"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Party"
-                      },
-                      {
-                        "const": "Party"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
             }
           ]
+        },
+        "industryCategory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_ClassificationShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_ClassificationShape"
+              },
+              "minItems": 0
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "organisationWebsite": {
+          "type": "string"
+        },
+        "partyAlsoKnownAs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_PartyShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_PartyShape"
+              },
+              "minItems": 0
+            }
+          ]
+        },
+        "registeredId": {
+          "type": "string"
+        },
+        "registrationCountry": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Party",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Party"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Party",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Party"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "id",
+        "name"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_IdentifierSchemeShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "id",
-            "name"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme"
-                    },
-                    {
-                      "const": "IdentifierScheme"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme"
-                      },
-                      {
-                        "const": "IdentifierScheme"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "name": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "IdentifierScheme",
+            "https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme"
           ]
+        },
+        "type": {
+          "enum": [
+            "IdentifierScheme",
+            "https://test.uncefact.org/vocabulary/untp/core/0/IdentifierScheme"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "id",
+        "name"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_ClassificationShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "code": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "schemeID": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "schemeName": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "code",
-            "id",
-            "name",
-            "schemeID",
-            "schemeName"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Classification"
-                    },
-                    {
-                      "const": "Classification"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Classification"
-                      },
-                      {
-                        "const": "Classification"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "schemeID": {
+          "type": "string"
+        },
+        "schemeName": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Classification",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Classification"
           ]
+        },
+        "type": {
+          "enum": [
+            "Classification",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Classification"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "code",
+        "id",
+        "name",
+        "schemeID",
+        "schemeName"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_ProductPassportShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "circularityScorecard": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_CircularityPerformanceShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_CircularityPerformanceShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "conformityClaim": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClaimShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClaimShape"
-                  }
-                }
-              ]
-            },
-            "dueDiligenceDeclaration": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "emissionsScorecard": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_EmissionsPerformanceShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_EmissionsPerformanceShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "granularityLevel": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "item",
-                        "batch",
-                        "model"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "item",
-                          "batch",
-                          "model"
-                        ]
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "materialsProvenance": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MaterialShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MaterialShape"
-                  }
-                }
-              ]
-            },
-            "product": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ProductShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ProductShape"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "traceabilityInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
-                  }
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "product"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "circularityScorecard": {
+          "$ref": "#/$defs/bri_shape_CircularityPerformanceShape"
         },
-        {
+        "conformityClaim": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport"
-                    },
-                    {
-                      "const": "ProductPassport"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_ClaimShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport"
-                      },
-                      {
-                        "const": "ProductPassport"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_ClaimShape"
+              }
             }
           ]
+        },
+        "dueDiligenceDeclaration": {
+          "$ref": "#/$defs/bri_shape_LinkShape"
+        },
+        "emissionsScorecard": {
+          "$ref": "#/$defs/bri_shape_EmissionsPerformanceShape"
+        },
+        "granularityLevel": {
+          "type": "string",
+          "enum": [
+            "item",
+            "batch",
+            "model"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "materialsProvenance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_MaterialShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_MaterialShape"
+              }
+            }
+          ]
+        },
+        "product": {
+          "$ref": "#/$defs/bri_shape_ProductShape"
+        },
+        "traceabilityInformation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
+              }
+            }
+          ]
+        },
+        "@type": {
+          "enum": [
+            "ProductPassport",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport"
+          ]
+        },
+        "type": {
+          "enum": [
+            "ProductPassport",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/ProductPassport"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "product"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_ProductShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "batchNumber": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "characteristics": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_CharacteristicsShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_CharacteristicsShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "countryOfProduction": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "AD",
-                        "AE",
-                        "AF",
-                        "AG",
-                        "AI",
-                        "AL",
-                        "AM",
-                        "AO",
-                        "AQ",
-                        "AR",
-                        "AS",
-                        "AT",
-                        "AU",
-                        "AW",
-                        "AX",
-                        "AZ",
-                        "BA",
-                        "BB",
-                        "BD",
-                        "BE",
-                        "BF",
-                        "BG",
-                        "BH",
-                        "BI",
-                        "BJ",
-                        "BL",
-                        "BM",
-                        "BN",
-                        "BO",
-                        "BQ",
-                        "BR",
-                        "BS",
-                        "BT",
-                        "BV",
-                        "BW",
-                        "BY",
-                        "BZ",
-                        "CA",
-                        "CC",
-                        "CD",
-                        "CF",
-                        "CG",
-                        "CH",
-                        "CI",
-                        "CK",
-                        "CL",
-                        "CM",
-                        "CN",
-                        "CO",
-                        "CR",
-                        "CU",
-                        "CV",
-                        "CW",
-                        "CX",
-                        "CY",
-                        "CZ",
-                        "DE",
-                        "DJ",
-                        "DK",
-                        "DM",
-                        "DO",
-                        "DZ",
-                        "EC",
-                        "EE",
-                        "EG",
-                        "EH",
-                        "ER",
-                        "ES",
-                        "ET",
-                        "FI",
-                        "FJ",
-                        "FK",
-                        "FM",
-                        "FO",
-                        "FR",
-                        "GA",
-                        "GB",
-                        "GD",
-                        "GE",
-                        "GF",
-                        "GG",
-                        "GH",
-                        "GI",
-                        "GL",
-                        "GM",
-                        "GN",
-                        "GP",
-                        "GQ",
-                        "GR",
-                        "GS",
-                        "GT",
-                        "GU",
-                        "GW",
-                        "GY",
-                        "HK",
-                        "HM",
-                        "HN",
-                        "HR",
-                        "HT",
-                        "HU",
-                        "ID",
-                        "IE",
-                        "IL",
-                        "IM",
-                        "IN",
-                        "IO",
-                        "IQ",
-                        "IR",
-                        "IS",
-                        "IT",
-                        "JE",
-                        "JM",
-                        "JO",
-                        "JP",
-                        "KE",
-                        "KG",
-                        "KH",
-                        "KI",
-                        "KM",
-                        "KN",
-                        "KP",
-                        "KR",
-                        "KW",
-                        "KY",
-                        "KZ",
-                        "LA",
-                        "LB",
-                        "LC",
-                        "LI",
-                        "LK",
-                        "LR",
-                        "LS",
-                        "LT",
-                        "LU",
-                        "LV",
-                        "LY",
-                        "MA",
-                        "MC",
-                        "MD",
-                        "ME",
-                        "MF",
-                        "MG",
-                        "MH",
-                        "MK",
-                        "ML",
-                        "MM",
-                        "MN",
-                        "MO",
-                        "MP",
-                        "MQ",
-                        "MR",
-                        "MS",
-                        "MT",
-                        "MU",
-                        "MV",
-                        "MW",
-                        "MX",
-                        "MY",
-                        "MZ",
-                        "NA",
-                        "NC",
-                        "NE",
-                        "NF",
-                        "NG",
-                        "NI",
-                        "NL",
-                        "NO",
-                        "NP",
-                        "NR",
-                        "NU",
-                        "NZ",
-                        "OM",
-                        "PA",
-                        "PE",
-                        "PF",
-                        "PG",
-                        "PH",
-                        "PK",
-                        "PL",
-                        "PM",
-                        "PN",
-                        "PR",
-                        "PS",
-                        "PT",
-                        "PW",
-                        "PY",
-                        "QA",
-                        "RE",
-                        "RO",
-                        "RS",
-                        "RU",
-                        "RW",
-                        "SA",
-                        "SB",
-                        "SC",
-                        "SD",
-                        "SE",
-                        "SG",
-                        "SH",
-                        "SI",
-                        "SJ",
-                        "SK",
-                        "SL",
-                        "SM",
-                        "SN",
-                        "SO",
-                        "SR",
-                        "SS",
-                        "ST",
-                        "SV",
-                        "SX",
-                        "SY",
-                        "SZ",
-                        "TC",
-                        "TD",
-                        "TF",
-                        "TG",
-                        "TH",
-                        "TJ",
-                        "TK",
-                        "TL",
-                        "TM",
-                        "TN",
-                        "TO",
-                        "TR",
-                        "TT",
-                        "TV",
-                        "TW",
-                        "TZ",
-                        "UA",
-                        "UG",
-                        "UM",
-                        "US",
-                        "UY",
-                        "UZ",
-                        "VA",
-                        "VC",
-                        "VE",
-                        "VG",
-                        "VI",
-                        "VN",
-                        "VU",
-                        "WF",
-                        "WS",
-                        "YE",
-                        "YT",
-                        "ZA",
-                        "ZM",
-                        "ZW"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "AD",
-                          "AE",
-                          "AF",
-                          "AG",
-                          "AI",
-                          "AL",
-                          "AM",
-                          "AO",
-                          "AQ",
-                          "AR",
-                          "AS",
-                          "AT",
-                          "AU",
-                          "AW",
-                          "AX",
-                          "AZ",
-                          "BA",
-                          "BB",
-                          "BD",
-                          "BE",
-                          "BF",
-                          "BG",
-                          "BH",
-                          "BI",
-                          "BJ",
-                          "BL",
-                          "BM",
-                          "BN",
-                          "BO",
-                          "BQ",
-                          "BR",
-                          "BS",
-                          "BT",
-                          "BV",
-                          "BW",
-                          "BY",
-                          "BZ",
-                          "CA",
-                          "CC",
-                          "CD",
-                          "CF",
-                          "CG",
-                          "CH",
-                          "CI",
-                          "CK",
-                          "CL",
-                          "CM",
-                          "CN",
-                          "CO",
-                          "CR",
-                          "CU",
-                          "CV",
-                          "CW",
-                          "CX",
-                          "CY",
-                          "CZ",
-                          "DE",
-                          "DJ",
-                          "DK",
-                          "DM",
-                          "DO",
-                          "DZ",
-                          "EC",
-                          "EE",
-                          "EG",
-                          "EH",
-                          "ER",
-                          "ES",
-                          "ET",
-                          "FI",
-                          "FJ",
-                          "FK",
-                          "FM",
-                          "FO",
-                          "FR",
-                          "GA",
-                          "GB",
-                          "GD",
-                          "GE",
-                          "GF",
-                          "GG",
-                          "GH",
-                          "GI",
-                          "GL",
-                          "GM",
-                          "GN",
-                          "GP",
-                          "GQ",
-                          "GR",
-                          "GS",
-                          "GT",
-                          "GU",
-                          "GW",
-                          "GY",
-                          "HK",
-                          "HM",
-                          "HN",
-                          "HR",
-                          "HT",
-                          "HU",
-                          "ID",
-                          "IE",
-                          "IL",
-                          "IM",
-                          "IN",
-                          "IO",
-                          "IQ",
-                          "IR",
-                          "IS",
-                          "IT",
-                          "JE",
-                          "JM",
-                          "JO",
-                          "JP",
-                          "KE",
-                          "KG",
-                          "KH",
-                          "KI",
-                          "KM",
-                          "KN",
-                          "KP",
-                          "KR",
-                          "KW",
-                          "KY",
-                          "KZ",
-                          "LA",
-                          "LB",
-                          "LC",
-                          "LI",
-                          "LK",
-                          "LR",
-                          "LS",
-                          "LT",
-                          "LU",
-                          "LV",
-                          "LY",
-                          "MA",
-                          "MC",
-                          "MD",
-                          "ME",
-                          "MF",
-                          "MG",
-                          "MH",
-                          "MK",
-                          "ML",
-                          "MM",
-                          "MN",
-                          "MO",
-                          "MP",
-                          "MQ",
-                          "MR",
-                          "MS",
-                          "MT",
-                          "MU",
-                          "MV",
-                          "MW",
-                          "MX",
-                          "MY",
-                          "MZ",
-                          "NA",
-                          "NC",
-                          "NE",
-                          "NF",
-                          "NG",
-                          "NI",
-                          "NL",
-                          "NO",
-                          "NP",
-                          "NR",
-                          "NU",
-                          "NZ",
-                          "OM",
-                          "PA",
-                          "PE",
-                          "PF",
-                          "PG",
-                          "PH",
-                          "PK",
-                          "PL",
-                          "PM",
-                          "PN",
-                          "PR",
-                          "PS",
-                          "PT",
-                          "PW",
-                          "PY",
-                          "QA",
-                          "RE",
-                          "RO",
-                          "RS",
-                          "RU",
-                          "RW",
-                          "SA",
-                          "SB",
-                          "SC",
-                          "SD",
-                          "SE",
-                          "SG",
-                          "SH",
-                          "SI",
-                          "SJ",
-                          "SK",
-                          "SL",
-                          "SM",
-                          "SN",
-                          "SO",
-                          "SR",
-                          "SS",
-                          "ST",
-                          "SV",
-                          "SX",
-                          "SY",
-                          "SZ",
-                          "TC",
-                          "TD",
-                          "TF",
-                          "TG",
-                          "TH",
-                          "TJ",
-                          "TK",
-                          "TL",
-                          "TM",
-                          "TN",
-                          "TO",
-                          "TR",
-                          "TT",
-                          "TV",
-                          "TW",
-                          "TZ",
-                          "UA",
-                          "UG",
-                          "UM",
-                          "US",
-                          "UY",
-                          "UZ",
-                          "VA",
-                          "VC",
-                          "VE",
-                          "VG",
-                          "VI",
-                          "VN",
-                          "VU",
-                          "WF",
-                          "WS",
-                          "YE",
-                          "YT",
-                          "ZA",
-                          "ZM",
-                          "ZW"
-                        ]
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "description": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "dimensions": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_DimensionShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_DimensionShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "furtherInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  }
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "idScheme": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "producedAtFacility": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_FacilityShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_FacilityShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "producedByParty": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "productCategory": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClassificationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClassificationShape"
-                  }
-                }
-              ]
-            },
-            "productImage": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "productionDate": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "registeredId": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "serialNumber": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "id"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "batchNumber": {
+          "type": "string"
         },
-        {
+        "characteristics": {
+          "$ref": "#/$defs/bri_shape_CharacteristicsShape"
+        },
+        "countryOfProduction": {
+          "type": "string",
+          "enum": [
+            "AD",
+            "AE",
+            "AF",
+            "AG",
+            "AI",
+            "AL",
+            "AM",
+            "AO",
+            "AQ",
+            "AR",
+            "AS",
+            "AT",
+            "AU",
+            "AW",
+            "AX",
+            "AZ",
+            "BA",
+            "BB",
+            "BD",
+            "BE",
+            "BF",
+            "BG",
+            "BH",
+            "BI",
+            "BJ",
+            "BL",
+            "BM",
+            "BN",
+            "BO",
+            "BQ",
+            "BR",
+            "BS",
+            "BT",
+            "BV",
+            "BW",
+            "BY",
+            "BZ",
+            "CA",
+            "CC",
+            "CD",
+            "CF",
+            "CG",
+            "CH",
+            "CI",
+            "CK",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CU",
+            "CV",
+            "CW",
+            "CX",
+            "CY",
+            "CZ",
+            "DE",
+            "DJ",
+            "DK",
+            "DM",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "EH",
+            "ER",
+            "ES",
+            "ET",
+            "FI",
+            "FJ",
+            "FK",
+            "FM",
+            "FO",
+            "FR",
+            "GA",
+            "GB",
+            "GD",
+            "GE",
+            "GF",
+            "GG",
+            "GH",
+            "GI",
+            "GL",
+            "GM",
+            "GN",
+            "GP",
+            "GQ",
+            "GR",
+            "GS",
+            "GT",
+            "GU",
+            "GW",
+            "GY",
+            "HK",
+            "HM",
+            "HN",
+            "HR",
+            "HT",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IM",
+            "IN",
+            "IO",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JE",
+            "JM",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KI",
+            "KM",
+            "KN",
+            "KP",
+            "KR",
+            "KW",
+            "KY",
+            "KZ",
+            "LA",
+            "LB",
+            "LC",
+            "LI",
+            "LK",
+            "LR",
+            "LS",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MC",
+            "MD",
+            "ME",
+            "MF",
+            "MG",
+            "MH",
+            "MK",
+            "ML",
+            "MM",
+            "MN",
+            "MO",
+            "MP",
+            "MQ",
+            "MR",
+            "MS",
+            "MT",
+            "MU",
+            "MV",
+            "MW",
+            "MX",
+            "MY",
+            "MZ",
+            "NA",
+            "NC",
+            "NE",
+            "NF",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NR",
+            "NU",
+            "NZ",
+            "OM",
+            "PA",
+            "PE",
+            "PF",
+            "PG",
+            "PH",
+            "PK",
+            "PL",
+            "PM",
+            "PN",
+            "PR",
+            "PS",
+            "PT",
+            "PW",
+            "PY",
+            "QA",
+            "RE",
+            "RO",
+            "RS",
+            "RU",
+            "RW",
+            "SA",
+            "SB",
+            "SC",
+            "SD",
+            "SE",
+            "SG",
+            "SH",
+            "SI",
+            "SJ",
+            "SK",
+            "SL",
+            "SM",
+            "SN",
+            "SO",
+            "SR",
+            "SS",
+            "ST",
+            "SV",
+            "SX",
+            "SY",
+            "SZ",
+            "TC",
+            "TD",
+            "TF",
+            "TG",
+            "TH",
+            "TJ",
+            "TK",
+            "TL",
+            "TM",
+            "TN",
+            "TO",
+            "TR",
+            "TT",
+            "TV",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "UM",
+            "US",
+            "UY",
+            "UZ",
+            "VA",
+            "VC",
+            "VE",
+            "VG",
+            "VI",
+            "VN",
+            "VU",
+            "WF",
+            "WS",
+            "YE",
+            "YT",
+            "ZA",
+            "ZM",
+            "ZW"
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "dimensions": {
+          "$ref": "#/$defs/bri_shape_DimensionShape"
+        },
+        "furtherInformation": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Product"
-                    },
-                    {
-                      "const": "Product"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_LinkShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Product"
-                      },
-                      {
-                        "const": "Product"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_LinkShape"
+              }
             }
           ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
+        },
+        "name": {
+          "type": "string"
+        },
+        "producedAtFacility": {
+          "$ref": "#/$defs/bri_shape_FacilityShape"
+        },
+        "producedByParty": {
+          "$ref": "#/$defs/bri_shape_PartyShape"
+        },
+        "productCategory": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_ClassificationShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_ClassificationShape"
+              }
+            }
+          ]
+        },
+        "productImage": {
+          "$ref": "#/$defs/bri_shape_LinkShape"
+        },
+        "productionDate": {
+          "type": "string"
+        },
+        "registeredId": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Product",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Product"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Product",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Product"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "id"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_CharacteristicsShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Characteristics"
-                    },
-                    {
-                      "const": "Characteristics"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Characteristics"
-                      },
-                      {
-                        "const": "Characteristics"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+      "type": "object",
+      "properties": {
+        "@type": {
+          "enum": [
+            "Characteristics",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Characteristics"
           ]
+        },
+        "type": {
+          "enum": [
+            "Characteristics",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Characteristics"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_DimensionShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "height": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "length": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "volume": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "weight": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "width": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "height": {
+          "$ref": "#/$defs/bri_shape_MeasureShape"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Dimension"
-                    },
-                    {
-                      "const": "Dimension"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Dimension"
-                      },
-                      {
-                        "const": "Dimension"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "length": {
+          "$ref": "#/$defs/bri_shape_MeasureShape"
+        },
+        "volume": {
+          "$ref": "#/$defs/bri_shape_MeasureShape"
+        },
+        "weight": {
+          "$ref": "#/$defs/bri_shape_MeasureShape"
+        },
+        "width": {
+          "$ref": "#/$defs/bri_shape_MeasureShape"
+        },
+        "@type": {
+          "enum": [
+            "Dimension",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Dimension"
           ]
+        },
+        "type": {
+          "enum": [
+            "Dimension",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Dimension"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_MeasureShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "unit": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "value": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "unit",
-            "value"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "unit": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Measure"
-                    },
-                    {
-                      "const": "Measure"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Measure"
-                      },
-                      {
-                        "const": "Measure"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "value": {
+          "type": "number"
+        },
+        "@type": {
+          "enum": [
+            "Measure",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Measure"
           ]
+        },
+        "type": {
+          "enum": [
+            "Measure",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Measure"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "unit",
+        "value"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_LinkShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "linkName": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "linkType": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "linkURL": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "linkURL"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "linkName": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Link"
-                    },
-                    {
-                      "const": "Link"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Link"
-                      },
-                      {
-                        "const": "Link"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "linkType": {
+          "type": "string"
+        },
+        "linkURL": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Link",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Link"
           ]
+        },
+        "type": {
+          "enum": [
+            "Link",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Link"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "linkURL"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_FacilityShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "address": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_AddressShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_AddressShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "countryOfOperation": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "description": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "facilityAlsoKnownAs": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_FacilityShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_FacilityShape"
-                  }
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
-            },
-            "idScheme": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "locationInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LocationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LocationShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "operatedByParty": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "processCategory": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClassificationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClassificationShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "registeredId": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "required": [
-            "id"
-          ],
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/$defs/bri_shape_AddressShape"
         },
-        {
+        "countryOfOperation": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "facilityAlsoKnownAs": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Facility"
-                    },
-                    {
-                      "const": "Facility"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_FacilityShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Facility"
-                      },
-                      {
-                        "const": "Facility"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_FacilityShape"
+              }
             }
           ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "idScheme": {
+          "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
+        },
+        "locationInformation": {
+          "$ref": "#/$defs/bri_shape_LocationShape"
+        },
+        "name": {
+          "type": "string"
+        },
+        "operatedByParty": {
+          "$ref": "#/$defs/bri_shape_PartyShape"
+        },
+        "processCategory": {
+          "$ref": "#/$defs/bri_shape_ClassificationShape"
+        },
+        "registeredId": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Facility",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Facility"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Facility",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Facility"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type",
+        "id"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_AddressShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "addressCountry": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "addressLocality": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "addressRegion": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "postalCode": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "streetAddress": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "addressCountry": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Address"
-                    },
-                    {
-                      "const": "Address"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Address"
-                      },
-                      {
-                        "const": "Address"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "addressLocality": {
+          "type": "string"
+        },
+        "addressRegion": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "streetAddress": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Address",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Address"
           ]
+        },
+        "type": {
+          "enum": [
+            "Address",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Address"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_LocationShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "geoBoundary": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "geoLocation": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "plusCode": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "geoBoundary": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Location"
-                    },
-                    {
-                      "const": "Location"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Location"
-                      },
-                      {
-                        "const": "Location"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "geoLocation": {
+          "type": "string"
+        },
+        "plusCode": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Location",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Location"
           ]
+        },
+        "type": {
+          "enum": [
+            "Location",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Location"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_CircularityPerformanceShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "materialCircularityIndicator": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "recyclableContent": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "recycledContent": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "recyclingInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "repairInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "utilityFactor": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "materialCircularityIndicator": {
+          "type": "number"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance"
-                    },
-                    {
-                      "const": "CircularityPerformance"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance"
-                      },
-                      {
-                        "const": "CircularityPerformance"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "recyclableContent": {
+          "type": "number"
+        },
+        "recycledContent": {
+          "type": "number"
+        },
+        "recyclingInformation": {
+          "$ref": "#/$defs/bri_shape_LinkShape"
+        },
+        "repairInformation": {
+          "$ref": "#/$defs/bri_shape_LinkShape"
+        },
+        "utilityFactor": {
+          "type": "number"
+        },
+        "@type": {
+          "enum": [
+            "CircularityPerformance",
+            "https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance"
           ]
+        },
+        "type": {
+          "enum": [
+            "CircularityPerformance",
+            "https://test.uncefact.org/vocabulary/untp/core/0/CircularityPerformance"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_ClaimShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "assessmentCriteria": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_CriterionShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_CriterionShape"
-                  }
-                }
-              ]
-            },
-            "assessmentDate": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "conformance": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "boolean"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "conformityEvidence": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_SecureLinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_SecureLinkShape"
-                  }
-                }
-              ]
-            },
-            "conformityTopic": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "declaredValue": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MetricShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MetricShape"
-                  }
-                }
-              ]
-            },
-            "description": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "referenceRegulation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_RegulationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_RegulationShape"
-                  }
-                }
-              ]
-            },
-            "referenceStandard": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_StandardShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_StandardShape"
-                  }
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
+      "type": "object",
+      "properties": {
+        "assessmentCriteria": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Claim"
-                    },
-                    {
-                      "const": "Claim"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_CriterionShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Claim"
-                      },
-                      {
-                        "const": "Claim"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_CriterionShape"
+              }
             }
           ]
+        },
+        "assessmentDate": {
+          "type": "string"
+        },
+        "conformance": {
+          "type": "boolean"
+        },
+        "conformityEvidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_SecureLinkShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_SecureLinkShape"
+              }
+            }
+          ]
+        },
+        "conformityTopic": {
+          "type": "string"
+        },
+        "declaredValue": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_MetricShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_MetricShape"
+              }
+            }
+          ]
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "referenceRegulation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_RegulationShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_RegulationShape"
+              }
+            }
+          ]
+        },
+        "referenceStandard": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_StandardShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_StandardShape"
+              }
+            }
+          ]
+        },
+        "@type": {
+          "enum": [
+            "Claim",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Claim"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Claim",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Claim"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_CriterionShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "category": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClassificationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClassificationShape"
-                  }
-                }
-              ]
-            },
-            "conformityTopic": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "description": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "performanceLevel": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "status": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "subCriterion": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_CriterionShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_CriterionShape"
-                  }
-                }
-              ]
-            },
-            "tag": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              ]
-            },
-            "thresholdValue": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MetricShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MetricShape"
-                  }
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
+      "type": "object",
+      "properties": {
+        "category": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Criterion"
-                    },
-                    {
-                      "const": "Criterion"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_ClassificationShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Criterion"
-                      },
-                      {
-                        "const": "Criterion"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_ClassificationShape"
+              }
             }
           ]
+        },
+        "conformityTopic": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "performanceLevel": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "subCriterion": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_CriterionShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_CriterionShape"
+              }
+            }
+          ]
+        },
+        "tag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "thresholdValue": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_MetricShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_MetricShape"
+              }
+            }
+          ]
+        },
+        "@type": {
+          "enum": [
+            "Criterion",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Criterion"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Criterion",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Criterion"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_MetricShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "accuracy": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "metricName": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "metricValue": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  }
-                }
-              ]
-            },
-            "score": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "accuracy": {
+          "type": "number"
         },
-        {
+        "metricName": {
+          "type": "string"
+        },
+        "metricValue": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Metric"
-                    },
-                    {
-                      "const": "Metric"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_MeasureShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Metric"
-                      },
-                      {
-                        "const": "Metric"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_MeasureShape"
+              }
             }
           ]
+        },
+        "score": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Metric",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Metric"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Metric",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Metric"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_SecureLinkShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "encryptionMethod": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "hashDigest": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "hashMethod": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "linkName": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "linkType": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "linkURL": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "encryptionMethod": {
+          "type": "string"
         },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/SecureLink"
-                    },
-                    {
-                      "const": "SecureLink"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            },
-            {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/SecureLink"
-                      },
-                      {
-                        "const": "SecureLink"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
+        "hashDigest": {
+          "type": "string"
+        },
+        "hashMethod": {
+          "type": "string"
+        },
+        "linkName": {
+          "type": "string"
+        },
+        "linkType": {
+          "type": "string"
+        },
+        "linkURL": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "SecureLink",
+            "https://test.uncefact.org/vocabulary/untp/core/0/SecureLink"
           ]
+        },
+        "type": {
+          "enum": [
+            "SecureLink",
+            "https://test.uncefact.org/vocabulary/untp/core/0/SecureLink"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_RegulationShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "administeredBy": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  }
-                }
-              ]
-            },
-            "effectiveDate": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "jurisdictionCountry": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
+      "type": "object",
+      "properties": {
+        "administeredBy": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Regulation"
-                    },
-                    {
-                      "const": "Regulation"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_PartyShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Regulation"
-                      },
-                      {
-                        "const": "Regulation"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_PartyShape"
+              }
             }
           ]
+        },
+        "effectiveDate": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "jurisdictionCountry": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Regulation",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Regulation"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Regulation",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Regulation"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_StandardShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "issueDate": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "issuingParty": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_PartyShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_PartyShape"
-                  }
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
         },
-        {
+        "issueDate": {
+          "type": "string"
+        },
+        "issuingParty": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Standard"
-                    },
-                    {
-                      "const": "Standard"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_PartyShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Standard"
-                      },
-                      {
-                        "const": "Standard"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_PartyShape"
+              }
             }
           ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Standard",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Standard"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Standard",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Standard"
+          ]
+        },
+        "@id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_EmissionsPerformanceShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "carbonFootprint": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "declaredUnit": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "operationalScope": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "enum": [
-                        "CradleToGate",
-                        "CradleToGrave",
-                        "None"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "enum": [
-                          "CradleToGate",
-                          "CradleToGrave",
-                          "None"
-                        ]
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "primarySourcedRatio": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "reportingStandard": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_StandardShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_StandardShape"
-                  }
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "carbonFootprint": {
+          "type": "number"
         },
-        {
+        "declaredUnit": {
+          "type": "string"
+        },
+        "operationalScope": {
+          "type": "string",
+          "enum": [
+            "CradleToGate",
+            "CradleToGrave",
+            "None"
+          ]
+        },
+        "primarySourcedRatio": {
+          "type": "number"
+        },
+        "reportingStandard": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance"
-                    },
-                    {
-                      "const": "EmissionsPerformance"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_StandardShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance"
-                      },
-                      {
-                        "const": "EmissionsPerformance"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_StandardShape"
+              }
             }
           ]
+        },
+        "@type": {
+          "enum": [
+            "EmissionsPerformance",
+            "https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance"
+          ]
+        },
+        "type": {
+          "enum": [
+            "EmissionsPerformance",
+            "https://test.uncefact.org/vocabulary/untp/core/0/EmissionsPerformance"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_MaterialShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "hazardous": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "boolean"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "mass": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_MeasureShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_MeasureShape"
-                  }
-                }
-              ]
-            },
-            "massFraction": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "materialSafetyInformation": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_LinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_LinkShape"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "materialType": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_ClassificationShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_ClassificationShape"
-                  }
-                }
-              ]
-            },
-            "name": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "originCountry": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "recycledMassFraction": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "symbol": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
+      "type": "object",
+      "properties": {
+        "hazardous": {
+          "type": "boolean"
         },
-        {
+        "mass": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/core/0/Material"
-                    },
-                    {
-                      "const": "Material"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_MeasureShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/core/0/Material"
-                      },
-                      {
-                        "const": "Material"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_MeasureShape"
+              }
             }
           ]
+        },
+        "massFraction": {
+          "type": "number"
+        },
+        "materialSafetyInformation": {
+          "$ref": "#/$defs/bri_shape_LinkShape"
+        },
+        "materialType": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bri_shape_ClassificationShape"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_ClassificationShape"
+              }
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "originCountry": {
+          "type": "string"
+        },
+        "recycledMassFraction": {
+          "type": "number"
+        },
+        "symbol": {
+          "type": "string"
+        },
+        "@type": {
+          "enum": [
+            "Material",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Material"
+          ]
+        },
+        "type": {
+          "enum": [
+            "Material",
+            "https://test.uncefact.org/vocabulary/untp/core/0/Material"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     },
     "bri_shape_TraceabilityPerformanceShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "traceabilityEvent": {
-              "anyOf": [
-                {
-                  "$ref": "#/$defs/bri_shape_SecureLinkShape"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/bri_shape_SecureLinkShape"
-                  }
-                }
-              ]
-            },
-            "valueChainProcess": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "verifiedRatio": {
-              "anyOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "number"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          },
-          "unevaluatedProperties": false
-        },
-        {
+      "type": "object",
+      "properties": {
+        "traceabilityEvent": {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance"
-                    },
-                    {
-                      "const": "TraceabilityPerformance"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "$ref": "#/$defs/bri_shape_SecureLinkShape"
             },
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance"
-                      },
-                      {
-                        "const": "TraceabilityPerformance"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/bri_shape_SecureLinkShape"
+              }
             }
           ]
+        },
+        "valueChainProcess": {
+          "type": "string"
+        },
+        "verifiedRatio": {
+          "type": "number"
+        },
+        "@type": {
+          "enum": [
+            "TraceabilityPerformance",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance"
+          ]
+        },
+        "type": {
+          "enum": [
+            "TraceabilityPerformance",
+            "https://test.uncefact.org/vocabulary/untp/dpp/0/TraceabilityPerformance"
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "@type"
+      ],
+      "unevaluatedProperties": false,
+      "additionalProperties": false
     }
   },
   "anyOf": [
@@ -4215,91 +1705,76 @@
       ]
     },
     {
-      "allOf": [
-        {
-          "not": {
-            "required": [
-              "@graph"
-            ]
-          }
-        },
-        {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/bri_shape_DigitalProductPassportShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_PartyShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_ClassificationShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_ProductPassportShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_ProductShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_CharacteristicsShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_DimensionShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_MeasureShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_LinkShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_FacilityShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_AddressShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_LocationShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_CircularityPerformanceShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_ClaimShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_CriterionShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_MetricShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_SecureLinkShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_RegulationShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_StandardShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_EmissionsPerformanceShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_MaterialShape"
-            },
-            {
-              "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
-            }
-          ]
-        }
-      ]
+      "$ref": "#/$defs/bri_shape_DigitalProductPassportShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_CredentialIssuerShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_PartyShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_IdentifierSchemeShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_ClassificationShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_ProductPassportShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_ProductShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_CharacteristicsShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_DimensionShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_MeasureShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_LinkShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_FacilityShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_AddressShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_LocationShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_CircularityPerformanceShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_ClaimShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_CriterionShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_MetricShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_SecureLinkShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_RegulationShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_StandardShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_EmissionsPerformanceShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_MaterialShape"
+    },
+    {
+      "$ref": "#/$defs/bri_shape_TraceabilityPerformanceShape"
     }
   ]
 }

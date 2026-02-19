@@ -1,47 +1,42 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-11 15:11:24
+ * Generated: 2026-02-19 15:36:09
  * Source: shapes/v0.1/recycling.shacl.ttl
  */
 export type RecyclingSchema = {
     "@graph": BriRecycling_RecyclingOrganisationShape[];
     [k: string]: unknown;
-} | ({
-    [k: string]: unknown;
-} & BriRecycling_RecyclingOrganisationShape);
+} | BriRecycling_RecyclingOrganisationShape;
 export type BriRecycling_RecyclingOrganisationShape = {
-    managerCode: string | [string & string];
-    nimaCode: string | [string & string];
-    name: string | [string & string];
-    streetAddress: string | [string & string];
-    addressLocality: string | [string & string];
-    postalCode: string | [string & string];
-    correspondeceAddress: string | [string & string];
-    correspondeceAddressLocality: string | [string & string];
-    correspondecePostalCode: string | [string & string];
-    telephone?: string | [] | [string & string];
-    faxNumber?: string | [] | [string & string];
-    email?: string | [] | [string & string];
-    url?: string | [] | [string];
-    adaptedToRD1102015?: (boolean & (true | false)) | [] | [boolean & (true | false)];
-    wasteTreatmentActivity?: string | [] | [string];
+    managerCode: string;
+    nimaCode: string;
+    name: string;
+    streetAddress: string;
+    addressLocality: string;
+    postalCode: string;
+    correspondeceAddress: string;
+    correspondeceAddressLocality: string;
+    correspondecePostalCode: string;
+    telephone?: string;
+    faxNumber?: string;
+    email?: string;
+    url?: string;
     latitude?: unknown;
     longitude?: unknown;
+    adaptedToRD1102015?: true | false;
+    wasteTreatmentActivity?: string;
+    "@type": "Recycler" | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler";
+    type?: "Recycler" | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler";
     "@id"?: string;
-    "@type"?: string | unknown[];
-    [k: string]: unknown;
+    id?: string;
 } & ({
-    "@type": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler" | "Recycler";
     [k: string]: unknown;
 } | {
-    "@type": unknown[];
+    latitude: number;
+    longitude: number;
     [k: string]: unknown;
-}) & {
-    latitude: number | [number];
-    longitude: number | [number];
-    [k: string]: unknown;
-};
+});
 /**
  * Alias exports without internal prefixes.
  */

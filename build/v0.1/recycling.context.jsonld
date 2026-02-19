@@ -2,6 +2,9 @@
   "@version": 1.1,
   "@protected": true,
   "@context": {
+    "type": "@type",
+    "baseURL": "@base",
+    "id": "@id",
     "bri-recycling": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "schema": "https://schema.org/",
@@ -36,6 +39,14 @@
       "@id": "schema:faxNumber",
       "@type": "xsd:string"
     },
+    "latitude": {
+      "@id": "schema:latitude",
+      "@type": "xsd:double"
+    },
+    "longitude": {
+      "@id": "schema:longitude",
+      "@type": "xsd:double"
+    },
     "managerCode": {
       "@id": "bri-recycling:managerCode",
       "@type": "xsd:string"
@@ -60,7 +71,10 @@
       "@id": "schema:telephone",
       "@type": "xsd:string"
     },
-    "url": "schema:url",
+    "url": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
     "wasteTreatmentActivity": {
       "@id": "bri-recycling:wasteTreatmentActivity",
       "@type": "xsd:string"

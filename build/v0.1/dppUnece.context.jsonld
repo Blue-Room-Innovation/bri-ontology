@@ -2,6 +2,8 @@
   "@version": 1.1,
   "@protected": true,
   "@context": {
+    "type": "@type",
+    "baseURL": "@base",
     "bri-shape": "https://blue-room-innovation.github.io/bri-ontology/shapes/v0.1/dpp-unece.shacl.ttl#",
     "geojson": "https://purl.org/geojson/vocab#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",

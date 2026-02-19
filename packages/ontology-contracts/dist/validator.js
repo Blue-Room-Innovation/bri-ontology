@@ -42,7 +42,7 @@ function normalizeErrors(errors) {
 }
 export function createValidator(options = {}) {
     const require = createRequire(import.meta.url);
-    const Ajv = require("ajv");
+    const Ajv = require("ajv/dist/2020").default;
     const addFormats = require("ajv-formats");
     const ajv = options.ajv ??
         new Ajv({

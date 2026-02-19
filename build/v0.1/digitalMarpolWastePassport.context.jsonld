@@ -2,6 +2,9 @@
   "@version": 1.1,
   "@protected": true,
   "@context": {
+    "type": "@type",
+    "baseURL": "@base",
+    "id": "@id",
     "dct": "http://purl.org/dc/terms/",
     "dmwp": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",

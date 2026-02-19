@@ -15,9 +15,7 @@ const payload = {
     telephone: "+34 987 567 564",
     faxNumber: "+34 912 345 678",
     email: "contacto@empresa.com",
-    url: {
-        "@id": "https://example.com",
-    },
+    url: "https://example.com",
     wasteTreatmentActivity: "sit",
     adaptedToRD1102015: true,
     latitude: 22,

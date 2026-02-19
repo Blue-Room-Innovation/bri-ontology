@@ -2,6 +2,9 @@
   "@version": 1.1,
   "@protected": true,
   "@context": {
+    "type": "@type",
+    "baseURL": "@base",
+    "id": "@id",
     "dcterms": "http://purl.org/dc/terms/",
     "epcis": "https://ref.gs1.org/epcis/",
     "owl": "http://www.w3.org/2002/07/owl#",
@@ -11,6 +14,7 @@
     "AggregationEvent": "epcis:AggregationEvent",
     "AssociationEvent": "epcis:AssociationEvent",
     "EPCISDocument": "epcis:EPCISDocument",
+    "EPCISEvent": "epcis:EPCISEvent",
     "ObjectEvent": "epcis:ObjectEvent",
     "TransactionEvent": "epcis:TransactionEvent",
     "TransformationEvent": "epcis:TransformationEvent",
@@ -18,37 +22,96 @@
       "@id": "epcis:action",
       "@type": "xsd:string"
     },
-    "bizLocation": "epcis:bizLocation",
-    "bizRules": "epcis:bizRules",
-    "bizStep": "epcis:bizStep",
-    "bizTransactionType": "epcis:bizTransactionType",
+    "bizLocation": {
+      "@id": "epcis:bizLocation",
+      "@type": "@id"
+    },
+    "bizRules": {
+      "@id": "epcis:bizRules",
+      "@type": "@id"
+    },
+    "bizStep": {
+      "@id": "epcis:bizStep",
+      "@type": "@id"
+    },
+    "bizTransactionList": {
+      "@id": "epcis:bizTransactionList",
+      "@type": "@id"
+    },
+    "bizTransactionType": {
+      "@id": "epcis:bizTransactionType",
+      "@type": "@id"
+    },
     "booleanValue": {
       "@id": "epcis:booleanValue",
       "@type": "xsd:boolean"
     },
-    "chemicalSubstance": "epcis:chemicalSubstance",
-    "childEPCs": "epcis:childEPCs",
-    "component": "epcis:component",
-    "coordinateReferenceSystem": "epcis:coordinateReferenceSystem",
-    "correctiveEventIDs": "epcis:correctiveEventIDs",
-    "created": {
+    "certificationInfo": {
+      "@id": "epcis:certificationInfo",
+      "@type": "@id"
+    },
+    "chemicalSubstance": {
+      "@id": "epcis:chemicalSubstance",
+      "@type": "@id"
+    },
+    "childEPCs": {
+      "@id": "epcis:childEPCs",
+      "@type": "@id"
+    },
+    "childQuantityList": "epcis:childQuantityList",
+    "component": {
+      "@id": "epcis:component",
+      "@type": "@id"
+    },
+    "coordinateReferenceSystem": {
+      "@id": "epcis:coordinateReferenceSystem",
+      "@type": "@id"
+    },
+    "correctiveEventIDs": {
+      "@id": "epcis:correctiveEventIDs",
+      "@type": "@id"
+    },
+    "creationDate": {
       "@id": "dcterms:created",
       "@type": "xsd:dateTime"
     },
-    "dataProcessingMethod": "epcis:dataProcessingMethod",
+    "dataProcessingMethod": {
+      "@id": "epcis:dataProcessingMethod",
+      "@type": "@id"
+    },
     "declarationTime": {
       "@id": "epcis:declarationTime",
       "@type": "xsd:dateTimeStamp"
     },
-    "deviceID": "epcis:deviceID",
-    "deviceMetadata": "epcis:deviceMetadata",
-    "disposition": "epcis:disposition",
+    "destinationList": "epcis:destinationList",
+    "deviceID": {
+      "@id": "epcis:deviceID",
+      "@type": "@id"
+    },
+    "deviceMetadata": {
+      "@id": "epcis:deviceMetadata",
+      "@type": "@id"
+    },
+    "disposition": {
+      "@id": "epcis:disposition",
+      "@type": "@id"
+    },
     "endTime": {
       "@id": "epcis:endTime",
       "@type": "xsd:dateTimeStamp"
     },
-    "epcClass": "epcis:epcClass",
-    "epcList": "epcis:epcList",
+    "epcClass": {
+      "@id": "epcis:epcClass",
+      "@type": "@id"
+    },
+    "epcList": {
+      "@id": "epcis:epcList",
+      "@type": "@id"
+    },
+    "epcisBody": "epcis:epcisBody",
+    "epcisHeader": "epcis:epcisHeader",
+    "errorDeclaration": "epcis:errorDeclaration",
+    "eventList": "epcis:eventList",
     "eventTime": {
       "@id": "epcis:eventTime",
       "@type": "xsd:dateTimeStamp"
@@ -57,13 +120,19 @@
       "@id": "epcis:eventTimeZoneOffset",
       "@type": "xsd:string"
     },
-    "exception": "epcis:exception",
+    "exception": {
+      "@id": "epcis:exception",
+      "@type": "@id"
+    },
     "hexBinaryValue": {
       "@id": "epcis:hexBinaryValue",
       "@type": "xsd:hexBinary"
     },
-    "ilmd": "epcis:ilmd",
-    "inputEPCList": "epcis:inputEPCList",
+    "inputEPCList": {
+      "@id": "epcis:inputEPCList",
+      "@type": "@id"
+    },
+    "inputQuantityList": "epcis:inputQuantityList",
     "instanceIdentifier": {
       "@id": "epcis:instanceIdentifier",
       "@type": "xsd:string"
@@ -76,14 +145,27 @@
       "@id": "epcis:meanValue",
       "@type": "xsd:double"
     },
-    "measurementType": "epcis:measurementType",
-    "microorganism": "epcis:microorganism",
+    "measurementType": {
+      "@id": "epcis:measurementType",
+      "@type": "@id"
+    },
+    "microorganism": {
+      "@id": "epcis:microorganism",
+      "@type": "@id"
+    },
     "minValue": {
       "@id": "epcis:minValue",
       "@type": "xsd:double"
     },
-    "outputEPCList": "epcis:outputEPCList",
-    "parentID": "epcis:parentID",
+    "outputEPCList": {
+      "@id": "epcis:outputEPCList",
+      "@type": "@id"
+    },
+    "outputQuantityList": "epcis:outputQuantityList",
+    "parentID": {
+      "@id": "epcis:parentID",
+      "@type": "@id"
+    },
     "percRank": {
       "@id": "epcis:percRank",
       "@type": "xsd:double"
@@ -92,13 +174,24 @@
       "@id": "epcis:percValue",
       "@type": "xsd:double"
     },
+    "persistentDisposition": "epcis:persistentDisposition",
     "quantity": {
       "@id": "epcis:quantity",
       "@type": "xsd:double"
     },
-    "rawData": "epcis:rawData",
-    "readPoint": "epcis:readPoint",
-    "reason": "epcis:reason",
+    "quantityList": "epcis:quantityList",
+    "rawData": {
+      "@id": "epcis:rawData",
+      "@type": "@id"
+    },
+    "readPoint": {
+      "@id": "epcis:readPoint",
+      "@type": "@id"
+    },
+    "reason": {
+      "@id": "epcis:reason",
+      "@type": "@id"
+    },
     "receiver": "epcis:receiver",
     "recordTime": {
       "@id": "epcis:recordTime",
@@ -108,12 +201,27 @@
       "@id": "epcis:sDev",
       "@type": "xsd:double"
     },
+    "schemaVersion": {
+      "@id": "owl:versionInfo",
+      "@type": "xsd:string"
+    },
     "sender": "epcis:sender",
+    "sensorElementList": "epcis:sensorElementList",
     "sensorMetadata": "epcis:sensorMetadata",
     "sensorReport": "epcis:sensorReport",
-    "set": "epcis:set",
-    "sourceOrDestination": "epcis:sourceOrDestination",
-    "sourceOrDestinationType": "epcis:sourceOrDestinationType",
+    "set": {
+      "@id": "epcis:set",
+      "@type": "@id"
+    },
+    "sourceList": "epcis:sourceList",
+    "sourceOrDestination": {
+      "@id": "epcis:sourceOrDestination",
+      "@type": "@id"
+    },
+    "sourceOrDestinationType": {
+      "@id": "epcis:sourceOrDestinationType",
+      "@type": "@id"
+    },
     "startTime": {
       "@id": "epcis:startTime",
       "@type": "xsd:dateTimeStamp"
@@ -126,20 +234,25 @@
       "@id": "epcis:time",
       "@type": "xsd:dateTimeStamp"
     },
-    "transformationID": "epcis:transformationID",
-    "unset": "epcis:unset",
+    "transformationID": {
+      "@id": "epcis:transformationID",
+      "@type": "@id"
+    },
+    "unset": {
+      "@id": "epcis:unset",
+      "@type": "@id"
+    },
     "uom": {
       "@id": "epcis:uom",
       "@type": "xsd:string"
     },
-    "uriValue": "epcis:uriValue",
+    "uriValue": {
+      "@id": "epcis:uriValue",
+      "@type": "@id"
+    },
     "value": {
       "@id": "epcis:value",
       "@type": "xsd:double"
-    },
-    "versionInfo": {
-      "@id": "owl:versionInfo",
-      "@type": "xsd:string"
     }
   }
 }

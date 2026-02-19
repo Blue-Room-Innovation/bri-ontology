@@ -8,451 +8,108 @@
           "type": "object",
           "properties": {
             "managerCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "nimaCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "name": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "streetAddress": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "addressLocality": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "postalCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "correspondeceAddress": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "correspondeceAddressLocality": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "correspondecePostalCode": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    ]
-                  },
-                  "minItems": 1,
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "minLength": 1
             },
             "telephone": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[0-9 +()]{6,}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[0-9 +()]{6,}$"
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "pattern": "^[0-9 +()]{6,}$"
             },
             "faxNumber": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[0-9 +()]{6,}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[0-9 +()]{6,}$"
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
-              ]
+              "type": "string",
+              "pattern": "^[0-9 +()]{6,}$"
             },
             "email": {
+              "type": "string",
+              "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+            },
+            "url": {
+              "type": "string",
+              "pattern": "^(?!_:).+:.+"
+            },
+            "latitude": {
               "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "string",
-                      "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
-                    }
-                  ]
-                },
+                {},
                 {
                   "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "string",
-                        "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
-                      }
-                    ]
-                  },
-                  "maxItems": 1
+                  "items": {},
+                  "minItems": 0
                 }
               ]
             },
-            "url": {
+            "longitude": {
               "anyOf": [
-                {
-                  "type": "string",
-                  "pattern": "^(?!_:).+:.+"
-                },
+                {},
                 {
                   "type": "array",
-                  "items": {
-                    "type": "string",
-                    "pattern": "^(?!_:).+:.+"
-                  },
-                  "maxItems": 1
+                  "items": {},
+                  "minItems": 0
                 }
               ]
             },
             "adaptedToRD1102015": {
-              "anyOf": [
-                {
-                  "allOf": [
-                    {
-                      "type": "boolean"
-                    },
-                    {
-                      "enum": [
-                        true,
-                        false
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "allOf": [
-                      {
-                        "type": "boolean"
-                      },
-                      {
-                        "enum": [
-                          true,
-                          false
-                        ]
-                      }
-                    ]
-                  },
-                  "maxItems": 1
-                }
+              "type": "boolean",
+              "enum": [
+                true,
+                false
               ]
             },
             "wasteTreatmentActivity": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "maxItems": 1
-                }
-              ]
-            },
-            "latitude": {},
-            "longitude": {},
-            "@id": {
               "type": "string"
             },
             "@type": {
-              "type": [
-                "string",
-                "array"
+              "enum": [
+                "Recycler",
+                "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler"
               ]
+            },
+            "type": {
+              "enum": [
+                "Recycler",
+                "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler"
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
             }
           },
           "required": [
+            "@type",
             "addressLocality",
             "correspondeceAddress",
             "correspondeceAddressLocality",
@@ -463,85 +120,71 @@
             "postalCode",
             "streetAddress"
           ],
-          "unevaluatedProperties": false
+          "unevaluatedProperties": false,
+          "additionalProperties": false
         },
         {
           "anyOf": [
             {
-              "type": "object",
-              "properties": {
-                "@type": {
-                  "anyOf": [
-                    {
-                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler"
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {}
+                },
+                {
+                  "not": {
+                    "type": "object",
+                    "properties": {
+                      "latitude": {
+                        "anyOf": [
+                          {},
+                          {
+                            "type": "array",
+                            "items": {},
+                            "minItems": 1
+                          }
+                        ]
+                      }
                     },
-                    {
-                      "const": "Recycler"
-                    }
-                  ]
+                    "required": [
+                      "latitude"
+                    ]
+                  }
+                },
+                {
+                  "not": {
+                    "type": "object",
+                    "properties": {
+                      "longitude": {
+                        "anyOf": [
+                          {},
+                          {
+                            "type": "array",
+                            "items": {},
+                            "minItems": 1
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "longitude"
+                    ]
+                  }
                 }
-              },
-              "required": [
-                "@type"
               ]
             },
             {
               "type": "object",
               "properties": {
-                "@type": {
-                  "type": "array",
-                  "contains": {
-                    "anyOf": [
-                      {
-                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#Recycler"
-                      },
-                      {
-                        "const": "Recycler"
-                      }
-                    ]
-                  }
-                }
-              },
-              "required": [
-                "@type"
-              ]
-            }
-          ]
-        },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
                 "latitude": {
-                  "anyOf": [
-                    {
-                      "type": "number"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "number"
-                      },
-                      "minItems": 1,
-                      "maxItems": 1
-                    }
-                  ]
+                  "type": "number",
+                  "minimum": -90,
+                  "maximum": 90
                 },
                 "longitude": {
-                  "anyOf": [
-                    {
-                      "type": "number"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "number"
-                      },
-                      "minItems": 1,
-                      "maxItems": 1
-                    }
-                  ]
+                  "type": "number",
+                  "minimum": -180,
+                  "maximum": 180
                 }
               },
               "required": [
@@ -551,7 +194,8 @@
             }
           ]
         }
-      ]
+      ],
+      "unevaluatedProperties": false
     }
   },
   "anyOf": [
@@ -574,22 +218,7 @@
       ]
     },
     {
-      "allOf": [
-        {
-          "not": {
-            "required": [
-              "@graph"
-            ]
-          }
-        },
-        {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/bri_recycling_RecyclingOrganisationShape"
-            }
-          ]
-        }
-      ]
+      "$ref": "#/$defs/bri_recycling_RecyclingOrganisationShape"
     }
   ]
 }
