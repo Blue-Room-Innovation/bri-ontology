@@ -1,6 +1,6 @@
 import {
   createValidator,
-  type DigitalMarpolWastePassportShape,
+  type DigitalMarpolWastePassportSchemaNS,
   type SchemaKeyCurrent,
 } from "@blueroominnovation/ontology-contracts";
 
@@ -8,7 +8,7 @@ const validator = createValidator();
 
 const schemaKey: SchemaKeyCurrent = "dmwp";
 
-const payload: DigitalMarpolWastePassportShape = {
+const payload: DigitalMarpolWastePassportSchemaNS.DigitalMarpolWastePassportShape = {
   "@type": "DigitalMarpolWastePassport",
   issued: new Date().toISOString(),
   publisher: {
