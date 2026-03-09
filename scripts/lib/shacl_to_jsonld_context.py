@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Dict, Iterable, Optional, Set, Tuple
 
 from rdflib import Graph, RDF, URIRef
-from rdflib.namespace import SH, OWL
+from rdflib.namespace import SH, OWL, SKOS
 from urllib.parse import urlparse, unquote
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -71,8 +71,8 @@ def _graph_prefixes(graph: Graph) -> Dict[str, str]:
     return {p: declared[p] for p in sorted(used) if p in declared}
 
 
-def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef]]]:
-    """Yield (sh:path, sh:datatype?) from property shapes."""
+def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef], Optional[str]]]:
+    """Yield (sh:path, sh:datatype?, alias?) from property shapes. Alias comes from skos:altLabel."""
     # SHACL property shapes are blank nodes referenced via sh:property
     for shape in graph.subjects(RDF.type, SH.NodeShape):
         for prop_shape in graph.objects(shape, SH.property):
@@ -80,7 +80,12 @@ def _iter_property_paths(graph: Graph) -> Iterable[Tuple[URIRef, Optional[URIRef
             if not isinstance(path, URIRef):
                 continue
             datatype = graph.value(prop_shape, SH.datatype)
-            yield path, datatype if isinstance(datatype, URIRef) else None
+            
+            # Check for skos:altLabel to be used as alias (sh:name reflects description/label)
+            name_node = graph.value(prop_shape, SKOS.altLabel)
+            alias = str(name_node) if name_node else None
+            
+            yield path, datatype if isinstance(datatype, URIRef) else None, alias
 
 
 def _iter_target_classes(graph: Graph) -> Iterable[URIRef]:
@@ -103,10 +108,23 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
     local_to_iri: Dict[str, str] = {}
     collisions: Dict[str, Set[str]] = {}
     iri_to_datatype: Dict[str, str] = {}
+    iri_to_alias: Dict[str, str] = {}
 
-    def add_candidate(uri: URIRef) -> None:
+    def add_candidate(uri: URIRef, forced_alias: Optional[str] = None) -> None:
         iri = str(uri)
-        local = _local_name(iri)
+        
+        if forced_alias:
+            local = forced_alias
+            # If we have a forced alias, we map it directly.
+            # We assume users won't force the same alias for different IRIs without expecting collision logic.
+            # But let's respect the existing collision logic just in case.
+        else:
+            # Check if we already have an alias for this IRI from a previous pass
+            if iri in iri_to_alias:
+                local = iri_to_alias[iri]
+            else:
+                local = _local_name(iri)
+            
         prev = local_to_iri.get(local)
         if prev is None:
             local_to_iri[local] = iri
@@ -114,8 +132,11 @@ def build_context_from_shacl(graph: Graph) -> Dict[str, object]:
             collisions.setdefault(local, set()).update({prev, iri})
 
     # Properties
-    for path, datatype in _iter_property_paths(graph):
-        add_candidate(path)
+    for path, datatype, alias in _iter_property_paths(graph):
+        if alias:
+            iri_to_alias[str(path)] = alias
+            
+        add_candidate(path, alias)
         if datatype:
             qn_dt = _qname(graph, datatype)
             iri_to_datatype[str(path)] = qn_dt if qn_dt else str(datatype)

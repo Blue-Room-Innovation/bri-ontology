@@ -24,6 +24,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 
 from rdflib import BNode, Graph, RDF, SH, URIRef
+from rdflib.namespace import SKOS
 from rdflib.collection import Collection
 
 # Configure logging
@@ -164,7 +165,10 @@ class ShaclToJsonSchema:
             if path is None:
                 continue
             if isinstance(path, URIRef):
-                props.append((self._prop_key(path), min_count, max_count))
+                # Check for alias
+                alias_node = self.graph.value(prop, SKOS.altLabel)
+                name = str(alias_node) if alias_node else self._prop_key(path)
+                props.append((name, min_count, max_count))
         return props
 
     def _shape_object_section(self, def_schema: JsonSchema) -> JsonSchema:
@@ -214,7 +218,11 @@ class ShaclToJsonSchema:
                 continue
             if not isinstance(path, URIRef):
                 continue
-            prop_name = self._prop_key(path)
+            
+            # Check for skos:altLabel as alias
+            alias_node = self.graph.value(prop, SKOS.altLabel)
+            prop_name = str(alias_node) if alias_node else self._prop_key(path)
+
             prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
             if prop_schema is not None:
                 properties[prop_name] = prop_schema
@@ -483,7 +491,15 @@ class ShaclToJsonSchema:
                 continue
             if not isinstance(path, URIRef):
                 continue
-            prop_name = self._prop_key(path)
+            
+            # Check for skos:altLabel as alias
+            alias_node = self.graph.value(prop, SKOS.altLabel)
+            prop_name = str(alias_node) if alias_node else self._prop_key(path)
+
+            # Check for skos:altLabel as alias
+            alias_node = self.graph.value(prop, SKOS.altLabel)
+            prop_name = str(alias_node) if alias_node else self._prop_key(path)
+
             prop_schema, prop_required, prop_forbidden = self._build_property_schema(prop)
             if prop_schema is not None:
                 properties[prop_name] = prop_schema
@@ -545,13 +561,16 @@ class ShaclToJsonSchema:
         names: List[str] = []
         path = self.graph.value(node, SH.path)
         if path is not None and isinstance(path, URIRef):
-            names.append(self._prop_key(path))
+            alias_node = self.graph.value(node, SKOS.altLabel)
+            names.append(str(alias_node) if alias_node else self._prop_key(path))
 
         for prop in self.graph.objects(node, SH.property):
             path = self.graph.value(prop, SH.path)
             if path is None or not isinstance(path, URIRef):
                 continue
-            names.append(self._prop_key(path))
+            
+            alias_node = self.graph.value(prop, SKOS.altLabel)
+            names.append(str(alias_node) if alias_node else self._prop_key(path))
 
         for list_pred in (SH["or"], SH["and"], SH.xone):
             list_node = self.graph.value(node, list_pred)
