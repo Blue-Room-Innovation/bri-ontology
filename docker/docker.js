@@ -155,7 +155,7 @@ function run(scriptName, ...args) {
     })
     .join(" ");
 
-  const cmd = `docker run --rm -v "${workspaceRoot}:/workspace" -w /workspace ${IMAGE_NAME} ${escapedArgs}`;
+  const cmd = `docker run --rm -v "${workspaceRoot}:/workspace" -v /workspace/node_modules -w /workspace ${IMAGE_NAME} ${escapedArgs}`;
 
   try {
     execSync(cmd, { stdio: "inherit", shell: true });
@@ -172,7 +172,7 @@ function shell() {
   console.log("🐳 Opening interactive shell in Docker container...");
 
   const workspaceRoot = path.resolve(__dirname, "..");
-  const cmd = `docker run --rm -it -v "${workspaceRoot}:/workspace" -w /workspace ${IMAGE_NAME} bash`;
+  const cmd = `docker run --rm -it -v "${workspaceRoot}:/workspace" -v /workspace/node_modules -w /workspace ${IMAGE_NAME} bash`;
 
   try {
     execSync(cmd, { stdio: "inherit", shell: true });
