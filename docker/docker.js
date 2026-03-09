@@ -64,7 +64,7 @@ function build() {
 
   try {
     execSync(
-      `docker build -t ${IMAGE_NAME} -f ${DOCKERFILE} ${workspaceRoot}`,
+      `docker build -t ${IMAGE_NAME} -f ${DOCKERFILE} ${workspaceRoot} --no-cache`,
       {
         stdio: "inherit",
         shell: true,
