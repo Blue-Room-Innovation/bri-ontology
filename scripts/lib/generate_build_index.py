@@ -18,7 +18,7 @@ from typing import Dict, List
 from urllib.parse import quote
 
 from .config import Config, load_config
-from .utils import get_workspace_root
+from .utils import get_workspace_root, log_info, log_success, log_warning
 
 _VERSION_DIR_RE = re.compile(r"^v\d+(?:\.\d+)*$")
 
@@ -285,7 +285,7 @@ def generate_build_indexes(workspace_root: Path | None = None) -> int:
 
     build_dir = workspace_root / "build"
     if not build_dir.exists():
-        print("[generate-build-index] No 'build/' directory found. Skipping.")
+        log_warning("No 'build/' directory found. Skipping build index generation.")
         return 0
 
     pages_base_url = get_pages_base_url()
@@ -297,8 +297,8 @@ def generate_build_indexes(workspace_root: Path | None = None) -> int:
     for vd in version_dirs:
         generate_version_index(vd, pages_base_url, cfg)
 
-    print(
-        f"[generate-build-index] Wrote build/index.md and {len(version_dirs)} build version index(es)."
+    log_success(
+        f"Updated build/index.md and {len(version_dirs)} build version index(es)."
     )
     return 0
 

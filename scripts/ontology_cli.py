@@ -23,7 +23,14 @@ from typing import List, Optional
 
 from lib import OwlConfig, ShaclConfig, validate_owl, validate_shacl
 from lib.config import load_config
-from lib.utils import get_workspace_root
+from lib.utils import (
+    get_workspace_root,
+    log_info,
+    log_section,
+    log_success,
+    log_warning,
+    log_error
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -425,10 +432,10 @@ def main(argv: Optional[List[str]] = None) -> int:
 
             # Case 3: no scenario and no overrides => validate all scenarios
             if not scenarios:
-                print("❌ ERROR: No validation.shacl.scenarios configured in config.yml")
+                log_error("No validation.shacl.scenarios configured in config.yml")
                 return 1
 
-            print(f"[SHACL] Validating all scenarios ({len(scenarios)}): {', '.join(sorted(scenarios.keys()))}")
+            log_section(f"Validation: SHACL ({len(scenarios)} scenarios)")
 
             worst_exit = 0
             for key in sorted(scenarios.keys()):
@@ -439,11 +446,11 @@ def main(argv: Optional[List[str]] = None) -> int:
                 fmt = scenario.get("format", "human")
 
                 if not data_file or not shapes_file:
-                    print(f"\n[SHACL] ❌ Scenario '{key}' is missing 'data' or 'shapes' in config.yml")
+                    log_error(f"Scenario '{key}' must have 'data' and 'shapes'")
                     worst_exit = max(worst_exit, 1)
                     continue
 
-                print(f"\n[SHACL] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                log_info(f"Scenario '{key}': {scenario.get('name', 'N/A')}")
                 config = ShaclConfig(
                     data_file=workspace_root / Path(data_file),
                     shapes_file=workspace_root / Path(shapes_file),
@@ -540,9 +547,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             if scenario_name:
                 scenario = conversions.get(scenario_name)
                 if not scenario:
-                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
-                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
-                    print("Run 'node docker/docker.js run cli convert json-schema --list' to see all scenarios")
+                    log_error(f"Conversion scenario '{scenario_name}' not found in config.yml")
+                    log_info(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    log_info("Run 'node docker/docker.js run cli convert json-schema --list' to see all scenarios")
                     return 1
 
                 input_file = ns.input or scenario.get("input")
@@ -551,10 +558,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                 ctx_file = ns.context or scenario.get("context")
 
                 if not input_file or not output_file:
-                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    log_error("Scenario is missing required 'input' or 'output' values")
                     return 1
 
-                print(f"[CONVERT:SHACL] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                log_info(f"Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
                 cmd = [
                     sys.executable,
                     str(shacl_script),
@@ -610,11 +617,11 @@ def main(argv: Optional[List[str]] = None) -> int:
 
             # Case 3: no scenario and no overrides => convert all
             if not conversions:
-                print("❌ ERROR: No conversion.shacl_to_json scenarios configured in config.yml")
+                log_error("No conversion.shacl_to_json scenarios configured in config.yml")
                 return 1
 
-            print(
-                f"[CONVERT:SHACL] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
+            log_section(
+                f"SHACL → JSON Schema ({len(conversions)} scenarios)"
             )
 
             worst_exit = 0
@@ -626,11 +633,11 @@ def main(argv: Optional[List[str]] = None) -> int:
                 ctx_file = ns.context or scenario.get("context")
 
                 if not input_file or not output_file:
-                    print(f"\n[CONVERT:SHACL] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
+                    log_error(f"Scenario '{key}' is missing 'input' or 'output' in config.yml")
                     worst_exit = max(worst_exit, 1)
                     continue
 
-                print(f"\n[CONVERT:SHACL] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                log_info(f"Scenario '{key}': {scenario.get('name', 'N/A')}")
                 cmd = [
                     sys.executable,
                     str(shacl_script),
@@ -683,19 +690,19 @@ def main(argv: Optional[List[str]] = None) -> int:
             if scenario_name:
                 scenario = conversions.get(scenario_name)
                 if not scenario:
-                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
-                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
-                    print("Run 'node docker/docker.js run cli convert context --list' to see all scenarios")
+                    log_error(f"Conversion scenario '{scenario_name}' not found in config.yml")
+                    log_info(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    log_info("Run 'node docker/docker.js run cli convert context --list' to see all scenarios")
                     return 1
 
                 input_file = ns.input or scenario.get("input")
                 output_file = ns.output or scenario.get("output")
 
                 if not input_file or not output_file:
-                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    log_error("Scenario is missing required 'input' or 'output' values")
                     return 1
 
-                print(f"[CONVERT:CONTEXT] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                log_info(f"Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
                 cmd = [
                     sys.executable,
                     str(ctx_script),
@@ -730,23 +737,29 @@ def main(argv: Optional[List[str]] = None) -> int:
                 return result.returncode
 
             if not conversions:
-                print("❌ ERROR: No conversion.shacl_to_context scenarios configured in config.yml")
+                log_error("No conversion.shacl_to_context scenarios configured in config.yml")
                 return 1
 
-            print(
-                f"[CONVERT:CONTEXT] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
+            log_section(
+                f"SHACL → JSON-LD Context ({len(conversions)} scenarios)"
             )
             worst_exit = 0
             for key in sorted(conversions.keys()):
+                # ...
+                # Wait, I must include context for replacement to be safe.
+                # But replace_string_in_file needs literal match.
+                # The "worst_exit = 0" line is distinct?
+                # The "print(f"[CONVERT:CONTEXT] ...")" spans multiple lines.
+                pass
                 scenario = conversions.get(key) or {}
                 input_file = scenario.get("input")
                 output_file = scenario.get("output")
                 if not input_file or not output_file:
-                    print(f"\n[CONVERT:CONTEXT] ❌ Scenario '{key}' is missing 'input' or 'output' in config.yml")
+                    log_error(f"Scenario '{key}' is missing 'input' or 'output' in config.yml")
                     worst_exit = max(worst_exit, 1)
                     continue
 
-                print(f"\n[CONVERT:CONTEXT] === Scenario '{key}': {scenario.get('name', 'N/A')} ===")
+                log_info(f"Scenario '{key}': {scenario.get('name', 'N/A')}")
                 cmd = [
                     sys.executable,
                     str(ctx_script),
@@ -794,9 +807,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             if scenario_name:
                 scenario = conversions.get(scenario_name)
                 if not scenario:
-                    print(f"❌ ERROR: Conversion scenario '{scenario_name}' not found in config.yml")
-                    print(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
-                    print("Run 'node docker/docker.js run cli convert ts --list' to see all scenarios")
+                    log_error(f"Conversion scenario '{scenario_name}' not found in config.yml")
+                    log_info(f"Available scenarios: {', '.join(sorted(conversions.keys()))}")
+                    log_info("Run 'node docker/docker.js run cli convert ts --list' to see all scenarios")
                     return 1
 
                 input_file = ns.input or scenario.get("input")
@@ -804,10 +817,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                 source_file = ns.source or scenario.get("source")
 
                 if not input_file or not output_file:
-                    print("❌ ERROR: Scenario is missing required 'input' or 'output' values")
+                    log_error("Scenario is missing required 'input' or 'output' values")
                     return 1
 
-                print(f"[CONVERT:TS] Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
+                log_info(f"Using scenario '{scenario_name}': {scenario.get('name', 'N/A')}")
                 cmd = [
                     sys.executable,
                     str(ts_script),
@@ -853,12 +866,10 @@ def main(argv: Optional[List[str]] = None) -> int:
 
             # Case 3: no scenario and no overrides => convert all
             if not conversions:
-                print("❌ ERROR: No conversion.json_to_ts scenarios configured in config.yml")
+                log_error("No conversion.json_to_ts scenarios configured in config.yml")
                 return 1
 
-            print(
-                f"[CONVERT:TS] Converting all scenarios ({len(conversions)}): {', '.join(sorted(conversions.keys()))}"
-            )
+            log_section(f"JSON Schema → TypeScript ({len(conversions)} scenarios)")
 
             worst_exit = 0
             for key in sorted(conversions.keys()):

@@ -10,6 +10,11 @@ from .utils import (
     get_workspace_root,
     iter_ontology_files,
     print_err,
+    log_info,
+    log_success,
+    log_warning,
+    log_error,
+    log_section,
     run_command,
     split_csv,
     which,
@@ -89,7 +94,7 @@ def _validate_with_robot(
         return -1
     
     if not config.quiet:
-        print("[OWL] Usant ROBOT CLI")
+        log_info("[OWL] Usant ROBOT CLI")
     
     # Check for catalog file
     # ----------------------
@@ -115,7 +120,7 @@ def _validate_with_robot(
         or not merged_path.exists()
         or merged_path.stat().st_size == 0
     ):
-        print_err(
+        log_error(
             f"[OWL] Merge fallat o sense sortida. "
             f"No existeix '{merged_path}'. Codi: {merge_status}"
         )
@@ -136,7 +141,7 @@ def _validate_with_robot(
     ]
     profile_status = run_command(profile_cmd, quiet=config.quiet)
     if profile_status != 0:
-        print_err(
+        log_warning(
             f"[OWL] Profile ({config.profile}) amb incidències "
             f"(exit {profile_status})."
         )
@@ -165,7 +170,7 @@ def _validate_with_robot(
             or not reasoned_path.exists()
             or reasoned_path.stat().st_size == 0
         ):
-            print_err(
+            log_error(
                 f"[OWL] Raonament fallat o sense sortida. "
                 f"Codi: {reason_status}"
             )
@@ -189,12 +194,12 @@ def _validate_with_riot(input_files: List[Path], config: OwlConfig) -> int:
         return -1
     
     if not config.quiet:
-        print("[OWL] ROBOT no trobat. Usant Apache Jena RIOT (només sintaxi).")
+        log_warning("[OWL] ROBOT no trobat. Usant Apache Jena RIOT (només sintaxi).")
     
     workspace_root = get_workspace_root()
     for p in input_files:
         if not config.quiet:
-            print(f"[RIOT] Validant {p.relative_to(workspace_root).as_posix()}")
+            log_info(f"[RIOT] Validant {p.relative_to(workspace_root).as_posix()}")
         status = run_command([riot, "--validate", str(p)], quiet=config.quiet)
         if status != 0:
             return status
@@ -227,7 +232,7 @@ def validate_owl(config: OwlConfig) -> int:
     # Get input files
     input_files = _get_input_files(config)
     if not input_files:
-        print_err(
+        log_error(
             "[OWL] No s'han proporcionat ontologies i l'auto-descobriment "
             "està desactivat o buit."
         )
@@ -235,15 +240,15 @@ def validate_owl(config: OwlConfig) -> int:
     
     # Print configuration
     if not config.quiet:
-        print(f"[OWL] Ontologies ({len(input_files)}):")
+        log_section(f"OWL Validation ({len(input_files)} inputs)")
         for p in input_files:
-            print(f"  - {p.relative_to(workspace_root).as_posix()}")
-        print(f"[OWL] Profile  : {config.profile}")
-        print(f"[OWL] Reasoner : {config.reasoner}")
+            log_info(f"  - {p.relative_to(workspace_root).as_posix()}")
+        log_info(f"Profile  : {config.profile}")
+        log_info(f"Reasoner : {config.reasoner}")
         merged_rel = (full_build_dir / config.merged).relative_to(workspace_root)
         output_rel = (full_build_dir / config.output).relative_to(workspace_root)
-        print(f"[OWL] Merge out: {merged_rel.as_posix()}")
-        print(f"[OWL] Reasoned : {output_rel.as_posix()}")
+        log_info(f"Merge out: {merged_rel.as_posix()}")
+        log_info(f"Reasoned : {output_rel.as_posix()}")
     
     merged_path = full_build_dir / config.merged
     reasoned_path = full_build_dir / config.output

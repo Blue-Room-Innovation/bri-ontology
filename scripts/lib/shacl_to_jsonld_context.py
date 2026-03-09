@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import logging
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,8 +29,12 @@ from rdflib import Graph, RDF, URIRef
 from rdflib.namespace import SH, OWL, SKOS
 from urllib.parse import urlparse, unquote
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
-logger = logging.getLogger(__name__)
+try:
+    from .utils import log_info, log_success, log_warning, log_error
+except ImportError:
+    # Fallback if running script directly
+    sys.path.append(str(Path(__file__).parent.parent))
+    from lib.utils import log_info, log_success, log_warning, log_error
 
 
 def _local_name(uri: str) -> str:
@@ -214,12 +217,10 @@ def main() -> int:
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output")
 
     args = parser.parse_args()
-    if args.verbose:
-        logger.setLevel(logging.DEBUG)
 
     input_path = Path(args.input)
     if not input_path.exists():
-        logger.error("Input file not found: %s", input_path)
+        log_error(f"Input file not found: {input_path}")
         return 1
 
     graph = Graph()
@@ -269,7 +270,7 @@ def main() -> int:
 
         load_imports_recursive(input_path.resolve())
     except Exception as e:
-        logger.error("Failed to parse SHACL file: %s", e)
+        log_error(f"Failed to parse SHACL file: {e}")
         return 1
 
     doc = build_context_from_shacl(graph)
@@ -281,9 +282,12 @@ def main() -> int:
         json.dump(doc, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
-    logger.info("✅ Wrote JSON-LD context to: %s", output_path)
+    log_success(f"Wrote JSON-LD context to: {output_path.name}")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+# Alias for CLI import
+generate_context = build_context_from_shacl

@@ -21,21 +21,17 @@ Date: 2026-01-13
 """
 
 import argparse
-import logging
 import subprocess
 import sys
 from pathlib import Path
 from datetime import datetime
 
-# Handle both direct execution and package import
 try:
-    from .utils import get_workspace_root
+    from .utils import get_workspace_root, log_info, log_success, log_error, log_warning
 except ImportError:
-    from utils import get_workspace_root
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-logger = logging.getLogger(__name__)
+    import sys
+    sys.path.append(str(Path(__file__).parent.parent))
+    from lib.utils import get_workspace_root, log_info, log_success, log_error, log_warning
 
 
 class JSONSchemaToTypeScriptConverter:
@@ -50,7 +46,7 @@ class JSONSchemaToTypeScriptConverter:
         
         # Validate input file exists
         if not input_file.exists():
-            logger.error(f"Input file not found: {input_file}")
+            log_error(f"Input file not found: {input_file}")
             return False
         
         # Check Node.js is installed
@@ -65,7 +61,7 @@ class JSONSchemaToTypeScriptConverter:
         output_file.parent.mkdir(parents=True, exist_ok=True)
         
         # Generate TypeScript
-        logger.info(f"Converting {input_file.name} → {output_file.name}")
+        log_info(f"Converting {input_file.name} → {output_file.name}")
         return self._run_json2ts(input_file, output_file, banner_comment)
     
     def _check_nodejs(self) -> bool:
@@ -78,11 +74,11 @@ class JSONSchemaToTypeScriptConverter:
                 check=True
             )
             node_version = result.stdout.strip()
-            logger.debug(f"Node.js {node_version}")
+            # debug: Node.js {node_version}
             return True
         except (subprocess.CalledProcessError, FileNotFoundError):
-            logger.error("Node.js is not installed or not in PATH")
-            logger.error("Install from: https://nodejs.org/")
+            log_error("Node.js is not installed or not in PATH")
+            log_info("Install from: https://nodejs.org/")
             return False
     
     def _check_json2ts(self) -> bool:
@@ -90,11 +86,11 @@ class JSONSchemaToTypeScriptConverter:
         json2ts_cmd = self.workspace_root / "node_modules" / "json-schema-to-typescript" / "dist" / "src" / "cli.js"
         
         if not json2ts_cmd.exists():
-            logger.error("json-schema-to-typescript not found")
-            logger.error("Install with: npm install")
+            log_error("json-schema-to-typescript not found")
+            log_info("Install with: npm install")
             return False
         
-        logger.debug("json-schema-to-typescript found")
+        # debug: json-schema-to-typescript found
         return True
     
     def _run_json2ts(self, input_file: Path, output_file: Path, banner_comment: str = None) -> bool:
@@ -128,19 +124,19 @@ class JSONSchemaToTypeScriptConverter:
             # Show relative path if possible, otherwise absolute
             try:
                 rel_path = output_file.relative_to(self.workspace_root)
-                logger.info(f"✅ Generated {rel_path}")
+                log_success(f"Generated {rel_path}")
             except ValueError:
-                logger.info(f"✅ Generated {output_file}")
+                log_success(f"Generated {output_file}")
             
             return True
             
         except subprocess.CalledProcessError as e:
-            logger.error(f"Failed to generate TypeScript: {e}")
+            log_error(f"Failed to generate TypeScript: {e}")
             if e.stderr:
-                logger.error(e.stderr)
+                log_error(e.stderr)
             return False
         except FileNotFoundError:
-            logger.error("Node.js not found. Make sure it's installed and in PATH.")
+            log_error("Node.js not found. Make sure it's installed and in PATH.")
             return False
     
     @staticmethod
