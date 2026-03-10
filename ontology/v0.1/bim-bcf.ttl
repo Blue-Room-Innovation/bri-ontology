@@ -22,11 +22,8 @@
 bcf:bcfModel a owl:Class ;
     rdfs:comment "Root container class for BIM BCF model resources." .
 
-bcf:documentInfo a owl:Class ;
+bcf:documents a owl:Class ;
     rdfs:comment "Container class for document metadata." .
-
-bcf:documentsContainer a owl:Class ;
-    rdfs:comment "Collection class that groups document entries." .
 
 bcf:document a owl:Class ;
     rdfs:comment "Document metadata entry with filename, description, and GUID." .
@@ -70,9 +67,6 @@ bcf:markup a owl:Class ;
 bcf:header a owl:Class ;
     rdfs:comment "Header section containing referenced files." .
 
-bcf:filesContainer a owl:Class ;
-    rdfs:comment "Collection class for file entries." .
-
 bcf:referenceLinks a owl:Class ;
     rdfs:comment "Collection class for topic reference links." .
 
@@ -85,17 +79,9 @@ bcf:bimSnippet a owl:Class ;
 bcf:documentReferences a owl:Class ;
     rdfs:comment "Collection class for document references." .
 
-bcf:relatedTopics a owl:Class ;
-    rdfs:comment "Collection class for links to related topics." .
-
 bcf:relatedTopicRef a owl:Class ;
     rdfs:comment "Reference class identifying a related topic by GUID." .
 
-bcf:comments a owl:Class ;
-    rdfs:comment "Collection class for comment entries." .
-
-bcf:viewpoints a owl:Class ;
-    rdfs:comment "Collection class for viewpoint entries." .
 
 bcf:topic a owl:Class ;
     rdfs:comment "Core issue/topic class with metadata, workflow state, comments, and viewpoints." .
@@ -133,9 +119,6 @@ bcf:direction a owl:Class ;
 bcf:components a owl:Class ;
     rdfs:comment "Components definition containing selection, visibility, and coloring sections." .
 
-bcf:componentSelection a owl:Class ;
-    rdfs:comment "Collection of selected components." .
-
 bcf:viewSetupHints a owl:Class ;
     rdfs:comment "Viewer hints for visibility of spaces, boundaries, and openings." .
 
@@ -144,9 +127,6 @@ bcf:exceptions a owl:Class ;
 
 bcf:componentVisibility a owl:Class ;
     rdfs:comment "Default visibility and exception settings for components." .
-
-bcf:colorComponents a owl:Class ;
-    rdfs:comment "Set of components affected by a single color rule." .
 
 bcf:coloringEntry a owl:Class ;
     rdfs:comment "Single color rule entry linking components and a color value." .
@@ -165,15 +145,6 @@ bcf:clippingPlane a owl:Class ;
 
 bcf:bitmap a owl:Class ;
     rdfs:comment "Bitmap overlay with placement, orientation, format, and size." .
-
-bcf:lines a owl:Class ;
-    rdfs:comment "Collection class for line overlays." .
-
-bcf:clippingPlanes a owl:Class ;
-    rdfs:comment "Collection class for clipping planes." .
-
-bcf:bitmaps a owl:Class ;
-    rdfs:comment "Collection class for bitmap overlays." .
 
 #################################################################
 #    object properties
@@ -209,50 +180,11 @@ bcf:visualizationInfo a owl:ObjectProperty ;
     rdfs:range bcf:visualizationInfo ;
     rdfs:comment "Links a BCF model to viewpoint visualization information." .
 
-bcf:documents a owl:ObjectProperty ;
-    rdfs:domain bcf:documentInfo ;
-    rdfs:range bcf:documentsContainer ;
-    rdfs:comment "Container relation that groups document entries." .
-
 bcf:document a owl:ObjectProperty ;
-    rdfs:domain bcf:documentsContainer ;
+    rdfs:domain bcf:documents ;
     rdfs:range bcf:document ;
     rdfs:comment "Links a documents collection to individual document metadata entries." .
 
-bcf:topicTypes a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:topicTypes ;
-    rdfs:comment "Links extensions to the available topic type values." .
-
-bcf:topicStatuses a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:topicStatuses ;
-    rdfs:comment "Links extensions to the available topic status values." .
-
-bcf:priorities a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:priorities ;
-    rdfs:comment "Links extensions to the available priority values." .
-
-bcf:topicLabels a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:topicLabels ;
-    rdfs:comment "Links extensions to the available topic labels." .
-
-bcf:users a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:users ;
-    rdfs:comment "Links extensions to the available user identifiers." .
-
-bcf:snippetTypes a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:snippetTypes ;
-    rdfs:comment "Links extensions to the available BIM snippet types." .
-
-bcf:stages a owl:ObjectProperty ;
-    rdfs:domain bcf:extensions ;
-    rdfs:range bcf:stages ;
-    rdfs:comment "Links extensions to the available workflow stages." .
 
 bcf:project a owl:ObjectProperty ;
     rdfs:domain bcf:projectInfo ;
@@ -294,11 +226,6 @@ bcf:bimSnippet a owl:ObjectProperty ;
     rdfs:range bcf:bimSnippet ;
     rdfs:comment "Links topic to its BIM snippet description." .
 
-bcf:documentReferences a owl:ObjectProperty ;
-    rdfs:domain bcf:topic ;
-    rdfs:range bcf:documentReferences ;
-    rdfs:comment "Links topic to document reference entries." .
-
 bcf:relatedTopics a owl:ObjectProperty ;
     rdfs:domain bcf:topic ;
     rdfs:range bcf:relatedTopics ;
@@ -339,10 +266,7 @@ bcf:components a owl:ObjectProperty ;
         a owl:Class ;
         owl:unionOf ( bcf:visualizationInfo bcf:coloringEntry )
     ] ;
-    rdfs:range [
-        a owl:Class ;
-        owl:unionOf ( bcf:components bcf:colorComponents )
-    ] ;
+    rdfs:range bcf:components ;
     rdfs:comment "References component sets used in visualization and coloring entries." .
 
 bcf:orthogonalCamera a owl:ObjectProperty ;
@@ -396,7 +320,7 @@ bcf:cameraUpVector a owl:ObjectProperty ;
 
 bcf:selection a owl:ObjectProperty ;
     rdfs:domain bcf:components ;
-    rdfs:range bcf:componentSelection ;
+    rdfs:range bcf:componentShape ;
     rdfs:comment "Selected components within a viewpoint." .
 
 bcf:visibility a owl:ObjectProperty ;
@@ -414,16 +338,8 @@ bcf:viewSetupHints a owl:ObjectProperty ;
     rdfs:range bcf:viewSetupHints ;
     rdfs:comment "Viewer hints for spaces, openings, and boundaries." .
 
-bcf:exceptions a owl:ObjectProperty ;
-    rdfs:domain bcf:componentVisibility ;
-    rdfs:range bcf:exceptions ;
-    rdfs:comment "Components that differ from default visibility." .
-
 bcf:component a owl:ObjectProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:componentSelection bcf:exceptions bcf:colorComponents )
-    ] ;
+    rdfs:domain bcf:componentShape ;
     rdfs:range bcf:component ;
     rdfs:comment "References individual IFC components." .
 
@@ -513,58 +429,6 @@ bcf:guid a owl:DatatypeProperty ;
     rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
     rdfs:comment "Globally unique identifier represented as text." .
 
-bcf:topicType a owl:DatatypeProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:topic bcf:topicTypes )
-    ] ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:type ;
-    rdfs:comment "Topic type value or catalog entry." .
-
-bcf:topicStatus a owl:DatatypeProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:topic bcf:topicStatuses )
-    ] ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Topic status value or catalog entry." .
-
-bcf:priority a owl:DatatypeProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:topic bcf:priorities )
-    ] ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Priority value or catalog entry." .
-
-bcf:topicLabel a owl:DatatypeProperty ;
-    rdfs:domain bcf:topicLabels ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf schema:keywords, dcterms:subject ;
-    rdfs:comment "Single label value available in extension catalogs." .
-
-bcf:user a owl:DatatypeProperty ;
-    rdfs:domain bcf:users ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Single user value available in extension catalogs." .
-
-bcf:snippetType a owl:DatatypeProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:bimSnippet bcf:snippetTypes )
-    ] ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf dcterms:type ;
-    rdfs:comment "Snippet type value used in topic snippets and extension catalogs." .
-
-bcf:stage a owl:DatatypeProperty ;
-    rdfs:domain [
-        a owl:Class ;
-        owl:unionOf ( bcf:topic bcf:stages )
-    ] ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Stage value used in topics and extension catalogs." .
 
 bcf:name a owl:DatatypeProperty ;
     rdfs:domain bcf:project ;
