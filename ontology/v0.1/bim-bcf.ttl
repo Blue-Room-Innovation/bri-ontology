@@ -1,6 +1,7 @@
 @prefix : <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#> .
-@prefix schema: <http://schema.org/> .
 @prefix bcf: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -8,705 +9,824 @@
 
 @base <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl> .
 
-<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl> rdf:type owl:Ontology ;
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl>
+    a owl:Ontology ;
     rdfs:label "BIM BCF Ontology" ;
     rdfs:comment "Ontology for BIM Collaboration Format (BCF) resources aligned with the BIM BCF SHACL model." ;
     owl:versionInfo "0.1" .
 
 #################################################################
-#    Object Properties
-#################################################################
-
-bcf:DocumentInfo rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :DocumentInfoType ;
-    rdfs:comment "Links a BCF model to its document information section." .
-
-bcf:Extensions rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :ExtensionsType ;
-    rdfs:comment "Links a BCF model to extension vocabularies like status, type, stage, and labels." .
-
-bcf:Markup rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :MarkupType ;
-    rdfs:comment "Links a BCF model to its main markup content." .
-
-bcf:ProjectInfo rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :ProjectInfoType ;
-    rdfs:comment "Links a BCF model to the project information section." .
-
-bcf:Version rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :VersionType ;
-    rdfs:comment "Links a BCF model to its declared version payload." .
-
-bcf:VisualizationInfo rdf:type owl:ObjectProperty ;
-    rdfs:domain :BcfModelType ;
-    rdfs:range :VisualizationInfoType ;
-    rdfs:comment "Links a BCF model to viewpoint visualization information." .
-
-bcf:Documents rdf:type owl:ObjectProperty ;
-    rdfs:domain :DocumentInfoType ;
-    rdfs:range :DocumentsContainerType ;
-    rdfs:comment "Container relation that groups document entries." .
-
-bcf:Document rdf:type owl:ObjectProperty ;
-    rdfs:domain :DocumentsContainerType ;
-    rdfs:range :DocumentType ;
-    rdfs:comment "Links a documents collection to individual document metadata entries." .
-
-bcf:TopicTypes rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :TopicTypesType ;
-    rdfs:comment "Links extensions to the available topic type values." .
-
-bcf:TopicStatuses rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :TopicStatusesType ;
-    rdfs:comment "Links extensions to the available topic status values." .
-
-bcf:Priorities rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :PrioritiesType ;
-    rdfs:comment "Links extensions to the available priority values." .
-
-bcf:TopicLabels rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :TopicLabelsType ;
-    rdfs:comment "Links extensions to the available topic labels." .
-
-bcf:Users rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :UsersType ;
-    rdfs:comment "Links extensions to the available user identifiers." .
-
-bcf:SnippetTypes rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :SnippetTypesType ;
-    rdfs:comment "Links extensions to the available BIM snippet types." .
-
-bcf:Stages rdf:type owl:ObjectProperty ;
-    rdfs:domain :ExtensionsType ;
-    rdfs:range :StagesType ;
-    rdfs:comment "Links extensions to the available workflow stages." .
-
-bcf:Project rdf:type owl:ObjectProperty ;
-    rdfs:domain :ProjectInfoType ;
-    rdfs:range :ProjectType ;
-    rdfs:comment "Links project info to the concrete project descriptor." .
-
-bcf:Header rdf:type owl:ObjectProperty ;
-    rdfs:domain :MarkupType ;
-    rdfs:range :HeaderType ;
-    rdfs:comment "Links markup to optional header information." .
-
-bcf:Topic rdf:type owl:ObjectProperty ;
-    rdfs:domain :MarkupType ;
-    rdfs:range :TopicType ;
-    rdfs:comment "Links markup to its main topic issue payload." .
-
-bcf:Files rdf:type owl:ObjectProperty ;
-    rdfs:domain :HeaderType ;
-    rdfs:range :FilesContainerType ;
-    rdfs:comment "Container relation for header file entries." .
-
-bcf:File rdf:type owl:ObjectProperty ;
-    rdfs:domain :FilesContainerType ;
-    rdfs:range :FileType ;
-    rdfs:comment "Links a files collection to individual file entries." .
-
-bcf:ReferenceLinks rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :ReferenceLinksType ;
-    rdfs:comment "Links topic to external reference URLs." .
-
-bcf:Labels rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :LabelsType ;
-    rdfs:comment "Links topic to free-form labels container." .
-
-bcf:BimSnippet rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :BimSnippetType ;
-    rdfs:comment "Links topic to its BIM snippet description." .
-
-bcf:DocumentReferences rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :DocumentReferencesType ;
-    rdfs:comment "Links topic to document reference entries." .
-
-bcf:RelatedTopics rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :RelatedTopicsType ;
-    rdfs:comment "Links topic to references to other related topics." .
-
-bcf:Comments rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :CommentsType ;
-    rdfs:comment "Links topic to its comment collection." .
-
-bcf:Viewpoints rdf:type owl:ObjectProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range :ViewpointsType ;
-    rdfs:comment "Links topic to viewpoint definitions and snapshots." .
-
-bcf:RelatedTopic rdf:type owl:ObjectProperty ;
-    rdfs:domain :RelatedTopicsType ;
-    rdfs:range :RelatedTopicRefType ;
-    rdfs:comment "Links related-topics container to individual related topic references." .
-
-bcf:Comment rdf:type owl:ObjectProperty ;
-    rdfs:domain :CommentsType ;
-    rdfs:range :CommentType ;
-    rdfs:comment "Links comments container to individual comment entries." .
-
-bcf:ViewPoint rdf:type owl:ObjectProperty ;
-    rdfs:domain :ViewpointsType ;
-    rdfs:range :ViewPointType ;
-    rdfs:comment "Links viewpoints container to individual viewpoint entries." .
-
-bcf:DocumentReference rdf:type owl:ObjectProperty ;
-    rdfs:domain :DocumentReferencesType ;
-    rdfs:range :DocumentReferenceType ;
-    rdfs:comment "Links document references container to individual reference entries." .
-
-bcf:Components rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType, :ColoringEntryType ;
-    rdfs:range :ComponentsType, :ColorComponentsType ;
-    rdfs:comment "References component sets used in visualization and coloring entries." .
-
-bcf:OrthogonalCamera rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType ;
-    rdfs:range :OrthogonalCameraType ;
-    rdfs:comment "Associates visualization info with an orthogonal camera definition." .
-
-bcf:PerspectiveCamera rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType ;
-    rdfs:range :PerspectiveCameraType ;
-    rdfs:comment "Associates visualization info with a perspective camera definition." .
-
-bcf:Lines rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType ;
-    rdfs:range :LinesType ;
-    rdfs:comment "Associates visualization info with line overlays." .
-
-bcf:ClippingPlanes rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType ;
-    rdfs:range :ClippingPlanesType ;
-    rdfs:comment "Associates visualization info with clipping plane definitions." .
-
-bcf:Bitmaps rdf:type owl:ObjectProperty ;
-    rdfs:domain :VisualizationInfoType ;
-    rdfs:range :BitmapsType ;
-    rdfs:comment "Associates visualization info with bitmap overlays." .
-
-bcf:CameraViewPoint rdf:type owl:ObjectProperty ;
-    rdfs:domain :OrthogonalCameraType, :PerspectiveCameraType ;
-    rdfs:range :PointType ;
-    rdfs:comment "Camera position in 3D space." .
-
-bcf:CameraDirection rdf:type owl:ObjectProperty ;
-    rdfs:domain :OrthogonalCameraType, :PerspectiveCameraType ;
-    rdfs:range :DirectionType ;
-    rdfs:comment "Camera forward direction vector." .
-
-bcf:CameraUpVector rdf:type owl:ObjectProperty ;
-    rdfs:domain :OrthogonalCameraType, :PerspectiveCameraType ;
-    rdfs:range :DirectionType ;
-    rdfs:comment "Camera up direction vector." .
-
-bcf:Selection rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentsType ;
-    rdfs:range :ComponentSelectionType ;
-    rdfs:comment "Selected components within a viewpoint." .
-
-bcf:Visibility rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentsType ;
-    rdfs:range :ComponentVisibilityType ;
-    rdfs:comment "Visibility rules for components within a viewpoint." .
-
-bcf:Coloring rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentsType ;
-    rdfs:range :ComponentColoringType ;
-    rdfs:comment "Color overrides for components within a viewpoint." .
-
-bcf:ViewSetupHints rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentVisibilityType ;
-    rdfs:range :ViewSetupHintsType ;
-    rdfs:comment "Viewer hints for spaces, openings, and boundaries." .
-
-bcf:Exceptions rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentVisibilityType ;
-    rdfs:range :ExceptionsType ;
-    rdfs:comment "Components that differ from default visibility." .
-
-bcf:Component rdf:type owl:ObjectProperty ;
-    rdfs:domain :ComponentSelectionType, :ExceptionsType, :ColorComponentsType ;
-    rdfs:range :ComponentType ;
-    rdfs:comment "References individual IFC components." .
-
-bcf:Line rdf:type owl:ObjectProperty ;
-    rdfs:domain :LinesType ;
-    rdfs:range :LineType ;
-    rdfs:comment "References individual line overlay entries." .
-
-bcf:ClippingPlane rdf:type owl:ObjectProperty ;
-    rdfs:domain :ClippingPlanesType ;
-    rdfs:range :ClippingPlaneType ;
-    rdfs:comment "References individual clipping plane entries." .
-
-bcf:Bitmap rdf:type owl:ObjectProperty ;
-    rdfs:domain :BitmapsType ;
-    rdfs:range :BitmapType ;
-    rdfs:comment "References individual bitmap overlay entries." .
-
-bcf:StartPoint rdf:type owl:ObjectProperty ;
-    rdfs:domain :LineType ;
-    rdfs:range :PointType ;
-    rdfs:comment "Start point of a line segment." .
-
-bcf:EndPoint rdf:type owl:ObjectProperty ;
-    rdfs:domain :LineType ;
-    rdfs:range :PointType ;
-    rdfs:comment "End point of a line segment." .
-
-bcf:Location rdf:type owl:ObjectProperty ;
-    rdfs:domain :ClippingPlaneType, :BitmapType ;
-    rdfs:range :PointType ;
-    rdfs:comment "3D location used by clipping planes and bitmap placement." .
-
-bcf:Direction rdf:type owl:ObjectProperty ;
-    rdfs:domain :ClippingPlaneType ;
-    rdfs:range :DirectionType ;
-    rdfs:comment "Normal direction of a clipping plane." .
-
-bcf:Normal rdf:type owl:ObjectProperty ;
-    rdfs:domain :BitmapType ;
-    rdfs:range :DirectionType ;
-    rdfs:comment "Normal vector of a bitmap overlay plane." .
-
-bcf:Up rdf:type owl:ObjectProperty ;
-    rdfs:domain :BitmapType ;
-    rdfs:range :DirectionType ;
-    rdfs:comment "Up vector of a bitmap overlay plane." .
-
-#################################################################
-#    Data Properties
-#################################################################
-
-bcf:Filename rdf:type owl:DatatypeProperty ;
-    rdfs:domain :DocumentType, :FileType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Filename associated with a document or file entry." .
-
-bcf:Description rdf:type owl:DatatypeProperty ;
-    rdfs:domain :DocumentType, :TopicType, :DocumentReferenceType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Human-readable description text." .
-
-bcf:Guid rdf:type owl:DatatypeProperty ;
-    rdfs:domain owl:Thing ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Globally unique identifier represented as text." .
-
-bcf:TopicType rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :TopicTypesType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Topic type value or catalog entry." .
-
-bcf:TopicStatus rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :TopicStatusesType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Topic status value or catalog entry." .
-
-bcf:Priority rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :PrioritiesType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Priority value or catalog entry." .
-
-bcf:TopicLabel rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicLabelsType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Single label value available in extension catalogs." .
-
-bcf:User rdf:type owl:DatatypeProperty ;
-    rdfs:domain :UsersType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Single user value available in extension catalogs." .
-
-bcf:SnippetType rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BimSnippetType, :SnippetTypesType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Snippet type value used in topic snippets and extension catalogs." .
-
-bcf:Stage rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :StagesType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Stage value used in topics and extension catalogs." .
-
-bcf:Name rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ProjectType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Human-readable name of the project." .
-
-bcf:ProjectId rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ProjectType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Identifier for the project." .
-
-bcf:VersionId rdf:type owl:DatatypeProperty ;
-    rdfs:domain :VersionType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Version identifier string for BCF payload." .
-
-bcf:ReferenceLink rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ReferenceLinksType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "External reference URL associated with a topic." .
-
-bcf:Title rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Short human-readable title of a topic." .
-
-bcf:Index rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :ViewPointType ;
-    rdfs:range xsd:int ;
-    rdfs:comment "Integer sort/index value for topic or viewpoint." .
-
-bcf:Label rdf:type owl:DatatypeProperty ;
-    rdfs:domain :LabelsType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Single label attached to a topic." .
-
-bcf:CreationDate rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:dateTime ;
-    rdfs:comment "Timestamp when the topic was created." .
-
-bcf:CreationAuthor rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Author who created the topic." .
-
-bcf:ModifiedDate rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :CommentType ;
-    rdfs:range xsd:dateTime ;
-    rdfs:comment "Timestamp of the latest modification." .
-
-bcf:ModifiedAuthor rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType, :CommentType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Author of the latest modification." .
-
-bcf:DueDate rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:dateTime ;
-    rdfs:comment "Requested due date for the topic." .
-
-bcf:AssignedTo rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Assignee identifier for the topic." .
-
-bcf:ServerAssignedId rdf:type owl:DatatypeProperty ;
-    rdfs:domain :TopicType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Server-assigned topic identifier." .
-
-bcf:Reference rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BimSnippetType, :FileType, :BitmapType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Reference string (filename, URI, or path) used by snippets, files, and bitmaps." .
-
-bcf:ReferenceSchema rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BimSnippetType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Schema identifier associated with a BIM snippet." .
-
-bcf:IsExternal rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BimSnippetType, :FileType ;
-    rdfs:range xsd:boolean ;
-    rdfs:comment "Indicates whether a referenced resource is external to the BCF package." .
-
-bcf:IfcProject rdf:type owl:DatatypeProperty ;
-    rdfs:domain :FileType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "IFC project GUID associated with a file entry." .
-
-bcf:IfcSpatialStructureElement rdf:type owl:DatatypeProperty ;
-    rdfs:domain :FileType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "IFC spatial structure element GUID associated with a file entry." .
-
-bcf:DocumentGuid rdf:type owl:DatatypeProperty ;
-    rdfs:domain :DocumentReferenceType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "GUID of an internal document referenced by a topic." .
-
-bcf:Url rdf:type owl:DatatypeProperty ;
-    rdfs:domain :DocumentReferenceType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "URL of an external document referenced by a topic." .
-
-bcf:Snapshot rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ViewPointType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Snapshot image filename associated with a viewpoint." .
-
-bcf:Date rdf:type owl:DatatypeProperty ;
-    rdfs:domain :FileType, :CommentType ;
-    rdfs:range xsd:dateTime ;
-    rdfs:comment "Timestamp associated with a file or comment entry." .
-
-bcf:Author rdf:type owl:DatatypeProperty ;
-    rdfs:domain :CommentType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Author identifier for a comment entry." .
-
-bcf:ViewToWorldScale rdf:type owl:DatatypeProperty ;
-    rdfs:domain :OrthogonalCameraType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Visible vertical size in world units for orthogonal camera." .
-
-bcf:FieldOfView rdf:type owl:DatatypeProperty ;
-    rdfs:domain :PerspectiveCameraType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Vertical field of view angle in degrees for perspective camera." .
-
-bcf:AspectRatio rdf:type owl:DatatypeProperty ;
-    rdfs:domain :OrthogonalCameraType, :PerspectiveCameraType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Width/height aspect ratio of the camera view." .
-
-bcf:X rdf:type owl:DatatypeProperty ;
-    rdfs:domain :PointType, :DirectionType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "X coordinate component." .
-
-bcf:Y rdf:type owl:DatatypeProperty ;
-    rdfs:domain :PointType, :DirectionType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Y coordinate component." .
-
-bcf:Z rdf:type owl:DatatypeProperty ;
-    rdfs:domain :PointType, :DirectionType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Z coordinate component." .
-
-bcf:SpacesVisible rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ViewSetupHintsType ;
-    rdfs:range xsd:boolean ;
-    rdfs:comment "Viewer hint indicating whether spaces are visible." .
-
-bcf:SpaceBoundariesVisible rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ViewSetupHintsType ;
-    rdfs:range xsd:boolean ;
-    rdfs:comment "Viewer hint indicating whether space boundaries are visible." .
-
-bcf:OpeningsVisible rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ViewSetupHintsType ;
-    rdfs:range xsd:boolean ;
-    rdfs:comment "Viewer hint indicating whether openings are visible." .
-
-bcf:DefaultVisibility rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ComponentVisibilityType ;
-    rdfs:range xsd:boolean ;
-    rdfs:comment "Default visibility state for components in a viewpoint." .
-
-bcf:OriginatingSystem rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ComponentType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Name of the source system for a component reference." .
-
-bcf:AuthoringToolId rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ComponentType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Identifier of the component in the authoring tool." .
-
-bcf:IfcGuid rdf:type owl:DatatypeProperty ;
-    rdfs:domain :ComponentType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "IFC GUID of the component." .
-
-bcf:Format rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BitmapType ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Bitmap image format (for example, png or jpg)." .
-
-bcf:Height rdf:type owl:DatatypeProperty ;
-    rdfs:domain :BitmapType ;
-    rdfs:range xsd:double ;
-    rdfs:comment "Height of the bitmap overlay in world units." .
-
-#################################################################
-#    Mixed-use Properties
-#################################################################
-
-bcf:Viewpoint rdf:type rdf:Property ;
-    rdfs:comment "Mixed-use property: object link in comment context and filename literal in viewpoint context." .
-
-bcf:Color rdf:type rdf:Property ;
-    rdfs:comment "Mixed-use property: object link in component coloring and hex literal in color entry." .
-
-#################################################################
 #    Classes
 #################################################################
 
-:BcfModelType rdf:type owl:Class ;
+bcf:BcfModel a owl:Class ;
     rdfs:comment "Root container class for BIM BCF model resources." .
 
-:DocumentInfoType rdf:type owl:Class ;
+bcf:DocumentInfo a owl:Class ;
     rdfs:comment "Container class for document metadata." .
 
-:DocumentsContainerType rdf:type owl:Class ;
+bcf:DocumentsContainer a owl:Class ;
     rdfs:comment "Collection class that groups document entries." .
 
-:DocumentType rdf:type owl:Class ;
+bcf:Document a owl:Class ;
     rdfs:comment "Document metadata entry with filename, description, and GUID." .
 
-:ExtensionsType rdf:type owl:Class ;
-    rdfs:comment "Container class for extension catalogs (types, statuses, labels, users, stages)." .
+bcf:Extensions a owl:Class ;
+    rdfs:comment "Container class for extension catalogs." .
 
-:TopicTypesType rdf:type owl:Class ;
+bcf:TopicTypes a owl:Class ;
     rdfs:comment "Collection of topic type literals." .
 
-:TopicStatusesType rdf:type owl:Class ;
+bcf:TopicStatuses a owl:Class ;
     rdfs:comment "Collection of topic status literals." .
 
-:PrioritiesType rdf:type owl:Class ;
+bcf:Priorities a owl:Class ;
     rdfs:comment "Collection of priority literals." .
 
-:TopicLabelsType rdf:type owl:Class ;
+bcf:TopicLabels a owl:Class ;
     rdfs:comment "Collection of topic label literals." .
 
-:UsersType rdf:type owl:Class ;
+bcf:Users a owl:Class ;
     rdfs:comment "Collection of user identifier literals." .
 
-:SnippetTypesType rdf:type owl:Class ;
+bcf:SnippetTypes a owl:Class ;
     rdfs:comment "Collection of BIM snippet type literals." .
 
-:StagesType rdf:type owl:Class ;
+bcf:Stages a owl:Class ;
     rdfs:comment "Collection of stage literals." .
 
-:ProjectInfoType rdf:type owl:Class ;
+bcf:ProjectInfo a owl:Class ;
     rdfs:comment "Project information wrapper." .
 
-:ProjectType rdf:type owl:Class ;
+bcf:Project a owl:Class ;
     rdfs:comment "Project details with project ID and optional name." .
 
-:VersionType rdf:type owl:Class ;
+bcf:Version a owl:Class ;
     rdfs:comment "Version payload with required version identifier." .
 
-:MarkupType rdf:type owl:Class ;
+bcf:Markup a owl:Class ;
     rdfs:comment "Main BCF markup class containing header and topic." .
 
-:HeaderType rdf:type owl:Class ;
+bcf:Header a owl:Class ;
     rdfs:comment "Header section containing referenced files." .
 
-:FilesContainerType rdf:type owl:Class ;
+bcf:FilesContainer a owl:Class ;
     rdfs:comment "Collection class for file entries." .
 
-:ReferenceLinksType rdf:type owl:Class ;
+bcf:ReferenceLinks a owl:Class ;
     rdfs:comment "Collection class for topic reference links." .
 
-:LabelsType rdf:type owl:Class ;
+bcf:Labels a owl:Class ;
     rdfs:comment "Collection class for topic labels." .
 
-:BimSnippetType rdf:type owl:Class ;
+bcf:BimSnippet a owl:Class ;
     rdfs:comment "BIM snippet metadata containing reference and schema details." .
 
-:DocumentReferencesType rdf:type owl:Class ;
+bcf:DocumentReferences a owl:Class ;
     rdfs:comment "Collection class for document references." .
 
-:RelatedTopicsType rdf:type owl:Class ;
+bcf:RelatedTopics a owl:Class ;
     rdfs:comment "Collection class for links to related topics." .
 
-:RelatedTopicRefType rdf:type owl:Class ;
+bcf:RelatedTopicRef a owl:Class ;
     rdfs:comment "Reference class identifying a related topic by GUID." .
 
-:CommentsType rdf:type owl:Class ;
+bcf:Comments a owl:Class ;
     rdfs:comment "Collection class for comment entries." .
 
-:ViewpointsType rdf:type owl:Class ;
+bcf:Viewpoints a owl:Class ;
     rdfs:comment "Collection class for viewpoint entries." .
 
-:TopicType rdf:type owl:Class ;
+bcf:Topic a owl:Class ;
     rdfs:comment "Core issue/topic class with metadata, workflow state, comments, and viewpoints." .
 
-:FileType rdf:type owl:Class ;
+bcf:File a owl:Class ;
     rdfs:comment "Referenced file metadata class in the markup header." .
 
-:ViewPointType rdf:type owl:Class ;
+bcf:ViewPoint a owl:Class ;
     rdfs:comment "Viewpoint resource with viewpoint file, snapshot, index, and GUID." .
 
-:DocumentReferenceType rdf:type owl:Class ;
+bcf:DocumentReference a owl:Class ;
     rdfs:comment "Document reference class for either internal document GUID or external URL." .
 
-:CommentType rdf:type owl:Class ;
+bcf:Comment a owl:Class ;
     rdfs:comment "Comment resource with authoring and modification metadata." .
 
-:CommentViewpointRefType rdf:type owl:Class ;
+bcf:CommentViewpointRef a owl:Class ;
     rdfs:comment "Reference from comment to a viewpoint identified by GUID." .
 
-:VisualizationInfoType rdf:type owl:Class ;
+bcf:VisualizationInfo a owl:Class ;
     rdfs:comment "Visualization payload including camera configuration and overlays." .
 
-:OrthogonalCameraType rdf:type owl:Class ;
+bcf:OrthogonalCamera a owl:Class ;
     rdfs:comment "Orthogonal camera definition." .
 
-:PerspectiveCameraType rdf:type owl:Class ;
+bcf:PerspectiveCamera a owl:Class ;
     rdfs:comment "Perspective camera definition." .
 
-:PointType rdf:type owl:Class ;
+bcf:Point a owl:Class ;
     rdfs:comment "3D point represented by X, Y, and Z coordinates." .
 
-:DirectionType rdf:type owl:Class ;
+bcf:Direction a owl:Class ;
     rdfs:comment "3D direction vector represented by X, Y, and Z components." .
 
-:ComponentsType rdf:type owl:Class ;
+bcf:Components a owl:Class ;
     rdfs:comment "Components definition containing selection, visibility, and coloring sections." .
 
-:ComponentSelectionType rdf:type owl:Class ;
+bcf:ComponentSelection a owl:Class ;
     rdfs:comment "Collection of selected components." .
 
-:ViewSetupHintsType rdf:type owl:Class ;
+bcf:ViewSetupHints a owl:Class ;
     rdfs:comment "Viewer hints for visibility of spaces, boundaries, and openings." .
 
-:ExceptionsType rdf:type owl:Class ;
+bcf:Exceptions a owl:Class ;
     rdfs:comment "Visibility exception list for components." .
 
-:ComponentVisibilityType rdf:type owl:Class ;
+bcf:ComponentVisibility a owl:Class ;
     rdfs:comment "Default visibility and exception settings for components." .
 
-:ColorComponentsType rdf:type owl:Class ;
+bcf:ColorComponents a owl:Class ;
     rdfs:comment "Set of components affected by a single color rule." .
 
-:ColoringEntryType rdf:type owl:Class ;
+bcf:ColoringEntry a owl:Class ;
     rdfs:comment "Single color rule entry linking components and a color value." .
 
-:ComponentColoringType rdf:type owl:Class ;
+bcf:ComponentColoring a owl:Class ;
     rdfs:comment "Collection of component coloring entries." .
 
-:ComponentType rdf:type owl:Class ;
+bcf:Component a owl:Class ;
     rdfs:comment "IFC component reference with optional originating system metadata." .
 
-:LineType rdf:type owl:Class ;
+bcf:Line a owl:Class ;
     rdfs:comment "Line overlay defined by start and end points." .
 
-:ClippingPlaneType rdf:type owl:Class ;
+bcf:ClippingPlane a owl:Class ;
     rdfs:comment "Clipping plane defined by location and direction." .
 
-:BitmapType rdf:type owl:Class ;
+bcf:Bitmap a owl:Class ;
     rdfs:comment "Bitmap overlay with placement, orientation, format, and size." .
 
-:LinesType rdf:type owl:Class ;
+bcf:Lines a owl:Class ;
     rdfs:comment "Collection class for line overlays." .
 
-:ClippingPlanesType rdf:type owl:Class ;
+bcf:ClippingPlanes a owl:Class ;
     rdfs:comment "Collection class for clipping planes." .
 
-:BitmapsType rdf:type owl:Class ;
+bcf:Bitmaps a owl:Class ;
     rdfs:comment "Collection class for bitmap overlays." .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+bcf:DocumentInfo a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:DocumentInfo ;
+    rdfs:comment "Links a BCF model to its document information section." .
+
+bcf:Extensions a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:Extensions ;
+    rdfs:comment "Links a BCF model to extension vocabularies like status, type, stage, and labels." .
+
+bcf:Markup a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:Markup ;
+    rdfs:comment "Links a BCF model to its main markup content." .
+
+bcf:ProjectInfo a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:ProjectInfo ;
+    rdfs:comment "Links a BCF model to the project information section." .
+
+bcf:Version a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:Version ;
+    rdfs:comment "Links a BCF model to its declared version payload." .
+
+bcf:VisualizationInfo a owl:ObjectProperty ;
+    rdfs:domain bcf:BcfModel ;
+    rdfs:range bcf:VisualizationInfo ;
+    rdfs:comment "Links a BCF model to viewpoint visualization information." .
+
+bcf:Documents a owl:ObjectProperty ;
+    rdfs:domain bcf:DocumentInfo ;
+    rdfs:range bcf:DocumentsContainer ;
+    rdfs:comment "Container relation that groups document entries." .
+
+bcf:Document a owl:ObjectProperty ;
+    rdfs:domain bcf:DocumentsContainer ;
+    rdfs:range bcf:Document ;
+    rdfs:comment "Links a documents collection to individual document metadata entries." .
+
+bcf:TopicTypes a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:TopicTypes ;
+    rdfs:comment "Links extensions to the available topic type values." .
+
+bcf:TopicStatuses a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:TopicStatuses ;
+    rdfs:comment "Links extensions to the available topic status values." .
+
+bcf:Priorities a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:Priorities ;
+    rdfs:comment "Links extensions to the available priority values." .
+
+bcf:TopicLabels a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:TopicLabels ;
+    rdfs:comment "Links extensions to the available topic labels." .
+
+bcf:Users a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:Users ;
+    rdfs:comment "Links extensions to the available user identifiers." .
+
+bcf:SnippetTypes a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:SnippetTypes ;
+    rdfs:comment "Links extensions to the available BIM snippet types." .
+
+bcf:Stages a owl:ObjectProperty ;
+    rdfs:domain bcf:Extensions ;
+    rdfs:range bcf:Stages ;
+    rdfs:comment "Links extensions to the available workflow stages." .
+
+bcf:Project a owl:ObjectProperty ;
+    rdfs:domain bcf:ProjectInfo ;
+    rdfs:range bcf:Project ;
+    rdfs:comment "Links project info to the concrete project descriptor." .
+
+bcf:Header a owl:ObjectProperty ;
+    rdfs:domain bcf:Markup ;
+    rdfs:range bcf:Header ;
+    rdfs:comment "Links markup to optional header information." .
+
+bcf:Topic a owl:ObjectProperty ;
+    rdfs:domain bcf:Markup ;
+    rdfs:range bcf:Topic ;
+    rdfs:comment "Links markup to its main topic issue payload." .
+
+bcf:Files a owl:ObjectProperty ;
+    rdfs:domain bcf:Header ;
+    rdfs:range bcf:FilesContainer ;
+    rdfs:comment "Container relation for header file entries." .
+
+bcf:File a owl:ObjectProperty ;
+    rdfs:domain bcf:FilesContainer ;
+    rdfs:range bcf:File ;
+    rdfs:comment "Links a files collection to individual file entries." .
+
+bcf:ReferenceLinks a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:ReferenceLinks ;
+    rdfs:comment "Links topic to external reference URLs." .
+
+bcf:Labels a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:Labels ;
+    rdfs:comment "Links topic to free-form labels container." .
+
+bcf:BimSnippet a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:BimSnippet ;
+    rdfs:comment "Links topic to its BIM snippet description." .
+
+bcf:DocumentReferences a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:DocumentReferences ;
+    rdfs:comment "Links topic to document reference entries." .
+
+bcf:RelatedTopics a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:RelatedTopics ;
+    rdfs:comment "Links topic to references to other related topics." .
+
+bcf:Comments a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:Comments ;
+    rdfs:comment "Links topic to its comment collection." .
+
+bcf:Viewpoints a owl:ObjectProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range bcf:Viewpoints ;
+    rdfs:comment "Links topic to viewpoint definitions and snapshots." .
+
+bcf:RelatedTopic a owl:ObjectProperty ;
+    rdfs:domain bcf:RelatedTopics ;
+    rdfs:range bcf:RelatedTopicRef ;
+    rdfs:comment "Links related-topics container to individual related topic references." .
+
+bcf:Comment a owl:ObjectProperty ;
+    rdfs:domain bcf:Comments ;
+    rdfs:range bcf:Comment ;
+    rdfs:comment "Links comments container to individual comment entries." .
+
+bcf:ViewPoint a owl:ObjectProperty ;
+    rdfs:domain bcf:Viewpoints ;
+    rdfs:range bcf:ViewPoint ;
+    rdfs:comment "Links viewpoints container to individual viewpoint entries." .
+
+bcf:DocumentReference a owl:ObjectProperty ;
+    rdfs:domain bcf:DocumentReferences ;
+    rdfs:range bcf:DocumentReference ;
+    rdfs:comment "Links document references container to individual reference entries." .
+
+bcf:Components a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:VisualizationInfo bcf:ColoringEntry )
+    ] ;
+    rdfs:range [
+        a owl:Class ;
+        owl:unionOf ( bcf:Components bcf:ColorComponents )
+    ] ;
+    rdfs:comment "References component sets used in visualization and coloring entries." .
+
+bcf:OrthogonalCamera a owl:ObjectProperty ;
+    rdfs:domain bcf:VisualizationInfo ;
+    rdfs:range bcf:OrthogonalCamera ;
+    rdfs:comment "Associates visualization info with an orthogonal camera definition." .
+
+bcf:PerspectiveCamera a owl:ObjectProperty ;
+    rdfs:domain bcf:VisualizationInfo ;
+    rdfs:range bcf:PerspectiveCamera ;
+    rdfs:comment "Associates visualization info with a perspective camera definition." .
+
+bcf:Lines a owl:ObjectProperty ;
+    rdfs:domain bcf:VisualizationInfo ;
+    rdfs:range bcf:Lines ;
+    rdfs:comment "Associates visualization info with line overlays." .
+
+bcf:ClippingPlanes a owl:ObjectProperty ;
+    rdfs:domain bcf:VisualizationInfo ;
+    rdfs:range bcf:ClippingPlanes ;
+    rdfs:comment "Associates visualization info with clipping plane definitions." .
+
+bcf:Bitmaps a owl:ObjectProperty ;
+    rdfs:domain bcf:VisualizationInfo ;
+    rdfs:range bcf:Bitmaps ;
+    rdfs:comment "Associates visualization info with bitmap overlays." .
+
+bcf:CameraViewPoint a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:OrthogonalCamera bcf:PerspectiveCamera )
+    ] ;
+    rdfs:range bcf:Point ;
+    rdfs:comment "Camera position in 3D space." .
+
+bcf:CameraDirection a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:OrthogonalCamera bcf:PerspectiveCamera )
+    ] ;
+    rdfs:range bcf:Direction ;
+    rdfs:comment "Camera forward direction vector." .
+
+bcf:CameraUpVector a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:OrthogonalCamera bcf:PerspectiveCamera )
+    ] ;
+    rdfs:range bcf:Direction ;
+    rdfs:comment "Camera up direction vector." .
+
+bcf:Selection a owl:ObjectProperty ;
+    rdfs:domain bcf:Components ;
+    rdfs:range bcf:ComponentSelection ;
+    rdfs:comment "Selected components within a viewpoint." .
+
+bcf:Visibility a owl:ObjectProperty ;
+    rdfs:domain bcf:Components ;
+    rdfs:range bcf:ComponentVisibility ;
+    rdfs:comment "Visibility rules for components within a viewpoint." .
+
+bcf:Coloring a owl:ObjectProperty ;
+    rdfs:domain bcf:Components ;
+    rdfs:range bcf:ComponentColoring ;
+    rdfs:comment "Color overrides for components within a viewpoint." .
+
+bcf:ViewSetupHints a owl:ObjectProperty ;
+    rdfs:domain bcf:ComponentVisibility ;
+    rdfs:range bcf:ViewSetupHints ;
+    rdfs:comment "Viewer hints for spaces, openings, and boundaries." .
+
+bcf:Exceptions a owl:ObjectProperty ;
+    rdfs:domain bcf:ComponentVisibility ;
+    rdfs:range bcf:Exceptions ;
+    rdfs:comment "Components that differ from default visibility." .
+
+bcf:Component a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:ComponentSelection bcf:Exceptions bcf:ColorComponents )
+    ] ;
+    rdfs:range bcf:Component ;
+    rdfs:comment "References individual IFC components." .
+
+bcf:Line a owl:ObjectProperty ;
+    rdfs:domain bcf:Lines ;
+    rdfs:range bcf:Line ;
+    rdfs:comment "References individual line overlay entries." .
+
+bcf:ClippingPlane a owl:ObjectProperty ;
+    rdfs:domain bcf:ClippingPlanes ;
+    rdfs:range bcf:ClippingPlane ;
+    rdfs:comment "References individual clipping plane entries." .
+
+bcf:Bitmap a owl:ObjectProperty ;
+    rdfs:domain bcf:Bitmaps ;
+    rdfs:range bcf:Bitmap ;
+    rdfs:comment "References individual bitmap overlay entries." .
+
+bcf:StartPoint a owl:ObjectProperty ;
+    rdfs:domain bcf:Line ;
+    rdfs:range bcf:Point ;
+    rdfs:comment "Start point of a line segment." .
+
+bcf:EndPoint a owl:ObjectProperty ;
+    rdfs:domain bcf:Line ;
+    rdfs:range bcf:Point ;
+    rdfs:comment "End point of a line segment." .
+
+bcf:Location a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:ClippingPlane bcf:Bitmap )
+    ] ;
+    rdfs:range bcf:Point ;
+    rdfs:comment "3D location used by clipping planes and bitmap placement." .
+
+bcf:Direction a owl:ObjectProperty ;
+    rdfs:domain bcf:ClippingPlane ;
+    rdfs:range bcf:Direction ;
+    rdfs:comment "Normal direction of a clipping plane." .
+
+bcf:Normal a owl:ObjectProperty ;
+    rdfs:domain bcf:Bitmap ;
+    rdfs:range bcf:Direction ;
+    rdfs:comment "Normal vector of a bitmap overlay plane." .
+
+bcf:Up a owl:ObjectProperty ;
+    rdfs:domain bcf:Bitmap ;
+    rdfs:range bcf:Direction ;
+    rdfs:comment "Up vector of a bitmap overlay plane." .
+
+bcf:Viewpoint a owl:ObjectProperty ;
+    rdfs:domain bcf:Comment ;
+    rdfs:range bcf:CommentViewpointRef ;
+    rdfs:comment "Links a comment to a referenced viewpoint." .
+
+bcf:Color a owl:ObjectProperty ;
+    rdfs:domain bcf:ComponentColoring ;
+    rdfs:range bcf:ColoringEntry ;
+    rdfs:comment "Links component coloring container to individual coloring entries." .
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+bcf:Filename a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Document bcf:File )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:name ;
+    rdfs:comment "Filename associated with a document or file entry." .
+
+bcf:Description a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Document bcf:Topic bcf:DocumentReference )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:description, dcterms:description ;
+    rdfs:comment "Human-readable description text." .
+
+bcf:Guid a owl:DatatypeProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "Globally unique identifier represented as text." .
+
+bcf:TopicType a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:TopicTypes )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:type ;
+    rdfs:comment "Topic type value or catalog entry." .
+
+bcf:TopicStatus a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:TopicStatuses )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Topic status value or catalog entry." .
+
+bcf:Priority a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:Priorities )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Priority value or catalog entry." .
+
+bcf:TopicLabel a owl:DatatypeProperty ;
+    rdfs:domain bcf:TopicLabels ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:keywords, dcterms:subject ;
+    rdfs:comment "Single label value available in extension catalogs." .
+
+bcf:User a owl:DatatypeProperty ;
+    rdfs:domain bcf:Users ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Single user value available in extension catalogs." .
+
+bcf:SnippetType a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:BimSnippet bcf:SnippetTypes )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf dcterms:type ;
+    rdfs:comment "Snippet type value used in topic snippets and extension catalogs." .
+
+bcf:Stage a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:Stages )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Stage value used in topics and extension catalogs." .
+
+bcf:Name a owl:DatatypeProperty ;
+    rdfs:domain bcf:Project ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:name ;
+    rdfs:comment "Human-readable name of the project." .
+
+bcf:ProjectId a owl:DatatypeProperty ;
+    rdfs:domain bcf:Project ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "Identifier for the project." .
+
+bcf:VersionId a owl:DatatypeProperty ;
+    rdfs:domain bcf:Version ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "Version identifier string for BCF payload." .
+
+bcf:ReferenceLink a owl:DatatypeProperty ;
+    rdfs:domain bcf:ReferenceLinks ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:url, dcterms:references ;
+    rdfs:comment "External reference URL associated with a topic." .
+
+bcf:Title a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:name, dcterms:title ;
+    rdfs:comment "Short human-readable title of a topic." .
+
+bcf:Index a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:ViewPoint )
+    ] ;
+    rdfs:range xsd:int ;
+    rdfs:subPropertyOf schema:position ;
+    rdfs:comment "Integer sort/index value for topic or viewpoint." .
+
+bcf:Label a owl:DatatypeProperty ;
+    rdfs:domain bcf:Labels ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:keywords, dcterms:subject ;
+    rdfs:comment "Single label attached to a topic." .
+
+bcf:CreationDate a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf schema:dateCreated, dcterms:created ;
+    rdfs:comment "Timestamp when the topic was created." .
+
+bcf:CreationAuthor a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:creator, schema:author ;
+    rdfs:comment "Author who created the topic." .
+
+bcf:ModifiedDate a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:Comment )
+    ] ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf schema:dateModified, dcterms:modified ;
+    rdfs:comment "Timestamp of the latest modification." .
+
+bcf:ModifiedAuthor a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Topic bcf:Comment )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:author ;
+    rdfs:comment "Author of the latest modification." .
+
+bcf:DueDate a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "Requested due date for the topic." .
+
+bcf:AssignedTo a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Assignee identifier for the topic." .
+
+bcf:ServerAssignedId a owl:DatatypeProperty ;
+    rdfs:domain bcf:Topic ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "Server-assigned topic identifier." .
+
+bcf:Reference a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:BimSnippet bcf:File bcf:Bitmap )
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:contentUrl ;
+    rdfs:comment "Reference string (filename, URI, or path) used by snippets, files, and bitmaps." .
+
+bcf:ReferenceSchema a owl:DatatypeProperty ;
+    rdfs:domain bcf:BimSnippet ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Schema identifier associated with a BIM snippet." .
+
+bcf:IsExternal a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:BimSnippet bcf:File )
+    ] ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Indicates whether a referenced resource is external to the BCF package." .
+
+bcf:IfcProject a owl:DatatypeProperty ;
+    rdfs:domain bcf:File ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "IFC project GUID associated with a file entry." .
+
+bcf:IfcSpatialStructureElement a owl:DatatypeProperty ;
+    rdfs:domain bcf:File ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "IFC spatial structure element GUID associated with a file entry." .
+
+bcf:DocumentGuid a owl:DatatypeProperty ;
+    rdfs:domain bcf:DocumentReference ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "GUID of an internal document referenced by a topic." .
+
+bcf:Url a owl:DatatypeProperty ;
+    rdfs:domain bcf:DocumentReference ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:url, dcterms:references ;
+    rdfs:comment "URL of an external document referenced by a topic." .
+
+bcf:Snapshot a owl:DatatypeProperty ;
+    rdfs:domain bcf:ViewPoint ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:image, schema:contentUrl ;
+    rdfs:comment "Snapshot image filename associated with a viewpoint." .
+
+bcf:Date a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:File bcf:Comment )
+    ] ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "Timestamp associated with a file or comment entry." .
+
+bcf:Author a owl:DatatypeProperty ;
+    rdfs:domain bcf:Comment ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:author ;
+    rdfs:comment "Author identifier for a comment entry." .
+
+bcf:CommentText a owl:DatatypeProperty ;
+    rdfs:domain bcf:Comment ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:text ;
+    rdfs:comment "Textual body of a comment entry." .
+
+bcf:ViewpointFile a owl:DatatypeProperty ;
+    rdfs:domain bcf:ViewPoint ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:contentUrl ;
+    rdfs:comment "Filename or path of the viewpoint file associated with a viewpoint resource." .
+
+bcf:ViewToWorldScale a owl:DatatypeProperty ;
+    rdfs:domain bcf:OrthogonalCamera ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Visible vertical size in world units for orthogonal camera." .
+
+bcf:FieldOfView a owl:DatatypeProperty ;
+    rdfs:domain bcf:PerspectiveCamera ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Vertical field of view angle in degrees for perspective camera." .
+
+bcf:AspectRatio a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:OrthogonalCamera bcf:PerspectiveCamera )
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Width/height aspect ratio of the camera view." .
+
+bcf:X a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Point bcf:Direction )
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:comment "X coordinate component." .
+
+bcf:Y a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Point bcf:Direction )
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Y coordinate component." .
+
+bcf:Z a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf ( bcf:Point bcf:Direction )
+    ] ;
+    rdfs:range xsd:double ;
+    rdfs:comment "Z coordinate component." .
+
+bcf:SpacesVisible a owl:DatatypeProperty ;
+    rdfs:domain bcf:ViewSetupHints ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Viewer hint indicating whether spaces are visible." .
+
+bcf:SpaceBoundariesVisible a owl:DatatypeProperty ;
+    rdfs:domain bcf:ViewSetupHints ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Viewer hint indicating whether space boundaries are visible." .
+
+bcf:OpeningsVisible a owl:DatatypeProperty ;
+    rdfs:domain bcf:ViewSetupHints ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Viewer hint indicating whether openings are visible." .
+
+bcf:DefaultVisibility a owl:DatatypeProperty ;
+    rdfs:domain bcf:ComponentVisibility ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "Default visibility state for components in a viewpoint." .
+
+bcf:OriginatingSystem a owl:DatatypeProperty ;
+    rdfs:domain bcf:Component ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Name of the source system for a component reference." .
+
+bcf:AuthoringToolId a owl:DatatypeProperty ;
+    rdfs:domain bcf:Component ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "Identifier of the component in the authoring tool." .
+
+bcf:IfcGuid a owl:DatatypeProperty ;
+    rdfs:domain bcf:Component ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:identifier, dcterms:identifier ;
+    rdfs:comment "IFC GUID of the component." .
+
+bcf:ColorValue a owl:DatatypeProperty ;
+    rdfs:domain bcf:ColoringEntry ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Hexadecimal RGB or RGBA color value used in a coloring rule." .
+
+bcf:Format a owl:DatatypeProperty ;
+    rdfs:domain bcf:Bitmap ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf schema:fileFormat, dcterms:format ;
+    rdfs:comment "Bitmap image format (for example, png or jpg)." .
+
+bcf:Height a owl:DatatypeProperty ;
+    rdfs:domain bcf:Bitmap ;
+    rdfs:range xsd:double ;
+    rdfs:subPropertyOf schema:height ;
+    rdfs:comment "Height of the bitmap overlay in world units." .

@@ -2,340 +2,339 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix bcf: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#> .
 
-bcf:BimBcfShapes
-	a sh:NodeShape ;
-	sh:targetClass bcf:BcfModel ;
-	sh:property [ sh:path bcf:DocumentInfo ; sh:node bcf:DocumentInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Extensions ; sh:node bcf:ExtensionsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Markup ; sh:node bcf:MarkupShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ProjectInfo ; sh:node bcf:ProjectInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Version ; sh:node bcf:VersionShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:VisualizationInfo ; sh:node bcf:VisualizationInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+bcf:BimBcfShape
+    a sh:NodeShape ;
+    sh:targetClass bcf:BcfModel ;
+    sh:property [ sh:path bcf:DocumentInfo ; sh:node bcf:DocumentInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Extensions ; sh:node bcf:ExtensionsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Markup ; sh:node bcf:MarkupShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ProjectInfo ; sh:node bcf:ProjectInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Version ; sh:node bcf:VersionShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:VisualizationInfo ; sh:node bcf:VisualizationInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
-# Shared scalar constraints from shared-types.xsd and visinfo.xsd
 bcf:GuidLiteralShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:string ;
-	sh:pattern "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:pattern "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}" .
 
 bcf:NonEmptyOrBlankStringShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:string ;
-	sh:minLength 1 .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 .
 
 bcf:IfcGuidLiteralShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:string ;
-	sh:minLength 22 ;
-	sh:maxLength 22 ;
-	sh:pattern "[0-9A-Za-z_$]*" .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:minLength 22 ;
+    sh:maxLength 22 ;
+    sh:pattern "[0-9A-Za-z_$]*" .
 
 bcf:ColorLiteralShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:string ;
-	sh:pattern "[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?" .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:string ;
+    sh:pattern "[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?" .
 
 bcf:PositiveDoubleShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:double ;
-	sh:minExclusive 0 .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minExclusive 0 .
 
 bcf:FieldOfViewShape
-	a sh:NodeShape ;
-	sh:nodeKind sh:Literal ;
-	sh:datatype xsd:double ;
-	sh:minExclusive 0 ;
-	sh:maxExclusive 180 .
+    a sh:NodeShape ;
+    sh:nodeKind sh:Literal ;
+    sh:datatype xsd:double ;
+    sh:minExclusive 0 ;
+    sh:maxExclusive 180 .
 
 bcf:BitmapFormatShape
-	a sh:NodeShape ;
-	sh:in ( "png" "jpg" ) .
+    a sh:NodeShape ;
+    sh:in ( "png" "jpg" ) .
 
-# documents.xsd
 bcf:DocumentInfoShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:DocumentInfo ;
-	sh:property [ sh:path bcf:Documents ; sh:node bcf:DocumentsContainerShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:DocumentInfo ;
+    sh:property [ sh:path bcf:Documents ; sh:node bcf:DocumentsContainerShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:DocumentsContainerShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:Document ; sh:node bcf:DocumentShape ; sh:minCount 0 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:DocumentsContainer ;
+    sh:property [ sh:path bcf:Document ; sh:node bcf:DocumentShape ; sh:minCount 0 ] .
 
 bcf:DocumentShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Document ;
-	sh:property [ sh:path bcf:Filename ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Document ;
+    sh:property [ sh:path bcf:Filename ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-# extensions.xsd
 bcf:ExtensionsShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Extensions ;
-	sh:property [ sh:path bcf:TopicTypes ; sh:node bcf:TopicTypesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:TopicStatuses ; sh:node bcf:TopicStatusesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Priorities ; sh:node bcf:PrioritiesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:TopicLabels ; sh:node bcf:TopicLabelsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Users ; sh:node bcf:UsersShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:SnippetTypes ; sh:node bcf:SnippetTypesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Stages ; sh:node bcf:StagesShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Extensions ;
+    sh:property [ sh:path bcf:TopicTypes ; sh:node bcf:TopicTypesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:TopicStatuses ; sh:node bcf:TopicStatusesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Priorities ; sh:node bcf:PrioritiesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:TopicLabels ; sh:node bcf:TopicLabelsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Users ; sh:node bcf:UsersShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:SnippetTypes ; sh:node bcf:SnippetTypesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Stages ; sh:node bcf:StagesShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
-bcf:TopicTypesShape a sh:NodeShape ; sh:property [ sh:path bcf:TopicType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:TopicStatusesShape a sh:NodeShape ; sh:property [ sh:path bcf:TopicStatus ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:PrioritiesShape a sh:NodeShape ; sh:property [ sh:path bcf:Priority ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:TopicLabelsShape a sh:NodeShape ; sh:property [ sh:path bcf:TopicLabel ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:UsersShape a sh:NodeShape ; sh:property [ sh:path bcf:User ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:SnippetTypesShape a sh:NodeShape ; sh:property [ sh:path bcf:SnippetType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:StagesShape a sh:NodeShape ; sh:property [ sh:path bcf:Stage ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:TopicTypesShape a sh:NodeShape ; sh:targetClass bcf:TopicTypes ; sh:property [ sh:path bcf:TopicType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:TopicStatusesShape a sh:NodeShape ; sh:targetClass bcf:TopicStatuses ; sh:property [ sh:path bcf:TopicStatus ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:PrioritiesShape a sh:NodeShape ; sh:targetClass bcf:Priorities ; sh:property [ sh:path bcf:Priority ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:TopicLabelsShape a sh:NodeShape ; sh:targetClass bcf:TopicLabels ; sh:property [ sh:path bcf:TopicLabel ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:UsersShape a sh:NodeShape ; sh:targetClass bcf:Users ; sh:property [ sh:path bcf:User ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:SnippetTypesShape a sh:NodeShape ; sh:targetClass bcf:SnippetTypes ; sh:property [ sh:path bcf:SnippetType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:StagesShape a sh:NodeShape ; sh:targetClass bcf:Stages ; sh:property [ sh:path bcf:Stage ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
 
-# project.xsd
 bcf:ProjectInfoShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ProjectInfo ;
-	sh:property [ sh:path bcf:Project ; sh:node bcf:ProjectShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ProjectInfo ;
+    sh:property [ sh:path bcf:Project ; sh:node bcf:ProjectShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:ProjectShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Project ;
-	sh:property [ sh:path bcf:Name ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ProjectId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Project ;
+    sh:property [ sh:path bcf:Name ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ProjectId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-# version.xsd
 bcf:VersionShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Version ;
-	sh:property [ sh:path bcf:VersionId ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Version ;
+    sh:property [ sh:path bcf:VersionId ; sh:datatype xsd:string ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-# markup.xsd
 bcf:MarkupShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Markup ;
-	sh:property [ sh:path bcf:Header ; sh:node bcf:HeaderShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Topic ; sh:node bcf:TopicShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Markup ;
+    sh:property [ sh:path bcf:Header ; sh:node bcf:HeaderShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Topic ; sh:node bcf:TopicShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:HeaderShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Header ;
-	sh:property [ sh:path bcf:Files ; sh:node bcf:FilesContainerShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Header ;
+    sh:property [ sh:path bcf:Files ; sh:node bcf:FilesContainerShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
-bcf:FilesContainerShape a sh:NodeShape ; sh:property [ sh:path bcf:File ; sh:node bcf:FileShape ; sh:minCount 0 ] .
-bcf:LabelsShape a sh:NodeShape ; sh:property [ sh:path bcf:Label ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:ReferenceLinksShape a sh:NodeShape ; sh:property [ sh:path bcf:ReferenceLink ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-bcf:CommentsShape a sh:NodeShape ; sh:property [ sh:path bcf:Comment ; sh:node bcf:CommentShape ; sh:minCount 0 ] .
-bcf:ViewpointsShape a sh:NodeShape ; sh:property [ sh:path bcf:ViewPoint ; sh:node bcf:ViewPointShape ; sh:minCount 0 ] .
-bcf:DocumentReferencesShape a sh:NodeShape ; sh:property [ sh:path bcf:DocumentReference ; sh:node bcf:DocumentReferenceShape ; sh:minCount 0 ] .
+bcf:FilesContainerShape a sh:NodeShape ; sh:targetClass bcf:FilesContainer ; sh:property [ sh:path bcf:File ; sh:node bcf:FileShape ; sh:minCount 0 ] .
+bcf:LabelsShape a sh:NodeShape ; sh:targetClass bcf:Labels ; sh:property [ sh:path bcf:Label ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:ReferenceLinksShape a sh:NodeShape ; sh:targetClass bcf:ReferenceLinks ; sh:property [ sh:path bcf:ReferenceLink ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ] .
+bcf:CommentsShape a sh:NodeShape ; sh:targetClass bcf:Comments ; sh:property [ sh:path bcf:Comment ; sh:node bcf:CommentShape ; sh:minCount 0 ] .
+bcf:ViewpointsShape a sh:NodeShape ; sh:targetClass bcf:Viewpoints ; sh:property [ sh:path bcf:ViewPoint ; sh:node bcf:ViewPointShape ; sh:minCount 0 ] .
+bcf:DocumentReferencesShape a sh:NodeShape ; sh:targetClass bcf:DocumentReferences ; sh:property [ sh:path bcf:DocumentReference ; sh:node bcf:DocumentReferenceShape ; sh:minCount 0 ] .
 
 bcf:RelatedTopicRefShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:RelatedTopicRef ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:RelatedTopicsShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:RelatedTopic ; sh:node bcf:RelatedTopicRefShape ; sh:minCount 0 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:RelatedTopics ;
+    sh:property [ sh:path bcf:RelatedTopic ; sh:node bcf:RelatedTopicRefShape ; sh:minCount 0 ] .
 
 bcf:TopicShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Topic ;
-	sh:property [ sh:path bcf:ReferenceLinks ; sh:node bcf:ReferenceLinksShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Title ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Priority ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Index ; sh:datatype xsd:int ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Labels ; sh:node bcf:LabelsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CreationDate ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CreationAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ModifiedDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ModifiedAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:DueDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:AssignedTo ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Stage ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:BimSnippet ; sh:node bcf:BimSnippetShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:DocumentReferences ; sh:node bcf:DocumentReferencesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:RelatedTopics ; sh:node bcf:RelatedTopicsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Comments ; sh:node bcf:CommentsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Viewpoints ; sh:node bcf:ViewpointsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ServerAssignedId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:TopicType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:TopicStatus ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Topic ;
+    sh:property [ sh:path bcf:ReferenceLinks ; sh:node bcf:ReferenceLinksShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Title ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Priority ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Index ; sh:datatype xsd:int ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Labels ; sh:node bcf:LabelsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CreationDate ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CreationAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ModifiedDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ModifiedAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:DueDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:AssignedTo ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Stage ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:BimSnippet ; sh:node bcf:BimSnippetShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:DocumentReferences ; sh:node bcf:DocumentReferencesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:RelatedTopics ; sh:node bcf:RelatedTopicsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Comments ; sh:node bcf:CommentsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Viewpoints ; sh:node bcf:ViewpointsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ServerAssignedId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:TopicType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:TopicStatus ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:BimSnippetShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:BimSnippet ;
-	sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ReferenceSchema ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:SnippetType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:IsExternal ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:BimSnippet ;
+    sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ReferenceSchema ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:SnippetType ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:IsExternal ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:FileShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:File ;
-	sh:property [ sh:path bcf:Filename ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Date ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:IfcProject ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:IfcSpatialStructureElement ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:IsExternal ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:File ;
+    sh:property [ sh:path bcf:Filename ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Date ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:IfcProject ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:IfcSpatialStructureElement ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:IsExternal ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:ViewPointShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ViewPoint ;
-	sh:property [ sh:path bcf:Viewpoint ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Snapshot ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Index ; sh:datatype xsd:int ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ViewPoint ;
+    sh:property [ sh:path bcf:ViewpointFile ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Snapshot ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Index ; sh:datatype xsd:int ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:DocumentReferenceShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:DocumentReference ;
-	sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:xone (
-		[ sh:property [ sh:path bcf:DocumentGuid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-		  sh:property [ sh:path bcf:Url ; sh:maxCount 0 ] ]
-		[ sh:property [ sh:path bcf:Url ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-		  sh:property [ sh:path bcf:DocumentGuid ; sh:maxCount 0 ] ]
-	) .
+    a sh:NodeShape ;
+    sh:targetClass bcf:DocumentReference ;
+    sh:property [ sh:path bcf:Description ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:xone (
+        [ sh:property [ sh:path bcf:DocumentGuid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+          sh:property [ sh:path bcf:Url ; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path bcf:Url ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+          sh:property [ sh:path bcf:DocumentGuid ; sh:maxCount 0 ] ]
+    ) .
 
 bcf:CommentViewpointRefShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:CommentViewpointRef ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:CommentShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Comment ;
-	sh:property [ sh:path bcf:Date ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Author ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Comment ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Viewpoint ; sh:node bcf:CommentViewpointRefShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ModifiedDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ModifiedAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Comment ;
+    sh:property [ sh:path bcf:Date ; sh:datatype xsd:dateTime ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Author ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CommentText ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Viewpoint ; sh:node bcf:CommentViewpointRefShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ModifiedDate ; sh:datatype xsd:dateTime ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ModifiedAuthor ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-# visinfo.xsd
 bcf:VisualizationInfoShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:VisualizationInfo ;
-	sh:property [ sh:path bcf:Components ; sh:node bcf:ComponentsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Lines ; sh:node bcf:LinesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ClippingPlanes ; sh:node bcf:ClippingPlanesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Bitmaps ; sh:node bcf:BitmapsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:xone (
-		[ sh:property [ sh:path bcf:OrthogonalCamera ; sh:node bcf:OrthogonalCameraShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-		  sh:property [ sh:path bcf:PerspectiveCamera ; sh:maxCount 0 ] ]
-		[ sh:property [ sh:path bcf:PerspectiveCamera ; sh:node bcf:PerspectiveCameraShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-		  sh:property [ sh:path bcf:OrthogonalCamera ; sh:maxCount 0 ] ]
-	) .
+    a sh:NodeShape ;
+    sh:targetClass bcf:VisualizationInfo ;
+    sh:property [ sh:path bcf:Components ; sh:node bcf:ComponentsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Lines ; sh:node bcf:LinesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ClippingPlanes ; sh:node bcf:ClippingPlanesShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Bitmaps ; sh:node bcf:BitmapsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Guid ; sh:node bcf:GuidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:xone (
+        [ sh:property [ sh:path bcf:OrthogonalCamera ; sh:node bcf:OrthogonalCameraShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+          sh:property [ sh:path bcf:PerspectiveCamera ; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path bcf:PerspectiveCamera ; sh:node bcf:PerspectiveCameraShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+          sh:property [ sh:path bcf:OrthogonalCamera ; sh:maxCount 0 ] ]
+    ) .
 
 bcf:OrthogonalCameraShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:OrthogonalCamera ;
-	sh:property [ sh:path bcf:CameraViewPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CameraDirection ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CameraUpVector ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:ViewToWorldScale ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:AspectRatio ;sh:node bcf:PositiveDoubleShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:OrthogonalCamera ;
+    sh:property [ sh:path bcf:CameraViewPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CameraDirection ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CameraUpVector ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ViewToWorldScale ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:AspectRatio ; sh:node bcf:PositiveDoubleShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:PerspectiveCameraShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:PerspectiveCamera ;
-	sh:property [ sh:path bcf:CameraViewPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CameraDirection ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:CameraUpVector ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:FieldOfView ; sh:node bcf:FieldOfViewShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:AspectRatio ;sh:node bcf:PositiveDoubleShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:PerspectiveCamera ;
+    sh:property [ sh:path bcf:CameraViewPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CameraDirection ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:CameraUpVector ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:FieldOfView ; sh:node bcf:FieldOfViewShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:AspectRatio ; sh:node bcf:PositiveDoubleShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:PointShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Point ;
-	sh:property [ sh:path bcf:X ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Y ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Z ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Point ;
+    sh:property [ sh:path bcf:X ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Y ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Z ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:DirectionShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Direction ;
-	sh:property [ sh:path bcf:X ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Y ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Z ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Direction ;
+    sh:property [ sh:path bcf:X ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Y ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Z ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:ComponentsShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Components ;
-	sh:property [ sh:path bcf:Selection ; sh:node bcf:ComponentSelectionShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Visibility ; sh:node bcf:ComponentVisibilityShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Coloring ; sh:node bcf:ComponentColoringShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Components ;
+    sh:property [ sh:path bcf:Selection ; sh:node bcf:ComponentSelectionShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Visibility ; sh:node bcf:ComponentVisibilityShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Coloring ; sh:node bcf:ComponentColoringShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:ComponentSelectionShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ComponentSelection ;
-	sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 0 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ComponentSelection ;
+    sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 0 ] .
 
 bcf:ViewSetupHintsShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ViewSetupHints ;
-	sh:property [ sh:path bcf:SpacesVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:SpaceBoundariesVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:OpeningsVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ViewSetupHints ;
+    sh:property [ sh:path bcf:SpacesVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:SpaceBoundariesVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:OpeningsVisible ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
 
-bcf:ExceptionsShape a sh:NodeShape ; sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 0 ] .
+bcf:ExceptionsShape a sh:NodeShape ; sh:targetClass bcf:Exceptions ; sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 0 ] .
 
 bcf:ComponentVisibilityShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ComponentVisibility ;
-	sh:property [ sh:path bcf:ViewSetupHints ; sh:node bcf:ViewSetupHintsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Exceptions ; sh:node bcf:ExceptionsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:DefaultVisibility ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ComponentVisibility ;
+    sh:property [ sh:path bcf:ViewSetupHints ; sh:node bcf:ViewSetupHintsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Exceptions ; sh:node bcf:ExceptionsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:DefaultVisibility ; sh:datatype xsd:boolean ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:ColorComponentsShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ColorComponents ;
+    sh:property [ sh:path bcf:Component ; sh:node bcf:ComponentShape ; sh:minCount 1 ] .
 
 bcf:ColoringEntryShape
-	a sh:NodeShape ;
-	sh:property [ sh:path bcf:Components ; sh:node bcf:ColorComponentsShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Color ; sh:node bcf:ColorLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ColoringEntry ;
+    sh:property [ sh:path bcf:Components ; sh:node bcf:ColorComponentsShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:ColorValue ; sh:node bcf:ColorLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:ComponentColoringShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ComponentColoring ;
-	sh:property [ sh:path bcf:Color ; sh:node bcf:ColoringEntryShape ; sh:minCount 0 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ComponentColoring ;
+    sh:property [ sh:path bcf:Color ; sh:node bcf:ColoringEntryShape ; sh:minCount 0 ] .
 
 bcf:ComponentShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Component ;
-	sh:property [ sh:path bcf:OriginatingSystem ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:AuthoringToolId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:IfcGuid ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Component ;
+    sh:property [ sh:path bcf:OriginatingSystem ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:AuthoringToolId ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:IfcGuid ; sh:node bcf:IfcGuidLiteralShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
 bcf:LineShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Line ;
-	sh:property [ sh:path bcf:StartPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:EndPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Line ;
+    sh:property [ sh:path bcf:StartPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:EndPoint ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:ClippingPlaneShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:ClippingPlane ;
-	sh:property [ sh:path bcf:Location ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Direction ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:ClippingPlane ;
+    sh:property [ sh:path bcf:Location ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Direction ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:BitmapShape
-	a sh:NodeShape ;
-	sh:targetClass bcf:Bitmap ;
-	sh:property [ sh:path bcf:Format ; sh:node bcf:BitmapFormatShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Location ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Normal ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Up ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
-	sh:property [ sh:path bcf:Height ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
+    a sh:NodeShape ;
+    sh:targetClass bcf:Bitmap ;
+    sh:property [ sh:path bcf:Format ; sh:node bcf:BitmapFormatShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Reference ; sh:node bcf:NonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Location ; sh:node bcf:PointShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Normal ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Up ; sh:node bcf:DirectionShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:Height ; sh:datatype xsd:double ; sh:minCount 1 ; sh:maxCount 1 ] .
 
-bcf:LinesShape a sh:NodeShape ; sh:property [ sh:path bcf:Line ; sh:node bcf:LineShape ; sh:minCount 0 ] .
-bcf:ClippingPlanesShape a sh:NodeShape ; sh:property [ sh:path bcf:ClippingPlane ; sh:node bcf:ClippingPlaneShape ; sh:minCount 0 ] .
-bcf:BitmapsShape a sh:NodeShape ; sh:property [ sh:path bcf:Bitmap ; sh:node bcf:BitmapShape ; sh:minCount 0 ] .
+bcf:LinesShape a sh:NodeShape ; sh:targetClass bcf:Lines ; sh:property [ sh:path bcf:Line ; sh:node bcf:LineShape ; sh:minCount 0 ] .
+bcf:ClippingPlanesShape a sh:NodeShape ; sh:targetClass bcf:ClippingPlanes ; sh:property [ sh:path bcf:ClippingPlane ; sh:node bcf:ClippingPlaneShape ; sh:minCount 0 ] .
+bcf:BitmapsShape a sh:NodeShape ; sh:targetClass bcf:Bitmaps ; sh:property [ sh:path bcf:Bitmap ; sh:node bcf:BitmapShape ; sh:minCount 0 ] .
