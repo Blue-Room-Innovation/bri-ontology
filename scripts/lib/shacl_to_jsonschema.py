@@ -205,6 +205,10 @@ class ShaclToJsonSchema:
             return str(uri)
 
     def _build_shape_schema(self, shape: Union[URIRef, BNode]) -> JsonSchema:
+        # Detect pure literal/scalar shapes and return a primitive schema instead of an object schema
+        if not self._has_structural_constraints(shape) and self._is_literal_shape(shape):
+            return self._build_scalar_schema(shape)
+
         properties: Dict[str, JsonSchema] = {}
         required: List[str] = []
         constraints: List[JsonSchema] = []
@@ -698,6 +702,70 @@ class ShaclToJsonSchema:
         if isinstance(value, float) and math.isnan(value):
             return "NaN"
         return value
+
+    def _is_literal_shape(self, node: Union[URIRef, BNode]) -> bool:
+        """Return True when a NodeShape defines only scalar/literal constraints with no object structure."""
+        node_kind = self.graph.value(node, SH.nodeKind)
+        has_literal_constraint = (
+            node_kind == SH.Literal
+            or self.graph.value(node, SH.datatype) is not None
+            or self.graph.value(node, SH.minLength) is not None
+            or self.graph.value(node, SH.maxLength) is not None
+            or self.graph.value(node, SH.pattern) is not None
+            or self.graph.value(node, SH.minExclusive) is not None
+            or self.graph.value(node, SH.maxExclusive) is not None
+            or self.graph.value(node, SH.minInclusive) is not None
+            or self.graph.value(node, SH.maxInclusive) is not None
+            or self.graph.value(node, SH["in"]) is not None
+        )
+        # Must not be a class-targeting shape (those are node shapes, not value shapes)
+        return has_literal_constraint and self.graph.value(node, SH.targetClass) is None
+
+    def _build_scalar_schema(self, node: Union[URIRef, BNode]) -> JsonSchema:
+        """Build a scalar JSON Schema for a SHACL literal/value shape."""
+        # sh:in → enum (supersedes everything else)
+        in_list = self.graph.value(node, SH["in"])
+        if in_list:
+            values = [v.toPython() for v in Collection(self.graph, in_list)]
+            return {"enum": values}
+
+        schema: JsonSchema = {}
+
+        datatype = self.graph.value(node, SH.datatype)
+        if datatype:
+            schema.update(self._datatype_schema(datatype))
+        elif self.graph.value(node, SH.nodeKind) == SH.Literal:
+            # nodeKind sh:Literal with no datatype → assume string
+            schema["type"] = "string"
+
+        pattern = self.graph.value(node, SH.pattern)
+        if pattern:
+            schema.setdefault("type", "string")
+            schema["pattern"] = str(pattern)
+
+        min_length = self._int_value(self.graph.value(node, SH.minLength))
+        max_length = self._int_value(self.graph.value(node, SH.maxLength))
+        if min_length is not None:
+            schema.setdefault("type", "string")
+            schema["minLength"] = min_length
+        if max_length is not None:
+            schema.setdefault("type", "string")
+            schema["maxLength"] = max_length
+
+        min_exclusive = self.graph.value(node, SH.minExclusive)
+        max_exclusive = self.graph.value(node, SH.maxExclusive)
+        min_inclusive = self.graph.value(node, SH.minInclusive)
+        max_inclusive = self.graph.value(node, SH.maxInclusive)
+        if min_exclusive is not None:
+            schema["exclusiveMinimum"] = min_exclusive.toPython()
+        if max_exclusive is not None:
+            schema["exclusiveMaximum"] = max_exclusive.toPython()
+        if min_inclusive is not None:
+            schema["minimum"] = min_inclusive.toPython()
+        if max_inclusive is not None:
+            schema["maximum"] = max_inclusive.toPython()
+
+        return schema if schema else {"type": "string"}
 
     def _has_structural_constraints(self, node: Union[URIRef, BNode]) -> bool:
         return (

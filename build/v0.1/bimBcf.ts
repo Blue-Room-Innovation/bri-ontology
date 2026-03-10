@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-03-10 15:35:08
+ * Generated: 2026-03-10 15:47:58
  * Source: shapes/v0.1/bim-bcf.shacl.ttl
  */
 
@@ -110,16 +110,8 @@ export type BcfDocumentShape = {
       [k: string]: unknown;
     }
 );
-export type BcfNonEmptyOrBlankStringShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
-export type BcfGuidLiteralShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfNonEmptyOrBlankStringShape = string;
+export type BcfGuidLiteralShape = string;
 export type BcfExtensionsShape = {
   topicTypes?: BcfNonEmptyOrBlankStringShape | BcfNonEmptyOrBlankStringShape[];
   topicStatuses?: BcfNonEmptyOrBlankStringShape | BcfNonEmptyOrBlankStringShape[];
@@ -194,11 +186,7 @@ export type BcfFileShape = {
       [k: string]: unknown;
     }
 );
-export type BcfIfcGuidLiteralShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfIfcGuidLiteralShape = string;
 export type BcfTopicShape = {
   referenceLinks?: BcfNonEmptyOrBlankStringShape | BcfNonEmptyOrBlankStringShape[];
   title: BcfNonEmptyOrBlankStringShape | [BcfNonEmptyOrBlankStringShape];
@@ -535,11 +523,7 @@ export type BcfColoringEntryShape = {
       [k: string]: unknown;
     }
 );
-export type BcfColorLiteralShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfColorLiteralShape = string;
 export type BcfLineShape = {
   startPoint: BcfPointShape | [BcfPointShape];
   endPoint: BcfPointShape | [BcfPointShape];
@@ -628,11 +612,7 @@ export type BcfBitmapShape = {
       [k: string]: unknown;
     }
 );
-export type BcfBitmapFormatShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfBitmapFormatShape = "png" | "jpg";
 export type BcfOrthogonalCameraShape = {
   cameraViewPoint: BcfPointShape | [BcfPointShape];
   cameraDirection: BcfDirectionShape | [BcfDirectionShape];
@@ -654,11 +634,7 @@ export type BcfOrthogonalCameraShape = {
       [k: string]: unknown;
     }
 );
-export type BcfPositiveDoubleShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfPositiveDoubleShape = number;
 export type BcfPerspectiveCameraShape = {
   cameraViewPoint: BcfPointShape | [BcfPointShape];
   cameraDirection: BcfDirectionShape | [BcfDirectionShape];
@@ -680,8 +656,4 @@ export type BcfPerspectiveCameraShape = {
       [k: string]: unknown;
     }
 );
-export type BcfFieldOfViewShape = {
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-};
+export type BcfFieldOfViewShape = number;

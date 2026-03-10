@@ -153,129 +153,36 @@
       ]
     },
     "bcf_guidLiteralShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "string",
+      "pattern": "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "bcf_nonEmptyOrBlankStringShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "string",
+      "minLength": 1
     },
     "bcf_ifcGuidLiteralShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "string",
+      "pattern": "[0-9A-Za-z_$]*",
+      "minLength": 22,
+      "maxLength": 22
     },
     "bcf_colorLiteralShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "string",
+      "pattern": "[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?"
     },
     "bcf_positiveDoubleShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "number",
+      "exclusiveMinimum": 0
     },
     "bcf_fieldOfViewShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
-      ]
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "exclusiveMaximum": 180
     },
     "bcf_bitmapFormatShape": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "@id": {
-              "type": "string"
-            },
-            "@type": {
-              "type": [
-                "string",
-                "array"
-              ]
-            }
-          }
-        }
+      "enum": [
+        "png",
+        "jpg"
       ]
     },
     "bcf_documentShape": {
