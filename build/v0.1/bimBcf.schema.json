@@ -1,0 +1,4058 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$defs": {
+    "bcf_bimBcfShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "documents": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_documentShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_documentShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "extensions": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_extensionsShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_extensionsShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "markup": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_markupShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_markupShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "projectInfo": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_projectInfoShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_projectInfoShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "version": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_versionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_versionShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "visualizationInfo": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_visualizationInfoShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_visualizationInfoShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bcfModel"
+                    },
+                    {
+                      "const": "bcfModel"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bcfModel"
+                      },
+                      {
+                        "const": "bcfModel"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_guidLiteralShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_nonEmptyOrBlankStringShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_ifcGuidLiteralShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_colorLiteralShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_positiveDoubleShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_fieldOfViewShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_bitmapFormatShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "bcf_documentShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "filename": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "filename",
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#document"
+                    },
+                    {
+                      "const": "document"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#document"
+                      },
+                      {
+                        "const": "document"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_extensionsShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "topicTypes": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "topicStatuses": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "priorities": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "topicLabels": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "users": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "snippetTypes": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "stages": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#extensions"
+                    },
+                    {
+                      "const": "extensions"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#extensions"
+                      },
+                      {
+                        "const": "extensions"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_projectInfoShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "project": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_projectShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_projectShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "project"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectInfo"
+                    },
+                    {
+                      "const": "projectInfo"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectInfo"
+                      },
+                      {
+                        "const": "projectInfo"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_projectShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "projectId": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "projectId"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project"
+                    },
+                    {
+                      "const": "project"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project"
+                      },
+                      {
+                        "const": "project"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_versionShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "versionId": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "versionId"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#version"
+                    },
+                    {
+                      "const": "version"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#version"
+                      },
+                      {
+                        "const": "version"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_markupShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "header": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_headerShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_headerShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "topic": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_topicShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_topicShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "topic"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#markup"
+                    },
+                    {
+                      "const": "markup"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#markup"
+                      },
+                      {
+                        "const": "markup"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_headerShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "file": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_fileShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_fileShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header"
+                    },
+                    {
+                      "const": "header"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header"
+                      },
+                      {
+                        "const": "header"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_topicShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "referenceLinks": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "title": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "priority": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "index": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "labels": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "creationDate": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "creationAuthor": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "modifiedDate": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "modifiedAuthor": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "dueDate": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "assignedTo": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "stage": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "bimSnippet": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_bimSnippetShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_bimSnippetShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "documentReferences": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_documentReferenceShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_documentReferenceShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "relatedTopics": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_relatedTopicRefShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_relatedTopicRefShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "comments": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_commentShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_commentShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "viewpoints": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_viewPointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_viewPointShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "serverAssignedId": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "topicType": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "topicStatus": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "creationAuthor",
+            "creationDate",
+            "guid",
+            "title",
+            "topicStatus",
+            "topicType"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topic"
+                    },
+                    {
+                      "const": "topic"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topic"
+                      },
+                      {
+                        "const": "topic"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_bimSnippetShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "reference": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "referenceSchema": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "snippetType": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "isExternal": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "reference",
+            "referenceSchema",
+            "snippetType"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bimSnippet"
+                    },
+                    {
+                      "const": "bimSnippet"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bimSnippet"
+                      },
+                      {
+                        "const": "bimSnippet"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_fileShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "filename": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "date": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "reference": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "ifcProject": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "ifcSpatialStructureElement": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "isExternal": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#file"
+                    },
+                    {
+                      "const": "file"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#file"
+                      },
+                      {
+                        "const": "file"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_viewPointShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "viewpointFile": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "snapshot": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "index": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewPoint"
+                    },
+                    {
+                      "const": "viewPoint"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewPoint"
+                      },
+                      {
+                        "const": "viewPoint"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_documentReferenceShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "description": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documentReference"
+                    },
+                    {
+                      "const": "documentReference"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documentReference"
+                      },
+                      {
+                        "const": "documentReference"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "documentGuid": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/bcf_guidLiteralShape"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/bcf_guidLiteralShape"
+                          },
+                          "minItems": 1,
+                          "maxItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "documentGuid"
+                  ]
+                },
+                {
+                  "not": {
+                    "required": [
+                      "url"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                          },
+                          "minItems": 1,
+                          "maxItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                },
+                {
+                  "not": {
+                    "required": [
+                      "documentGuid"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_relatedTopicRefShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopicRef"
+                    },
+                    {
+                      "const": "relatedTopicRef"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopicRef"
+                      },
+                      {
+                        "const": "relatedTopicRef"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_commentViewpointRefShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#commentViewpointRef"
+                    },
+                    {
+                      "const": "commentViewpointRef"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#commentViewpointRef"
+                      },
+                      {
+                        "const": "commentViewpointRef"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_commentShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "date": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "author": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "commentText": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "viewpoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_commentViewpointRefShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_commentViewpointRefShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "modifiedDate": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "modifiedAuthor": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "author",
+            "date",
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#comment"
+                    },
+                    {
+                      "const": "comment"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#comment"
+                      },
+                      {
+                        "const": "comment"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_visualizationInfoShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "components": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_componentsShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_componentsShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "lines": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_lineShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_lineShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "clippingPlanes": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_clippingPlaneShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_clippingPlaneShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "bitmaps": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_bitmapShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_bitmapShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "guid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_guidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_guidLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "guid"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#visualizationInfo"
+                    },
+                    {
+                      "const": "visualizationInfo"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#visualizationInfo"
+                      },
+                      {
+                        "const": "visualizationInfo"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        },
+        {
+          "oneOf": [
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "orthogonalCamera": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/bcf_orthogonalCameraShape"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/bcf_orthogonalCameraShape"
+                          },
+                          "minItems": 1,
+                          "maxItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "orthogonalCamera"
+                  ]
+                },
+                {
+                  "not": {
+                    "required": [
+                      "perspectiveCamera"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "perspectiveCamera": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/bcf_perspectiveCameraShape"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/$defs/bcf_perspectiveCameraShape"
+                          },
+                          "minItems": 1,
+                          "maxItems": 1
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "perspectiveCamera"
+                  ]
+                },
+                {
+                  "not": {
+                    "required": [
+                      "orthogonalCamera"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_orthogonalCameraShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "cameraViewPoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "cameraDirection": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "cameraUpVector": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "viewToWorldScale": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "aspectRatio": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_positiveDoubleShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_positiveDoubleShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "aspectRatio",
+            "cameraDirection",
+            "cameraUpVector",
+            "cameraViewPoint",
+            "viewToWorldScale"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#orthogonalCamera"
+                    },
+                    {
+                      "const": "orthogonalCamera"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#orthogonalCamera"
+                      },
+                      {
+                        "const": "orthogonalCamera"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_perspectiveCameraShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "cameraViewPoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "cameraDirection": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "cameraUpVector": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "fieldOfView": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_fieldOfViewShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_fieldOfViewShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "aspectRatio": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_positiveDoubleShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_positiveDoubleShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "aspectRatio",
+            "cameraDirection",
+            "cameraUpVector",
+            "cameraViewPoint",
+            "fieldOfView"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#perspectiveCamera"
+                    },
+                    {
+                      "const": "perspectiveCamera"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#perspectiveCamera"
+                      },
+                      {
+                        "const": "perspectiveCamera"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_pointShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "x": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "y": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "z": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#point"
+                    },
+                    {
+                      "const": "point"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#point"
+                      },
+                      {
+                        "const": "point"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_directionShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "x": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "y": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "z": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#direction"
+                    },
+                    {
+                      "const": "direction"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#direction"
+                      },
+                      {
+                        "const": "direction"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_componentsShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "selection": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_componentShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_componentShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "visibility": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_componentVisibilityShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_componentVisibilityShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "coloring": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_coloringEntryShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_coloringEntryShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#components"
+                    },
+                    {
+                      "const": "components"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#components"
+                      },
+                      {
+                        "const": "components"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_viewSetupHintsShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "spacesVisible": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "spaceBoundariesVisible": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "openingsVisible": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewSetupHints"
+                    },
+                    {
+                      "const": "viewSetupHints"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewSetupHints"
+                      },
+                      {
+                        "const": "viewSetupHints"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_componentVisibilityShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "viewSetupHints": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_viewSetupHintsShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_viewSetupHintsShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "exceptions": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_componentShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_componentShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "defaultVisibility": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#componentVisibility"
+                    },
+                    {
+                      "const": "componentVisibility"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#componentVisibility"
+                      },
+                      {
+                        "const": "componentVisibility"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_coloringEntryShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "components": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_componentShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_componentShape"
+                  },
+                  "minItems": 0
+                }
+              ]
+            },
+            "colorValue": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_colorLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_colorLiteralShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "colorValue"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#coloringEntry"
+                    },
+                    {
+                      "const": "coloringEntry"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#coloringEntry"
+                      },
+                      {
+                        "const": "coloringEntry"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_componentShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "originatingSystem": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "authoringToolId": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "ifcGuid": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_ifcGuidLiteralShape"
+                  },
+                  "minItems": 0,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#component"
+                    },
+                    {
+                      "const": "component"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#component"
+                      },
+                      {
+                        "const": "component"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_lineShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "startPoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "endPoint": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "endPoint",
+            "startPoint"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#line"
+                    },
+                    {
+                      "const": "line"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#line"
+                      },
+                      {
+                        "const": "line"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_clippingPlaneShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "location": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "direction": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "direction",
+            "location"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#clippingPlane"
+                    },
+                    {
+                      "const": "clippingPlane"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#clippingPlane"
+                      },
+                      {
+                        "const": "clippingPlane"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "bcf_bitmapShape": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_bitmapFormatShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_bitmapFormatShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "reference": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_nonEmptyOrBlankStringShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "location": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_pointShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_pointShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "normal": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "up": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/bcf_directionShape"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/bcf_directionShape"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "height": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                }
+              ]
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": [
+                "string",
+                "array"
+              ]
+            }
+          },
+          "required": [
+            "format",
+            "height",
+            "location",
+            "normal",
+            "reference",
+            "up"
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "anyOf": [
+                    {
+                      "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bitmap"
+                    },
+                    {
+                      "const": "bitmap"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "array",
+                  "contains": {
+                    "anyOf": [
+                      {
+                        "const": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bitmap"
+                      },
+                      {
+                        "const": "bitmap"
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "anyOf": [
+    {
+      "type": "object",
+      "properties": {
+        "@graph": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/bcf_bimBcfShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_documentShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_extensionsShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_projectInfoShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_projectShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_versionShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_markupShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_headerShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_topicShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_bimSnippetShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_fileShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_viewPointShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_documentReferenceShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_relatedTopicRefShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_commentViewpointRefShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_commentShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_visualizationInfoShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_orthogonalCameraShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_perspectiveCameraShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_pointShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_directionShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_componentsShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_viewSetupHintsShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_componentVisibilityShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_coloringEntryShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_componentShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_lineShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_clippingPlaneShape"
+              },
+              {
+                "$ref": "#/$defs/bcf_bitmapShape"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "@graph"
+      ]
+    },
+    {
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "@graph"
+            ]
+          }
+        },
+        {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/bcf_bimBcfShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_documentShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_extensionsShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_projectInfoShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_projectShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_versionShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_markupShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_headerShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_topicShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_bimSnippetShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_fileShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_viewPointShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_documentReferenceShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_relatedTopicRefShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_commentViewpointRefShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_commentShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_visualizationInfoShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_orthogonalCameraShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_perspectiveCameraShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_pointShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_directionShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_componentsShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_viewSetupHintsShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_componentVisibilityShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_coloringEntryShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_componentShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_lineShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_clippingPlaneShape"
+            },
+            {
+              "$ref": "#/$defs/bcf_bitmapShape"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
