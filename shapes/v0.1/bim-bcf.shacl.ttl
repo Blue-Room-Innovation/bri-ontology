@@ -100,16 +100,6 @@ bcf:headerShape
     sh:targetClass bcf:header ;
     sh:property [ sh:path bcf:file ; sh:node bcf:fileShape ; sh:minCount 0 ] .
 
-bcf:referenceLinksShape
-    a sh:NodeShape ;
-    sh:targetClass bcf:referenceLinks ;
-    sh:property [ sh:path bcf:referenceLink ; sh:node bcf:nonEmptyOrBlankStringShape ; sh:minCount 0 ] .
-
-bcf:relatedTopicRefShape
-    a sh:NodeShape ;
-    sh:targetClass bcf:relatedTopicRef ;
-    sh:property [ sh:path bcf:guid ; sh:node bcf:guidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
-
 bcf:topicShape
     a sh:NodeShape ;
     sh:targetClass bcf:topic ;
@@ -129,7 +119,7 @@ bcf:topicShape
     sh:property [ sh:path bcf:bimSnippet ; sh:node bcf:bimSnippetShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:documentReferences ; sh:node bcf:documentReferenceShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:relatedTopics ; sh:node bcf:relatedTopicRefShape ; sh:minCount 0 ] ;
-	sh:property [ sh:path bcf:comments ; sh:node bcf:commentShape ; sh:minCount 0 ] ;
+    sh:property [ sh:path bcf:comments ; sh:node bcf:commentShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:viewpoints ; sh:node bcf:viewPointShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:guid ; sh:node bcf:guidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:serverAssignedId ; sh:node bcf:nonEmptyOrBlankStringShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
@@ -173,6 +163,11 @@ bcf:documentReferenceShape
         [ sh:property [ sh:path bcf:url ; sh:node bcf:nonEmptyOrBlankStringShape ; sh:minCount 1 ; sh:maxCount 1 ] ;
           sh:property [ sh:path bcf:documentGuid ; sh:maxCount 0 ] ]
     ) .
+
+bcf:relatedTopicRefShape
+    a sh:NodeShape ;
+    sh:targetClass bcf:relatedTopicRef ;
+    sh:property [ sh:path bcf:guid ; sh:node bcf:guidLiteralShape ; sh:minCount 1 ; sh:maxCount 1 ] .
 
 bcf:commentViewpointRefShape
     a sh:NodeShape ;
@@ -243,6 +238,7 @@ bcf:componentsShape
     sh:property [ sh:path bcf:selection ; sh:node bcf:componentShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:visibility ; sh:node bcf:componentVisibilityShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:coloring ; sh:node bcf:coloringEntryShape ; sh:minCount 0 ] .
+
 bcf:viewSetupHintsShape
     a sh:NodeShape ;
     sh:targetClass bcf:viewSetupHints ;
