@@ -32,20 +32,15 @@ from urllib.parse import quote
 import rdflib
 from rdflib import RDF, RDFS, OWL
 try:
-    from graphviz import Digraph  # type: ignore
-except ImportError:  # pragma: no cover
-    Digraph = None  # type: ignore
+    from .utils import log_info, log_error, log_warning, log_success, log_section
+except ImportError:
+    import sys
+    sys.path.append(str(Path(__file__).parent.parent))
+    from lib.utils import log_info, log_error, log_warning, log_success, log_section
 
 # Namespaces comunes
 SKOS = rdflib.Namespace("http://www.w3.org/2004/02/skos/core#")
 SH = rdflib.Namespace("http://www.w3.org/ns/shacl#")
-
-LOGGER = logging.getLogger("generate-wiki")
-
-def setup_logging(verbose: bool = False):
-    level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(level=level, format='[%(levelname)s] %(message)s')
-    LOGGER.debug("Logging initialized in DEBUG mode")
 
 def slug(uri: rdflib.term.Identifier) -> str:
     s = str(uri)
@@ -519,8 +514,8 @@ def main():
     parser.add_argument('--verbose', action='store_true', help='Enable verbose logging')
     args = parser.parse_args()
 
-    setup_logging(args.verbose)
-    LOGGER.info("Starting wiki generation")
+    log_section("Wiki Generation")
+    log_info("Starting wiki generation...")
 
     ontology_dir = Path(args.ontology_dir)
     out_dir = Path(args.output_dir)
@@ -548,11 +543,11 @@ def main():
                     sg.parse(str(f), format='turtle')
                     key = _normalize_artifact_key(f.stem)
                     shapes_graphs[key] = sg
-                    LOGGER.debug(f"Shapes loaded: {f.name} -> key {key}")
+                    # debug: log_info(f"Shapes loaded: {f.name} -> key {key}")
                 except Exception as e:
-                    LOGGER.warning(f"Could not parse shapes {f}: {e}")
+                    log_warning(f"Could not parse shapes {f}: {e}")
         else:
-            LOGGER.warning(f"Shapes directory does not exist: {shapes_dir}")
+            log_warning(f"Shapes directory does not exist: {shapes_dir}")
 
     contexts_by_ontology: Dict[str, int] = {}
     include_contexts = bool(args.contexts_dir)
@@ -562,9 +557,9 @@ def main():
             for f in contexts_dir.glob('*.context.jsonld'):
                 key = _normalize_artifact_key(f.stem)
                 contexts_by_ontology[key] = contexts_by_ontology.get(key, 0) + 1
-                LOGGER.debug(f"Context detected: {f.name} -> key {key}")
+                # debug: Context detected
         else:
-            LOGGER.warning(f"Contexts directory does not exist: {contexts_dir}")
+            log_warning(f"Contexts directory does not exist: {contexts_dir}")
 
     # Dynamic header construction
     header_cols = ["Ontology", "#Classes", "#ObjProps", "#DataProps"]
@@ -672,7 +667,7 @@ def main():
         if shape_graph is not None:
             shapes_md = generate_shapes_md(shape_graph, name)
             (ont_out_dir / 'SHAPES.md').write_text(shapes_md, encoding='utf-8')
-            LOGGER.debug(f"Shapes documented for {name}")
+            # debug: Shapes documented
 
         # Navigation entry (prefer folder link)
         folder_href = f"{name}/"
@@ -691,7 +686,7 @@ def main():
         )
 
     (out_dir / 'index.md').write_text('\n'.join(index_lines) + '\n', encoding='utf-8')
-    LOGGER.info(f"Generated wiki for {len(ttl_files)} ontologies in {out_dir}")
+    log_success(f"Generated wiki for {len(ttl_files)} ontologies in {out_dir}")
 
 if __name__ == '__main__':
     main()

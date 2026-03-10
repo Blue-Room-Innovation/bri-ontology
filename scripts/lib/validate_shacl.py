@@ -7,7 +7,16 @@ import json
 from pathlib import Path
 from typing import List
 
-from .utils import get_workspace_root, print_err, split_csv
+from .utils import (
+    get_workspace_root,
+    print_err,
+    log_info,
+    log_success,
+    log_warning,
+    log_error,
+    log_section,
+    split_csv,
+)
 
 
 @dataclass
@@ -207,22 +216,23 @@ def _print_config(config: ShaclConfig, extras: List[Path]) -> None:
     """
     workspace_root = get_workspace_root()
     
-    print(
-        f"[SHACL] Data   : "
+    log_section("SHACL Validation")
+    log_info(
+        f"Data   : "
         f"{config.data_file.relative_to(workspace_root).as_posix()}"
     )
-    print(
-        f"[SHACL] Shapes : "
+    log_info(
+        f"Shapes : "
         f"{config.shapes_file.relative_to(workspace_root).as_posix()}"
     )
-    print(f"[SHACL] Format : {config.output_format}")
+    log_info(f"Format : {config.output_format}")
     
     if extras:
-        print(f"[SHACL] Extras ({len(extras)}):")
+        log_info(f"Extras ({len(extras)}):")
         for p in extras:
-            print(f"  - {p.relative_to(workspace_root).as_posix()}")
+            log_info(f"  - {p.relative_to(workspace_root).as_posix()}")
     else:
-        print("[SHACL] Extras : (cap)")
+        log_info("Extras : (None)")
 
 
 def _merge_extras_into_data(data_graph, extras: List[Path]):
@@ -254,8 +264,13 @@ def _serialize_report(report_graph, report_text: str, output_format: str) -> int
     fmt = output_format.lower()
     
     if fmt in {"human", "text"}:
+        if "Conforms: True" in report_text:
+            log_success("SHACL Validation: PASSED")
+        else:
+            log_error("SHACL Validation: FAILED")
         print(report_text)
         return 0
+
     
     if fmt == "turtle":
         if isinstance(report_graph, RDFGraph):
@@ -263,8 +278,8 @@ def _serialize_report(report_graph, report_text: str, output_format: str) -> int
         elif isinstance(report_graph, (bytes, bytearray)):
             print(report_graph.decode("utf-8", errors="replace"))
         else:
-            print_err(
-                "[SHACL] No es pot serialitzar el report graph a turtle."
+            log_error(
+                "No es pot serialitzar el report graph a turtle."
             )
             return 2
     elif fmt in {"json-ld", "jsonld"}:
@@ -273,12 +288,12 @@ def _serialize_report(report_graph, report_text: str, output_format: str) -> int
         elif isinstance(report_graph, (bytes, bytearray)):
             print(report_graph.decode("utf-8", errors="replace"))
         else:
-            print_err(
-                "[SHACL] No es pot serialitzar el report graph a json-ld."
+            log_error(
+                "No es pot serialitzar el report graph a json-ld."
             )
             return 2
     else:
-        print_err(f"[SHACL] Format desconegut: {output_format}")
+        log_error(f"Format desconegut: {output_format}")
         return 2
     
     return 0
@@ -344,10 +359,10 @@ def validate_shacl(config: ShaclConfig) -> int:
     """
     # Check file existence
     if not config.data_file.exists():
-        print_err(f"[SHACL] Data file no existeix: {config.data_file}")
+        log_error(f"Data file no existeix: {config.data_file}")
         return 2
     if not config.shapes_file.exists():
-        print_err(f"[SHACL] Shapes file no existeix: {config.shapes_file}")
+        log_error(f"Shapes file no existeix: {config.shapes_file}")
         return 2
     
     # Get extra files

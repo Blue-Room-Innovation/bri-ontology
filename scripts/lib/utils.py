@@ -39,13 +39,51 @@ def split_csv(value: str) -> List[str]:
     return [part.strip() for part in value.split(",") if part.strip()]
 
 
+# ANSI Escape Codes for Colors
+class Colors:
+    RESET = "\033[0m"
+    BOLD = "\033[1m"
+    DIM = "\033[2m"
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+    MAGENTA = "\033[35m"
+    CYAN = "\033[36m"
+    WHITE = "\033[37m"
+
 def print_err(msg: str) -> None:
     """Print message to stderr.
     
     Args:
         msg: Message to print
     """
-    print(msg, file=sys.stderr)
+    print(f"{Colors.RED}{msg}{Colors.RESET}", file=sys.stderr)
+
+
+def log_info(msg: str) -> None:
+    """Print informational message (cyan)."""
+    print(f"{Colors.CYAN}ℹ {msg}{Colors.RESET}")
+
+
+def log_success(msg: str) -> None:
+    """Print success message (green)."""
+    print(f"{Colors.GREEN}✔ {msg}{Colors.RESET}")
+
+
+def log_warning(msg: str) -> None:
+    """Print warning message (yellow)."""
+    print(f"{Colors.YELLOW}⚠ {msg}{Colors.RESET}")
+
+
+def log_error(msg: str) -> None:
+    """Print error message (red)."""
+    print(f"{Colors.RED}✖ {msg}{Colors.RESET}", file=sys.stderr)
+
+
+def log_section(title: str) -> None:
+    """Print a section header (bold magenta)."""
+    print(f"\n{Colors.BOLD}{Colors.MAGENTA}=== {title} ==={Colors.RESET}")
 
 
 def run_command(cmd: List[str], quiet: bool = False) -> int:
