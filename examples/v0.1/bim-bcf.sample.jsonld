@@ -1,5 +1,5 @@
 {
-  "@context": "../../build/v0.1/bim-bcf.context.jsonld",
+  "@context": "../../build/v0.1/bimBcf.context.jsonld",
   "@type": "Recycler",
   "@id": "test",
   "VisualizationInfo": {
