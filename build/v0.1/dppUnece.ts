@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-03-10 15:47:52
+ * Generated: 2026-03-11 11:51:35
  * Source: shapes/v0.1/dpp-unece.shacl.ttl
  */
 

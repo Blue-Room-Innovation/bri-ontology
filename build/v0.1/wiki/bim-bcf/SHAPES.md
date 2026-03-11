@@ -5,7 +5,7 @@
 | bimBcfShape | bcfModel | documents |  |  | 0 |  |  |  |
 | bimBcfShape | bcfModel | extensions |  |  | 0 | 1 |  |  |
 | bimBcfShape | bcfModel | markup |  |  | 0 | 1 |  |  |
-| bimBcfShape | bcfModel | projectInfo |  |  | 0 | 1 |  |  |
+| bimBcfShape | bcfModel | project |  |  | 0 | 1 |  |  |
 | bimBcfShape | bcfModel | version |  |  | 0 | 1 |  |  |
 | bimBcfShape | bcfModel | visualizationInfo |  |  | 0 | 1 |  |  |
 | bimSnippetShape | bimSnippet | reference |  |  | 1 | 1 |  |  |
@@ -64,7 +64,7 @@
 | fileShape | file | ifcSpatialStructureElement |  |  | 0 | 1 |  |  |
 | fileShape | file | isExternal | boolean |  | 0 | 1 |  |  |
 | guidLiteralShape |  |  |  |  |  |  |  |  |
-| headerShape | header | file |  |  | 0 |  |  |  |
+| headerShape | header | files |  |  | 0 |  |  |  |
 | ifcGuidLiteralShape |  |  |  |  |  |  |  |  |
 | lineShape | line | startPoint |  |  | 1 | 1 |  |  |
 | lineShape | line | endPoint |  |  | 1 | 1 |  |  |
@@ -85,7 +85,6 @@
 | pointShape | point | y | double |  | 1 | 1 |  |  |
 | pointShape | point | z | double |  | 1 | 1 |  |  |
 | positiveDoubleShape |  |  |  |  |  |  |  |  |
-| projectInfoShape | projectInfo | project |  |  | 1 | 1 |  |  |
 | projectShape | project | name |  |  | 0 | 1 |  |  |
 | projectShape | project | projectId |  |  | 1 | 1 |  |  |
 | relatedTopicRefShape | relatedTopicRef | guid |  |  | 1 | 1 |  |  |

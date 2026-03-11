@@ -8,7 +8,7 @@ bcf:bimBcfShape
     sh:property [ sh:path bcf:documents ; sh:node bcf:documentShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:extensions ; sh:node bcf:extensionsShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:markup ; sh:node bcf:markupShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
-    sh:property [ sh:path bcf:projectInfo ; sh:node bcf:projectInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path bcf:project ; sh:node bcf:projectShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:version ; sh:node bcf:versionShape ; sh:minCount 0 ; sh:maxCount 1 ] ;
     sh:property [ sh:path bcf:visualizationInfo ; sh:node bcf:visualizationInfoShape ; sh:minCount 0 ; sh:maxCount 1 ] .
 
@@ -73,11 +73,6 @@ bcf:extensionsShape
     sh:property [ sh:path bcf:snippetTypes ; sh:node bcf:nonEmptyOrBlankStringShape ; sh:minCount 0 ] ;
     sh:property [ sh:path bcf:stages ; sh:node bcf:nonEmptyOrBlankStringShape ; sh:minCount 0 ] .
 
-bcf:projectInfoShape
-    a sh:NodeShape ;
-    sh:targetClass bcf:projectInfo ;
-    sh:property [ sh:path bcf:project ; sh:node bcf:projectShape ; sh:minCount 1 ; sh:maxCount 1 ] .
-
 bcf:projectShape
     a sh:NodeShape ;
     sh:targetClass bcf:project ;
@@ -98,7 +93,7 @@ bcf:markupShape
 bcf:headerShape
     a sh:NodeShape ;
     sh:targetClass bcf:header ;
-    sh:property [ sh:path bcf:file ; sh:node bcf:fileShape ; sh:minCount 0 ] .
+    sh:property [ sh:path bcf:files ; sh:node bcf:fileShape ; sh:minCount 0 ] .
 
 bcf:topicShape
     a sh:NodeShape ;

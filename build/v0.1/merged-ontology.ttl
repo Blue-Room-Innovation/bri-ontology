@@ -171,10 +171,11 @@ bcf:extensions rdf:type owl:ObjectProperty ;
                rdfs:range bcf:extensions .
 
 
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#file
-bcf:file rdf:type owl:ObjectProperty ;
-         rdfs:domain bcf:header ;
-         rdfs:range bcf:file .
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#files
+bcf:files rdf:type owl:ObjectProperty ;
+          rdfs:domain bcf:header ;
+          rdfs:range bcf:file ;
+          rdfs:comment "Links a header directly to file entries." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header
@@ -228,14 +229,8 @@ bcf:perspectiveCamera rdf:type owl:ObjectProperty ;
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project
 bcf:project rdf:type owl:ObjectProperty ;
-            rdfs:domain bcf:projectInfo ;
+            rdfs:domain bcf:bcfModel ;
             rdfs:range bcf:project .
-
-
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectInfo
-bcf:projectInfo rdf:type owl:ObjectProperty ;
-                rdfs:domain bcf:bcfModel ;
-                rdfs:range bcf:projectInfo .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopics
@@ -1318,7 +1313,8 @@ bcf:extensions rdf:type owl:Class .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#file
-bcf:file rdf:type owl:Class .
+bcf:file rdf:type owl:Class ;
+         rdfs:comment "Referenced file metadata class in the markup header." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header
@@ -1349,10 +1345,6 @@ bcf:point rdf:type owl:Class ;
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project
 bcf:project rdf:type owl:Class .
-
-
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectInfo
-bcf:projectInfo rdf:type owl:Class .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopicRef
@@ -1705,10 +1697,6 @@ bcf:extensions rdfs:comment "Extension catalog holder." ,
                             "Links a BCF model to extension values." .
 
 
-bcf:file rdfs:comment "Links a header directly to file entries." ,
-                      "Referenced file metadata class in the markup header." .
-
-
 bcf:header rdfs:comment "Header section containing referenced files." ,
                         "Links markup to optional header information." .
 
@@ -1727,10 +1715,6 @@ bcf:perspectiveCamera rdfs:comment "Associates visualization info with a perspec
 
 bcf:project rdfs:comment "Links project info to the concrete project descriptor." ,
                          "Project details with project ID and optional name." .
-
-
-bcf:projectInfo rdfs:comment "Links a BCF model to the project information section." ,
-                             "Project information wrapper." .
 
 
 bcf:topic rdfs:comment "Core issue/topic class with metadata, workflow state, comments, and viewpoints." ,

@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-03-10 15:47:54
+ * Generated: 2026-03-11 11:51:37
  * Source: shapes/v0.1/digital-marpol-waste-passport.shacl.ttl
  */
 

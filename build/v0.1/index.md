@@ -1,6 +1,6 @@
 # Build artifacts v0.1
 
-Generated: 2026-03-10T15:48:08Z
+Generated: 2026-03-11T11:51:50Z
 
 - [Back to build index](https://blue-room-innovation.github.io/bri-ontology/build/)
 

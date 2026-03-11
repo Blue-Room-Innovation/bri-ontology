@@ -28,9 +28,6 @@ bcf:document a owl:Class ;
 bcf:extensions a owl:Class ;
     rdfs:comment "Extension catalog holder." .
 
-bcf:projectInfo a owl:Class ;
-    rdfs:comment "Project information wrapper." .
-
 bcf:project a owl:Class ;
     rdfs:comment "Project details with project ID and optional name." .
 
@@ -125,11 +122,6 @@ bcf:markup a owl:ObjectProperty ;
     rdfs:range bcf:markup ;
     rdfs:comment "Links a BCF model to its main markup content." .
 
-bcf:projectInfo a owl:ObjectProperty ;
-    rdfs:domain bcf:bcfModel ;
-    rdfs:range bcf:projectInfo ;
-    rdfs:comment "Links a BCF model to the project information section." .
-
 bcf:version a owl:ObjectProperty ;
     rdfs:domain bcf:bcfModel ;
     rdfs:range bcf:version ;
@@ -141,7 +133,7 @@ bcf:visualizationInfo a owl:ObjectProperty ;
     rdfs:comment "Links a BCF model to viewpoint visualization information." .
 
 bcf:project a owl:ObjectProperty ;
-    rdfs:domain bcf:projectInfo ;
+    rdfs:domain bcf:bcfModel ;
     rdfs:range bcf:project ;
     rdfs:comment "Links project info to the concrete project descriptor." .
 
@@ -155,7 +147,7 @@ bcf:topic a owl:ObjectProperty ;
     rdfs:range bcf:topic ;
     rdfs:comment "Links markup to its main topic issue payload." .
 
-bcf:file a owl:ObjectProperty ;
+bcf:files a owl:ObjectProperty ;
     rdfs:domain bcf:header ;
     rdfs:range bcf:file ;
     rdfs:comment "Links a header directly to file entries." .

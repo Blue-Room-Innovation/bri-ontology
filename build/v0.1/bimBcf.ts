@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-03-10 15:47:58
+ * Generated: 2026-03-11 11:51:40
  * Source: shapes/v0.1/bim-bcf.shacl.ttl
  */
 
@@ -11,7 +11,6 @@ export type BimBcfSchema =
         | BcfBimBcfShape
         | BcfDocumentShape
         | BcfExtensionsShape
-        | BcfProjectInfoShape
         | BcfProjectShape
         | BcfVersionShape
         | BcfMarkupShape
@@ -46,7 +45,6 @@ export type BimBcfSchema =
       | BcfBimBcfShape
       | BcfDocumentShape
       | BcfExtensionsShape
-      | BcfProjectInfoShape
       | BcfProjectShape
       | BcfVersionShape
       | BcfMarkupShape
@@ -77,7 +75,7 @@ export type BcfBimBcfShape = {
   documents?: BcfDocumentShape | BcfDocumentShape[];
   extensions?: BcfExtensionsShape | [] | [BcfExtensionsShape];
   markup?: BcfMarkupShape | [] | [BcfMarkupShape];
-  projectInfo?: BcfProjectInfoShape | [] | [BcfProjectInfoShape];
+  project?: BcfProjectShape | [] | [BcfProjectShape];
   version?: BcfVersionShape | [] | [BcfVersionShape];
   visualizationInfo?: BcfVisualizationInfoShape | [] | [BcfVisualizationInfoShape];
   "@id"?: string;
@@ -152,7 +150,7 @@ export type BcfMarkupShape = {
     }
 );
 export type BcfHeaderShape = {
-  file?: BcfFileShape | BcfFileShape[];
+  files?: BcfFileShape | BcfFileShape[];
   "@id"?: string;
   "@type"?: string | unknown[];
   [k: string]: unknown;
@@ -191,7 +189,7 @@ export type BcfTopicShape = {
   referenceLinks?: BcfNonEmptyOrBlankStringShape | BcfNonEmptyOrBlankStringShape[];
   title: BcfNonEmptyOrBlankStringShape | [BcfNonEmptyOrBlankStringShape];
   priority?: BcfNonEmptyOrBlankStringShape | [] | [BcfNonEmptyOrBlankStringShape];
-  index?: string | [] | [string];
+  index?: number | [] | [number];
   labels?: BcfNonEmptyOrBlankStringShape | BcfNonEmptyOrBlankStringShape[];
   creationDate: string | [string];
   creationAuthor: BcfNonEmptyOrBlankStringShape | [BcfNonEmptyOrBlankStringShape];
@@ -333,7 +331,7 @@ export type BcfCommentViewpointRefShape = {
 export type BcfViewPointShape = {
   viewpointFile?: BcfNonEmptyOrBlankStringShape | [] | [BcfNonEmptyOrBlankStringShape];
   snapshot?: BcfNonEmptyOrBlankStringShape | [] | [BcfNonEmptyOrBlankStringShape];
-  index?: string | [] | [string];
+  index?: number | [] | [number];
   guid: BcfGuidLiteralShape | [BcfGuidLiteralShape];
   "@id"?: string;
   "@type"?: string | unknown[];
@@ -341,23 +339,6 @@ export type BcfViewPointShape = {
 } & (
   | {
       "@type": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewPoint" | "viewPoint";
-      [k: string]: unknown;
-    }
-  | {
-      "@type": unknown[];
-      [k: string]: unknown;
-    }
-);
-export type BcfProjectInfoShape = {
-  project: BcfProjectShape | [BcfProjectShape];
-  "@id"?: string;
-  "@type"?: string | unknown[];
-  [k: string]: unknown;
-} & (
-  | {
-      "@type":
-        | "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectInfo"
-        | "projectInfo";
       [k: string]: unknown;
     }
   | {

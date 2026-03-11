@@ -614,11 +614,18 @@ class ShaclToJsonSchema:
             "http://www.w3.org/2001/XMLSchema#string": {"type": "string"},
             "http://www.w3.org/2001/XMLSchema#boolean": {"type": "boolean"},
             "http://www.w3.org/2001/XMLSchema#integer": {"type": "integer"},
+            "http://www.w3.org/2001/XMLSchema#int": {"type": "integer"},
+            "http://www.w3.org/2001/XMLSchema#long": {"type": "integer"},
+            "http://www.w3.org/2001/XMLSchema#short": {"type": "integer"},
+            "http://www.w3.org/2001/XMLSchema#byte": {"type": "integer"},
+            "http://www.w3.org/2001/XMLSchema#nonNegativeInteger": {"type": "integer", "minimum": 0},
+            "http://www.w3.org/2001/XMLSchema#positiveInteger": {"type": "integer", "minimum": 1},
             "http://www.w3.org/2001/XMLSchema#decimal": {"type": "number"},
             "http://www.w3.org/2001/XMLSchema#double": {"type": "number"},
             "http://www.w3.org/2001/XMLSchema#float": {"type": "number"},
             "http://www.w3.org/2001/XMLSchema#dateTime": {"type": "string", "format": "date-time"},
             "http://www.w3.org/2001/XMLSchema#dateTimeStamp": {"type": "string", "format": "date-time"},
+            "http://www.w3.org/2001/XMLSchema#date": {"type": "string", "format": "date"},
             "http://www.w3.org/2001/XMLSchema#anyURI": {"type": "string"},
         }
         return mapping.get(datatype_str, {"type": "string"})

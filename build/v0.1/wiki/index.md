@@ -6,7 +6,7 @@
 
 | Ontology | #Classes | #ObjProps | #DataProps | #Shapes | #Contexts |
 | ----------- | --------- | ----------- | ----------- | --------- | ----------- |
-| bim-bcf | 47 | 36 | 56 | 36 | 0 |
+| bim-bcf | 46 | 35 | 56 | 35 | 0 |
 | digitalMarpolWastePassport | 14 | 13 | 20 | 0 | 1 |
 | digitalWastePassport | 8 | 2 | 0 | 0 | 1 |
 | recycling | 1 | 0 | 7 | 1 | 1 |
