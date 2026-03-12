@@ -1,0 +1,163 @@
+{
+  "@version": 1.1,
+  "@protected": true,
+  "@context": {
+    "bcf": "https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "aspectRatio": "bcf:aspectRatio",
+    "assignedTo": "bcf:assignedTo",
+    "author": "bcf:author",
+    "authoringToolId": "bcf:authoringToolId",
+    "bcfModel": "bcf:bcfModel",
+    "bimSnippet": "bcf:bimSnippet",
+    "bitmap": "bcf:bitmap",
+    "bitmaps": "bcf:bitmaps",
+    "cameraDirection": "bcf:cameraDirection",
+    "cameraUpVector": "bcf:cameraUpVector",
+    "cameraViewPoint": "bcf:cameraViewPoint",
+    "clippingPlane": "bcf:clippingPlane",
+    "clippingPlanes": "bcf:clippingPlanes",
+    "colorValue": "bcf:colorValue",
+    "coloring": "bcf:coloring",
+    "coloringEntry": "bcf:coloringEntry",
+    "comment": "bcf:comment",
+    "commentText": "bcf:commentText",
+    "commentViewpointRef": "bcf:commentViewpointRef",
+    "comments": "bcf:comments",
+    "component": "bcf:component",
+    "componentVisibility": "bcf:componentVisibility",
+    "components": "bcf:components",
+    "creationAuthor": "bcf:creationAuthor",
+    "creationDate": {
+      "@id": "bcf:creationDate",
+      "@type": "xsd:dateTime"
+    },
+    "date": {
+      "@id": "bcf:date",
+      "@type": "xsd:dateTime"
+    },
+    "defaultVisibility": {
+      "@id": "bcf:defaultVisibility",
+      "@type": "xsd:boolean"
+    },
+    "description": "bcf:description",
+    "direction": "bcf:direction",
+    "document": "bcf:document",
+    "documentReference": "bcf:documentReference",
+    "documentReferences": "bcf:documentReferences",
+    "documents": "bcf:documents",
+    "dueDate": {
+      "@id": "bcf:dueDate",
+      "@type": "xsd:dateTime"
+    },
+    "endPoint": "bcf:endPoint",
+    "exceptions": "bcf:exceptions",
+    "extensions": "bcf:extensions",
+    "fieldOfView": "bcf:fieldOfView",
+    "file": "bcf:file",
+    "filename": "bcf:filename",
+    "files": "bcf:files",
+    "format": "bcf:format",
+    "guid": "bcf:guid",
+    "header": "bcf:header",
+    "height": {
+      "@id": "bcf:height",
+      "@type": "xsd:double"
+    },
+    "ifcGuid": "bcf:ifcGuid",
+    "ifcProject": "bcf:ifcProject",
+    "ifcSpatialStructureElement": "bcf:ifcSpatialStructureElement",
+    "index": {
+      "@id": "bcf:index",
+      "@type": "xsd:int"
+    },
+    "isExternal": {
+      "@id": "bcf:isExternal",
+      "@type": "xsd:boolean"
+    },
+    "labels": "bcf:labels",
+    "line": "bcf:line",
+    "lines": "bcf:lines",
+    "location": "bcf:location",
+    "markup": "bcf:markup",
+    "modifiedAuthor": "bcf:modifiedAuthor",
+    "modifiedDate": {
+      "@id": "bcf:modifiedDate",
+      "@type": "xsd:dateTime"
+    },
+    "name": "bcf:name",
+    "normal": "bcf:normal",
+    "openingsVisible": {
+      "@id": "bcf:openingsVisible",
+      "@type": "xsd:boolean"
+    },
+    "originatingSystem": "bcf:originatingSystem",
+    "orthogonalCamera": "bcf:orthogonalCamera",
+    "perspectiveCamera": "bcf:perspectiveCamera",
+    "point": "bcf:point",
+    "priorities": "bcf:priorities",
+    "priority": "bcf:priority",
+    "project": "bcf:project",
+    "projectId": "bcf:projectId",
+    "reference": "bcf:reference",
+    "referenceLinks": "bcf:referenceLinks",
+    "referenceSchema": "bcf:referenceSchema",
+    "relatedTopicRef": "bcf:relatedTopicRef",
+    "relatedTopics": "bcf:relatedTopics",
+    "selection": "bcf:selection",
+    "serverAssignedId": "bcf:serverAssignedId",
+    "snapshot": "bcf:snapshot",
+    "snippetType": "bcf:snippetType",
+    "snippetTypes": "bcf:snippetTypes",
+    "spaceBoundariesVisible": {
+      "@id": "bcf:spaceBoundariesVisible",
+      "@type": "xsd:boolean"
+    },
+    "spacesVisible": {
+      "@id": "bcf:spacesVisible",
+      "@type": "xsd:boolean"
+    },
+    "stage": "bcf:stage",
+    "stages": "bcf:stages",
+    "startPoint": "bcf:startPoint",
+    "title": "bcf:title",
+    "topic": "bcf:topic",
+    "topicLabels": "bcf:topicLabels",
+    "topicStatus": "bcf:topicStatus",
+    "topicStatuses": "bcf:topicStatuses",
+    "topicType": "bcf:topicType",
+    "topicTypes": "bcf:topicTypes",
+    "up": "bcf:up",
+    "users": "bcf:users",
+    "version": "bcf:version",
+    "versionId": {
+      "@id": "bcf:versionId",
+      "@type": "xsd:string"
+    },
+    "viewPoint": "bcf:viewPoint",
+    "viewSetupHints": "bcf:viewSetupHints",
+    "viewToWorldScale": {
+      "@id": "bcf:viewToWorldScale",
+      "@type": "xsd:double"
+    },
+    "viewpoint": "bcf:viewpoint",
+    "viewpointFile": "bcf:viewpointFile",
+    "viewpoints": "bcf:viewpoints",
+    "visibility": "bcf:visibility",
+    "visualizationInfo": "bcf:visualizationInfo",
+    "x": {
+      "@id": "bcf:x",
+      "@type": "xsd:double"
+    },
+    "y": {
+      "@id": "bcf:y",
+      "@type": "xsd:double"
+    },
+    "z": {
+      "@id": "bcf:z",
+      "@type": "xsd:double"
+    }
+  }
+}

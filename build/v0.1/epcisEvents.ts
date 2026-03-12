@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-02-11 15:11:26
+ * Generated: 2026-03-12 09:59:25
  * Source: shapes/v0.1/epcis-events.shacl.ttl
  */
 

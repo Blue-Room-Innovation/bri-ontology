@@ -52,6 +52,11 @@ ontologies:
     display_name: "Waste Actors"
     description: "Waste management actors and roles"
 
+  - name: "bim-bcf"
+    file: "bim-bcf.ttl"
+    display_name: "BIM BCF"
+    description: "BIM Collaboration Format ontology"
+
 # SHACL Shapes Configuration
 # --------------------------
 shapes:
@@ -71,6 +76,10 @@ shapes:
     file: "epcis-events.shacl.ttl"
     ontology: "epcisEvents"
 
+  - name: "bim-bcf"
+    file: "bim-bcf.shacl.ttl"
+    ontology: "bim-bcf"
+
 # Generation Pipeline Configuration
 # ---------------------------------
 generation:
@@ -81,6 +90,7 @@ generation:
     - dmwp
     - recycling
     - epcis-events
+    - bim-bcf
 
 # Validation Configuration
 # ------------------------
@@ -138,6 +148,14 @@ validation:
         shapes: "shapes/v0.1/epcis-events.shacl.ttl"
         format: "human"
         extras: ""
+        
+      bim-bcf:
+        name: "BIM BCF"
+        description: ""
+        data: "examples/v0.1/bim-bcf.sample.jsonld"
+        shapes: "shapes/v0.1/bim-bcf.shacl.ttl"
+        format: "human"
+        extras: ""
 
 # Conversion Configuration
 # ------------------------
@@ -175,6 +193,12 @@ conversion:
       output: "build/v0.1/epcisEvents.schema.json"
       naming: "local"
 
+    bim-bcf:
+      name: "BIM BCF"
+      input: "shapes/v0.1/bim-bcf.shacl.ttl"
+      output: "build/v0.1/bimBcf.schema.json"
+      naming: "local"
+
   # SHACL to JSON-LD context conversions (baseline contexts)
   shacl_to_context:
     dpp-unece:
@@ -201,6 +225,11 @@ conversion:
       name: "EPCIS Events"
       input: "shapes/v0.1/epcis-events.shacl.ttl"
       output: "build/v0.1/epcisEvents.context.jsonld"
+
+    bim-bcf:
+      name: "BIM BCF"
+      input: "shapes/v0.1/bim-bcf.shacl.ttl"
+      output: "build/v0.1/bimBcf.context.jsonld"
 
   # JSON Schema to TypeScript conversions
   json_to_ts:
@@ -233,6 +262,12 @@ conversion:
       input: "build/v0.1/epcisEvents.schema.json"
       output: "build/v0.1/epcisEvents.ts"
       source: "shapes/v0.1/epcis-events.shacl.ttl"
+
+    bim-bcf:
+      name: "BIM BCF"
+      input: "build/v0.1/bimBcf.schema.json"
+      output: "build/v0.1/bimBcf.ts"
+      source: "shapes/v0.1/bim-bcf.shacl.ttl"
 
 # Wiki Documentation Configuration
 # --------------------------------

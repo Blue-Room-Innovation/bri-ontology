@@ -1,22 +1,25 @@
-@prefix : <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#> .
+@prefix : <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#> .
+@prefix bcf: <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl> .
+@prefix schema: <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl> .
 
-<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl> rdf:type owl:Ontology ;
-                                                                                                    rdfs:comment "An ontology extending the Digital Waste Passport model for MARPOL-regulated waste documentation and reporting." ;
-                                                                                                    rdfs:label "Digital MARPOL Waste Passport Ontology" ;
-                                                                                                    owl:versionInfo "0.1" .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl> rdf:type owl:Ontology ;
+                                                                                 rdfs:comment "Ontology for BIM Collaboration Format (BCF) resources aligned with the BIM BCF SHACL model." ;
+                                                                                 rdfs:label "BIM BCF Ontology" ;
+                                                                                 owl:versionInfo "0.1" .
 
 #################################################################
 #    Annotation properties
 #################################################################
 
 ###  http://purl.org/dc/terms/source
-<http://purl.org/dc/terms/source> rdf:type owl:AnnotationProperty .
+dcterms:source rdf:type owl:AnnotationProperty .
 
 
 ###  http://www.w3.org/2004/02/skos/core#definition
@@ -47,95 +50,351 @@
 #    Object Properties
 #################################################################
 
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bimSnippet
+bcf:bimSnippet rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:topic ;
+               rdfs:range bcf:bimSnippet .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bitmaps
+bcf:bitmaps rdf:type owl:ObjectProperty ;
+            rdfs:domain bcf:visualizationInfo ;
+            rdfs:range bcf:bitmap ;
+            rdfs:comment "Links visualization info directly to bitmap entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#cameraDirection
+bcf:cameraDirection rdf:type owl:ObjectProperty ;
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( bcf:orthogonalCamera
+                                                bcf:perspectiveCamera
+                                              )
+                                ] ;
+                    rdfs:range bcf:direction ;
+                    rdfs:comment "Camera forward direction vector." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#cameraUpVector
+bcf:cameraUpVector rdf:type owl:ObjectProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( bcf:orthogonalCamera
+                                               bcf:perspectiveCamera
+                                             )
+                               ] ;
+                   rdfs:range bcf:direction ;
+                   rdfs:comment "Camera up direction vector." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#cameraViewPoint
+bcf:cameraViewPoint rdf:type owl:ObjectProperty ;
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( bcf:orthogonalCamera
+                                                bcf:perspectiveCamera
+                                              )
+                                ] ;
+                    rdfs:range bcf:point ;
+                    rdfs:comment "Camera position in 3D space." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#clippingPlanes
+bcf:clippingPlanes rdf:type owl:ObjectProperty ;
+                   rdfs:domain bcf:visualizationInfo ;
+                   rdfs:range bcf:clippingPlane ;
+                   rdfs:comment "Links visualization info directly to clipping plane entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#coloring
+bcf:coloring rdf:type owl:ObjectProperty ;
+             rdfs:domain bcf:components ;
+             rdfs:range bcf:coloringEntry ;
+             rdfs:comment "Links components directly to coloring entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#comments
+bcf:comments rdf:type owl:ObjectProperty ;
+             rdfs:domain bcf:topic ;
+             rdfs:range bcf:comment ;
+             rdfs:comment "Links a topic directly to comment entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#components
+bcf:components rdf:type owl:ObjectProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( bcf:coloringEntry
+                                           bcf:visualizationInfo
+                                         )
+                           ] ;
+               rdfs:range [ rdf:type owl:Class ;
+                            owl:unionOf ( bcf:component
+                                          bcf:components
+                                        )
+                          ] .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#direction
+bcf:direction rdf:type owl:ObjectProperty ;
+              rdfs:domain bcf:clippingPlane ;
+              rdfs:range bcf:direction .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documentReferences
+bcf:documentReferences rdf:type owl:ObjectProperty ;
+                       rdfs:domain bcf:topic ;
+                       rdfs:range bcf:documentReference ;
+                       rdfs:comment "Links a topic directly to document reference entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documents
+bcf:documents rdf:type owl:ObjectProperty ;
+              rdfs:domain bcf:bcfModel ;
+              rdfs:range bcf:document ;
+              rdfs:comment "Links a BCF model directly to document entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#endPoint
+bcf:endPoint rdf:type owl:ObjectProperty ;
+             rdfs:domain bcf:line ;
+             rdfs:range bcf:point ;
+             rdfs:comment "End point of a line segment." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#exceptions
+bcf:exceptions rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:componentVisibility ;
+               rdfs:range bcf:component ;
+               rdfs:comment "Links component visibility directly to exception components." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#extensions
+bcf:extensions rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:bcfModel ;
+               rdfs:range bcf:extensions .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#files
+bcf:files rdf:type owl:ObjectProperty ;
+          rdfs:domain bcf:header ;
+          rdfs:range bcf:file ;
+          rdfs:comment "Links a header directly to file entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header
+bcf:header rdf:type owl:ObjectProperty ;
+           rdfs:domain bcf:markup ;
+           rdfs:range bcf:header .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#lines
+bcf:lines rdf:type owl:ObjectProperty ;
+          rdfs:domain bcf:visualizationInfo ;
+          rdfs:range bcf:line ;
+          rdfs:comment "Links visualization info directly to line entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#location
+bcf:location rdf:type owl:ObjectProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( bcf:bitmap
+                                         bcf:clippingPlane
+                                       )
+                         ] ;
+             rdfs:range bcf:point ;
+             rdfs:comment "3D location used by clipping planes and bitmap placement." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#markup
+bcf:markup rdf:type owl:ObjectProperty ;
+           rdfs:domain bcf:bcfModel ;
+           rdfs:range bcf:markup .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#normal
+bcf:normal rdf:type owl:ObjectProperty ;
+           rdfs:domain bcf:bitmap ;
+           rdfs:range bcf:direction ;
+           rdfs:comment "Normal vector of a bitmap overlay plane." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#orthogonalCamera
+bcf:orthogonalCamera rdf:type owl:ObjectProperty ;
+                     rdfs:domain bcf:visualizationInfo ;
+                     rdfs:range bcf:orthogonalCamera .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#perspectiveCamera
+bcf:perspectiveCamera rdf:type owl:ObjectProperty ;
+                      rdfs:domain bcf:visualizationInfo ;
+                      rdfs:range bcf:perspectiveCamera .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project
+bcf:project rdf:type owl:ObjectProperty ;
+            rdfs:domain bcf:bcfModel ;
+            rdfs:range bcf:project .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopics
+bcf:relatedTopics rdf:type owl:ObjectProperty ;
+                  rdfs:domain bcf:topic ;
+                  rdfs:range bcf:relatedTopicRef ;
+                  rdfs:comment "Links a topic directly to related topic references." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#selection
+bcf:selection rdf:type owl:ObjectProperty ;
+              rdfs:domain bcf:components ;
+              rdfs:range bcf:component ;
+              rdfs:comment "Links components directly to selected components." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#startPoint
+bcf:startPoint rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:line ;
+               rdfs:range bcf:point ;
+               rdfs:comment "Start point of a line segment." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topic
+bcf:topic rdf:type owl:ObjectProperty ;
+          rdfs:domain bcf:markup ;
+          rdfs:range bcf:topic .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#up
+bcf:up rdf:type owl:ObjectProperty ;
+       rdfs:domain bcf:bitmap ;
+       rdfs:range bcf:direction ;
+       rdfs:comment "Up vector of a bitmap overlay plane." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#version
+bcf:version rdf:type owl:ObjectProperty ;
+            rdfs:domain bcf:bcfModel ;
+            rdfs:range bcf:version .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewSetupHints
+bcf:viewSetupHints rdf:type owl:ObjectProperty ;
+                   rdfs:domain bcf:componentVisibility ;
+                   rdfs:range bcf:viewSetupHints .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewpoint
+bcf:viewpoint rdf:type owl:ObjectProperty ;
+              rdfs:domain bcf:comment ;
+              rdfs:range bcf:commentViewpointRef ;
+              rdfs:comment "Links a comment to a referenced viewpoint." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewpoints
+bcf:viewpoints rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:topic ;
+               rdfs:range bcf:viewPoint ;
+               rdfs:comment "Links a topic directly to viewpoint entries." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#visibility
+bcf:visibility rdf:type owl:ObjectProperty ;
+               rdfs:domain bcf:components ;
+               rdfs:range bcf:componentVisibility ;
+               rdfs:comment "Visibility rules for components within a viewpoint." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#visualizationInfo
+bcf:visualizationInfo rdf:type owl:ObjectProperty ;
+                      rdfs:domain bcf:bcfModel ;
+                      rdfs:range bcf:visualizationInfo .
+
+
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#contactPoint
-:contactPoint rdf:type owl:ObjectProperty ;
-              rdfs:domain :AuthorizedParty ;
-              rdfs:range <https://ontology.untp.io/core/Link> ;
-              rdfs:comment "Contact information for the authorized party, represented as a link." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#contactPoint> rdf:type owl:ObjectProperty ;
+                                                                                                                rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty> ;
+                                                                                                                rdfs:range <https://ontology.untp.io/core/Link> ;
+                                                                                                                rdfs:comment "Contact information for the authorized party, represented as a link." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#credentialSubject
-:credentialSubject rdf:type owl:ObjectProperty ;
-                   rdfs:domain :DigitalMarpolWastePassport ;
-                   rdfs:range :MarpolWastePassport ;
-                   rdfs:comment "References the MARPOL-specific waste passport subject (`MarpolWastePassport`)." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#credentialSubject> rdf:type owl:ObjectProperty ;
+                                                                                                                     rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport> ;
+                                                                                                                     rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport> ;
+                                                                                                                     rdfs:comment "References the MARPOL-specific waste passport subject (`MarpolWastePassport`)." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#estimatedGenerated
-:estimatedGenerated rdf:type owl:ObjectProperty ;
-                    rdfs:domain :ResidueInformation ;
-                    rdfs:range <https://ontology.untp.io/core/Measure> ;
-                    rdfs:comment "The estimated quantity of residue generated, represented as a measure." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#estimatedGenerated> rdf:type owl:ObjectProperty ;
+                                                                                                                      rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                                      rdfs:range <https://ontology.untp.io/core/Measure> ;
+                                                                                                                      rdfs:comment "The estimated quantity of residue generated, represented as a measure." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#involvedParty
-:involvedParty rdf:type owl:ObjectProperty ;
-               rdfs:domain :MarpolWaste ;
-               rdfs:range :InvolvedParty ;
-               rdfs:comment "The party involved in the waste management process, such as the ship operator or company." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#involvedParty> rdf:type owl:ObjectProperty ;
+                                                                                                                 rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                 rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty> ;
+                                                                                                                 rdfs:comment "The party involved in the waste management process, such as the ship operator or company." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#maxCapacity
-:maxCapacity rdf:type owl:ObjectProperty ;
-             rdfs:domain :ResidueInformation ;
-             rdfs:range <https://ontology.untp.io/core/Measure> ;
-             rdfs:comment "The maximum capacity for residue storage, represented as a measure." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#maxCapacity> rdf:type owl:ObjectProperty ;
+                                                                                                               rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                               rdfs:range <https://ontology.untp.io/core/Measure> ;
+                                                                                                               rdfs:comment "The maximum capacity for residue storage, represented as a measure." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#message
-:message rdf:type owl:ObjectProperty ;
-         rdfs:domain :MarpolWaste ;
-         rdfs:range :WasdisMetadata ;
-         rdfs:comment "Metadata related to the WASDIS system, including the sender, message ID, and submission details." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#message> rdf:type owl:ObjectProperty ;
+                                                                                                           rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                           rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> ;
+                                                                                                           rdfs:comment "Metadata related to the WASDIS system, including the sender, message ID, and submission details." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityRemainingOnBoard
-:quantityRemainingOnBoard rdf:type owl:ObjectProperty ;
-                          rdfs:domain :ResidueInformation ;
-                          rdfs:range <https://ontology.untp.io/core/Measure> ;
-                          rdfs:comment "The quantity of residue still remaining onboard, represented as a measure." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityRemainingOnBoard> rdf:type owl:ObjectProperty ;
+                                                                                                                            rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                                            rdfs:range <https://ontology.untp.io/core/Measure> ;
+                                                                                                                            rdfs:comment "The quantity of residue still remaining onboard, represented as a measure." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityToDeliver
-:quantityToDeliver rdf:type owl:ObjectProperty ;
-                   rdfs:domain :ResidueInformation ;
-                   rdfs:range <https://ontology.untp.io/core/Measure> ;
-                   rdfs:comment "The quantity of residue to be delivered, represented as a measure." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#quantityToDeliver> rdf:type owl:ObjectProperty ;
+                                                                                                                     rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                                     rdfs:range <https://ontology.untp.io/core/Measure> ;
+                                                                                                                     rdfs:comment "The quantity of residue to be delivered, represented as a measure." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#residue
-:residue rdf:type owl:ObjectProperty ;
-         rdfs:domain :MarpolWaste ;
-         rdfs:range :ResidueInformation ;
-         rdfs:comment "Detailed information about the waste residue, including type, quantity, and discharge method." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#residue> rdf:type owl:ObjectProperty ;
+                                                                                                           rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                           rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                           rdfs:comment "Detailed information about the waste residue, including type, quantity, and discharge method." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#role
-:role rdf:type owl:ObjectProperty ;
-      rdfs:domain :InvolvedParty ;
-      rdfs:range <https://ontology.untp.io/core/Party> ;
-      rdfs:comment "The role of the involved party, as defined by the regulatory framework." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#role> rdf:type owl:ObjectProperty ;
+                                                                                                        rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty> ;
+                                                                                                        rdfs:range <https://ontology.untp.io/core/Party> ;
+                                                                                                        rdfs:comment "The role of the involved party, as defined by the regulatory framework." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ship
-:ship rdf:type owl:ObjectProperty ;
-      rdfs:domain :MarpolWaste ;
-      rdfs:range :Ship ;
-      rdfs:comment "Details about the ship responsible for the waste, including the IMO number, name, and flag." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ship> rdf:type owl:ObjectProperty ;
+                                                                                                        rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                        rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship> ;
+                                                                                                        rdfs:comment "Details about the ship responsible for the waste, including the IMO number, name, and flag." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#waste
-:waste rdf:type owl:ObjectProperty ;
-       rdfs:domain :MarpolWastePassport ;
-       rdfs:range :MarpolWaste ;
-       rdfs:comment "Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#waste> rdf:type owl:ObjectProperty ;
+                                                                                                         rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport> ;
+                                                                                                         rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                         rdfs:comment "Details of the MARPOL-specific waste entity, encapsulating waste-related information within the MARPOL framework." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#wasteAgent
-:wasteAgent rdf:type owl:ObjectProperty ;
-            rdfs:domain :MarpolWaste ;
-            rdfs:range :AuthorizedParty ;
-            rdfs:comment "The authorized waste collection company handling the waste." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#wasteAgent> rdf:type owl:ObjectProperty ;
+                                                                                                              rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                              rdfs:range <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty> ;
+                                                                                                              rdfs:comment "The authorized waste collection company handling the waste." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#credentialSubject
@@ -156,6 +415,42 @@
 #    Data properties
 #################################################################
 
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/format
+dcterms:format rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/identifier
+dcterms:identifier rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/references
+dcterms:references rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/subject
+dcterms:subject rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/type
+dcterms:type rdf:type owl:DatatypeProperty .
+
+
 ###  http://schema.org/addressLocality
 <http://schema.org/addressLocality> rdf:type owl:DatatypeProperty .
 
@@ -168,153 +463,647 @@
 <http://schema.org/streetAddress> rdf:type owl:DatatypeProperty .
 
 
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#arrivalPort
-:arrivalPort rdf:type owl:DatatypeProperty ;
-             rdfs:domain :MarpolWaste ;
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#aspectRatio
+bcf:aspectRatio rdf:type owl:DatatypeProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( bcf:orthogonalCamera
+                                            bcf:perspectiveCamera
+                                          )
+                            ] ;
+                rdfs:range xsd:double ;
+                rdfs:comment "Width/height aspect ratio of the camera view." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#assignedTo
+bcf:assignedTo rdf:type owl:DatatypeProperty ;
+               rdfs:domain bcf:topic ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Assignee identifier for the topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#author
+bcf:author rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf schema:author ;
+           rdfs:domain bcf:comment ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Author identifier for a comment entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#authoringToolId
+bcf:authoringToolId rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf dcterms:identifier ,
+                                       schema:identifier ;
+                    rdfs:domain bcf:component ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "Identifier of the component in the authoring tool." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#colorValue
+bcf:colorValue rdf:type owl:DatatypeProperty ;
+               rdfs:domain bcf:coloringEntry ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Hexadecimal RGB or RGBA color value used in a coloring rule." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#commentText
+bcf:commentText rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf schema:text ;
+                rdfs:domain bcf:comment ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Textual body of a comment entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#creationAuthor
+bcf:creationAuthor rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf schema:author ,
+                                      schema:creator ;
+                   rdfs:domain bcf:topic ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Author who created the topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#creationDate
+bcf:creationDate rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dcterms:created ,
+                                    schema:dateCreated ;
+                 rdfs:domain bcf:topic ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:comment "Timestamp when the topic was created." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#date
+bcf:date rdf:type owl:DatatypeProperty ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( bcf:comment
+                                     bcf:file
+                                   )
+                     ] ;
+         rdfs:range xsd:dateTime ;
+         rdfs:comment "Timestamp associated with a file or comment entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#defaultVisibility
+bcf:defaultVisibility rdf:type owl:DatatypeProperty ;
+                      rdfs:domain bcf:componentVisibility ;
+                      rdfs:range xsd:boolean ;
+                      rdfs:comment "Default visibility state for components in a viewpoint." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#description
+bcf:description rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf dcterms:description ,
+                                   schema:description ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( bcf:document
+                                            bcf:documentReference
+                                            bcf:topic
+                                          )
+                            ] ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Human-readable description text." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documentGuid
+bcf:documentGuid rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dcterms:identifier ,
+                                    schema:identifier ;
+                 rdfs:domain bcf:documentReference ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "GUID of an internal document referenced by a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#dueDate
+bcf:dueDate rdf:type owl:DatatypeProperty ;
+            rdfs:domain bcf:topic ;
+            rdfs:range xsd:dateTime ;
+            rdfs:comment "Requested due date for the topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#fieldOfView
+bcf:fieldOfView rdf:type owl:DatatypeProperty ;
+                rdfs:domain bcf:perspectiveCamera ;
+                rdfs:range xsd:double ;
+                rdfs:comment "Vertical field of view angle in degrees for perspective camera." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#filename
+bcf:filename rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf schema:name ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( bcf:document
+                                         bcf:file
+                                       )
+                         ] ;
              rdfs:range xsd:string ;
-             rdfs:comment "The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`)." ;
-             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
+             rdfs:comment "Filename associated with a document or file entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#format
+bcf:format rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf dcterms:format ,
+                              schema:fileFormat ;
+           rdfs:domain bcf:bitmap ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Bitmap image format (for example, png or jpg)." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#guid
+bcf:guid rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf dcterms:identifier ,
+                            schema:identifier ;
+         rdfs:domain owl:Thing ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Globally unique identifier represented as text." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#height
+bcf:height rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf schema:height ;
+           rdfs:domain bcf:bitmap ;
+           rdfs:range xsd:double ;
+           rdfs:comment "Height of the bitmap overlay in world units." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#ifcGuid
+bcf:ifcGuid rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf dcterms:identifier ,
+                               schema:identifier ;
+            rdfs:domain bcf:component ;
+            rdfs:range xsd:string ;
+            rdfs:comment "IFC GUID of the component." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#ifcProject
+bcf:ifcProject rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:identifier ,
+                                  schema:identifier ;
+               rdfs:domain bcf:file ;
+               rdfs:range xsd:string ;
+               rdfs:comment "IFC project GUID associated with a file entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#ifcSpatialStructureElement
+bcf:ifcSpatialStructureElement rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf dcterms:identifier ,
+                                                  schema:identifier ;
+                               rdfs:domain bcf:file ;
+                               rdfs:range xsd:string ;
+                               rdfs:comment "IFC spatial structure element GUID associated with a file entry." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#index
+bcf:index rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf schema:position ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( bcf:topic
+                                      bcf:viewPoint
+                                    )
+                      ] ;
+          rdfs:range xsd:int ;
+          rdfs:comment "Integer sort/index value for topic or viewpoint." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#isExternal
+bcf:isExternal rdf:type owl:DatatypeProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( bcf:bimSnippet
+                                           bcf:file
+                                         )
+                           ] ;
+               rdfs:range xsd:boolean ;
+               rdfs:comment "Indicates whether a referenced resource is external to the BCF package." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#labels
+bcf:labels rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf dcterms:subject ,
+                              schema:keywords ;
+           rdfs:domain bcf:topic ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Label attached directly to a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#modifiedAuthor
+bcf:modifiedAuthor rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf schema:author ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( bcf:comment
+                                               bcf:topic
+                                             )
+                               ] ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Author of the latest modification." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#modifiedDate
+bcf:modifiedDate rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dcterms:modified ,
+                                    schema:dateModified ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( bcf:comment
+                                             bcf:topic
+                                           )
+                             ] ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:comment "Timestamp of the latest modification." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#name
+bcf:name rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf schema:name ;
+         rdfs:domain bcf:project ;
+         rdfs:range xsd:string ;
+         rdfs:comment "Human-readable name of the project." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#openingsVisible
+bcf:openingsVisible rdf:type owl:DatatypeProperty ;
+                    rdfs:domain bcf:viewSetupHints ;
+                    rdfs:range xsd:boolean ;
+                    rdfs:comment "Viewer hint indicating whether openings are visible." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#originatingSystem
+bcf:originatingSystem rdf:type owl:DatatypeProperty ;
+                      rdfs:domain bcf:component ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "Name of the source system for a component reference." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#priorities
+bcf:priorities rdf:type owl:DatatypeProperty ;
+               rdfs:domain bcf:extensions ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Priority value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#priority
+bcf:priority rdf:type owl:DatatypeProperty ;
+             rdfs:domain bcf:topic ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Priority value used in a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#projectId
+bcf:projectId rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:identifier ,
+                                 schema:identifier ;
+              rdfs:domain bcf:project ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Identifier for the project." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#reference
+bcf:reference rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf schema:contentUrl ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( bcf:bimSnippet
+                                          bcf:bitmap
+                                          bcf:file
+                                        )
+                          ] ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Reference string (filename, URI, or path) used by snippets, files, and bitmaps." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#referenceLinks
+bcf:referenceLinks rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf dcterms:references ,
+                                      schema:url ;
+                   rdfs:domain bcf:topic ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "External reference URL associated with a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#referenceSchema
+bcf:referenceSchema rdf:type owl:DatatypeProperty ;
+                    rdfs:domain bcf:bimSnippet ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "Schema identifier associated with a BIM snippet." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#serverAssignedId
+bcf:serverAssignedId rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf dcterms:identifier ,
+                                        schema:identifier ;
+                     rdfs:domain bcf:topic ;
+                     rdfs:range xsd:string ;
+                     rdfs:comment "Server-assigned topic identifier." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#snapshot
+bcf:snapshot rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf schema:contentUrl ,
+                                schema:image ;
+             rdfs:domain bcf:viewPoint ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Snapshot image filename associated with a viewpoint." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#snippetTypes
+bcf:snippetTypes rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dcterms:type ;
+                 rdfs:domain bcf:extensions ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Snippet type value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#spaceBoundariesVisible
+bcf:spaceBoundariesVisible rdf:type owl:DatatypeProperty ;
+                           rdfs:domain bcf:viewSetupHints ;
+                           rdfs:range xsd:boolean ;
+                           rdfs:comment "Viewer hint indicating whether space boundaries are visible." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#spacesVisible
+bcf:spacesVisible rdf:type owl:DatatypeProperty ;
+                  rdfs:domain bcf:viewSetupHints ;
+                  rdfs:range xsd:boolean ;
+                  rdfs:comment "Viewer hint indicating whether spaces are visible." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#stage
+bcf:stage rdf:type owl:DatatypeProperty ;
+          rdfs:domain bcf:topic ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Stage value used in a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#stages
+bcf:stages rdf:type owl:DatatypeProperty ;
+           rdfs:domain bcf:extensions ;
+           rdfs:range xsd:string ;
+           rdfs:comment "Stage value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#title
+bcf:title rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf dcterms:title ,
+                             schema:name ;
+          rdfs:domain bcf:topic ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Short human-readable title of a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topicLabels
+bcf:topicLabels rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf dcterms:subject ,
+                                   schema:keywords ;
+                rdfs:domain bcf:extensions ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Topic label value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topicStatus
+bcf:topicStatus rdf:type owl:DatatypeProperty ;
+                rdfs:domain bcf:topic ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Topic status value used in a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topicStatuses
+bcf:topicStatuses rdf:type owl:DatatypeProperty ;
+                  rdfs:domain bcf:extensions ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Topic status value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topicType
+bcf:topicType rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:type ;
+              rdfs:domain bcf:topic ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Topic type value used in a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topicTypes
+bcf:topicTypes rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:type ;
+               rdfs:domain bcf:extensions ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Topic type value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#url
+bcf:url rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf dcterms:references ,
+                           schema:url ;
+        rdfs:domain bcf:documentReference ;
+        rdfs:range xsd:string ;
+        rdfs:comment "URL of an external document referenced by a topic." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#users
+bcf:users rdf:type owl:DatatypeProperty ;
+          rdfs:domain bcf:extensions ;
+          rdfs:range xsd:string ;
+          rdfs:comment "User identifier value available in extensions." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#versionId
+bcf:versionId rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dcterms:identifier ,
+                                 schema:identifier ;
+              rdfs:domain bcf:version ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Version identifier string for BCF payload." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewToWorldScale
+bcf:viewToWorldScale rdf:type owl:DatatypeProperty ;
+                     rdfs:domain bcf:orthogonalCamera ;
+                     rdfs:range xsd:double ;
+                     rdfs:comment "Visible vertical size in world units for orthogonal camera." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewpointFile
+bcf:viewpointFile rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf schema:contentUrl ;
+                  rdfs:domain bcf:viewPoint ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Filename or path of the viewpoint file associated with a viewpoint resource." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#x
+bcf:x rdf:type owl:DatatypeProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( bcf:direction
+                                  bcf:point
+                                )
+                  ] ;
+      rdfs:range xsd:double ;
+      rdfs:comment "X coordinate component." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#y
+bcf:y rdf:type owl:DatatypeProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( bcf:direction
+                                  bcf:point
+                                )
+                  ] ;
+      rdfs:range xsd:double ;
+      rdfs:comment "Y coordinate component." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#z
+bcf:z rdf:type owl:DatatypeProperty ;
+      rdfs:domain [ rdf:type owl:Class ;
+                    owl:unionOf ( bcf:direction
+                                  bcf:point
+                                )
+                  ] ;
+      rdfs:range xsd:double ;
+      rdfs:comment "Z coordinate component." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#arrivalPort
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#arrivalPort> rdf:type owl:DatatypeProperty ;
+                                                                                                               rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                               rdfs:range xsd:string ;
+                                                                                                               rdfs:comment "The port of arrival for the ship, identified using the UN/LOCODE format (e.g., `ESPMI`)." ;
+                                                                                                               <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#deliveryType
-:deliveryType rdf:type owl:DatatypeProperty ;
-              rdfs:domain :MarpolWaste ;
-              rdfs:range xsd:string ;
-              rdfs:comment "Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`)." ;
-              <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#deliveryType> rdf:type owl:DatatypeProperty ;
+                                                                                                                rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                rdfs:range xsd:string ;
+                                                                                                                rdfs:comment "Code indicating the type of delivery method used for the waste, based on a local codelist (e.g., `ZTO`)." ;
+                                                                                                                <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/delivery-type-code.ttl#DeliveryTypeCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#dischargeMeans
-:dischargeMeans rdf:type owl:DatatypeProperty ;
-                rdfs:domain :ResidueInformation ;
-                rdfs:range xsd:string ;
-                rdfs:comment "The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`)." ;
-                <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/discharge-means-code.ttl.ttl#DischargeMeansCodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#dischargeMeans> rdf:type owl:DatatypeProperty ;
+                                                                                                                  rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                                  rdfs:range xsd:string ;
+                                                                                                                  rdfs:comment "The method used to discharge the residue, identified by a local codelist code (e.g., `ZTE`)." ;
+                                                                                                                  <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/discharge-means-code.ttl.ttl#DischargeMeansCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#flag
-:flag rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Ship ;
-      rdfs:range xsd:string ;
-      rdfs:comment "The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus)." ;
-      <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#flag> rdf:type owl:DatatypeProperty ;
+                                                                                                        rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship> ;
+                                                                                                        rdfs:range xsd:string ;
+                                                                                                        rdfs:comment "The flag state of the ship, identified by the ISO 3166-1 Alpha-2 code (e.g., `CY` for Cyprus)." ;
+                                                                                                        <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#identifier
-:identifier rdf:type owl:DatatypeProperty ;
-            rdfs:domain :AuthorizedParty ;
-            rdfs:range xsd:string ;
-            rdfs:comment "A unique identifier for the authorized party." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#identifier> rdf:type owl:DatatypeProperty ;
+                                                                                                              rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty> ;
+                                                                                                              rdfs:range xsd:string ;
+                                                                                                              rdfs:comment "A unique identifier for the authorized party." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#imoNumber
-:imoNumber rdf:type owl:DatatypeProperty ;
-           rdfs:domain :Ship ;
-           rdfs:range xsd:string ;
-           rdfs:comment "The International Maritime Organization (IMO) number, a 7-digit identifier for ships." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#imoNumber> rdf:type owl:DatatypeProperty ;
+                                                                                                             rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship> ;
+                                                                                                             rdfs:range xsd:string ;
+                                                                                                             rdfs:comment "The International Maritime Organization (IMO) number, a 7-digit identifier for ships." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#lastDeliveryDate
-:lastDeliveryDate rdf:type owl:DatatypeProperty ;
-                  rdfs:domain :MarpolWaste ;
-                  rdfs:range xsd:dateTime ;
-                  rdfs:comment "The date and time of the last waste delivery, in ISO-8601 format with timezone." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#lastDeliveryDate> rdf:type owl:DatatypeProperty ;
+                                                                                                                    rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                    rdfs:range xsd:dateTime ;
+                                                                                                                    rdfs:comment "The date and time of the last waste delivery, in ISO-8601 format with timezone." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#lastWasteDeliveryPort
-:lastWasteDeliveryPort rdf:type owl:DatatypeProperty ;
-                       rdfs:domain :MarpolWaste ;
-                       rdfs:range xsd:string ;
-                       rdfs:comment "The last port where waste was delivered, using UN/LOCODE format." ;
-                       <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#lastWasteDeliveryPort> rdf:type owl:DatatypeProperty ;
+                                                                                                                         rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                         rdfs:range xsd:string ;
+                                                                                                                         rdfs:comment "The last port where waste was delivered, using UN/LOCODE format." ;
+                                                                                                                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#marpolEdition
-:marpolEdition rdf:type owl:DatatypeProperty ;
-               rdfs:domain :MarpolWaste ;
-               rdfs:range xsd:string ;
-               rdfs:comment "The edition of MARPOL applicable to the waste being documented (if relevant)." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#marpolEdition> rdf:type owl:DatatypeProperty ;
+                                                                                                                 rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                 rdfs:range xsd:string ;
+                                                                                                                 rdfs:comment "The edition of MARPOL applicable to the waste being documented (if relevant)." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#messageId
-:messageId rdf:type owl:DatatypeProperty ;
-           rdfs:domain :WasdisMetadata ;
-           rdfs:range xsd:string ;
-           rdfs:comment "A unique identifier for the message." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#messageId> rdf:type owl:DatatypeProperty ;
+                                                                                                             rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> ;
+                                                                                                             rdfs:range xsd:string ;
+                                                                                                             rdfs:comment "A unique identifier for the message." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#name
-:name rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Ship ;
-      rdfs:range xsd:string ;
-      rdfs:comment "The name of the ship." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#name> rdf:type owl:DatatypeProperty ;
+                                                                                                        rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship> ;
+                                                                                                        rdfs:range xsd:string ;
+                                                                                                        rdfs:comment "The name of the ship." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#nextCollectionPort
-:nextCollectionPort rdf:type owl:DatatypeProperty ;
-                    rdfs:domain :ResidueInformation ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "The next port where the residue will be collected, identified by the UN/LOCODE" ;
-                    <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#nextCollectionPort> rdf:type owl:DatatypeProperty ;
+                                                                                                                      rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                                      rdfs:range xsd:string ;
+                                                                                                                      rdfs:comment "The next port where the residue will be collected, identified by the UN/LOCODE" ;
+                                                                                                                      <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#nextPlannedDeliveryPort
-:nextPlannedDeliveryPort rdf:type owl:DatatypeProperty ;
-                         rdfs:domain :MarpolWaste ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "The next planned port for waste delivery, identified with UN/LOCODE." ;
-                         <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#nextPlannedDeliveryPort> rdf:type owl:DatatypeProperty ;
+                                                                                                                           rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                                           rdfs:range xsd:string ;
+                                                                                                                           rdfs:comment "The next planned port for waste delivery, identified with UN/LOCODE." ;
+                                                                                                                           <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#remarks
-:remarks rdf:type owl:DatatypeProperty ;
-         rdfs:domain :WasdisMetadata ;
-         rdfs:range xsd:string ;
-         rdfs:comment "Any additional remarks or notes regarding the waste delivery or process." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#remarks> rdf:type owl:DatatypeProperty ;
+                                                                                                           rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> ;
+                                                                                                           rdfs:range xsd:string ;
+                                                                                                           rdfs:comment "Any additional remarks or notes regarding the waste delivery or process." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#sender
-:sender rdf:type owl:DatatypeProperty ;
-        rdfs:domain :WasdisMetadata ;
-        rdfs:range xsd:string ;
-        rdfs:comment "The entity that sent the waste notification." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#sender> rdf:type owl:DatatypeProperty ;
+                                                                                                          rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> ;
+                                                                                                          rdfs:range xsd:string ;
+                                                                                                          rdfs:comment "The entity that sent the waste notification." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#shipScale
-:shipScale rdf:type owl:DatatypeProperty ;
-           rdfs:domain :MarpolWaste ;
-           rdfs:range xsd:string ;
-           rdfs:comment "An identifier for the ship scale or port call, useful for traceability." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#shipScale> rdf:type owl:DatatypeProperty ;
+                                                                                                             rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> ;
+                                                                                                             rdfs:range xsd:string ;
+                                                                                                             rdfs:comment "An identifier for the ship scale or port call, useful for traceability." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#submissionDate
-:submissionDate rdf:type owl:DatatypeProperty ;
-                rdfs:domain :WasdisMetadata ;
-                rdfs:range xsd:dateTime ;
-                rdfs:comment "The date and time when the waste notification was submitted." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#submissionDate> rdf:type owl:DatatypeProperty ;
+                                                                                                                  rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> ;
+                                                                                                                  rdfs:range xsd:dateTime ;
+                                                                                                                  rdfs:comment "The date and time when the waste notification was submitted." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#substance
-:substance rdf:type owl:DatatypeProperty ;
-           rdfs:domain :ResidueInformation ;
-           rdfs:range xsd:string ;
-           rdfs:comment "The substance of the residue, e.g., oil, sewage, or waste sludge." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#substance> rdf:type owl:DatatypeProperty ;
+                                                                                                             rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                             rdfs:range xsd:string ;
+                                                                                                             rdfs:comment "The substance of the residue, e.g., oil, sewage, or waste sludge." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#subtypeCode
-:subtypeCode rdf:type owl:DatatypeProperty ;
-             rdfs:domain :ResidueInformation ;
-             rdfs:range xsd:string ;
-             rdfs:comment "Code representing the subtype of residue, providing more detailed categorization." ;
-             <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#subtypeCode> rdf:type owl:DatatypeProperty ;
+                                                                                                               rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                               rdfs:range xsd:string ;
+                                                                                                               rdfs:comment "Code representing the subtype of residue, providing more detailed categorization." ;
+                                                                                                               <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-subtype-code.ttl#ResidueSubtypeCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#typeCode
-:typeCode rdf:type owl:DatatypeProperty ;
-          rdfs:domain :ResidueInformation ;
-          rdfs:range xsd:string ;
-          rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
-          <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#typeCode> rdf:type owl:DatatypeProperty ;
+                                                                                                            rdfs:domain <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> ;
+                                                                                                            rdfs:range xsd:string ;
+                                                                                                            rdfs:comment "Code representing the type of residue, based on a local codelist or MARPOL standard." ;
+                                                                                                            <http://www.w3.org/2004/02/skos/core#related> <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/residue-type-code.ttl#ResidueTypeCodeScheme> .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/recycling.ttl#adaptedToRD1102015
@@ -377,6 +1166,66 @@
                                                                                                          rdfs:label "Waste treatment activity description"@en .
 
 
+###  https://schema.org/author
+schema:author rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/contentUrl
+schema:contentUrl rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/creator
+schema:creator rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/dateCreated
+schema:dateCreated rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/dateModified
+schema:dateModified rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/description
+schema:description rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/fileFormat
+schema:fileFormat rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/height
+schema:height rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/identifier
+schema:identifier rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/image
+schema:image rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/keywords
+schema:keywords rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/name
+schema:name rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/position
+schema:position rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/text
+schema:text rdf:type owl:DatatypeProperty .
+
+
+###  https://schema.org/url
+schema:url rdf:type owl:DatatypeProperty .
+
+
 ###  https://test.uncefact.org/vocabulary/untp/core/0/conformance
 <https://test.uncefact.org/vocabulary/untp/core/0/conformance> rdf:type owl:DatatypeProperty .
 
@@ -400,67 +1249,222 @@
                                                     rdfs:subClassOf owl:Thing .
 
 
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty
-:AuthorizedParty rdf:type owl:Class ;
-                 rdfs:subClassOf owl:Thing ;
-                 rdfs:comment "Represents an authorized entity responsible for handling the waste." .
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bcfModel
+bcf:bcfModel rdf:type owl:Class ;
+             rdfs:subClassOf owl:Thing ;
+             rdfs:comment "Root container class for BIM BCF model resources." .
 
 
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport
-:DigitalMarpolWastePassport rdf:type owl:Class ;
-                            rdfs:subClassOf :DigitalWastePassport ;
-                            rdfs:comment "A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`." .
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bimSnippet
+bcf:bimSnippet rdf:type owl:Class ;
+               rdfs:subClassOf owl:Thing .
 
 
-###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalWastePassport
-:DigitalWastePassport rdf:type owl:Class ;
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#bitmap
+bcf:bitmap rdf:type owl:Class ;
+           rdfs:subClassOf owl:Thing ;
+           rdfs:comment "Bitmap overlay with placement, orientation, format, and size." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#clippingPlane
+bcf:clippingPlane rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing ;
+                  rdfs:comment "Clipping plane defined by location and direction." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#coloringEntry
+bcf:coloringEntry rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing ;
+                  rdfs:comment "Single color rule entry linking components and a color value." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#comment
+bcf:comment rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing ;
+            rdfs:comment "Comment resource with authoring and modification metadata." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#commentViewpointRef
+bcf:commentViewpointRef rdf:type owl:Class ;
+                        rdfs:subClassOf owl:Thing ;
+                        rdfs:comment "Reference from comment to a viewpoint identified by GUID." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#component
+bcf:component rdf:type owl:Class ;
+              rdfs:subClassOf owl:Thing ;
+              rdfs:comment "IFC component reference with optional originating system metadata." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#componentVisibility
+bcf:componentVisibility rdf:type owl:Class ;
+                        rdfs:subClassOf owl:Thing ;
+                        rdfs:comment "Default visibility and exception settings for components." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#components
+bcf:components rdf:type owl:Class ;
+               rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#direction
+bcf:direction rdf:type owl:Class ;
+              rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#document
+bcf:document rdf:type owl:Class ;
+             rdfs:subClassOf owl:Thing ;
+             rdfs:comment "Document metadata entry with filename, description, and GUID." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#documentReference
+bcf:documentReference rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing ;
+                      rdfs:comment "Document reference class for either internal document GUID or external URL." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#extensions
+bcf:extensions rdf:type owl:Class ;
+               rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#file
+bcf:file rdf:type owl:Class ;
+         rdfs:subClassOf owl:Thing ;
+         rdfs:comment "Referenced file metadata class in the markup header." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#header
+bcf:header rdf:type owl:Class ;
+           rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#line
+bcf:line rdf:type owl:Class ;
+         rdfs:subClassOf owl:Thing ;
+         rdfs:comment "Line overlay defined by start and end points." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#markup
+bcf:markup rdf:type owl:Class ;
+           rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#orthogonalCamera
+bcf:orthogonalCamera rdf:type owl:Class ;
+                     rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#perspectiveCamera
+bcf:perspectiveCamera rdf:type owl:Class ;
                       rdfs:subClassOf owl:Thing .
 
 
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#point
+bcf:point rdf:type owl:Class ;
+          rdfs:subClassOf owl:Thing ;
+          rdfs:comment "3D point represented by X, Y, and Z coordinates." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#project
+bcf:project rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#relatedTopicRef
+bcf:relatedTopicRef rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing ;
+                    rdfs:comment "Reference class identifying a related topic by GUID." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#topic
+bcf:topic rdf:type owl:Class ;
+          rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#version
+bcf:version rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewPoint
+bcf:viewPoint rdf:type owl:Class ;
+              rdfs:subClassOf owl:Thing ;
+              rdfs:comment "Viewpoint resource with viewpoint file, snapshot, index, and GUID." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#viewSetupHints
+bcf:viewSetupHints rdf:type owl:Class ;
+                   rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/bim-bcf.ttl#visualizationInfo
+bcf:visualizationInfo rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#AuthorizedParty> rdf:type owl:Class ;
+                                                                                                                   rdfs:subClassOf owl:Thing ;
+                                                                                                                   rdfs:comment "Represents an authorized entity responsible for handling the waste." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalMarpolWastePassport> rdf:type owl:Class ;
+                                                                                                                              rdfs:subClassOf <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalWastePassport> ;
+                                                                                                                              rdfs:comment "A digital waste passport specific to MARPOL regulations, extending the generic `DigitalWastePassport`." .
+
+
+###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalWastePassport
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#DigitalWastePassport> rdf:type owl:Class ;
+                                                                                                                        rdfs:subClassOf owl:Thing .
+
+
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty
-:InvolvedParty rdf:type owl:Class ;
-               rdfs:subClassOf owl:Thing ;
-               rdfs:comment "A party involved in the waste management process, such as the ship operator." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#InvolvedParty> rdf:type owl:Class ;
+                                                                                                                 rdfs:subClassOf owl:Thing ;
+                                                                                                                 rdfs:comment "A party involved in the waste management process, such as the ship operator." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste
-:MarpolWaste rdf:type owl:Class ;
-             rdfs:subClassOf :Waste ;
-             rdfs:comment "Represents a specific waste entity within the MARPOL context, including regulatory attributes for ship-generated waste." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWaste> rdf:type owl:Class ;
+                                                                                                               rdfs:subClassOf <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Waste> ;
+                                                                                                               rdfs:comment "Represents a specific waste entity within the MARPOL context, including regulatory attributes for ship-generated waste." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport
-:MarpolWastePassport rdf:type owl:Class ;
-                     rdfs:subClassOf :WastePassport ;
-                     rdfs:comment "Represents the waste passport data specific to MARPOL regulations." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#MarpolWastePassport> rdf:type owl:Class ;
+                                                                                                                       rdfs:subClassOf <https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WastePassport> ;
+                                                                                                                       rdfs:comment "Represents the waste passport data specific to MARPOL regulations." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation
-:ResidueInformation rdf:type owl:Class ;
-                    rdfs:subClassOf owl:Thing ;
-                    rdfs:comment "Details of a specific waste residue, including type, quantity, and handling." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#ResidueInformation> rdf:type owl:Class ;
+                                                                                                                      rdfs:subClassOf owl:Thing ;
+                                                                                                                      rdfs:comment "Details of a specific waste residue, including type, quantity, and handling." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship
-:Ship rdf:type owl:Class ;
-      rdfs:subClassOf owl:Thing ;
-      rdfs:comment "Details about the ship generating the waste." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Ship> rdf:type owl:Class ;
+                                                                                                        rdfs:subClassOf owl:Thing ;
+                                                                                                        rdfs:comment "Details about the ship generating the waste." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata
-:WasdisMetadata rdf:type owl:Class ;
-                rdfs:subClassOf owl:Thing ;
-                rdfs:comment "Metadata related to the WASDIS system for auditing purposes." .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WasdisMetadata> rdf:type owl:Class ;
+                                                                                                                  rdfs:subClassOf owl:Thing ;
+                                                                                                                  rdfs:comment "Metadata related to the WASDIS system for auditing purposes." .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Waste
-:Waste rdf:type owl:Class ;
-       rdfs:subClassOf owl:Thing .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#Waste> rdf:type owl:Class ;
+                                                                                                         rdfs:subClassOf owl:Thing .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WastePassport
-:WastePassport rdf:type owl:Class ;
-               rdfs:subClassOf owl:Thing .
+<https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalMarpolWastePassport.ttl#WastePassport> rdf:type owl:Class ;
+                                                                                                                 rdfs:subClassOf owl:Thing .
 
 
 ###  https://blue-room-innovation.github.io/bri-ontology/ontology/v0.1/digitalWastePassport.ttl#DigitalWastePassport
@@ -621,7 +1625,7 @@
 ###  https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme
 <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/iso3166-iAlpha2.ttl#ISO3166Alpha2Scheme> rdf:type owl:NamedIndividual ,
                                                                                                                       <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                             <http://purl.org/dc/terms/source> <https://www.iso.org/obp/ui/#search> ;
+                                                                                                             dcterms:source <https://www.iso.org/obp/ui/#search> ;
                                                                                                              <http://www.w3.org/2004/02/skos/core#definition> "Standardized two-letter country codes established by ISO 3166-1 Alpha-2."@en ;
                                                                                                              <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :flag within the Digital MARPOL Waste Passport ontology, indicating the flag state of a ship using standardized ISO 3166-1 Alpha-2 codes."@en ;
                                                                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "ISO 3166-1 Alpha-2 Country Codes"@en ;
@@ -713,11 +1717,67 @@
 ###  https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme
 <https://blue-room-innovation.github.io/bri-ontology/codelists/v0.1/unlocode.ttl#UNLocodeScheme> rdf:type owl:NamedIndividual ,
                                                                                                           <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
-                                                                                                 <http://purl.org/dc/terms/source> <https://unece.org/trade/cefact/unlocode-code-list-country-and-territory> ;
+                                                                                                 dcterms:source <https://unece.org/trade/cefact/unlocode-code-list-country-and-territory> ;
                                                                                                  <http://www.w3.org/2004/02/skos/core#definition> "A standardized code that uniquely identifies geographical locations used in international trade and transport, as defined by UNECE."@en ;
                                                                                                  <http://www.w3.org/2004/02/skos/core#note> "Referenced by properties such as :arrivalPort, :nextPlannedDeliveryPort, :lastWasteDeliveryPort, and :nextCollectionPort in the Digital MARPOL Waste Passport ontology. These properties should use valid UN/LOCODE values to identify ports or geographical locations."@en ;
                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "UN/LOCODE"@en ;
                                                                                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "This scheme references the official UN/LOCODE dataset published by UNECE. Implementations should use codes directly from that source (e.g., ESPMI for Palma de Mallorca, ESBCN for Barcelona)."@en .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+bcf:bimSnippet rdfs:comment "BIM snippet metadata containing reference and schema details." ,
+                            "Links topic to its BIM snippet description." .
+
+
+bcf:components rdfs:comment "Components definition containing selection, visibility, and coloring sections." ,
+                            "Links visualization info or a coloring entry to components according to the SHACL model." .
+
+
+bcf:direction rdfs:comment "3D direction vector represented by X, Y, and Z components." ,
+                           "Normal direction of a clipping plane." .
+
+
+bcf:extensions rdfs:comment "Extension catalog holder." ,
+                            "Links a BCF model to extension values." .
+
+
+bcf:header rdfs:comment "Header section containing referenced files." ,
+                        "Links markup to optional header information." .
+
+
+bcf:markup rdfs:comment "Links a BCF model to its main markup content." ,
+                        "Main BCF markup class containing header and topic." .
+
+
+bcf:orthogonalCamera rdfs:comment "Associates visualization info with an orthogonal camera definition." ,
+                                  "Orthogonal camera definition." .
+
+
+bcf:perspectiveCamera rdfs:comment "Associates visualization info with a perspective camera definition." ,
+                                   "Perspective camera definition." .
+
+
+bcf:project rdfs:comment "Links project info to the concrete project descriptor." ,
+                         "Project details with project ID and optional name." .
+
+
+bcf:topic rdfs:comment "Core issue/topic class with metadata, workflow state, comments, and viewpoints." ,
+                       "Links markup to its main topic issue payload." .
+
+
+bcf:version rdfs:comment "Links a BCF model to its declared version payload." ,
+                         "Version payload with required version identifier." .
+
+
+bcf:viewSetupHints rdfs:comment "Viewer hints for spaces, openings, and boundaries." ,
+                                "Viewer hints for visibility of spaces, boundaries, and openings." .
+
+
+bcf:visualizationInfo rdfs:comment "Links a BCF model to viewpoint visualization information." ,
+                                   "Visualization payload including camera configuration and overlays." .
 
 
 ###  Generated by the OWL API (version 4.5.29) https://github.com/owlcs/owlapi

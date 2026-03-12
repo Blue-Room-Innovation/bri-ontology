@@ -6,12 +6,14 @@
 
 | Ontology | #Classes | #ObjProps | #DataProps | #Shapes | #Contexts |
 | ----------- | --------- | ----------- | ----------- | --------- | ----------- |
+| bim-bcf | 46 | 35 | 56 | 35 | 0 |
 | digitalMarpolWastePassport | 14 | 13 | 20 | 0 | 1 |
 | digitalWastePassport | 8 | 2 | 0 | 0 | 1 |
 | recycling | 1 | 0 | 7 | 1 | 1 |
 
 ## Ontologies
 
+- [bim-bcf](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/wiki/bim-bcf/)
 - [digitalMarpolWastePassport](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/wiki/digitalMarpolWastePassport/)
 - [digitalWastePassport](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/wiki/digitalWastePassport/)
 - [recycling](https://blue-room-innovation.github.io/bri-ontology/build/v0.1/wiki/recycling/)

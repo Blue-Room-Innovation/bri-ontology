@@ -1,0 +1,103 @@
+{
+  "@context": "../../build/v0.1/bimBcf.context.jsonld",
+  "@type": "Recycler",
+  "@id": "test",
+  "VisualizationInfo": {
+    "Guid": "cfeed42b-17c2-4851-8b93-07dda9188d2f",
+    "Components": {
+      "Visibility": {
+        "DefaultVisibility": false,
+        "ViewSetupHints": {
+          "SpacesVisible": false,
+          "SpaceBoundariesVisible": false,
+          "OpeningsVisible": false
+        },
+        "Exceptions": [
+          {
+            "IfcGuid": "2_hQ1Rixj6lgHTra$L72O4",
+            "OriginatingSystem": "Allplan"
+          }
+        ]
+      }
+    },
+    "PerspectiveCamera": {
+      "CameraViewPoint": {
+        "X": 16.587450354818614,
+        "Y": -16.499197975783936,
+        "Z": 9.38133028821751
+      },
+      "CameraDirection": {
+        "X": -0.6658547449859127,
+        "Y": 0.48425538694449827,
+        "Z": -0.5675686555783183
+      },
+      "CameraUpVector": {
+        "X": -0.45901410774094714,
+        "Y": 0.3338266431694178,
+        "Z": 0.8233260722247416
+      },
+      "FieldOfView": 60,
+      "AspectRatio": 1
+    }
+  },
+  "Version": {
+    "VersionId": "3.0"
+  },
+  "Markup": {
+    "Header": {
+      "Files": [
+        {
+          "Filename": "BCF-ARK",
+          "Date": "2021-01-04T09:37:45.000Z",
+          "Reference": "https://bimsync.com/project/f5fbb3c695274d1890036bf64f77eb71/revisions/007afab57f264d2296aae0a452486ae1",
+          "IsExternal": true
+        },
+        {
+          "Filename": "BCF-MEP",
+          "Date": "2017-08-07T09:51:34.000Z",
+          "Reference": "https://bimsync.com/project/f5fbb3c695274d1890036bf64f77eb71/revisions/a21ed391f9e046a2bb2bc879c48f1d48",
+          "IsExternal": true
+        }
+      ]
+    },
+    "Topic": {
+      "Guid": "cc1ba10e-c55c-4056-a24c-45f30172899b",
+      "ServerAssignedId": "826",
+      "TopicType": "Info",
+      "TopicStatus": "In_progress",
+      "Title": "All components of curtain wall visible",
+      "Priority": "Medium",
+      "CreationDate": "2017-05-23T08:26:49.974Z",
+      "CreationAuthor": "pasi.paasiala@solibri.com",
+      "ModifiedDate": "2026-02-25T15:18:28.702Z",
+      "ModifiedAuthor": "arnaunsbri@gmail.com",
+      "Description": "All components of curtain wall visible. Only parent guid send as visible.",
+      "AssignedTo": "arnaunsbri@gmail.com",
+      "DueDate": "2026-02-27T15:07:00.000Z",
+      "Comments": [
+        {
+          "Guid": "8981e3f0-5023-4ba2-b69a-2ed4a9d17c37",
+          "Date": "2026-02-25T15:18:08.589Z",
+          "Author": "arnaunsbri@gmail.com",
+          "Comment": "This bcf is a test",
+          "Viewpoint": {
+            "Guid": "cfeed42b-17c2-4851-8b93-07dda9188d2f"
+          }
+        },
+        {
+          "Guid": "ad0649dd-5c09-4b85-a7a5-46ddac10dd95",
+          "Date": "2026-02-25T15:18:28.702Z",
+          "Author": "arnaunsbri@gmail.com",
+          "Comment": "Testing a general comment"
+        }
+      ],
+      "Viewpoints": [
+        {
+          "Guid": "cfeed42b-17c2-4851-8b93-07dda9188d2f",
+          "Viewpoint": "Viewpoint_cfeed42b-17c2-4851-8b93-07dda9188d2f.bcfv",
+          "Snapshot": "Snapshot_cfeed42b-17c2-4851-8b93-07dda9188d2f.png"
+        }
+      ]
+    }
+  }
+}
