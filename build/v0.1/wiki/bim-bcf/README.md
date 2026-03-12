@@ -104,63 +104,63 @@ classDiagram
    }
    class visualizationInfo{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db1{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db1{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db10{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db10{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db13{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db13{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db16{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db16{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db19{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db19{
        filename string
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db22{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db22{
        description string
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db26{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db26{
        index int
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db29{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db29{
        modifiedDate dateTime
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db32{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db32{
        modifiedAuthor string
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db35{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db35{
        reference string
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db39{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db39{
        isExternal boolean
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db4{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db4{
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db42{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db42{
        date dateTime
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db45{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db45{
        aspectRatio double
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db48{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db48{
        x double
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db51{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db51{
        y double
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db54{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db54{
        z double
    }
-   class nfb5d8e84ffd546c3b82502e0b3015e6db7{
+   class n8c2bdbc85a1f44838e37b2e6c92f758db7{
    }
    topic --> bimSnippet : bimSnippet
    visualizationInfo --> bitmap : bitmaps
-   nfb5d8e84ffd546c3b82502e0b3015e6db10 --> direction : cameraDirection
-   nfb5d8e84ffd546c3b82502e0b3015e6db13 --> direction : cameraUpVector
-   nfb5d8e84ffd546c3b82502e0b3015e6db7 --> point : cameraViewPoint
+   n8c2bdbc85a1f44838e37b2e6c92f758db10 --> direction : cameraDirection
+   n8c2bdbc85a1f44838e37b2e6c92f758db13 --> direction : cameraUpVector
+   n8c2bdbc85a1f44838e37b2e6c92f758db7 --> point : cameraViewPoint
    visualizationInfo --> clippingPlane : clippingPlanes
    components --> coloringEntry : coloring
    topic --> comment : comments
-   nfb5d8e84ffd546c3b82502e0b3015e6db1 --> nfb5d8e84ffd546c3b82502e0b3015e6db4 : components
+   n8c2bdbc85a1f44838e37b2e6c92f758db1 --> n8c2bdbc85a1f44838e37b2e6c92f758db4 : components
    clippingPlane --> direction : direction
    topic --> documentReference : documentReferences
    bcfModel --> document : documents
@@ -170,7 +170,7 @@ classDiagram
    header --> file : files
    markup --> header : header
    visualizationInfo --> line : lines
-   nfb5d8e84ffd546c3b82502e0b3015e6db16 --> point : location
+   n8c2bdbc85a1f44838e37b2e6c92f758db16 --> point : location
    bcfModel --> markup : markup
    bitmap --> direction : normal
    visualizationInfo --> orthogonalCamera : orthogonalCamera
@@ -221,30 +221,30 @@ classDiagram
 |<span id="viewPoint">viewPoint</span>|Viewpoint resource with viewpoint file, snapshot, index, and GUID.|[snapshot](#snapshot), [viewpointFile](#viewpointFile)|||
 |<span id="viewSetupHints">viewSetupHints</span>|Viewer hints for visibility of spaces, boundaries, and openings.|[openingsVisible](#openingsVisible), [spaceBoundariesVisible](#spaceBoundariesVisible), [spacesVisible](#spacesVisible)|||
 |<span id="visualizationInfo">visualizationInfo</span>|Visualization payload including camera configuration and overlays.||[bitmaps](#bitmaps), [clippingPlanes](#clippingPlanes), [lines](#lines), [orthogonalCamera](#orthogonalCamera), [perspectiveCamera](#perspectiveCamera)||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db1">nfb5d8e84ffd546c3b82502e0b3015e6db1</span>|||[components](#components)||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db10">nfb5d8e84ffd546c3b82502e0b3015e6db10</span>|||[cameraDirection](#cameraDirection)||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db13">nfb5d8e84ffd546c3b82502e0b3015e6db13</span>|||[cameraUpVector](#cameraUpVector)||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db16">nfb5d8e84ffd546c3b82502e0b3015e6db16</span>|||[location](#location)||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db19">nfb5d8e84ffd546c3b82502e0b3015e6db19</span>||[filename](#filename)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db22">nfb5d8e84ffd546c3b82502e0b3015e6db22</span>||[description](#description)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db26">nfb5d8e84ffd546c3b82502e0b3015e6db26</span>||[index](#index)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db29">nfb5d8e84ffd546c3b82502e0b3015e6db29</span>||[modifiedDate](#modifiedDate)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db32">nfb5d8e84ffd546c3b82502e0b3015e6db32</span>||[modifiedAuthor](#modifiedAuthor)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db35">nfb5d8e84ffd546c3b82502e0b3015e6db35</span>||[reference](#reference)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db39">nfb5d8e84ffd546c3b82502e0b3015e6db39</span>||[isExternal](#isExternal)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db4">nfb5d8e84ffd546c3b82502e0b3015e6db4</span>|||||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db42">nfb5d8e84ffd546c3b82502e0b3015e6db42</span>||[date](#date)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db45">nfb5d8e84ffd546c3b82502e0b3015e6db45</span>||[aspectRatio](#aspectRatio)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db48">nfb5d8e84ffd546c3b82502e0b3015e6db48</span>||[x](#x)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db51">nfb5d8e84ffd546c3b82502e0b3015e6db51</span>||[y](#y)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db54">nfb5d8e84ffd546c3b82502e0b3015e6db54</span>||[z](#z)|||
-|<span id="nfb5d8e84ffd546c3b82502e0b3015e6db7">nfb5d8e84ffd546c3b82502e0b3015e6db7</span>|||[cameraViewPoint](#cameraViewPoint)||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db1">n8c2bdbc85a1f44838e37b2e6c92f758db1</span>|||[components](#components)||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db10">n8c2bdbc85a1f44838e37b2e6c92f758db10</span>|||[cameraDirection](#cameraDirection)||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db13">n8c2bdbc85a1f44838e37b2e6c92f758db13</span>|||[cameraUpVector](#cameraUpVector)||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db16">n8c2bdbc85a1f44838e37b2e6c92f758db16</span>|||[location](#location)||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db19">n8c2bdbc85a1f44838e37b2e6c92f758db19</span>||[filename](#filename)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db22">n8c2bdbc85a1f44838e37b2e6c92f758db22</span>||[description](#description)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db26">n8c2bdbc85a1f44838e37b2e6c92f758db26</span>||[index](#index)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db29">n8c2bdbc85a1f44838e37b2e6c92f758db29</span>||[modifiedDate](#modifiedDate)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db32">n8c2bdbc85a1f44838e37b2e6c92f758db32</span>||[modifiedAuthor](#modifiedAuthor)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db35">n8c2bdbc85a1f44838e37b2e6c92f758db35</span>||[reference](#reference)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db39">n8c2bdbc85a1f44838e37b2e6c92f758db39</span>||[isExternal](#isExternal)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db4">n8c2bdbc85a1f44838e37b2e6c92f758db4</span>|||||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db42">n8c2bdbc85a1f44838e37b2e6c92f758db42</span>||[date](#date)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db45">n8c2bdbc85a1f44838e37b2e6c92f758db45</span>||[aspectRatio](#aspectRatio)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db48">n8c2bdbc85a1f44838e37b2e6c92f758db48</span>||[x](#x)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db51">n8c2bdbc85a1f44838e37b2e6c92f758db51</span>||[y](#y)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db54">n8c2bdbc85a1f44838e37b2e6c92f758db54</span>||[z](#z)|||
+|<span id="n8c2bdbc85a1f44838e37b2e6c92f758db7">n8c2bdbc85a1f44838e37b2e6c92f758db7</span>|||[cameraViewPoint](#cameraViewPoint)||
 
 ## Data Properties
 
 |Name|Description|Domain|Range|Subproperty of|
 | :--- | :--- | :--- | :--- | :--- |
-|<span id="aspectRatio">aspectRatio</span>|Width/height aspect ratio of the camera view.|[nfb5d8e84ffd546c3b82502e0b3015e6db45](#nfb5d8e84ffd546c3b82502e0b3015e6db45)|double||
+|<span id="aspectRatio">aspectRatio</span>|Width/height aspect ratio of the camera view.|[n8c2bdbc85a1f44838e37b2e6c92f758db45](#n8c2bdbc85a1f44838e37b2e6c92f758db45)|double||
 |<span id="assignedTo">assignedTo</span>|Assignee identifier for the topic.|[topic](#topic)|string||
 |<span id="author">author</span>|Author identifier for a comment entry.|[comment](#comment)|string|author|
 |<span id="authoringToolId">authoringToolId</span>|Identifier of the component in the authoring tool.|[component](#component)|string|identifier, identifier|
@@ -252,31 +252,31 @@ classDiagram
 |<span id="commentText">commentText</span>|Textual body of a comment entry.|[comment](#comment)|string|text|
 |<span id="creationAuthor">creationAuthor</span>|Author who created the topic.|[topic](#topic)|string|creator, author|
 |<span id="creationDate">creationDate</span>|Timestamp when the topic was created.|[topic](#topic)|dateTime|dateCreated, created|
-|<span id="date">date</span>|Timestamp associated with a file or comment entry.|[nfb5d8e84ffd546c3b82502e0b3015e6db42](#nfb5d8e84ffd546c3b82502e0b3015e6db42)|dateTime||
+|<span id="date">date</span>|Timestamp associated with a file or comment entry.|[n8c2bdbc85a1f44838e37b2e6c92f758db42](#n8c2bdbc85a1f44838e37b2e6c92f758db42)|dateTime||
 |<span id="defaultVisibility">defaultVisibility</span>|Default visibility state for components in a viewpoint.|[componentVisibility](#componentVisibility)|boolean||
-|<span id="description">description</span>|Human-readable description text.|[nfb5d8e84ffd546c3b82502e0b3015e6db22](#nfb5d8e84ffd546c3b82502e0b3015e6db22)|string|description, description|
+|<span id="description">description</span>|Human-readable description text.|[n8c2bdbc85a1f44838e37b2e6c92f758db22](#n8c2bdbc85a1f44838e37b2e6c92f758db22)|string|description, description|
 |<span id="documentGuid">documentGuid</span>|GUID of an internal document referenced by a topic.|[documentReference](#documentReference)|string|identifier, identifier|
 |<span id="dueDate">dueDate</span>|Requested due date for the topic.|[topic](#topic)|dateTime||
 |<span id="fieldOfView">fieldOfView</span>|Vertical field of view angle in degrees for perspective camera.|[perspectiveCamera](#perspectiveCamera)|double||
-|<span id="filename">filename</span>|Filename associated with a document or file entry.|[nfb5d8e84ffd546c3b82502e0b3015e6db19](#nfb5d8e84ffd546c3b82502e0b3015e6db19)|string|name|
+|<span id="filename">filename</span>|Filename associated with a document or file entry.|[n8c2bdbc85a1f44838e37b2e6c92f758db19](#n8c2bdbc85a1f44838e37b2e6c92f758db19)|string|name|
 |<span id="format">format</span>|Bitmap image format (for example, png or jpg).|[bitmap](#bitmap)|string|fileFormat, format|
 |<span id="guid">guid</span>|Globally unique identifier represented as text.|[Thing](#Thing)|string|identifier, identifier|
 |<span id="height">height</span>|Height of the bitmap overlay in world units.|[bitmap](#bitmap)|double|height|
 |<span id="ifcGuid">ifcGuid</span>|IFC GUID of the component.|[component](#component)|string|identifier, identifier|
 |<span id="ifcProject">ifcProject</span>|IFC project GUID associated with a file entry.|[file](#file)|string|identifier, identifier|
 |<span id="ifcSpatialStructureElement">ifcSpatialStructureElement</span>|IFC spatial structure element GUID associated with a file entry.|[file](#file)|string|identifier, identifier|
-|<span id="index">index</span>|Integer sort/index value for topic or viewpoint.|[nfb5d8e84ffd546c3b82502e0b3015e6db26](#nfb5d8e84ffd546c3b82502e0b3015e6db26)|int|position|
-|<span id="isExternal">isExternal</span>|Indicates whether a referenced resource is external to the BCF package.|[nfb5d8e84ffd546c3b82502e0b3015e6db39](#nfb5d8e84ffd546c3b82502e0b3015e6db39)|boolean||
+|<span id="index">index</span>|Integer sort/index value for topic or viewpoint.|[n8c2bdbc85a1f44838e37b2e6c92f758db26](#n8c2bdbc85a1f44838e37b2e6c92f758db26)|int|position|
+|<span id="isExternal">isExternal</span>|Indicates whether a referenced resource is external to the BCF package.|[n8c2bdbc85a1f44838e37b2e6c92f758db39](#n8c2bdbc85a1f44838e37b2e6c92f758db39)|boolean||
 |<span id="labels">labels</span>|Label attached directly to a topic.|[topic](#topic)|string|keywords, subject|
-|<span id="modifiedAuthor">modifiedAuthor</span>|Author of the latest modification.|[nfb5d8e84ffd546c3b82502e0b3015e6db32](#nfb5d8e84ffd546c3b82502e0b3015e6db32)|string|author|
-|<span id="modifiedDate">modifiedDate</span>|Timestamp of the latest modification.|[nfb5d8e84ffd546c3b82502e0b3015e6db29](#nfb5d8e84ffd546c3b82502e0b3015e6db29)|dateTime|dateModified, modified|
+|<span id="modifiedAuthor">modifiedAuthor</span>|Author of the latest modification.|[n8c2bdbc85a1f44838e37b2e6c92f758db32](#n8c2bdbc85a1f44838e37b2e6c92f758db32)|string|author|
+|<span id="modifiedDate">modifiedDate</span>|Timestamp of the latest modification.|[n8c2bdbc85a1f44838e37b2e6c92f758db29](#n8c2bdbc85a1f44838e37b2e6c92f758db29)|dateTime|dateModified, modified|
 |<span id="name">name</span>|Human-readable name of the project.|[project](#project)|string|name|
 |<span id="openingsVisible">openingsVisible</span>|Viewer hint indicating whether openings are visible.|[viewSetupHints](#viewSetupHints)|boolean||
 |<span id="originatingSystem">originatingSystem</span>|Name of the source system for a component reference.|[component](#component)|string||
 |<span id="priorities">priorities</span>|Priority value available in extensions.|[extensions](#extensions)|string||
 |<span id="priority">priority</span>|Priority value used in a topic.|[topic](#topic)|string||
 |<span id="projectId">projectId</span>|Identifier for the project.|[project](#project)|string|identifier, identifier|
-|<span id="reference">reference</span>|Reference string (filename, URI, or path) used by snippets, files, and bitmaps.|[nfb5d8e84ffd546c3b82502e0b3015e6db35](#nfb5d8e84ffd546c3b82502e0b3015e6db35)|string|contentUrl|
+|<span id="reference">reference</span>|Reference string (filename, URI, or path) used by snippets, files, and bitmaps.|[n8c2bdbc85a1f44838e37b2e6c92f758db35](#n8c2bdbc85a1f44838e37b2e6c92f758db35)|string|contentUrl|
 |<span id="referenceLinks">referenceLinks</span>|External reference URL associated with a topic.|[topic](#topic)|string|url, references|
 |<span id="referenceSchema">referenceSchema</span>|Schema identifier associated with a BIM snippet.|[bimSnippet](#bimSnippet)|string||
 |<span id="serverAssignedId">serverAssignedId</span>|Server-assigned topic identifier.|[topic](#topic)|string|identifier, identifier|
@@ -297,9 +297,9 @@ classDiagram
 |<span id="versionId">versionId</span>|Version identifier string for BCF payload.|[version](#version)|string|identifier, identifier|
 |<span id="viewToWorldScale">viewToWorldScale</span>|Visible vertical size in world units for orthogonal camera.|[orthogonalCamera](#orthogonalCamera)|double||
 |<span id="viewpointFile">viewpointFile</span>|Filename or path of the viewpoint file associated with a viewpoint resource.|[viewPoint](#viewPoint)|string|contentUrl|
-|<span id="x">x</span>|X coordinate component.|[nfb5d8e84ffd546c3b82502e0b3015e6db48](#nfb5d8e84ffd546c3b82502e0b3015e6db48)|double||
-|<span id="y">y</span>|Y coordinate component.|[nfb5d8e84ffd546c3b82502e0b3015e6db51](#nfb5d8e84ffd546c3b82502e0b3015e6db51)|double||
-|<span id="z">z</span>|Z coordinate component.|[nfb5d8e84ffd546c3b82502e0b3015e6db54](#nfb5d8e84ffd546c3b82502e0b3015e6db54)|double||
+|<span id="x">x</span>|X coordinate component.|[n8c2bdbc85a1f44838e37b2e6c92f758db48](#n8c2bdbc85a1f44838e37b2e6c92f758db48)|double||
+|<span id="y">y</span>|Y coordinate component.|[n8c2bdbc85a1f44838e37b2e6c92f758db51](#n8c2bdbc85a1f44838e37b2e6c92f758db51)|double||
+|<span id="z">z</span>|Z coordinate component.|[n8c2bdbc85a1f44838e37b2e6c92f758db54](#n8c2bdbc85a1f44838e37b2e6c92f758db54)|double||
 
 ## Object Properties
 
@@ -307,13 +307,13 @@ classDiagram
 | :--- | :--- | :--- | :--- | :--- |
 |<span id="bimSnippet">bimSnippet</span>|BIM snippet metadata containing reference and schema details. Links topic to its BIM snippet description.|[topic](#topic)|[bimSnippet](#bimSnippet)||
 |<span id="bitmaps">bitmaps</span>|Links visualization info directly to bitmap entries.|[visualizationInfo](#visualizationInfo)|[bitmap](#bitmap)||
-|<span id="cameraDirection">cameraDirection</span>|Camera forward direction vector.|[nfb5d8e84ffd546c3b82502e0b3015e6db10](#nfb5d8e84ffd546c3b82502e0b3015e6db10)|[direction](#direction)||
-|<span id="cameraUpVector">cameraUpVector</span>|Camera up direction vector.|[nfb5d8e84ffd546c3b82502e0b3015e6db13](#nfb5d8e84ffd546c3b82502e0b3015e6db13)|[direction](#direction)||
-|<span id="cameraViewPoint">cameraViewPoint</span>|Camera position in 3D space.|[nfb5d8e84ffd546c3b82502e0b3015e6db7](#nfb5d8e84ffd546c3b82502e0b3015e6db7)|[point](#point)||
+|<span id="cameraDirection">cameraDirection</span>|Camera forward direction vector.|[n8c2bdbc85a1f44838e37b2e6c92f758db10](#n8c2bdbc85a1f44838e37b2e6c92f758db10)|[direction](#direction)||
+|<span id="cameraUpVector">cameraUpVector</span>|Camera up direction vector.|[n8c2bdbc85a1f44838e37b2e6c92f758db13](#n8c2bdbc85a1f44838e37b2e6c92f758db13)|[direction](#direction)||
+|<span id="cameraViewPoint">cameraViewPoint</span>|Camera position in 3D space.|[n8c2bdbc85a1f44838e37b2e6c92f758db7](#n8c2bdbc85a1f44838e37b2e6c92f758db7)|[point](#point)||
 |<span id="clippingPlanes">clippingPlanes</span>|Links visualization info directly to clipping plane entries.|[visualizationInfo](#visualizationInfo)|[clippingPlane](#clippingPlane)||
 |<span id="coloring">coloring</span>|Links components directly to coloring entries.|[components](#components)|[coloringEntry](#coloringEntry)||
 |<span id="comments">comments</span>|Links a topic directly to comment entries.|[topic](#topic)|[comment](#comment)||
-|<span id="components">components</span>|Components definition containing selection, visibility, and coloring sections. Links visualization info or a coloring entry to components according to the SHACL model.|[nfb5d8e84ffd546c3b82502e0b3015e6db1](#nfb5d8e84ffd546c3b82502e0b3015e6db1)|[nfb5d8e84ffd546c3b82502e0b3015e6db4](#nfb5d8e84ffd546c3b82502e0b3015e6db4)||
+|<span id="components">components</span>|Components definition containing selection, visibility, and coloring sections. Links visualization info or a coloring entry to components according to the SHACL model.|[n8c2bdbc85a1f44838e37b2e6c92f758db1](#n8c2bdbc85a1f44838e37b2e6c92f758db1)|[n8c2bdbc85a1f44838e37b2e6c92f758db4](#n8c2bdbc85a1f44838e37b2e6c92f758db4)||
 |<span id="direction">direction</span>|3D direction vector represented by X, Y, and Z components. Normal direction of a clipping plane.|[clippingPlane](#clippingPlane)|[direction](#direction)||
 |<span id="documentReferences">documentReferences</span>|Links a topic directly to document reference entries.|[topic](#topic)|[documentReference](#documentReference)||
 |<span id="documents">documents</span>|Links a BCF model directly to document entries.|[bcfModel](#bcfModel)|[document](#document)||
@@ -323,7 +323,7 @@ classDiagram
 |<span id="files">files</span>|Links a header directly to file entries.|[header](#header)|[file](#file)||
 |<span id="header">header</span>|Header section containing referenced files. Links markup to optional header information.|[markup](#markup)|[header](#header)||
 |<span id="lines">lines</span>|Links visualization info directly to line entries.|[visualizationInfo](#visualizationInfo)|[line](#line)||
-|<span id="location">location</span>|3D location used by clipping planes and bitmap placement.|[nfb5d8e84ffd546c3b82502e0b3015e6db16](#nfb5d8e84ffd546c3b82502e0b3015e6db16)|[point](#point)||
+|<span id="location">location</span>|3D location used by clipping planes and bitmap placement.|[n8c2bdbc85a1f44838e37b2e6c92f758db16](#n8c2bdbc85a1f44838e37b2e6c92f758db16)|[point](#point)||
 |<span id="markup">markup</span>|Main BCF markup class containing header and topic. Links a BCF model to its main markup content.|[bcfModel](#bcfModel)|[markup](#markup)||
 |<span id="normal">normal</span>|Normal vector of a bitmap overlay plane.|[bitmap](#bitmap)|[direction](#direction)||
 |<span id="orthogonalCamera">orthogonalCamera</span>|Orthogonal camera definition. Associates visualization info with an orthogonal camera definition.|[visualizationInfo](#visualizationInfo)|[orthogonalCamera](#orthogonalCamera)||

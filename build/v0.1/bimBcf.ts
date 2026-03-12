@@ -1,7 +1,7 @@
 /**
  * Auto-generated TypeScript definitions from JSON Schema
  * DO NOT EDIT MANUALLY
- * Generated: 2026-03-11 11:51:40
+ * Generated: 2026-03-12 09:59:27
  * Source: shapes/v0.1/bim-bcf.shacl.ttl
  */
 
