@@ -86,6 +86,24 @@ def format_multilang(d: Dict[str, List[str]]) -> str:
 def extract_entities(g: rdflib.Graph, rdf_type) -> List[rdflib.term.Identifier]:
     return sorted(set(g.subjects(RDF.type, rdf_type)), key=lambda u: str(u))
 
+def resolve_class_ref(g: rdflib.Graph, node: rdflib.term.Identifier) -> List[str]:
+    """Resolve a class reference to a list of local names.
+
+    Handles ``owl:unionOf`` anonymous (blank node) classes by expanding them
+    to the list of their union members.  A plain URIRef is returned as-is.
+    """
+    if isinstance(node, rdflib.term.URIRef):
+        return [local_name(node)]
+    if isinstance(node, rdflib.term.BNode):
+        union_list = next(g.objects(node, OWL.unionOf), None)
+        if union_list is not None:
+            members = []
+            collection = rdflib.collection.Collection(g, union_list)
+            for m in collection:
+                members.append(local_name(m))
+            return members
+    return []
+
 def _normalize_artifact_key(stem: str) -> str:
     """Normalizes file names to an ontology key.
 
@@ -228,12 +246,14 @@ def generate_readme(
                     continue
                 rng_text = ranges[0] if ranges else ''
                 for d in domains:
-                    cname = local_name(d)
-                    dt_by_class.setdefault(cname, []).append((local_name(dp), local_name(rng_text) if rng_text else ''))
-            # Class declarations
+                    for cname in resolve_class_ref(g, d):
+                        dt_by_class.setdefault(cname, []).append((local_name(dp), local_name(rng_text) if rng_text else ''))
+            # Class declarations (skip anonymous blank-node classes)
             for c in classes:
+                if isinstance(c, rdflib.term.BNode):
+                    continue
                 cname = local_name(c)
-                lines.append(f"   class {cname}{{")
+                lines.append(f"   class {cname}{{")  
                 for (prop, rng) in dt_by_class.get(cname, []):
                     rng_disp = rng if rng else ''
                     lines.append(f"       {prop} {rng_disp}")
@@ -245,15 +265,18 @@ def generate_readme(
                 ranges = list(g.objects(op, RDFS.range))
                 for d in domains:
                     for r in ranges:
-                        lines.append(f"   {local_name(d)} --> {local_name(r)} : {pname}")
-            # Subclass relations
+                        for d_name in resolve_class_ref(g, d):
+                            for r_name in resolve_class_ref(g, r):
+                                lines.append(f"   {d_name} --> {r_name} : {pname}")
+            # Subclass relations (skip anonymous blank-node classes)
             for c in classes:
+                if isinstance(c, rdflib.term.BNode):
+                    continue
                 for sc in g.objects(c, RDFS.subClassOf):
                     if (sc, RDF.type, OWL.Class) in g or isinstance(sc, rdflib.term.URIRef):
                         lines.append(f"   {local_name(c)} --|> {local_name(sc)}")
             lines.append("```")
             lines.append("")
-
     if rich:
         # Rich tables similar to user example
         if classes:
@@ -261,22 +284,25 @@ def generate_readme(
             lines.append("\n|Name|Description|Datatype properties|Object properties|Subclass of|")
             lines.append("| :--- | :--- | :--- | :--- | :--- |")
             for c in classes:
+                # Skip anonymous blank-node classes (e.g. owl:unionOf nodes)
+                if isinstance(c, rdflib.term.BNode):
+                    continue
                 cname = local_name(c)
                 comments = get_comments(g, c)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
                 desc_txt = md_table_cell(desc[0])
-                # Datatype props for this class
+                # Datatype props for this class (resolve union domains)
                 dt_props = []
                 for dp in data_props:
                     if (dp, RDF.type, OWL.DatatypeProperty) in g:
                         for d in g.objects(dp, RDFS.domain):
-                            if local_name(d) == cname:
+                            if cname in resolve_class_ref(g, d):
                                 dt_props.append(f"[{local_name(dp)}](#{local_name(dp)})")
-                # Object props for this class (as domain)
+                # Object props for this class (as domain, resolve union domains)
                 op_props = []
                 for op in obj_props:
                     for d in g.objects(op, RDFS.domain):
-                        if local_name(d) == cname:
+                        if cname in resolve_class_ref(g, d):
                             op_props.append(f"[{local_name(op)}](#{local_name(op)})")
                 subclass_of = []
                 for sc in g.objects(c, RDFS.subClassOf):
@@ -292,7 +318,11 @@ def generate_readme(
                 comments = get_comments(g, dp)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
                 desc_txt = md_table_cell(desc[0])
-                domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(dp, RDFS.domain)]
+                domain_names = []
+                for d in g.objects(dp, RDFS.domain):
+                    for n in resolve_class_ref(g, d):
+                        domain_names.append(f"[{n}](#{n})")
+                domains = domain_names
                 ranges = [local_name(r) for r in g.objects(dp, RDFS.range)]
                 subprops = [local_name(sp) for sp in g.objects(dp, RDFS.subPropertyOf)]
                 lines.append(f"|<span id=\"{pname}\">{pname}</span>|{desc_txt}|{', '.join(domains)}|{', '.join(ranges)}|{', '.join(subprops)}|")
@@ -305,8 +335,16 @@ def generate_readme(
                 comments = get_comments(g, op)
                 desc = comments.get('es') or comments.get('en') or comments.get('und') or ['']
                 desc_txt = md_table_cell(' '.join(desc))
-                domains = [f"[{local_name(d)}](#{local_name(d)})" for d in g.objects(op, RDFS.domain)]
-                ranges = [f"[{local_name(r)}](#{local_name(r)})" for r in g.objects(op, RDFS.range)]
+                domain_names = []
+                for d in g.objects(op, RDFS.domain):
+                    for n in resolve_class_ref(g, d):
+                        domain_names.append(f"[{n}](#{n})")
+                domains = domain_names
+                range_names = []
+                for r in g.objects(op, RDFS.range):
+                    for n in resolve_class_ref(g, r):
+                        range_names.append(f"[{n}](#{n})")
+                ranges = range_names
                 subprops = [local_name(sp) for sp in g.objects(op, RDFS.subPropertyOf)]
                 lines.append(f"|<span id=\"{pname}\">{pname}</span>|{desc_txt}|{', '.join(domains)}|{', '.join(ranges)}|{', '.join(subprops)}|")
     else:
